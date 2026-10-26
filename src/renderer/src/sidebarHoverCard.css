@@ -1,0 +1,336 @@
+.sidebar-hover-card {
+  position: fixed;
+  z-index: 1000;
+  width: 320px;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  border-radius: 15px;
+  background: #262626;
+  box-shadow:
+    0 0 0 0.5px var(--border),
+    0 8px 16px -4px var(--shadow-soft);
+  color: var(--text);
+  font-family: -apple-system, system-ui, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 18.5714px;
+  backdrop-filter: blur(12px);
+}
+
+.sidebar-project-hover-card-copy,
+.sidebar-thread-hover-card-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-project-hover-card-copy {
+  gap: 6px;
+  padding: 8px;
+}
+
+.sidebar-project-hover-card-main,
+.sidebar-project-hover-card-section {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-project-hover-card-section {
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.sidebar-project-hover-card-row {
+  width: 100%;
+  min-width: 0;
+  min-height: 20px;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 6px;
+  padding: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font: 430 13px/20px -apple-system, system-ui, "Segoe UI", sans-serif;
+  text-align: left;
+}
+
+.sidebar-project-hover-card-row.is-title {
+  min-height: 24px;
+  grid-template-columns: 16px minmax(0, 1fr) 20px;
+}
+
+.sidebar-hover-card-leading {
+  width: 16px;
+  height: 20px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+}
+
+.sidebar-hover-card-leading svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  stroke-width: 1.6;
+}
+
+.sidebar-project-hover-card-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-project-hover-card-title button {
+  max-width: 100%;
+  min-width: 0;
+  padding: 0 6px;
+  margin-left: -6px;
+  overflow: hidden;
+  border-radius: 10px;
+  color: var(--text);
+  font: 500 13px/24px -apple-system, system-ui, "Segoe UI", sans-serif;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-project-hover-card-title button:hover,
+.sidebar-project-hover-card-title button:focus-visible,
+.sidebar-project-hover-card-row:is(button):hover,
+.sidebar-project-hover-card-row:is(button):focus-visible {
+  background: var(--hover);
+}
+
+.sidebar-project-hover-card-pin {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 9999px;
+  color: var(--text-faint);
+}
+
+.sidebar-project-hover-card-pin:hover,
+.sidebar-project-hover-card-pin:focus-visible {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.sidebar-project-hover-card-pin svg,
+.sidebar-project-hover-card-external svg {
+  width: 14px;
+  height: 14px;
+}
+
+.sidebar-project-hover-card-stat {
+  min-width: 0;
+  color: var(--text);
+}
+
+.sidebar-project-hover-card-row.is-path {
+  grid-template-columns: 16px minmax(0, 1fr) 20px;
+  align-items: center;
+}
+
+.sidebar-project-hover-card-row.is-path:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.sidebar-project-hover-card-path {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sidebar-project-hover-card-external {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+  opacity: 0;
+}
+
+.sidebar-project-hover-card-row.is-path:hover .sidebar-project-hover-card-external,
+.sidebar-project-hover-card-row.is-path:focus-visible .sidebar-project-hover-card-external {
+  opacity: 1;
+}
+
+.sidebar-project-hover-card-row.is-action > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-thread-hover-card-copy {
+  gap: 4px;
+  padding: 6px 8px;
+}
+
+.sidebar-thread-hover-card-header {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 2px;
+}
+
+.sidebar-thread-hover-card-title-wrap {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.sidebar-thread-hover-card-title {
+  min-width: 0;
+  display: -webkit-box;
+  padding: 0 6px;
+  margin-left: -6px;
+  overflow: hidden;
+  border-radius: 10px;
+  color: var(--text);
+  font: 500 13px/20px -apple-system, system-ui, "Segoe UI", sans-serif;
+  overflow-wrap: anywhere;
+  text-align: left;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.sidebar-thread-hover-card-title:hover,
+.sidebar-thread-hover-card-title:focus-visible {
+  background: var(--hover);
+}
+
+.sidebar-thread-hover-card-host-icon {
+  height: 20px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--text-faint);
+}
+
+.sidebar-thread-hover-card-host-icon svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 1.6;
+}
+
+.sidebar-thread-hover-card-header time {
+  flex: 0 0 auto;
+  color: var(--text-faint);
+  font: 430 12px/20px -apple-system, system-ui, "Segoe UI", sans-serif;
+  white-space: nowrap;
+}
+
+.sidebar-thread-hover-card-detail {
+  min-width: 0;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  font: 430 13px/20px -apple-system, system-ui, "Segoe UI", sans-serif;
+}
+
+.sidebar-thread-hover-card-detail > span:last-child {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-tooltip-anchor {
+  display: inline-flex;
+}
+
+.sidebar-action-tooltip {
+  position: fixed;
+  z-index: 1200;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 24px));
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #1a1c1f;
+  box-shadow: 0 8px 18px rgb(15 23 42 / 20%);
+  color: #fff;
+  font: 430 13px/18px -apple-system, system-ui, "Segoe UI", sans-serif;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.sidebar-action-tooltip[data-side='top'] {
+  transform: translate(-50%, calc(-100% - 7px));
+}
+
+.sidebar-action-tooltip[data-side='bottom'] {
+  transform: translate(-50%, 7px);
+}
+
+.sidebar-action-tooltip[data-side='right'] {
+  transform: translate(7px, -50%);
+}
+
+.sidebar-marquee-viewport {
+  min-width: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.sidebar-marquee-track {
+  width: max-content;
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.sidebar-marquee-track > span {
+  flex: 0 0 auto;
+}
+
+.sidebar-marquee-track > i {
+  width: 24px;
+  flex: 0 0 24px;
+}
+
+.thread-row-wrap:hover .sidebar-marquee-viewport.is-overflowing .sidebar-marquee-track,
+.thread-row-wrap:focus-within .sidebar-marquee-viewport.is-overflowing .sidebar-marquee-track,
+.sidebar-project-row-wrap:hover .sidebar-marquee-viewport.is-overflowing .sidebar-marquee-track,
+.sidebar-project-row-wrap:focus-within .sidebar-marquee-viewport.is-overflowing .sidebar-marquee-track {
+  animation: sidebar-marquee-scroll var(--sidebar-marquee-duration, 6s) linear 350ms infinite;
+}
+
+@keyframes sidebar-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 12px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-marquee-track { animation: none !important; }
+}
+
+:root[data-theme='light'] .sidebar-hover-card {
+  background: #fff;
+  box-shadow:
+    0 0 0 0.5px rgb(26 28 31 / 8%),
+    0 8px 16px -4px rgb(0 0 0 / 12%);
+}

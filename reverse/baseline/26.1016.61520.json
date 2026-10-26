@@ -1,0 +1,137 @@
+{
+  "$schema": "../baseline.schema.json",
+  "capturedAt": "2026-10-23T15:30:58+08:00",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "application": {
+    "path": "/Applications/ChatGPT.app",
+    "bundleIdentifier": "com.openai.codex",
+    "marketingVersion": "26.1016.61520",
+    "buildVersion": "21421",
+    "runtime": {
+      "name": "Owl/Chromium",
+      "version": "155.0.8059.80"
+    },
+    "artifacts": {
+      "executable": {
+        "relativePath": "Contents/MacOS/ChatGPT",
+        "sha256": "a6755e5c694d3bf5292a69c0db98a76b255e23d8b697525e24082f950d491944"
+      },
+      "asar": {
+        "relativePath": "Contents/Resources/app.asar",
+        "sizeBytes": 626349077,
+        "sha256": "c9945f821fcbaf48424933a82860beac4dd4ad8b8a5444a75568fa6e38a1ad4b"
+      }
+    }
+  },
+  "codexServer": {
+    "cliVersion": "0.163.0-alpha.11.1",
+    "transport": "stdio://",
+    "launch": [
+      "codex",
+      "-c",
+      "features.code_mode_host=true",
+      "app-server",
+      "--analytics-default-enabled",
+      "-c",
+      "plugins.codex-app-tools@openai-bundled.mcp_servers.codex_app.enabled=true",
+      "-c",
+      "plugins.code-review@openai-bundled.mcp_servers.code-review.enabled=true"
+    ]
+  },
+  "rea": {
+    "cliVersion": "6.7.0",
+    "nodeVersion": "24.11.0",
+    "selectedSourceEvidenceId": "ev_ce372bfb030568b113a3dd33c334b5fe08e26bcbfe966632ad33c7daaac62717",
+    "fuseEvidenceId": "ev_4cafc2b12a1be192050fe6ba892d1508fb89b6561d96f7dfa5dcd9843a74d6bb",
+    "selectedFiles": 16445,
+    "findings": 2709,
+    "ipcOperations": 25,
+    "notes": [
+      "The app-shared corpus exceeded the worker heap and was excluded from semantic analysis.",
+      "Raw REA evidence is intentionally not tracked because it contains extracted proprietary material."
+    ]
+  },
+  "fuses": {
+    "runAsNode": false,
+    "enableCookieEncryption": true,
+    "enableNodeOptionsEnvironmentVariable": false,
+    "enableNodeCliInspectArguments": false,
+    "embeddedAsarIntegrityValidation": true,
+    "onlyLoadAppFromAsar": true,
+    "loadBrowserProcessSpecificV8Snapshot": false,
+    "grantFileProtocolExtraPrivileges": false
+  },
+  "renderer": {
+    "url": "app://-/index.html",
+    "viewportCssPixels": {
+      "width": 2056,
+      "height": 1203,
+      "devicePixelRatio": 2
+    },
+    "layoutCssPixels": {
+      "titlebarHeight": 44,
+      "iconRailWidth": 52,
+      "railIconSize": 20,
+      "sidebarWidth": 468,
+      "sidebarBorderRadius": 0,
+      "leftPanelWidth": 520,
+      "workspaceInsets": { "right": 4, "bottom": 4 },
+      "main": { "x": 520, "y": 44, "width": 1532, "height": 1155 },
+      "outputTrackWidth": 305,
+      "outputCard": { "width": 300, "height": 78, "right": 5, "top": 8, "borderRadius": 18 },
+      "conversation": { "outerX": 749.5, "outerWidth": 768, "innerX": 765.5, "innerWidth": 736 },
+      "composer": {
+        "outerX": 749.5,
+        "outerWidth": 768,
+        "x": 765.5,
+        "innerWidth": 736,
+        "height": 98,
+        "borderRadius": 22,
+        "bottom": 12
+      },
+      "emptyChat": {
+        "outputTrackWidth": 0,
+        "titlebarActions": ["New chat"],
+        "titlebarThreadVisible": false,
+        "conversation": { "outerX": 902, "outerWidth": 768, "innerX": 918, "innerWidth": 736 },
+        "composer": {
+          "outerX": 902,
+          "outerWidth": 768,
+          "x": 918,
+          "innerWidth": 736,
+          "height": 98,
+          "borderRadius": 22,
+          "bottom": 16
+        },
+        "contextStrip": {
+          "x": 931,
+          "width": 710,
+          "height": 42,
+          "borderRadius": 20,
+          "bottomOverlap": 4
+        },
+        "editor": { "x": 930, "width": 712, "height": 44, "fontSize": 14, "lineHeight": 20 }
+      }
+    },
+    "colors": {
+      "chromeBackground": "#1d1d1d",
+      "railBackground": "#1d1d1d",
+      "sidebarBackground": "#151515",
+      "mainBackground": "#111111",
+      "composerBackground": "rgb(47, 47, 47)",
+      "outputCardBackground": "rgb(38, 38, 38)",
+      "selectedRowBackground": "rgb(39, 39, 39)"
+    },
+    "preload": {
+      "approximateSizeBytes": 6900,
+      "bridgeGlobal": "electronBridge",
+      "bridgeMethodCount": 20,
+      "bridgeFrozen": true,
+      "primaryInboundChannel": "codex_desktop:message-from-view",
+      "primaryOutboundChannel": "codex_desktop:message-for-view"
+    }
+  }
+}

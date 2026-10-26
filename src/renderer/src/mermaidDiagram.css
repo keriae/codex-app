@@ -1,0 +1,509 @@
+.mermaid-diagram {
+  --background: var(--main, #111111);
+  --mermaid-wide-block-width: min(
+    calc(100% + 20rem),
+    max(
+      100%,
+      calc(
+        100vw - var(--rail-width, 0px) - var(--sidebar-width, 0px) -
+          var(--output-track-width, 0px) - 96px
+      )
+    )
+  );
+  position: relative;
+  width: var(--mermaid-wide-block-width);
+  max-width: none;
+  margin-block: 7px;
+  margin-left: calc((100% - var(--mermaid-wide-block-width)) / 2);
+  user-select: text;
+}
+
+.mermaid-diagram.is-streaming {
+  width: 100%;
+  margin-block: 0;
+  margin-left: 0;
+}
+
+.mermaid-diagram.is-error {
+  width: 100%;
+  margin-block: 14px;
+  margin-left: 0;
+}
+
+.mermaid-preview {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.mermaid-preview:not(.is-streaming) {
+  min-height: 240px;
+}
+
+.mermaid-diagram-stage {
+  display: contents;
+}
+
+.mermaid-diagram-layer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: opacity 150ms ease-out;
+}
+
+.mermaid-diagram:not(.is-streaming) .mermaid-diagram-layer {
+  min-height: 240px;
+}
+
+.mermaid-diagram-layer.is-pending {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.mermaid-diagram-layer.is-ready {
+  position: relative;
+  opacity: 1;
+}
+
+.mermaid-diagram-svg {
+  width: 100%;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mermaid-diagram-svg > svg {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  flex: 0 1 auto;
+  user-select: text;
+}
+
+.mermaid-diagram-loading {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.mermaid-diagram-loading.is-placeholder {
+  min-height: 240px;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--surface) 58%, transparent),
+    var(--surface-hover),
+    color-mix(in srgb, var(--surface) 58%, transparent)
+  );
+  background-size: 240% 100%;
+  animation: mermaid-placeholder-shimmer 1.5s infinite;
+}
+
+.mermaid-diagram-loading.is-streaming {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.mermaid-diagram-loading.is-streaming span {
+  background: linear-gradient(
+    90deg,
+    var(--text-muted) 20%,
+    var(--text) 50%,
+    var(--text-muted) 80%
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: mermaid-text-shimmer 1.45s linear infinite;
+}
+
+.mermaid-source-fallback {
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid rgb(252 252 252 / 7%);
+  border-radius: 17px;
+  background: #222;
+  color: #d4d4d4;
+}
+
+.mermaid-source-fallback figcaption {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 20px;
+  color: #f1f1f1;
+  font-size: 13px;
+  font-weight: 570;
+}
+
+.mermaid-source-fallback figcaption button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #f1f1f1;
+}
+
+.mermaid-source-fallback figcaption button:hover,
+.mermaid-source-fallback figcaption button:focus-visible {
+  background: rgb(252 252 252 / 6%);
+  color: #fff;
+}
+
+.mermaid-source-fallback figcaption svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.8;
+}
+
+.mermaid-source-fallback pre {
+  max-height: min(560px, 64vh);
+  overflow: auto;
+  margin: 0;
+  padding: 0 20px 14px;
+  border: 0;
+  background: transparent;
+  scrollbar-color: rgb(252 252 252 / 15%) transparent;
+  scrollbar-width: thin;
+}
+
+.mermaid-source-fallback code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 19px;
+  white-space: pre;
+}
+
+.mermaid-diagram.is-error .mermaid-preview,
+.mermaid-diagram.is-error .mermaid-diagram-layer {
+  min-height: 0;
+  display: block;
+  overflow: visible;
+}
+
+.mermaid-diagram-actions {
+  position: absolute;
+  z-index: 2;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.mermaid-preview:hover .mermaid-diagram-actions,
+.mermaid-diagram-actions:focus-within {
+  opacity: 1;
+}
+
+.mermaid-diagram-actions > .activity-tooltip-anchor > button,
+.mermaid-diagram-menu-anchor > .activity-tooltip-anchor > button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.mermaid-diagram-actions button:hover,
+.mermaid-diagram-actions button:focus-visible,
+.mermaid-diagram-menu-anchor button[aria-expanded='true'] {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.mermaid-diagram-actions svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.75;
+}
+
+.mermaid-diagram-menu-anchor {
+  position: relative;
+  display: flex;
+}
+
+.mermaid-diagram-menu {
+  position: absolute;
+  z-index: 10;
+  top: 40px;
+  right: 0;
+  width: 152px;
+  padding: 4px;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow: 0 14px 36px rgb(0 0 0 / 35%);
+  backdrop-filter: blur(16px);
+}
+
+.mermaid-diagram-menu.is-up {
+  top: auto;
+  bottom: 40px;
+}
+
+.mermaid-diagram-menu button {
+  width: 100%;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-align: left;
+}
+
+.mermaid-diagram-menu button:hover,
+.mermaid-diagram-menu button:focus-visible {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.mermaid-diagram-menu button svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+}
+
+.mermaid-export-error {
+  position: absolute;
+  z-index: 3;
+  right: 8px;
+  bottom: 8px;
+  max-width: 320px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--danger) 14%, var(--surface));
+  color: var(--danger);
+  font-size: 11px;
+}
+
+.diagram-lightbox {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgb(0 0 0 / 90%);
+}
+
+.diagram-lightbox-actions {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.diagram-lightbox-actions button {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #202020;
+  color: #d2d2d2;
+}
+
+.diagram-lightbox-actions button:hover:not(:disabled),
+.diagram-lightbox-actions button:focus-visible:not(:disabled) {
+  background: #2d2d2d;
+  color: #fff;
+}
+
+.diagram-lightbox-actions button:disabled {
+  opacity: 0.5;
+}
+
+.diagram-lightbox-actions svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.75;
+}
+
+.diagram-lightbox-viewport {
+  position: absolute;
+  inset: 52px 30px 94px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: #222;
+  cursor: default;
+  touch-action: none;
+}
+
+.diagram-lightbox-viewport:has(.diagram-lightbox-canvas) {
+  cursor: grab;
+}
+
+.diagram-lightbox-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.diagram-lightbox-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  flex: 0 0 auto;
+  transform-origin: center;
+  transition: transform 120ms ease-out;
+  will-change: transform;
+}
+
+.diagram-lightbox-viewport.is-dragging .diagram-lightbox-canvas {
+  transition: none;
+}
+
+.diagram-lightbox-canvas > svg {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  display: block;
+}
+
+.diagram-lightbox-zoom {
+  position: absolute;
+  bottom: 33px;
+  left: 50%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #1e1e1e;
+  box-shadow: 0 4px 18px rgb(0 0 0 / 30%);
+  color: #d0d0d0;
+  transform: translateX(-50%);
+}
+
+.diagram-lightbox-zoom button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #303030;
+  color: #d0d0d0;
+}
+
+.diagram-lightbox-zoom button:hover:not(:disabled),
+.diagram-lightbox-zoom button:focus-visible:not(:disabled) {
+  background: #3a3a3a;
+  color: #fff;
+}
+
+.diagram-lightbox-zoom button:disabled {
+  color: rgb(255 255 255 / 28%);
+  cursor: default;
+}
+
+.diagram-lightbox-zoom .diagram-lightbox-zoom-value {
+  min-width: 54px;
+  width: auto;
+  padding-inline: 5px;
+  background: transparent;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.diagram-lightbox-zoom svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.75;
+}
+
+.side-chat-pane .mermaid-diagram {
+  --mermaid-wide-block-width: min(calc(100% + 8rem), calc(100vw / 2 - 64px));
+}
+
+:root[data-theme='light'] .mermaid-source-fallback {
+  border-color: rgb(0 0 0 / 8%);
+  background: #f7f7f7;
+  color: #242424;
+}
+
+:root[data-theme='light'] .mermaid-source-fallback figcaption,
+:root[data-theme='light'] .mermaid-source-fallback figcaption button {
+  color: #292929;
+}
+
+:root[data-theme='light'] .mermaid-source-fallback figcaption button:hover,
+:root[data-theme='light'] .mermaid-source-fallback figcaption button:focus-visible {
+  background: rgb(0 0 0 / 6%);
+  color: #111;
+}
+
+@media (max-width: 960px) {
+  .mermaid-diagram {
+    --mermaid-wide-block-width: 100%;
+  }
+
+  .diagram-lightbox-viewport {
+    right: 16px;
+    left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mermaid-diagram-layer,
+  .mermaid-diagram-actions,
+  .diagram-lightbox-canvas {
+    transition: none;
+  }
+
+  .mermaid-diagram-loading.is-placeholder,
+  .mermaid-diagram-loading.is-streaming span {
+    animation: none;
+  }
+}
+
+@keyframes mermaid-placeholder-shimmer {
+  to {
+    background-position: -140% 0;
+  }
+}
+
+@keyframes mermaid-text-shimmer {
+  to {
+    background-position: -120% 0;
+  }
+}

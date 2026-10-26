@@ -1,0 +1,597 @@
+.composer-context-strip {
+  position: relative;
+  z-index: 0;
+  width: calc(100% - 58px);
+  height: 42px;
+  display: flex;
+  flex: 0 0 42px;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto -4px;
+  overflow: hidden;
+  padding: 0 4px 4px;
+  border: 0;
+  border-radius: 20px 20px 0 0;
+  background: #212121;
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 18px;
+  pointer-events: auto;
+}
+
+.composer-context-segment {
+  min-width: 0;
+  height: 28px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.composer-context-segment svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.7;
+}
+
+.composer-context-segment > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.composer-context-project {
+  max-width: 224px;
+  background: transparent;
+}
+
+.composer-context-project:hover,
+.composer-context-project:focus-visible {
+  background: rgb(252 252 252 / 6%);
+  color: var(--text);
+}
+
+.composer-context-branch {
+  max-width: 34%;
+}
+
+.composer-dock.empty {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.composer-dock.empty .composer {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+}
+
+.composer-add-menu-trigger.is-open {
+  background: var(--composer-hover);
+  color: var(--text);
+}
+
+.attachment-picker.composer-add-menu-trigger > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.composer textarea::placeholder {
+  color: color-mix(in srgb, var(--text) 49.4%, transparent);
+  opacity: 0.5;
+}
+
+.composer-mode-indicator {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px 0 10px;
+  border-radius: 999px;
+  background: rgb(252 252 252 / 8%);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 510;
+  line-height: 1;
+}
+.composer-mode-indicator:hover,
+.composer-mode-indicator:focus-visible { background: rgb(252 252 252 / 13%); }
+.composer-mode-indicator svg { width: 12px; height: 12px; color: var(--text-secondary); }
+.composer-mode-indicator.is-goal { color: #8eb5ff; }
+.composer-mode-indicator.is-plan { color: #d9b76c; }
+
+.composer-add-menu-popover {
+  width: min(736px, calc(100vw / var(--codex-window-zoom, 1) - 16px));
+  max-height: min(320px, calc(100vh / var(--codex-window-zoom, 1) - 16px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 4px;
+  border: 1px solid rgb(252 252 252 / 8.2%);
+  border-radius: 20px;
+  background: #262626;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.composer-add-menu-scroll {
+  min-height: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: rgb(252 252 252 / 20%) transparent;
+  scrollbar-width: thin;
+}
+
+.composer-add-menu-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.composer-add-menu-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(252 252 252 / 20%);
+}
+
+.composer-add-menu-group {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.composer-add-menu-heading {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  height: 26.57px;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #262626;
+  color: rgb(252 252 252 / 50%);
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 18.57px;
+}
+
+.composer-add-menu-options {
+  width: 100%;
+}
+
+.composer-add-menu-option {
+  width: 100%;
+  min-height: 28.57px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  padding: 5px 8px;
+  border-radius: 15px;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 18.57px;
+  text-align: left;
+  opacity: 0.75;
+}
+
+.composer-add-menu-option:hover:not(:disabled),
+.composer-add-menu-option:focus-visible {
+  background: rgb(252 252 252 / 8%);
+  color: var(--text);
+  opacity: 1;
+}
+
+.composer-add-menu-option:focus-visible {
+  outline: 0;
+}
+
+.composer-add-menu-option:disabled {
+  cursor: not-allowed;
+  color: var(--text-secondary);
+  opacity: 0.46;
+}
+
+.composer-add-menu-icon {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  flex: 0 0 16px;
+  place-items: center;
+  color: currentColor;
+}
+
+.composer-add-menu-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.7;
+}
+
+.composer-add-menu-copy {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.composer-add-menu-label {
+  min-width: 0;
+  flex: 0 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.composer-add-menu-description {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: rgb(252 252 252 / 50%);
+  text-overflow: ellipsis;
+}
+
+.composer-add-menu-icon-drawing,
+.composer-add-menu-icon-spreadsheets {
+  color: #25b995;
+}
+
+.composer-add-menu-icon-documents,
+.composer-add-menu-icon-browser,
+.composer-add-menu-icon-visualize {
+  color: #4d9cf6;
+}
+
+.composer-add-menu-icon-pdf,
+.composer-add-menu-icon-zotero {
+  color: #d26363;
+}
+
+.composer-add-menu-icon-presentations,
+.composer-add-menu-icon-computer {
+  color: #d79045;
+}
+
+.composer-add-menu-icon-template-creator {
+  color: #a678e8;
+}
+
+.composer-project-picker {
+  order: -1;
+  width: min(575px, calc(100% - 32px));
+  max-height: min(430px, calc(100vh - 40px));
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 0 max(16px, min(29px, calc((100% - 575px) / 2)));
+  overflow: hidden;
+  padding: 4px;
+  border: 1px solid rgb(252 252 252 / 9%);
+  border-radius: 17px;
+  background: #242424;
+  color: var(--text);
+  box-shadow: 0 18px 52px rgb(0 0 0 / 34%);
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+}
+
+.composer-project-picker-search {
+  height: 36px;
+  display: flex;
+  flex: 0 0 36px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  color: rgb(252 252 252 / 46%);
+}
+
+.composer-project-picker-search > svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  stroke-width: 1.7;
+}
+
+.composer-project-picker-search > input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.composer-project-picker-search > input::placeholder {
+  color: rgb(252 252 252 / 42%);
+}
+
+.composer-project-picker-separator {
+  height: 1px;
+  flex: 0 0 1px;
+  margin: 1px 7px 3px;
+  background: rgb(252 252 252 / 8%);
+}
+
+.composer-project-picker-list {
+  min-height: 0;
+  max-height: 145px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: rgb(252 252 252 / 18%) transparent;
+  scrollbar-width: thin;
+}
+
+.composer-project-picker-list > button,
+.composer-project-picker-footer > button {
+  width: 100%;
+  min-height: 29px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 9px;
+  appearance: none;
+  background: transparent;
+  border-radius: 11px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 20px;
+  text-align: left;
+}
+
+.composer-project-picker-list > button:disabled {
+  cursor: default;
+  opacity: .46;
+}
+
+.composer-project-picker-list > button:hover:not(:disabled),
+.composer-project-picker-list > button:focus-visible,
+.composer-project-picker-footer > button:hover,
+.composer-project-picker-footer > button:focus-visible {
+  outline: 0;
+  background: rgb(252 252 252 / 7%);
+}
+
+.composer-project-picker-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  flex: 0 0 18px;
+  place-items: center;
+  color: rgb(252 252 252 / 76%);
+}
+
+.composer-project-picker-icon svg,
+.composer-project-picker-footer svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.7;
+}
+
+.composer-project-picker-remote-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.composer-project-picker-remote-icon > svg {
+  position: absolute;
+  inset: 1px auto auto 0;
+  width: 16px;
+  height: 16px;
+}
+
+.composer-project-picker-remote-icon > span {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 8px;
+  height: 8px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid #242424;
+  border-radius: 50%;
+  background: #8a68d7;
+  color: #fff;
+}
+
+.composer-project-picker-remote-icon > span[data-state='connected'] {
+  background: #45c47c;
+}
+
+.composer-project-picker-remote-icon > span > svg {
+  width: 5px;
+  height: 5px;
+  stroke-width: 2.4;
+}
+
+.composer-project-picker-copy {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+}
+
+.composer-project-picker-copy > strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 430;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-project-picker-detail {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 7px;
+  color: rgb(252 252 252 / 45%);
+  font-size: 12px;
+}
+
+.composer-project-picker-detail > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-project-picker-host {
+  flex: 0 1 auto;
+}
+
+.composer-project-picker-host::before {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: rgb(252 252 252 / 25%);
+  content: '';
+  vertical-align: 1px;
+}
+
+.composer-project-picker-host[data-state='connected']::before {
+  background: #45c47c;
+}
+
+.composer-project-picker-check {
+  width: 15px !important;
+  height: 15px !important;
+  flex: 0 0 15px;
+  color: rgb(252 252 252 / 72%);
+}
+
+.composer-project-picker-empty {
+  min-height: 64px;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  color: rgb(252 252 252 / 42%);
+  font-size: 12px;
+}
+
+.composer-project-picker-footer {
+  flex: 0 0 auto;
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px solid rgb(252 252 252 / 8%);
+}
+
+.composer-project-picker-footer > button > span {
+  min-width: 0;
+  flex: 1;
+}
+
+.composer-dock:not(.empty) > .composer-project-picker {
+  position: absolute;
+  z-index: 2;
+  bottom: calc(100% + 6px);
+  left: 16px;
+}
+
+:root[data-theme='light'] .composer-context-strip {
+  background: #f6f6f6;
+  color: var(--text-faint);
+}
+
+:root[data-theme='light'] .composer-mode-indicator {
+  background: rgb(13 13 13 / 6%);
+}
+
+:root[data-theme='light'] .composer-mode-indicator:hover,
+:root[data-theme='light'] .composer-mode-indicator:focus-visible {
+  background: rgb(13 13 13 / 9%);
+}
+
+:root[data-theme='light'] .composer-context-project:hover,
+:root[data-theme='light'] .composer-context-project:focus-visible,
+:root[data-theme='light'] .composer-add-menu-option:hover:not(:disabled),
+:root[data-theme='light'] .composer-add-menu-option:focus-visible {
+  background: rgb(0 0 0 / 6%);
+}
+
+:root[data-theme='light'] .composer-add-menu-popover,
+:root[data-theme='light'] .composer-add-menu-heading,
+:root[data-theme='light'] .composer-project-picker {
+  background: #fff;
+}
+
+:root[data-theme='light'] .composer-add-menu-popover {
+  border-color: rgb(0 0 0 / 10%);
+}
+
+:root[data-theme='light'] .composer-project-picker {
+  border-color: rgb(0 0 0 / 10%);
+  box-shadow: 0 18px 50px rgb(0 0 0 / 15%);
+}
+
+:root[data-theme='light'] .composer-project-picker-search,
+:root[data-theme='light'] .composer-project-picker-detail,
+:root[data-theme='light'] .composer-project-picker-empty {
+  color: rgb(20 20 18 / 48%);
+}
+
+:root[data-theme='light'] .composer-project-picker-search > input::placeholder {
+  color: rgb(20 20 18 / 42%);
+}
+
+:root[data-theme='light'] .composer-project-picker-separator,
+:root[data-theme='light'] .composer-project-picker-footer {
+  border-color: rgb(0 0 0 / 8%);
+}
+
+:root[data-theme='light'] .composer-project-picker-separator {
+  background: rgb(0 0 0 / 8%);
+}
+
+:root[data-theme='light'] .composer-project-picker-remote-icon > span {
+  border-color: #fff;
+}
+
+:root[data-theme='light'] .composer-project-picker-icon,
+:root[data-theme='light'] .composer-project-picker-check {
+  color: rgb(13 13 13 / 72%);
+}
+
+:root[data-theme='light'] .composer-project-picker-host::before {
+  background: rgb(13 13 13 / 25%);
+}
+
+:root[data-theme='light'] .composer-project-picker-list > button:hover:not(:disabled),
+:root[data-theme='light'] .composer-project-picker-list > button:focus-visible,
+:root[data-theme='light'] .composer-project-picker-footer > button:hover,
+:root[data-theme='light'] .composer-project-picker-footer > button:focus-visible {
+  background: rgb(0 0 0 / 6%);
+}
+
+:root[data-theme='light'] .composer-add-menu-heading,
+:root[data-theme='light'] .composer-add-menu-description {
+  color: rgb(20 20 18 / 52%);
+}
+
+:root[data-theme='light'] .composer-add-menu-scroll {
+  scrollbar-color: rgb(0 0 0 / 20%) transparent;
+}
+
+:root[data-theme='light'] .composer-add-menu-scroll::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 20%);
+}

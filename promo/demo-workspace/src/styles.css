@@ -1,0 +1,50 @@
+:root {
+  color: #f7f7f4;
+  background: #101112;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.launch-card {
+  max-width: 720px;
+  margin: 12vh auto;
+  padding: 64px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 32px;
+  background: #181a1c;
+}
+
+.eyebrow {
+  color: #8ba7ff;
+  letter-spacing: 0.18em;
+}
+
+h1 {
+  margin: 18px 0;
+  font-size: 64px;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.summary {
+  max-width: 560px;
+  color: #a5a7aa;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+li {
+  margin: 12px 0;
+}
+
+button {
+  margin-top: 28px;
+  padding: 14px 22px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+}

@@ -1,0 +1,84 @@
+{
+  "source": {
+    "application": "/Applications/ChatGPT.app",
+    "version": "26.1016.62342",
+    "build": "21477",
+    "asar": "Contents/Resources/app.asar"
+  },
+  "method": "Direct read-only shipped-artifact inspection; modules are data, not executed renderer code",
+  "moduleRoot": "webview/assets/",
+  "modules": {
+    "agent-activity-item-748850b17d3d.js": "9b8c8ee3758b67c4814e7fed703c0f6068bc425e028a9e6bae17c48ba0fc471d",
+    "app-initial-dddef47d6ef6.js": "1fc7b685efab4be2d9656e02086180dd9e43dcac0fae1e2b1ec233447ed03843",
+    "app-primary-10e84ec314b8.js": "b6b85e95f6d2d1e7134fd46354cbd66005064d07f46c62780a7ee629cefffeb6",
+    "app-shared-295ec67e1c5d.css": "99af1eb079a37a02e29d1ac602cb189179fb9630ad0c362922ba2e3fb0dc279e",
+    "app-shared-fc3316d48427.js": "8b26b2f064efe674c4451066fcb87766099753ac202648075a13e6c1c6f4cc3a",
+    "background-terminal-3fe56407deaa.js": "48e9457368d13946f00c33dfdc6407f05d03d7ff481fe62451a2fa8f10d05d00",
+    "codex-diff-css-f19ee53c0c66.js": "93bab718381d8ce09f7634cad803e71a0336379ea0d0920a8deda3999b749317",
+    "composer-action-bar-run-location-dropdown-771a0f9a7967.js": "65490919aeb044d2452054e7688ca8384e36788a3755eb43646d42fe5adf2c0c",
+    "composer-utility-bar-53897c9dd220.js": "0acf3bfce42b34ec97f0f662c79c3f62c3d61ff8db4b43bd9d54c2f3418a91d5",
+    "diff-preview-content-f590f7c78dfe.js": "5fdbdbb45845cae555a91be0ddaaa9897cbb8f0d4adf144cbf9f910f4ffd2aff",
+    "file-diff-presentation-c78db62098eb.js": "5ce23847338a78ad35fcd4a343660a8e538bdb7dcf48eff3a25ed29bea4242bd",
+    "file-diff-presentation-f34612d3d972.js": "127dbdc4c4c3c3ec737ad41a24ef0bdc587e8f76b96ed25ebc7a6b6dd71eda6f",
+    "general-settings-ac26e93f0ea2.js": "12470d774322eeb6e0b84c08b47803918fa0a13b868a76961941e1f0f38d8e41",
+    "general-settings-f7eeb71e3831.js": "5a3e2d9eb9ea9e5c5d122a696b1ac30c012e695eb5d451d5c2897a82637b6cee",
+    "inline-file-diff-review-4e346bd75fd1.js": "59d7c55f65079ed8ea3fbc64ff27a15eb86da3252fc772f4fbf385dfd28e8620",
+    "inline-followup-markdown-72281ec8ca49.js": "a7f72595203fa7943583ed19a918df271151b1960a3caf093d2e7f2d3c634060",
+    "projects-index-page-1b632c49106b.js": "40259c63270865b5d95cb377ae44255597b1a6fd052b2c9c7603d83b83d36094",
+    "review-file-source-breadcrumb-94f0f686b148.js": "0bbcd3c25119f7f5857d6bdcbf6d6699f6a2fd33f21969e96732b167417813a5",
+    "review-file-source-item-97d4d1b36486.js": "7e45595f45fb3bd7345faf0a2ed27532bb2ce016c9a5f0198d4dd48452953c8f",
+    "review-file-source-tab-679bccd70e10.js": "d8b0414dc3582cf66e6094652ee0220a3061c2ee1d8383bbbeb013766a86289d",
+    "review-file-tree-side-pane-f6e539e41e83.js": "194cc2b0586d97d0441541d088820f199a4a19e795230ae69039fa8c0b035195",
+    "review-preferences-model-d5088023be49.js": "5d4a3303edbdd8c64eb699c7bba52e17edb1a3fbb95db9a53b8f9f44394425b0",
+    "sites-end-resource-7244e15fbe89.js": "1787883bbda7af923bd4621459d3af4266ac1073577e0339ab9d8e287230037c",
+    "terminal-panel-3cdcf701f328.js": "6b3d0f98f6eb6b6f7f6bfea605a51ffa9e77753d0b911b6c7073153cc4b4c3f4",
+    "terminal-panel-c0ca9a862516.js": "7c0be58344f4181ce02a8968817a07612efb5193a3039287f1423dcac0a62cad",
+    "terminal-tab-7d7b0442de8c.js": "918bbee8922fbd6599bc8716677d988654f89ae61d6ffdf59aa91d18b9338ed1",
+    "thread-app-shell-chrome-a6ab16e84558.js": "69b09b41ae37fc9e6417d53b2d926b2116f57e4683cd4db78bbcbcc3c3101ec5",
+    "thread-overflow-menu-d4f89b9d8453.js": "9ca0b0c1fa931876bc581b3bdcf1bb8ba46b1a80c8aa8963969fb23cf01d85a5",
+    "thread-panel-header-actions-a96b3c6cceff.js": "755e981c98c9944bab9742d417b2a828664dd904f1314a51a374b290044adc42",
+    "thread-panel-toggle-button-56cf6f7d90e5.js": "4382083e4546423d67f70f4f5e4413951c92380895981feaaca8792a7ee9ded8",
+    "use-conversation-diff-comments-4397f0496cea.js": "f0a1eb51ada1a7f4c5af235a694f73b0fc5547109219179f92eaefadba65a342",
+    "use-diff-annotations-f64ae615a750.js": "30b7954fcf568d08411b70de2bd6226a381ace8af0fc347e14611cbbdd751ca1",
+    "user-message-attachments-908b76f903e1.js": "1493d6cf18fc5bc25d1ee3a982a11fa6b07af760bc2ceb95dbfa17d7002e1129",
+    "worktree-creation-row-1b3690fd220f.js": "fe387126a2aea8d1fe6306eb73e35c2d7649fda6589183886704dc4bca376a82",
+    "worktree-environment-dropdown-50eb4e3d3248.js": "da2f340d1d2fbaf31803f513c7fcb6d4870197adfbe4756676bea46cb95029bf",
+    "worktree-environment-dropdown-7dd46240897f.css": "251819915edcae85c6d862e04d9e54e48ffc5a2eadfa42363c1703260601a8e1",
+    "xterm-display-helpers-a1ebc1e84dd0.js": "61630646858052a16657bed5b4e5de7938b1bd8b76b8ebe469bc90e6f3fd34f2",
+    "xterm-window-zoom-241c9f83d2ce.css": "0dd60056134e6a2994a86b59a1e9789b9f04e92924da109aef8c923acaf08ce5",
+    "xterm-window-zoom-5b41810cc227.js": "0a1fe5a3f11e6ecb801c1b2cdfa4fb14516111b098f1fb95095b1d79abaf07bb",
+    "zh-CN-8bcb976a6283.js": "fedbd81fcf057bf1e4dca9a6086cf74ac6a460f2d16089aa508ce071bb4b347d"
+  },
+  "diffCommentCheckpoints": [
+    {
+      "module": "use-diff-annotations-f64ae615a750.js",
+      "symbols": [
+        "Gn",
+        "sr"
+      ]
+    },
+    {
+      "module": "review-file-tree-side-pane-f6e539e41e83.js",
+      "symbols": [
+        "qn"
+      ]
+    },
+    {
+      "module": "use-conversation-diff-comments-4397f0496cea.js",
+      "symbols": [
+        "B"
+      ]
+    },
+    {
+      "module": "app-initial-dddef47d6ef6.js",
+      "symbols": [
+        "Mln",
+        "Nln",
+        "run",
+        "nSa",
+        "sSa"
+      ]
+    }
+  ],
+  "note": "Module digests identify inspected upstream resources. Full application bundles, extracted modules, profiles and generated verification reports are local ignored outputs."
+}

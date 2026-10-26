@@ -1,0 +1,6 @@
+.thread-dialog {
+  zoom: var(--codex-window-zoom, 1);
+  max-width: calc((100vw - 48px) / var(--codex-window-zoom, 1));
+  max-height: calc((100vh - 48px) / var(--codex-window-zoom, 1));
+  overflow-y: auto;
+}

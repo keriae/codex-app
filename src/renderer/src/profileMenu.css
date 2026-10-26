@@ -1,0 +1,94 @@
+.profile-menu {
+  position: fixed;
+  z-index: 1300;
+  width: 228px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 4px;
+  border: 0;
+  border-radius: 20px;
+  outline: none;
+  background: color-mix(in srgb, var(--surface-menu) 90%, transparent);
+  box-shadow: 0 0 0 0.5px var(--border), 0 8px 16px -4px var(--shadow-soft);
+  color: var(--text);
+  font: 430 13px/18.5703px -apple-system, system-ui, "Segoe UI", sans-serif;
+  backdrop-filter: blur(12px);
+}
+
+.profile-help-menu { width: 220px; }
+
+.profile-menu-account,
+.profile-menu-item {
+  width: 100%;
+  height: 28.5703px;
+  min-height: 28.5703px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 15px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+
+.profile-menu-account {
+  cursor: default;
+  user-select: none;
+}
+
+.profile-menu-item:hover,
+.profile-menu-item:focus-visible,
+.profile-menu-item[aria-expanded='true'] {
+  outline: none;
+  background: var(--hover);
+}
+
+.profile-menu-item > svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  color: var(--text-muted);
+  stroke-width: 1.7;
+}
+
+.profile-menu-item:hover > svg,
+.profile-menu-item:focus-visible > svg,
+.profile-menu-item[aria-expanded='true'] > svg { color: var(--text); }
+
+.profile-menu-item > span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-menu-item > kbd {
+  flex: 0 0 auto;
+  color: var(--text-faint);
+  font: inherit;
+}
+
+.profile-menu-separator {
+  width: 100%;
+  height: 9px;
+  flex: 0 0 9px;
+  padding: 4px 8px;
+}
+
+.profile-menu-separator > span {
+  display: block;
+  height: 1px;
+  background: var(--border);
+}
+
+:root[data-theme='light'] .profile-menu {
+  background: rgb(255 255 255 / 90%);
+  box-shadow:
+    0 0 0 0.5px rgb(26 28 31 / 8%),
+    0 8px 16px -4px rgb(0 0 0 / 12%);
+}

@@ -1,0 +1,296 @@
+.project-summary-popover {
+  position: fixed;
+  z-index: 325;
+  top: 52px;
+  right: 8px;
+  box-sizing: border-box;
+  width: min(285px, calc(100vw / var(--codex-window-zoom, 1) - 16px));
+  max-height: calc(100vh / var(--codex-window-zoom, 1) - 60px);
+  overflow: hidden auto;
+  padding: 14px 16px;
+  border: 0.5px solid rgb(252 252 252 / 7%);
+  border-radius: 13px;
+  background: color-mix(in srgb, #272727 98%, transparent);
+  color: var(--text, #f2f2f2);
+  box-shadow:
+    0 18px 44px rgb(0 0 0 / 38%),
+    0 2px 8px rgb(0 0 0 / 20%);
+  font: 450 14px/20px -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  zoom: var(--codex-window-zoom, 1);
+  user-select: none;
+  opacity: 0;
+  transform: translateY(-3px) scale(0.99);
+  transform-origin: top right;
+  animation: project-summary-popover-in 110ms ease-out forwards;
+}
+
+@keyframes project-summary-popover-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.project-summary-popover button {
+  border: 0;
+  outline: 0;
+  font: inherit;
+}
+
+.project-summary-header {
+  height: 22px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-secondary, rgb(244 244 244 / 62%));
+}
+
+.project-summary-header strong {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-summary-icon-button {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  flex: 0 0 24px;
+  place-items: center;
+  padding: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary, rgb(244 244 244 / 53%));
+}
+
+.project-summary-icon-button:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.project-summary-icon-button:not(:disabled):hover,
+.project-summary-icon-button:not(:disabled):focus-visible,
+.project-summary-row:hover,
+.project-summary-row:focus-visible,
+.project-summary-source-row:hover,
+.project-summary-source-row:focus-visible {
+  background: rgb(252 252 252 / 7%);
+  color: var(--text, #f2f2f2);
+}
+
+.project-summary-icon-button:focus-visible,
+.project-summary-row:focus-visible,
+.project-summary-source-row:focus-visible {
+  box-shadow: inset 0 0 0 1.5px rgb(115 174 231 / 72%);
+}
+
+.project-summary-icon-button svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.8;
+}
+
+.project-summary-row {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text, #f2f2f2);
+  text-align: left;
+}
+
+.project-summary-changes {
+  height: 34px;
+  gap: 11px;
+  margin-top: 1px;
+  padding: 0 4px;
+  font-weight: 520;
+}
+
+.project-summary-changes svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  stroke-width: 2;
+}
+
+.project-summary-divider {
+  height: 0.5px;
+  margin: 7px 0 10px;
+  background: rgb(252 252 252 / 8%);
+}
+
+.project-summary-section h2 {
+  height: 22px;
+  margin: 0;
+  color: var(--text-secondary, rgb(244 244 244 / 62%));
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 470;
+  line-height: 22px;
+}
+
+.project-summary-subagents {
+  height: 34px;
+  gap: 7px;
+  padding: 0 2px;
+}
+
+.project-summary-agent-avatars {
+  display: inline-flex;
+  min-width: 0;
+  height: 18px;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 5px;
+}
+
+.project-summary-agent-avatars:empty {
+  display: none;
+}
+
+.project-summary-agent-avatars .subagent-activity-avatar,
+.project-summary-agent-avatars .subagent-activity-avatar img {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+}
+
+.project-summary-agent-running {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text, #f2f2f2);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-summary-agent-completed {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--text-secondary, rgb(244 244 244 / 52%));
+}
+
+.project-summary-sources-header {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-summary-add-source {
+  margin-right: -4px;
+}
+
+.project-summary-source-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-summary-source-list li {
+  height: 26px;
+}
+
+.project-summary-source-row {
+  width: 100%;
+  height: 26px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 11px;
+  padding: 0 2px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary, rgb(244 244 244 / 65%));
+  text-align: left;
+}
+
+.project-summary-source-row > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-summary-source-thumbnail {
+  width: 17px;
+  height: 17px;
+  display: grid;
+  flex: 0 0 17px;
+  overflow: hidden;
+  place-items: center;
+  border: 0.5px solid rgb(252 252 252 / 16%);
+  border-radius: 3px;
+  background: #111;
+  color: rgb(244 244 244 / 44%);
+}
+
+.project-summary-source-thumbnail img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.project-summary-source-thumbnail svg {
+  width: 10px;
+  height: 10px;
+  stroke-width: 1.6;
+}
+
+.project-summary-view-all {
+  height: 28px;
+  gap: 11px;
+  margin-top: 4px;
+  padding: 0 3px;
+  color: var(--text-secondary, rgb(244 244 244 / 53%));
+}
+
+.project-summary-view-all svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  stroke-width: 1.8;
+}
+
+:root[data-theme='light'] .project-summary-popover {
+  border-color: rgb(0 0 0 / 10%);
+  background: color-mix(in srgb, #f2f2f2 98%, transparent);
+  box-shadow:
+    0 18px 44px rgb(0 0 0 / 18%),
+    0 2px 8px rgb(0 0 0 / 9%);
+}
+
+:root[data-theme='light'] .project-summary-divider {
+  background: rgb(0 0 0 / 9%);
+}
+
+:root[data-theme='light'] .project-summary-icon-button:not(:disabled):hover,
+:root[data-theme='light'] .project-summary-icon-button:not(:disabled):focus-visible,
+:root[data-theme='light'] .project-summary-row:hover,
+:root[data-theme='light'] .project-summary-row:focus-visible,
+:root[data-theme='light'] .project-summary-source-row:hover,
+:root[data-theme='light'] .project-summary-source-row:focus-visible {
+  background: rgb(0 0 0 / 6%);
+}
+
+:root[data-theme='light'] .project-summary-source-thumbnail {
+  border-color: rgb(0 0 0 / 15%);
+  background: #dedede;
+  color: rgb(0 0 0 / 44%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-summary-popover {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

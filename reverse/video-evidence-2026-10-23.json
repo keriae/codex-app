@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "capturedAt": "2026-10-23",
+  "source": {
+    "relativePath": "raw/video/codex-app-use-screenshot.mp4",
+    "gitIgnored": true,
+    "sizeBytes": 172107119,
+    "sha256": "fecd9fd2023d03db8d5cde3e9b4030acc783e7fc04958729bc523d713f3012a1",
+    "durationSeconds": 470.333,
+    "pixelWidth": 3878,
+    "pixelHeight": 2282,
+    "framesPerSecond": 30,
+    "codec": "h264",
+    "retinaScale": 2,
+    "approximateCssViewport": { "width": 1939, "height": 1141 }
+  },
+  "review": {
+    "method": "offline frame extraction and hand-reviewed contact sheets",
+    "derivedArtifacts": [
+      "raw/video/frames-2s/",
+      "raw/video/frames-10s/",
+      "raw/video/contact-sheets/"
+    ],
+    "privacy": "Raw frames remain ignored because they contain account and conversation content. This manifest stores only sanitized product-state descriptions.",
+    "rendererFindings": [
+      {
+        "source": "reviewed REA inventory and selected local bundle modules",
+        "finding": "Mermaid fences use Mermaid 11.16.0, a 240px minimum preview, loading and failure states, hover actions for source/copy/download, and an expandable full-size viewer."
+      },
+      {
+        "source": "reviewed REA inventory and selected local bundle modules",
+        "finding": "The transcript considers the viewport pinned within 24 CSS pixels of the bottom, stops following after deliberate upward navigation, and exposes an accessible Scroll to bottom control while displaced."
+      },
+      {
+        "source": "recording frames at 00:10, 02:32, 02:36, and 02:50 plus reviewed local workspace modules",
+        "finding": "Opening a file turns the right side into a persistent split workspace rather than a narrow overlay. It combines a breadcrumb editor, line-numbered highlighted source, changed/all-files trees, loading and retry states, and file actions while the conversation remains visible."
+      },
+      {
+        "source": "reviewed REA inventory and local highlight-code/shiki provider modules",
+        "finding": "The product uses registered syntax grammars for fenced code and a worker-backed Shiki provider for editor surfaces; code blocks expose language and copy chrome rather than plain preformatted text."
+      },
+      {
+        "source": "reviewed app-server v2 ThreadItem schema and recording frame at 02:10",
+        "finding": "imageView and imageGeneration are first-class thread items. Viewed images appear as expandable activity with a thumbnail and open into a dedicated image preview with loading, failure, download, and zoom states."
+      }
+    ]
+  },
+  "timeline": [
+    { "at": "00:00", "state": "conversation steady state with rail, sidebar, turn content, output card, and composer" },
+    { "at": "00:08-00:12", "state": "right workspace opens to a file tree and syntax-highlighted source view, then closes" },
+    { "at": "00:20", "state": "full-screen preview of a replica error screenshot; excluded from upstream error-state evidence" },
+    { "at": "00:28", "state": "file-change summary and red/green unified diff cards" },
+    { "at": "00:42-01:10", "state": "right workspace loading spinner, loaded state, and close transition" },
+    { "at": "01:16", "state": "thread overflow menu including rename, pin, side chat, fork, scheduled work, copy, new window, open-with, and archive actions" },
+    { "at": "01:18-01:38", "state": "side-chat tab plus attachment/plugin, permission, model, and reasoning controls" },
+    { "at": "01:52-02:06", "state": "Changes workspace tab error and retry state" },
+    { "at": "02:10-02:52", "state": "browser tab, file-tree loading, code editor, selection, and context menu states" },
+    { "at": "03:10-04:00", "state": "marketplace, projects, settings pages, integrations, personalization, shortcuts, hooks, Git, environments, and worktrees" },
+    { "at": "04:02", "state": "new-chat empty state with workspace context strip above the composer" },
+    { "at": "04:14-04:20", "state": "native macOS folder picker" },
+    { "at": "04:28-04:48", "state": "add menu, high-permission confirmation dialog, and attachment chips" },
+    { "at": "04:58-07:12", "state": "new turn startup, thinking, streamed commentary, incremental tool events, stop control, final-answer streaming, and completion actions" },
+    { "at": "07:14-07:48", "state": "follow-up turn with inline diagrams, diagram loading, full-screen preview, zoom controls, and hover menu" }
+  ],
+  "geometry": {
+    "targetBaseline": "baseline/26.1016.61520.json",
+    "outputCard": { "width": 300, "height": 78 },
+    "composer": { "width": 736, "minimumHeight": 98, "borderRadius": 22 },
+    "notes": "The recording contains rollout- and state-dependent chrome measurements. Stable shell geometry continues to use the sanitized CDP baseline; interaction states use the recording as the behavioral authority."
+  }
+}

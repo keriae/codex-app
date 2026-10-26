@@ -1,0 +1,773 @@
+.remote-project-dialog-backdrop,
+.remote-project-nested-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(0 0 0 / 52%);
+  backdrop-filter: blur(4px);
+}
+
+.remote-project-dialog-backdrop { z-index: 170; }
+.remote-project-nested-backdrop {
+  z-index: 180;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.remote-project-dialog,
+.remote-project-folder-dialog,
+.remote-project-missing-dialog {
+  position: relative;
+  box-sizing: border-box;
+  color: var(--text, #fcfcfc);
+  border: 0;
+  background: rgb(42 42 42 / 92%);
+  box-shadow: 0 0 0 .5px rgb(252 252 252 / 8.2%), 0 4px 8px -2px rgb(0 0 0 / 10%);
+  backdrop-filter: blur(24px);
+  -webkit-app-region: no-drag;
+}
+
+.remote-project-dialog {
+  width: min(520px, calc((100vw - 48px) / var(--codex-window-zoom, 1)));
+  max-height: calc((100vh - 48px) / var(--codex-window-zoom, 1));
+  overflow: visible;
+  border-radius: 25px;
+  zoom: var(--codex-window-zoom, 1);
+}
+
+.remote-project-dialog form {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 20px;
+}
+
+.remote-project-dialog fieldset {
+  min-width: 0;
+  display: contents;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.remote-project-dialog-header,
+.remote-project-folder-header {
+  width: 100%;
+  height: 28px;
+  padding: 0 32px 0 0;
+}
+
+.remote-project-dialog-header h2,
+.remote-project-folder-dialog h3,
+.remote-project-missing-dialog h3 {
+  margin: 0;
+  color: var(--text, #fcfcfc);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 28px;
+}
+
+.remote-project-dialog-close {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  background: transparent;
+  color: rgb(252 252 252 / 80%);
+  line-height: 16px;
+}
+
+.remote-project-dialog-close:hover:not(:disabled),
+.remote-project-dialog-close:focus-visible {
+  outline: 0;
+  background: rgb(252 252 252 / 7%);
+  color: var(--text, #fcfcfc);
+}
+
+.remote-project-dialog-close > svg { width: 16px; height: 16px; }
+
+.remote-project-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.remote-project-name-field {
+  width: 100%;
+  height: 52px;
+  display: block;
+  padding-top: 12px;
+}
+
+.remote-project-name-input {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 0 0;
+  overflow: hidden;
+  border: 1px solid rgb(252 252 252 / 8.2%);
+  border-radius: 15px;
+  background: rgb(38 38 38 / 96%);
+  color: var(--text, #fcfcfc);
+}
+
+.remote-project-name-input:focus-within { border-color: rgb(100 164 224 / 76%); }
+
+.remote-project-name-leading {
+  width: 40px;
+  height: 38px;
+  display: grid;
+  flex: 0 0 40px;
+  place-items: center;
+  border-right: 1px solid rgb(252 252 252 / 8.2%);
+  color: var(--text, #fcfcfc);
+}
+
+.remote-project-name-leading > svg { width: 16px; height: 16px; stroke-width: 1.7; }
+
+.remote-project-name-input input {
+  appearance: none;
+  width: 100%;
+  height: 38px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text, #fcfcfc);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 19px;
+}
+
+.remote-project-name-input input:focus,
+.remote-project-name-input input:focus-visible {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+.remote-project-name-input input::placeholder { color: rgb(252 252 252 / 42%); }
+
+.remote-project-source-section {
+  width: 100%;
+  min-width: 0;
+  padding-top: 12px;
+}
+
+.remote-project-source-heading {
+  min-width: 0;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.remote-project-source-heading > strong { font-size: 14px; font-weight: 430; line-height: 21px; }
+
+.remote-project-source-row,
+.remote-project-source-empty {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgb(252 252 252 / 8.2%);
+  border-radius: 12.5px;
+  background: rgb(38 38 38 / 96%);
+}
+
+.remote-project-source-empty {
+  height: 104.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgb(252 252 252 / 65%);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.remote-project-host-picker { position: relative; min-width: 0; }
+
+.remote-project-host-trigger {
+  max-width: 410px;
+  min-width: 0;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgb(252 252 252 / 65%);
+  font-size: 13px;
+  line-height: 19px;
+  text-align: center;
+}
+
+.remote-project-host-trigger:hover,
+.remote-project-host-trigger:focus-visible { outline: 0; color: var(--text, #fcfcfc); }
+
+.remote-project-host-trigger > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remote-project-host-trigger strong { color: inherit; font-weight: 430; }
+.remote-project-host-trigger > svg { width: 14px; height: 14px; flex: 0 0 14px; }
+
+.remote-project-host-menu {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 8px);
+  left: 50%;
+  width: min(260px, calc(100vw - 64px));
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 5px;
+  transform: translateX(-50%);
+  border: 1px solid rgb(252 252 252 / 10%);
+  border-radius: 14px;
+  background: rgb(49 49 49 / 98%);
+  box-shadow: 0 16px 50px rgb(0 0 0 / 36%);
+  backdrop-filter: blur(18px);
+}
+
+.remote-project-host-menu-label {
+  padding: 4px 8px;
+  color: rgb(252 252 252 / 44%);
+  font-size: 11px;
+  line-height: 18px;
+  text-align: left;
+}
+
+.remote-project-host-menu > button,
+.remote-project-host-menu-footer > button {
+  width: 100%;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text, #fcfcfc);
+  font-size: 12px;
+  text-align: left;
+}
+
+.remote-project-host-menu > button:hover,
+.remote-project-host-menu > button:focus-visible,
+.remote-project-host-menu-footer > button:hover,
+.remote-project-host-menu-footer > button:focus-visible { outline: 0; background: rgb(252 252 252 / 7%); }
+
+.remote-project-host-menu > button > span:not(.remote-project-host-icon),
+.remote-project-host-menu-footer > button > span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remote-project-host-menu > button > svg,
+.remote-project-host-menu-footer svg { width: 14px; height: 14px; flex: 0 0 14px; }
+
+.remote-project-host-icon {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  flex: 0 0 17px;
+  place-items: center;
+}
+
+.remote-project-host-icon > svg { width: 16px; height: 16px; stroke-width: 1.7; }
+
+.remote-project-host-icon > i {
+  position: absolute;
+  right: -1px;
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #313131;
+  border-radius: 50%;
+  background: #45c47c;
+}
+
+.remote-project-host-icon[data-state='disconnected'] > i { background: rgb(252 252 252 / 28%); }
+
+.remote-project-host-empty {
+  min-height: 46px;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  color: rgb(252 252 252 / 40%);
+  font-size: 11px;
+}
+
+.remote-project-host-menu-footer {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgb(252 252 252 / 8%);
+}
+
+.remote-project-source-empty > button:last-child {
+  width: 64px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background: rgb(252 252 252 / 5%);
+  color: var(--text, #fcfcfc);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.remote-project-source-empty > button:last-child:hover:not(:disabled) { background: rgb(252 252 252 / 10%); }
+.remote-project-source-empty > button:last-child svg { width: 14px; height: 14px; }
+
+.remote-project-source-row {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px 7px 12px;
+}
+
+.remote-project-source-row > svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  color: rgb(252 252 252 / 50%);
+  stroke-width: 1.7;
+}
+
+.remote-project-source-row > button:first-of-type {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  background: transparent;
+  text-align: left;
+}
+
+.remote-project-source-row > button:first-of-type strong,
+.remote-project-source-row > button:first-of-type span {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remote-project-source-row > button:first-of-type strong {
+  color: var(--text, #fcfcfc);
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 19px;
+}
+
+.remote-project-source-row > button:first-of-type span {
+  color: rgb(252 252 252 / 50%);
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.remote-project-source-remove {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  border-radius: 8px;
+  background: transparent;
+  color: rgb(252 252 252 / 50%);
+}
+
+.remote-project-source-remove:hover,
+.remote-project-source-remove:focus-visible { outline: 0; background: rgb(252 252 252 / 6%); color: var(--text, #fcfcfc); }
+.remote-project-source-remove svg { width: 14px; height: 14px; }
+
+.remote-project-dialog-message { min-height: 31px; padding-top: 9px; }
+
+.remote-project-dialog-error,
+.remote-project-dialog-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 11px;
+  line-height: 17px;
+}
+
+.remote-project-dialog-error { color: var(--danger, #ef7774); }
+.remote-project-dialog-warning { color: #d5ad63; }
+
+.remote-project-dialog-error > svg,
+.remote-project-dialog-warning > svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  margin-top: 1px;
+}
+
+.remote-project-dialog-warning > span { flex: 1; }
+
+.remote-project-dialog-warning > button {
+  flex: 0 0 auto;
+  color: inherit;
+  font-weight: 550;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.remote-project-dialog footer,
+.remote-project-folder-dialog footer,
+.remote-project-missing-dialog footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.remote-project-dialog > form > fieldset > footer { height: 64px; padding-top: 32px; }
+
+.remote-project-dialog footer button,
+.remote-project-folder-dialog footer button,
+.remote-project-missing-dialog footer button {
+  min-width: 62px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 16px;
+  border: 1px solid transparent;
+  border-radius: 12.5px;
+  font-size: 14px;
+  font-weight: 430;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.remote-project-dialog footer button > svg,
+.remote-project-folder-dialog footer button > svg,
+.remote-project-missing-dialog footer button > svg { width: 14px; height: 14px; }
+
+.remote-project-dialog-secondary { background: transparent; color: rgb(252 252 252 / 50%); }
+.remote-project-dialog-secondary:hover:not(:disabled) { background: rgb(252 252 252 / 6%); color: var(--text, #fcfcfc); }
+
+.remote-project-dialog-primary {
+  border-color: rgb(252 252 252 / 8.2%) !important;
+  background: #fcfcfc;
+  color: #262626;
+}
+
+.remote-project-dialog-primary:hover:not(:disabled) { background: rgb(252 252 252 / 80%); }
+
+.remote-project-dialog button:disabled,
+.remote-project-dialog fieldset:disabled button,
+.remote-project-folder-dialog button:disabled,
+.remote-project-missing-dialog button:disabled { cursor: default; opacity: .4; }
+
+.remote-project-folder-dialog {
+  width: min(520px, calc((100vw - 48px) / var(--codex-window-zoom, 1)));
+  height: min(404px, calc((100vh - 48px) / var(--codex-window-zoom, 1)));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 25px;
+}
+
+.remote-project-folder-content {
+  width: 100%;
+  height: 292px;
+  min-height: 0;
+  padding-top: 12px;
+}
+
+.remote-project-folder-browser-shell {
+  width: 100%;
+  height: 280px;
+  min-height: 224px;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.remote-project-folder-path-row {
+  width: 100%;
+  height: 36px;
+  display: flex;
+  flex: 0 0 36px;
+  align-items: center;
+  gap: 4px;
+}
+
+.remote-project-directory-up {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 12.5px;
+  background: transparent;
+  color: rgb(252 252 252 / 50%);
+}
+
+.remote-project-directory-up:hover:not(:disabled),
+.remote-project-directory-up:focus-visible { outline: 0; background: rgb(252 252 252 / 6%); color: var(--text, #fcfcfc); }
+.remote-project-directory-up svg { width: 16px; height: 16px; }
+
+.remote-project-folder-path-row input {
+  width: 100%;
+  height: 36px;
+  min-width: 0;
+  padding: 0 10px;
+  border: 1px solid rgb(252 252 252 / 15.7%);
+  border-radius: 10px;
+  outline: 0;
+  background: rgb(38 38 38 / 96%);
+  color: var(--text, #fcfcfc);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 19px;
+}
+
+.remote-project-folder-path-row input:focus,
+.remote-project-folder-path-row input:focus-visible {
+  border-color: rgb(252 252 252 / 15.7%);
+  outline: 0;
+  box-shadow: none;
+}
+.remote-project-folder-path-row input::placeholder { color: rgb(252 252 252 / 42%); }
+
+.remote-project-directory-browser {
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  border: 1px solid rgb(252 252 252 / 15.7%);
+  border-radius: 12.5px;
+  background: rgb(38 38 38 / 96%);
+  scrollbar-color: rgb(252 252 252 / 18%) transparent;
+  scrollbar-width: thin;
+}
+
+.remote-project-directory-list {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+
+.remote-project-directory-list > button {
+  width: 100%;
+  min-height: 30.57px;
+  display: flex;
+  flex: 0 0 30.57px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text, #fcfcfc);
+  font-size: 13px;
+  font-weight: 430;
+  line-height: 18.57px;
+  text-align: left;
+}
+
+.remote-project-directory-list > button:hover,
+.remote-project-directory-list > button:focus-visible,
+.remote-project-directory-list > button[aria-selected='true'] { outline: 0; background: rgb(252 252 252 / 5%); }
+
+.remote-project-directory-list > button > svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  color: rgb(252 252 252 / 50%);
+  stroke-width: 1.7;
+}
+
+.remote-project-directory-list > button > span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remote-project-directory-message {
+  min-height: 100%;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 16px;
+  color: rgb(252 252 252 / 42%);
+  font-size: 12px;
+  text-align: center;
+}
+
+.remote-project-directory-message > svg { width: 14px; height: 14px; flex: 0 0 14px; }
+.remote-project-directory-message.is-error { color: var(--danger, #ef7774); }
+
+.remote-project-directory-message > button {
+  color: inherit;
+  font-weight: 550;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.remote-project-folder-dialog footer { height: 44px; padding-top: 12px; }
+
+.remote-project-missing-dialog {
+  width: min(420px, calc((100vw - 48px) / var(--codex-window-zoom, 1)));
+  padding: 20px;
+  border-radius: 25px;
+}
+
+.remote-project-missing-dialog h3 { font-size: 17px; line-height: 24px; }
+
+.remote-project-missing-dialog header p {
+  margin: 8px 0 0;
+  color: rgb(252 252 252 / 65%);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.remote-project-missing-dialog footer { margin-top: 20px; }
+
+.remote-project-missing-dialog code {
+  color: var(--text, #fcfcfc);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+:root[data-theme='light'] .remote-project-dialog-backdrop { background: rgb(0 0 0 / 25%); }
+:root[data-theme='light'] .remote-project-nested-backdrop { background: transparent; }
+
+:root[data-theme='light'] .remote-project-dialog,
+:root[data-theme='light'] .remote-project-folder-dialog,
+:root[data-theme='light'] .remote-project-missing-dialog {
+  background: rgb(255 255 255 / 94%);
+  box-shadow: 0 0 0 .5px rgb(13 13 13 / 10%), 0 4px 12px -2px rgb(0 0 0 / 12%);
+}
+
+:root[data-theme='light'] .remote-project-name-input,
+:root[data-theme='light'] .remote-project-source-row,
+:root[data-theme='light'] .remote-project-source-empty,
+:root[data-theme='light'] .remote-project-folder-path-row input,
+:root[data-theme='light'] .remote-project-directory-browser {
+  border-color: rgb(13 13 13 / 12%);
+  background: rgb(246 246 246 / 96%);
+}
+
+:root[data-theme='light'] .remote-project-name-input {
+  border-color: rgb(26 28 31 / 8%);
+  background: rgb(255 255 255 / 96%);
+}
+
+:root[data-theme='light'] .remote-project-name-input:focus-within {
+  border-color: rgb(51 156 255);
+}
+
+:root[data-theme='light'] .remote-project-folder-path-row input:focus,
+:root[data-theme='light'] .remote-project-folder-path-row input:focus-visible {
+  border-color: rgb(13 13 13 / 12%);
+  outline: 0;
+  box-shadow: none;
+}
+
+:root[data-theme='light'] .remote-project-name-leading { border-color: rgb(26 28 31 / 8%); color: var(--text, #1a1c1f); }
+
+:root[data-theme='light'] .remote-project-name-input input::placeholder,
+:root[data-theme='light'] .remote-project-folder-path-row input::placeholder,
+:root[data-theme='light'] .remote-project-source-row > button:first-of-type span,
+:root[data-theme='light'] .remote-project-directory-list > button > svg,
+:root[data-theme='light'] .remote-project-directory-message { color: rgb(13 13 13 / 50%); }
+
+:root[data-theme='light'] .remote-project-source-empty,
+:root[data-theme='light'] .remote-project-host-trigger,
+:root[data-theme='light'] .remote-project-dialog-secondary,
+:root[data-theme='light'] .remote-project-directory-up { color: rgb(13 13 13 / 50%); }
+
+:root[data-theme='light'] .remote-project-host-menu {
+  border-color: rgb(13 13 13 / 10%);
+  background: rgb(255 255 255 / 98%);
+  box-shadow: 0 16px 50px rgb(0 0 0 / 18%);
+}
+
+:root[data-theme='light'] .remote-project-host-icon > i { border-color: #fff; }
+:root[data-theme='light'] .remote-project-dialog-close { color: rgb(13 13 13 / 72%); }
+
+:root[data-theme='light'] .remote-project-host-menu > button:hover,
+:root[data-theme='light'] .remote-project-host-menu > button:focus-visible,
+:root[data-theme='light'] .remote-project-host-menu-footer > button:hover,
+:root[data-theme='light'] .remote-project-host-menu-footer > button:focus-visible,
+:root[data-theme='light'] .remote-project-source-remove:hover,
+:root[data-theme='light'] .remote-project-source-remove:focus-visible,
+:root[data-theme='light'] .remote-project-directory-up:hover:not(:disabled),
+:root[data-theme='light'] .remote-project-directory-up:focus-visible,
+:root[data-theme='light'] .remote-project-directory-list > button:hover,
+:root[data-theme='light'] .remote-project-directory-list > button:focus-visible,
+:root[data-theme='light'] .remote-project-dialog-secondary:hover:not(:disabled),
+:root[data-theme='light'] .remote-project-dialog-close:hover:not(:disabled),
+:root[data-theme='light'] .remote-project-dialog-close:focus-visible { background: rgb(13 13 13 / 6%); color: var(--text); }
+
+:root[data-theme='light'] .remote-project-source-empty > button:last-child { background: rgb(13 13 13 / 5%); }
+:root[data-theme='light'] .remote-project-source-empty > button:last-child:hover:not(:disabled) { background: rgb(13 13 13 / 10%); }
+
+:root[data-theme='light'] .remote-project-dialog-primary {
+  border-color: rgb(13 13 13 / 10%) !important;
+  background: #262626;
+  color: #fff;
+}
+
+:root[data-theme='light'] .remote-project-dialog-primary:hover:not(:disabled) { background: rgb(38 38 38 / 82%); }
+
+@media (max-width: 560px) {
+  .remote-project-dialog-backdrop,
+  .remote-project-nested-backdrop { padding: 12px; }
+
+  .remote-project-dialog,
+  .remote-project-folder-dialog { width: calc((100vw - 24px) / var(--codex-window-zoom, 1)); }
+
+  .remote-project-folder-dialog { height: min(404px, calc((100vh - 24px) / var(--codex-window-zoom, 1))); }
+}

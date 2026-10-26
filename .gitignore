@@ -1,0 +1,36 @@
+node_modules/
+out/
+dist/
+release/
+.DS_Store
+*.log
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
+.idea/
+.vscode/
+.eslintcache
+
+# Reverse-engineering captures can contain proprietary application code,
+# account data, local paths, and conversation contents. Keep only reviewed,
+# hand-authored summaries under reverse/.
+reverse/raw/
+reverse/**/*.raw.json
+reverse/**/*.har
+reverse/**/*.asar
+reverse/**/*.bin
+reverse/**/*.png
+reverse/**/*.jpg
+reverse/**/*.jpeg
+reverse/**/*.webp
+reverse/**/*.gif
+reverse/**/*.avif
+reverse/**/*.trace
+reverse/**/*.cpuprofile
+reverse/**/*.heapsnapshot
+
+# Isolated Chromium/Owl profiles and local app-server transcripts.
+.codex-re-profile/
+profiles/
+transcripts/

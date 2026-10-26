@@ -1,0 +1,62 @@
+.collapsible-user-message {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.collapsible-user-message-body {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.collapsible-user-message-content {
+  width: 100%;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.collapsible-user-message-content.is-collapsed {
+  max-height: 19lh;
+  overflow: hidden;
+}
+
+.collapsible-user-message-ellipsis {
+  display: block;
+  line-height: inherit;
+}
+
+.collapsible-user-message-toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  line-height: inherit;
+}
+
+.collapsible-user-message-toggle:focus-visible {
+  outline: 2px solid rgb(100 164 224 / 76%);
+  outline-offset: 2px;
+}
+
+.collapsible-user-message-toggle svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 140ms ease-out;
+}
+
+.collapsible-user-message-toggle svg.is-expanded {
+  transform: rotate(180deg);
+}

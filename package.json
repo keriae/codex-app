@@ -1,0 +1,107 @@
+{
+  "name": "codex-app-macos",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "An editable reconstruction of the macOS codex-app desktop client.",
+  "author": "codex-app Reconstruction Contributors",
+  "productName": "Codex",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "type": "module",
+  "main": "out/main/index.js",
+  "scripts": {
+    "prepare:native": "node scripts/prepare-node-pty.cjs",
+    "postinstall": "npm run prepare:native",
+    "dev": "npm run prepare:native && electron-vite dev",
+    "build": "electron-vite build",
+    "package:mac": "npm run prepare:native && npm run build && electron-builder --mac dir --publish never",
+    "dist:mac": "npm run prepare:native && npm run build && electron-builder --mac dmg zip --publish never",
+    "reconstruct:mac": "node scripts/reverse/reconstruct-local.mjs",
+    "preview": "electron-vite preview",
+    "runtime:check": "node scripts/reverse/verify-runtime.mjs",
+    "visual:check": "node scripts/reverse/verify-layout.mjs",
+    "verify:integrations-schema": "node scripts/verify-integrations-schema.mjs",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "typecheck:node": "tsc -p tsconfig.node.json --noEmit --composite false",
+    "typecheck:web": "tsc -p tsconfig.web.json --noEmit --composite false",
+    "test": "vitest run"
+  },
+  "build": {
+    "appId": "com.openai.codex.replica",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/node-pty/**/*"
+    ],
+    "beforePack": "scripts/prepare-node-pty.cjs",
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "loadBrowserProcessSpecificV8Snapshot": false,
+      "grantFileProtocolExtraPrivileges": false,
+      "resetAdHocDarwinSignature": true
+    },
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "darkModeSupport": true,
+      "icon": "resources/icon.icns",
+      "minimumSystemVersion": "13.0",
+      "identity": null,
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "artifactName": "codex-app-${version}-${arch}.${ext}"
+  },
+  "dependencies": {
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-html": "^6.4.12",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/lang-python": "^6.2.1",
+    "@mermaid-js/layout-elk": "0.2.2",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "codemirror": "^6.0.2",
+    "highlight.js": "^11.12.0",
+    "lucide-react": "^0.468.0",
+    "mermaid": "^11.17.2",
+    "node-pty": "^1.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.0.0",
+    "remark-gfm": "^4.0.0",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@electron/asar": "^3.4.1",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.3",
+    "@types/react-dom": "^19.0.2",
+    "@types/ws": "^8.18.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^44.9.3",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^3.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1",
+    "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "katex": "0.18.2"
+  }
+}

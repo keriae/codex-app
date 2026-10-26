@@ -1,0 +1,430 @@
+.thread-goal-bar {
+  position: relative;
+  z-index: 0;
+  width: calc(100% - 58px);
+  min-height: 42px;
+  display: flex;
+  flex: 0 0 42px;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto -4px;
+  overflow: hidden;
+  padding: 0 8px 0 13px;
+  border: 0.5px solid rgb(252 252 252 / 7%);
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  background: #212121;
+  color: #b7b7b7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  pointer-events: auto;
+}
+
+.composer-dock:has(> .thread-goal-bar) {
+  flex-direction: column;
+  align-items: center;
+}
+
+.thread-goal-summary {
+  min-width: 0;
+  height: 34px;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.thread-goal-summary:hover:not(:disabled),
+.thread-goal-summary:focus-visible {
+  background: rgb(252 252 252 / 5%);
+}
+
+.thread-goal-summary:disabled {
+  cursor: default;
+}
+
+.thread-goal-summary:focus-visible,
+.thread-goal-action:focus-visible,
+.thread-goal-dialog button:focus-visible,
+.thread-goal-dialog textarea:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--text, #f7f7f7) 35%, transparent);
+  outline-offset: 1px;
+}
+
+.thread-goal-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin-right: 9px;
+  color: rgb(252 252 252 / 46%);
+  stroke-width: 1.7;
+}
+
+.thread-goal-status {
+  flex: 0 0 auto;
+  color: var(--text, #f7f7f7);
+  font-weight: 510;
+  white-space: nowrap;
+}
+
+.thread-goal-objective {
+  min-width: 0;
+  overflow: hidden;
+  margin-left: 5px;
+  color: var(--text-secondary, #a5a5a5);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thread-goal-progress {
+  flex: 0 0 auto;
+  margin-left: 6px;
+  color: var(--text-secondary, #a5a5a5);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.thread-goal-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 1px;
+}
+
+.thread-goal-actions > .activity-tooltip-anchor {
+  display: inline-flex;
+}
+
+.thread-goal-action {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  flex: 0 0 27px;
+  place-items: center;
+  padding: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgb(252 252 252 / 48%);
+}
+
+.thread-goal-action:hover:not(:disabled) {
+  background: rgb(252 252 252 / 7%);
+  color: var(--text, #f7f7f7);
+}
+
+.thread-goal-action:disabled {
+  opacity: 0.42;
+}
+
+.thread-goal-action svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.8;
+}
+
+.thread-goal-spinner {
+  animation: thread-goal-spin 800ms linear infinite;
+}
+
+.thread-goal-live-error {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.thread-goal-dialog-backdrop {
+  position: fixed;
+  z-index: 240;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(0 0 0 / 42%);
+  backdrop-filter: blur(4px);
+  animation: thread-goal-fade-in 120ms ease-out;
+}
+
+.thread-goal-dialog {
+  width: min(520px, 100%);
+  overflow: hidden;
+  border: 1px solid var(--border-strong, #3a3a3a);
+  border-radius: 16px;
+  outline: none;
+  background: var(--main-raised, #252525);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
+  color: var(--text, #f7f7f7);
+  animation: thread-goal-dialog-in 140ms ease-out;
+}
+
+.thread-goal-dialog form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.thread-goal-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.thread-goal-dialog-emblem {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--text, #fff) 7%, transparent);
+  color: var(--text-secondary, #a5a5a5);
+}
+
+.thread-goal-dialog-emblem svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.7;
+}
+
+.thread-goal-dialog h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 620;
+}
+
+.thread-goal-resume-dialog {
+  width: min(440px, 100%);
+}
+
+.thread-goal-resume-heading h2 {
+  margin: 0;
+}
+
+.thread-goal-resume-heading p {
+  margin: 8px 0 0;
+  color: var(--text-secondary, #a5a5a5);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.thread-goal-resume-objective {
+  display: -webkit-box;
+  margin-top: 18px;
+  overflow: hidden;
+  padding: 10px 12px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--text, #fff) 6%, transparent);
+  color: var(--text, #f7f7f7);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.thread-goal-dialog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 18px;
+  color: var(--text-secondary, #a5a5a5);
+  font-size: 12px;
+  font-weight: 560;
+}
+
+.thread-goal-dialog textarea {
+  width: 100%;
+  min-height: 210px;
+  resize: vertical;
+  padding: 11px 12px;
+  border: 1px solid var(--border-strong, #3a3a3a);
+  border-radius: 10px;
+  outline: none;
+  background: var(--main, #1d1d1d);
+  color: var(--text, #f7f7f7);
+  font: 400 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  user-select: text;
+}
+
+.thread-goal-dialog textarea:focus {
+  border-color: color-mix(in srgb, var(--text, #fff) 32%, var(--border-strong, #3a3a3a));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--text, #fff) 7%, transparent);
+}
+
+.thread-goal-dialog textarea:disabled {
+  opacity: 0.58;
+}
+
+.thread-goal-dialog-error {
+  margin: 10px 0 0;
+  color: var(--danger, #ff6b6b);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.thread-goal-dialog-meta {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 7px;
+  color: var(--text-muted, #777);
+  font-size: 11px;
+}
+
+.thread-goal-dialog-revert {
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 7px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary, #a5a5a5);
+  font-size: 11px;
+}
+
+.thread-goal-dialog-revert:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--text, #fff) 7%, transparent);
+  color: var(--text, #f7f7f7);
+}
+
+.thread-goal-dialog-revert:disabled {
+  opacity: 0.36;
+}
+
+.thread-goal-dialog-revert svg {
+  width: 12px;
+  height: 12px;
+}
+
+.thread-goal-dialog footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.thread-goal-dialog footer button {
+  min-width: 66px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 13px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 580;
+}
+
+.thread-goal-dialog-secondary {
+  border: 1px solid var(--border-strong, #3a3a3a);
+  background: transparent;
+  color: var(--text-secondary, #a5a5a5);
+}
+
+.thread-goal-dialog-primary {
+  background: var(--accent, #f4f4f4);
+  color: var(--accent-text, #171717);
+}
+
+.thread-goal-dialog footer button:disabled {
+  opacity: 0.46;
+}
+
+.thread-goal-completion {
+  min-height: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  color: var(--text-muted, #777);
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.agent-message-actions:has(.thread-goal-completion) {
+  width: auto;
+}
+
+.thread-goal-completion-separator {
+  width: 1px;
+  height: 12px;
+  background: var(--border, #333);
+}
+
+.thread-goal-completion svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  stroke-width: 1.7;
+}
+
+:root[data-theme='light'] .thread-goal-bar {
+  border-color: rgb(0 0 0 / 8%);
+  background: #e7e7e4;
+  color: var(--text-secondary, #666);
+}
+
+:root[data-theme='light'] .thread-goal-summary:hover:not(:disabled),
+:root[data-theme='light'] .thread-goal-summary:focus-visible,
+:root[data-theme='light'] .thread-goal-action:hover:not(:disabled) {
+  background: rgb(0 0 0 / 6%);
+}
+
+:root[data-theme='light'] .thread-goal-icon,
+:root[data-theme='light'] .thread-goal-action {
+  color: rgb(0 0 0 / 45%);
+}
+
+@keyframes thread-goal-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes thread-goal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes thread-goal-dialog-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 620px) {
+  .thread-goal-bar {
+    width: calc(100% - 32px);
+  }
+
+  .thread-goal-status {
+    display: none;
+  }
+
+  .thread-goal-objective {
+    margin-left: 0;
+  }
+
+  .thread-goal-dialog-backdrop {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thread-goal-spinner,
+  .thread-goal-dialog-backdrop,
+  .thread-goal-dialog {
+    animation-duration: 0.01ms !important;
+  }
+}

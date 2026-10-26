@@ -1,0 +1,95 @@
+.composer-dock:has(> .thread-resume-notice) {
+  flex-direction: column;
+  align-items: center;
+}
+
+.thread-resume-notice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: calc(100% - 32px);
+  min-height: 72px;
+  margin: 0 0 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  pointer-events: auto;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.thread-resume-notice-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--text);
+}
+
+.thread-resume-notice-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.thread-resume-notice-copy strong {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.thread-resume-notice-copy span {
+  color: var(--text-secondary);
+}
+
+.thread-resume-notice-actions {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  flex: none;
+}
+
+.thread-resume-notice-actions::before {
+  width: 1px;
+  margin: 0 14px 0 0;
+  background: var(--border);
+  content: '';
+}
+
+.thread-resume-notice button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex: none;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.thread-resume-notice button:hover { background: var(--hover); }
+.thread-resume-notice button:disabled { opacity: .5; cursor: default; }
+.thread-resume-notice button svg { width: 13px; height: 13px; }
+
+@media (max-width: 760px) {
+  .thread-resume-notice {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .thread-resume-notice-actions {
+    width: 100%;
+    height: 32px;
+    justify-content: flex-end;
+    padding-left: 32px;
+  }
+
+  .thread-resume-notice-actions::before { display: none; }
+}

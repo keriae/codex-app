@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-24",
+  "scope": "High-value macOS Codex reconstruction evidence; raw proprietary extracts and account-bearing captures remain Git-ignored",
+  "targets": {
+    "current": {
+      "application": "/Applications/ChatGPT.app",
+      "bundleIdentifier": "com.openai.codex",
+      "version": "26.1016.62342",
+      "build": "21477",
+      "asarSha256": "5b5cf52887cfd4de19cb5862155a8ef6cf58830c0a2fc592b72060cfcc3be869"
+    },
+    "historicalGeometry": {
+      "version": "26.1016.61520",
+      "build": "21421",
+      "asarSha256": "c9945f821fcbaf48424933a82860beac4dd4ad8b8a5444a75568fa6e38a1ad4b",
+      "baseline": "reverse/baseline/26.1016.61520.json",
+      "warning": "Do not attribute historical hashes, offsets or geometry to build 21477."
+    }
+  },
+  "evidence": {
+    "rea": [
+      {
+        "name": "entry-preload",
+        "evidenceId": "ev_d702624abc628a62a2d1d89bf7f7ec91cac9c4d96727b324ec1e3018554454cb",
+        "operation": "analyze_javascript_application",
+        "selectedSources": [
+          "package.json",
+          ".vite/build/early-bootstrap.js",
+          ".vite/build/preload.js"
+        ],
+        "summary": "docs/reverse-engineering.md"
+      },
+      {
+        "name": "workspace-tabs",
+        "evidenceId": "ev_ef27d69ee68c2ffd8d204c5786b6933502a9abcf3a5c5668f724e2c4450a4e79",
+        "operation": "analyze_javascript_application",
+        "rawEvidence": "reverse/raw/checks/current/rea-workspace-evidence.json",
+        "selectedSourceCount": 4,
+        "inventoriedFilesOutsideAnalysis": 16441,
+        "coverage": "Selected workspace tab/editor boundary only"
+      },
+      {
+        "name": "editor-storage",
+        "evidenceId": "ev_05280836fc14faa480c57da5409f69fbdc2f5cf37c5bb78a68849d387a6b711f",
+        "operation": "analyze_javascript_application",
+        "rawEvidence": "reverse/raw/checks/current/rea-editor-evidence.json",
+        "selectedSourceCount": 2,
+        "inventoriedFilesOutsideAnalysis": 16443,
+        "coverage": "Selected editor and storage modules only"
+      },
+      {
+        "name": "editor-controls",
+        "evidenceId": "ev_66d941f2ef65ba6a47d8923f1fddb52e441fa253f117afb069a454822272811b",
+        "operation": "analyze_javascript_application",
+        "rawEvidence": "reverse/raw/checks/current/rea-editor-controls-evidence.json",
+        "trackedSummary": "reverse/editor-controls-evidence-2026-10-24.json",
+        "selectedSourceCount": 4,
+        "coverage": "Extracted bounded module set; not whole-application runtime evidence"
+      },
+      {
+        "name": "historical-selected-source",
+        "evidenceId": "ev_ce372bfb030568b113a3dd33c334b5fe08e26bcbfe966632ad33c7daaac62717",
+        "operation": "analyze_javascript_application",
+        "targetBuild": "21421",
+        "summary": "reverse/baseline/26.1016.61520.json"
+      },
+      {
+        "name": "historical-electron-fuses",
+        "evidenceId": "ev_4cafc2b12a1be192050fe6ba892d1508fb89b6561d96f7dfa5dcd9843a74d6bb",
+        "operation": "inspect_electron_fuses",
+        "targetBuild": "21421",
+        "summary": "reverse/baseline/26.1016.61520.json"
+      }
+    ],
+    "recording": {
+      "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+      "sha256": "fecd9fd2023d03db8d5cde3e9b4030acc783e7fc04958729bc523d713f3012a1",
+      "durationSeconds": 470.333,
+      "index": "reverse/video-evidence-2026-10-23.json",
+      "applicationVersion": "unknown",
+      "authority": "Behavioral reference only; exact build attribution is unavailable"
+    },
+    "referenceImages": [
+      {
+        "path": "reverse/raw/reference/conversation-layout-user-2026-10-24.png",
+        "sha256": "09c25877e320e6747eda96cbf269b4c829d1336f493bae70d7e3129f423a9833",
+        "state": "conversation layout",
+        "tracked": false
+      },
+      {
+        "path": "reverse/raw/reference/conversation-process-user-2026-10-24.png",
+        "sha256": "71fb9a437b60bd49b555bd77d7c4d9599ccb62fd62dc0eb2570ff645e77396f4",
+        "state": "conversation process rows",
+        "tracked": false
+      }
+    ],
+    "moduleManifest": "reverse/source-provenance.json"
+  },
+  "features": [
+    {
+      "id": "shell.window",
+      "upstreamEvidence": [
+        "reverse/baseline/26.1016.61520.json",
+        "docs/visual-baseline.md"
+      ],
+      "implementationFiles": [
+        "src/main/macosWindowOptions.ts",
+        "src/main/windowState.ts",
+        "src/main/windowZoom.ts",
+        "src/renderer/src/styles.css"
+      ],
+      "validation": [
+        "docs/source-validation-current.md",
+        "docs/reconstruction-validation-current.md"
+      ],
+      "unknowns": [
+        "No build-21477 visual baseline matrix",
+        "Light theme, inactive window, fullscreen, hover/focus/menu and minimum-window states lack complete pixel acceptance"
+      ]
+    },
+    {
+      "id": "nav.sidebar",
+      "upstreamEvidence": [
+        "reverse/video-evidence-2026-10-23.json#00:00",
+        "reverse/raw/reference/conversation-layout-user-2026-10-24.png"
+      ],
+      "implementationFiles": [
+        "src/renderer/src/App.tsx",
+        "src/renderer/src/styles.css"
+      ],
+      "validation": [
+        "docs/visual-baseline.md"
+      ],
+      "unknowns": [
+        "Complete context-menu, tooltip, badge, transition and responsive pixel parity"
+      ]
+    },
+    {
+      "id": "turn.lifecycle",
+      "upstreamEvidence": [
+        "ev_d702624abc628a62a2d1d89bf7f7ec91cac9c4d96727b324ec1e3018554454cb",
+        "docs/app-server-protocol.md",
+        "docs/thread-operations.md"
+      ],
+      "implementationFiles": [
+        "src/main/appServer.ts",
+        "src/main/managedDaemon.ts",
+        "src/main/serverEndpoint.ts",
+        "src/renderer/src/threadHydration.ts"
+      ],
+      "validation": [
+        "docs/transport-recovery.md",
+        "docs/thread-writer-conflicts.md",
+        "docs/source-validation-current.md"
+      ],
+      "unknowns": [
+        "Complete recovery across concurrent turns and terminals",
+        "All out-of-order notification and server failure combinations"
+      ]
+    },
+    {
+      "id": "thread.items",
+      "upstreamEvidence": [
+        "reverse/source-provenance.json",
+        "reverse/video-evidence-2026-10-23.json#04:58-07:12",
+        "reverse/raw/reference/conversation-process-user-2026-10-24.png"
+      ],
+      "implementationFiles": [
+        "src/renderer/src/ConversationActivity.tsx",
+        "src/renderer/src/conversationActivityModel.ts",
+        "src/renderer/src/ToolActivity.tsx",
+        "src/renderer/src/toolActivityModel.ts",
+        "src/renderer/src/CollaborationActivity.tsx",
+        "src/renderer/src/SubagentActivity.tsx"
+      ],
+      "validation": [
+        "docs/activity-parity.md",
+        "docs/source-validation-current.md"
+      ],
+      "unknowns": [
+        "Exhaustive MCP media, embedded app and connector variants",
+        "Complete streamed/collapsed/grouped activity pixel and transition acceptance"
+      ]
+    },
+    {
+      "id": "thinking.subagents",
+      "upstreamEvidence": [
+        "reverse/source-provenance.json",
+        "reverse/video-evidence-2026-10-23.json#00:00"
+      ],
+      "implementationFiles": [
+        "src/renderer/src/SubagentThreadPanel.tsx",
+        "src/renderer/src/subagentThreadModel.ts",
+        "src/renderer/src/SubagentsSidePanel.tsx",
+        "src/renderer/src/CollaborationActivity.tsx"
+      ],
+      "validation": [
+        "docs/activity-parity.md"
+      ],
+      "unknowns": [
+        "Complete nested-agent lifecycle and multi-agent state transitions",
+        "Final-package visual acceptance of child transcript navigation"
+      ]
+    },
+    {
+      "id": "terminal.diff",
+      "upstreamEvidence": [
+        "ev_ef27d69ee68c2ffd8d204c5786b6933502a9abcf3a5c5668f724e2c4450a4e79",
+        "ev_05280836fc14faa480c57da5409f69fbdc2f5cf37c5bb78a68849d387a6b711f",
+        "ev_66d941f2ef65ba6a47d8923f1fddb52e441fa253f117afb069a454822272811b",
+        "reverse/video-evidence-2026-10-23.json#00:08-02:52"
+      ],
+      "implementationFiles": [
+        "src/renderer/src/App.tsx",
+        "src/renderer/src/WorkspacePane.tsx",
+        "src/renderer/src/WorkspaceTextEditor.tsx",
+        "src/renderer/src/WorkspaceDiffViewer.tsx",
+        "src/renderer/src/workspaceDocuments.ts",
+        "src/main/workspaceFiles.ts",
+        "src/main/workspaceWatchers.ts"
+      ],
+      "validation": [
+        "docs/workspace-editor-parity.md",
+        "docs/workspace-filesystem-parity.md",
+        "docs/source-validation-current.md"
+      ],
+      "unknowns": [
+        "Complete Pierre grammar/decorations, rich HTML and KaTeX behavior",
+        "Direct inline selection-edit review service",
+        "Build-21477 split/full/sidebar/workbench visual matrix"
+      ]
+    },
+    {
+      "id": "settings",
+      "upstreamEvidence": [
+        "reverse/source-provenance.json",
+        "reverse/video-evidence-2026-10-23.json#03:10-04:00"
+      ],
+      "implementationFiles": [
+        "src/renderer/src/SettingsPage.tsx",
+        "src/renderer/src/SettingsIntegrations.tsx",
+        "src/renderer/src/MarketplacePage.tsx",
+        "src/renderer/src/marketplaceModels.ts",
+        "src/renderer/src/ImportSettings.tsx",
+        "src/main/externalAgentImport.ts"
+      ],
+      "validation": [
+        "docs/settings-parity.md",
+        "docs/external-agent-import.md",
+        "docs/source-validation-current.md"
+      ],
+      "unknowns": [
+        "Marketplace removal, upgrade and sharing",
+        "Hosted app authentication and complete settings-category behavior",
+        "Final-package pixel acceptance for all settings routes"
+      ]
+    }
+  ],
+  "knownEvidenceGaps": [
+    "No retained build-21421 ASAR was found, so compare_application_versions cannot currently attribute rollout differences.",
+    "No tracked trace_application_feature or trace_javascript_semantics result connects each feature to a bounded semantic graph.",
+    "No compare_source_to_bundle or compare_javascript_export_shapes result validates the editable implementation against recovered export contracts.",
+    "No reconcile_javascript_runtime result joins current static evidence to passive runtime evidence from the locally reconstructed application.",
+    "The original application cannot be controlled through Computer Use; original dynamic evidence is bounded to the supplied recording and passive/static inspection."
+  ]
+}

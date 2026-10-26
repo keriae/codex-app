@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "capturedAt": "2026-10-24",
+  "method": "Direct installed shipped-source analysis with REA 6.7.0; no clean-room process",
+  "installed": {
+    "version": "26.1016.62342",
+    "build": "21477",
+    "archive": "/Applications/ChatGPT.app/Contents/Resources/app.asar",
+    "sha256": "5b5cf52887cfd4de19cb5862155a8ef6cf58830c0a2fc592b72060cfcc3be869"
+  },
+  "rea": {
+    "evidenceId": "ev_66d941f2ef65ba6a47d8923f1fddb52e441fa253f117afb069a454822272811b",
+    "rawEvidence": "raw/checks/current/rea-editor-controls-evidence.json",
+    "inputManifest": "raw/checks/current/editor-rea-source/original-path-manifest.json",
+    "subjectSha256": "e95b6aeb842c02a94ba90dd48b5a98b669d81ac0085eb0408d560df66f70ab99",
+    "scope": "Inert four-editor-module copy with external imports deliberately unresolved; archive identity is established by earlier editor Evidence."
+  },
+  "modules": [
+    {
+      "path": "webview/assets/text-file-editor-tab-content.electron-60719fe1f4c8.js",
+      "sha256": "bbceae00dd595b17f151ef61b1da467ac72719a1e8273031498beb738da52070",
+      "bytes": 81112,
+      "anchors": [
+        {
+          "text": "beginGoToLinePreview",
+          "byteOffset": 9800,
+          "codepointOffset": 9800
+        },
+        {
+          "text": "emitSelectionChange",
+          "byteOffset": 18673,
+          "codepointOffset": 18673
+        },
+        {
+          "text": "onAddSelectedTextToChat",
+          "byteOffset": 25249,
+          "codepointOffset": 25249
+        },
+        {
+          "text": "Br=class",
+          "byteOffset": 3267,
+          "codepointOffset": 3267
+        },
+        {
+          "text": "activeMode",
+          "byteOffset": 3276,
+          "codepointOffset": 3276
+        },
+        {
+          "text": "activeSave",
+          "byteOffset": 3287,
+          "codepointOffset": 3287
+        }
+      ]
+    },
+    {
+      "path": "webview/assets/text-file-editor-extensions-98b7f595d14b.js",
+      "sha256": "01f93947dcced4fa0c15b1bd1030413ddd5818d7c8b5fe3d3197ba378be05c71",
+      "bytes": 64089,
+      "anchors": [
+        {
+          "text": "function nr(",
+          "byteOffset": 50019,
+          "codepointOffset": 50019
+        },
+        {
+          "text": "function rr(",
+          "byteOffset": 51796,
+          "codepointOffset": 51796
+        },
+        {
+          "text": "function ar(",
+          "byteOffset": 52428,
+          "codepointOffset": 52428
+        },
+        {
+          "text": "function sr(",
+          "byteOffset": 57216,
+          "codepointOffset": 57216
+        },
+        {
+          "text": "function dr(",
+          "byteOffset": 58474,
+          "codepointOffset": 58474
+        },
+        {
+          "text": "cm-markdown-code-line",
+          "byteOffset": 58230,
+          "codepointOffset": 58230
+        }
+      ]
+    },
+    {
+      "path": "webview/assets/review-file-source-breadcrumb-94f0f686b148.js",
+      "sha256": "0bbcd3c25119f7f5857d6bdcbf6d6699f6a2fd33f21969e96732b167417813a5",
+      "bytes": 27101,
+      "anchors": [
+        {
+          "text": "function Me(",
+          "byteOffset": 1043,
+          "codepointOffset": 1043
+        },
+        {
+          "text": "function Ne(",
+          "byteOffset": 1179,
+          "codepointOffset": 1179
+        }
+      ]
+    },
+    {
+      "path": "webview/assets/app-initial-dddef47d6ef6.js",
+      "sha256": "1fc7b685efab4be2d9656e02086180dd9e43dcac0fae1e2b1ec233447ed03843",
+      "bytes": 14606938,
+      "anchors": [
+        {
+          "text": "function BJn(",
+          "byteOffset": 3470677,
+          "codepointOffset": 3451850
+        },
+        {
+          "text": "function VJn(",
+          "byteOffset": 3470967,
+          "codepointOffset": 3452140
+        }
+      ]
+    },
+    {
+      "path": "webview/assets/zh-CN-8bcb976a6283.js",
+      "sha256": "fedbd81fcf057bf1e4dca9a6086cf74ac6a460f2d16089aa508ce071bb4b347d",
+      "bytes": 2896568,
+      "anchors": [
+        {
+          "text": "selectedTextOverlay.addToCodex",
+          "byteOffset": 2130935,
+          "codepointOffset": 1625191
+        },
+        {
+          "text": "selectedTextOverlay.editPlaceholder",
+          "byteOffset": 2131171,
+          "codepointOffset": 1625385
+        },
+        {
+          "text": "markdownFileEditor.mode.viewSource",
+          "byteOffset": 1698517,
+          "codepointOffset": 1295785
+        }
+      ]
+    }
+  ],
+  "recovered": [
+    "Editable Markdown preview with syntax-marker reveal around active selections",
+    "Save dirty content and reject stale mode changes",
+    "Selected-text ranges use zero-based UTF-16 positions and exclusive ends",
+    "Add-to-chat appends to scoped composer and focuses it without starting a turn",
+    "Signed, nonzero safe-integer line input with negative lines counted backward",
+    "Go-to-line preview cancel restores selection and scroll",
+    "Scalar/list frontmatter subset; unsupported object and block scalar values skipped"
+  ],
+  "implemented": [
+    "Markdown/source switch retaining the real CodeMirror document/history",
+    "Local find, match navigation and go-to-line preview",
+    "Selected-text add/edit instruction through the scoped composer event",
+    "Markdown headings/emphasis/strike/code/lists/quotes/tables/fences",
+    "Mermaid, scoped local images and source-aware local/external links",
+    "Installed scalar/list frontmatter subset",
+    "Retained per-tab undo/redo, selection and scroll snapshots"
+  ],
+  "verification": {
+    "command": "npm test -- src/renderer/src/workspaceEditorSelection.test.ts src/renderer/src/workspaceEditorModel.test.ts src/renderer/src/workspaceMarkdown.test.ts src/renderer/src/workspaceDocuments.test.ts",
+    "testFiles": 4,
+    "tests": 24,
+    "webTypecheck": "passed"
+  },
+  "limitations": [
+    "This static subset analysis does not establish whole-application runtime execution",
+    "Original direct inline selection-edit review service is separate from the implemented composer instruction action",
+    "Rich HTML, KaTeX Markdown rendering and complete Pierre grammar/decorations remain reconstruction gaps",
+    "Original default go-to-line keyboard shortcut not verified"
+  ]
+}

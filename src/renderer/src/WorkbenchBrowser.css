@@ -1,0 +1,1167 @@
+.workbench-browser {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--main);
+  color: var(--text);
+}
+
+.workbench-browser-chrome {
+  position: relative;
+  z-index: 20;
+  height: 48px;
+  display: flex;
+  flex: 0 0 48px;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--surface);
+}
+
+.workbench-browser-navigation-slot,
+.workbench-browser-actions {
+  min-width: 94px;
+  display: flex;
+  flex: 1 1 94px;
+  align-items: center;
+}
+
+.workbench-browser-navigation-slot {
+  justify-content: flex-start;
+}
+
+.workbench-browser-navigation {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border: 0.5px solid color-mix(in srgb, var(--text) 6%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  box-shadow: 0 1px 1px color-mix(in srgb, #000 16%, transparent);
+}
+
+.workbench-browser-navigation button,
+.workbench-browser-actions button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.workbench-browser-navigation button:not(:disabled):hover,
+.workbench-browser-actions button:hover {
+  background: var(--surface-active);
+  color: var(--text);
+}
+
+.workbench-browser-navigation button:disabled {
+  opacity: 0.35;
+}
+
+.workbench-browser-navigation svg,
+.workbench-browser-actions svg {
+  width: 14px;
+  height: 14px;
+}
+
+.workbench-browser-navigation .workbench-browser-reload {
+  width: 32px;
+  margin-left: 2px;
+  border-left: 0.5px solid color-mix(in srgb, var(--text) 12%, transparent);
+  border-radius: 0 999px 999px 0;
+}
+
+.workbench-browser-address {
+  position: relative;
+  height: 32px;
+  min-width: 0;
+  display: flex;
+  flex: 0 1 770px;
+  align-items: center;
+  gap: 0;
+  max-width: 770px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 11%, transparent);
+  color: var(--text-muted);
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--text) 4%, transparent);
+}
+
+.workbench-browser-address:focus-within {
+  border-color: var(--border-strong);
+  box-shadow: inset 0 0 0 0.5px var(--border-strong);
+}
+
+.workbench-browser-address input {
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: center;
+}
+
+.workbench-browser-actions {
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.workbench-browser-actions button {
+  width: 32px;
+  height: 32px;
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+}
+
+.workbench-browser-actions button[aria-expanded='true'] {
+  background: var(--surface-active);
+  color: var(--text);
+}
+
+.workbench-browser-actions svg {
+  width: 15px;
+  height: 15px;
+}
+
+.workbench-browser-menu {
+  position: absolute;
+  z-index: 30;
+  top: 43px;
+  width: min(260px, calc(100% - 16px));
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--main-raised) 96%, transparent);
+  color: var(--text-secondary);
+  box-shadow:
+    0 16px 42px rgb(0 0 0 / 42%),
+    0 0 0 0.5px color-mix(in srgb, var(--text) 5%, transparent) inset;
+  backdrop-filter: blur(18px) saturate(1.1);
+  font-size: 12px;
+  line-height: 16px;
+  user-select: none;
+  animation: workbench-browser-menu-in 110ms cubic-bezier(0.2, 0.78, 0.25, 1);
+}
+
+.workbench-browser-extensions-menu {
+  right: 46px;
+}
+
+.workbench-browser-options-menu {
+  right: 8px;
+  width: min(244px, calc(100% - 16px));
+}
+
+.workbench-browser-menu-heading {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.workbench-browser-menu-empty {
+  margin: 0;
+  padding: 4px 8px 8px;
+  color: var(--text-secondary);
+}
+
+.workbench-browser-menu-separator {
+  height: 1px;
+  flex: 0 0 1px;
+  margin: 4px 8px;
+  background: var(--border);
+}
+
+.workbench-browser-menu > button {
+  width: 100%;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+}
+
+.workbench-browser-menu > button > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-menu > button svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  color: var(--text-muted);
+}
+
+.workbench-browser-menu > button:hover:not(:disabled),
+.workbench-browser-menu > button:focus-visible {
+  background: var(--surface-active);
+  color: var(--text);
+}
+
+.workbench-browser-menu > button:focus-visible,
+.workbench-browser-zoom-row button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--text) 45%, transparent);
+  outline-offset: -2px;
+}
+
+.workbench-browser-menu button:disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+
+.workbench-browser-zoom-row {
+  min-height: 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 28px;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 5px 2px 9px;
+  color: var(--text-secondary);
+}
+
+.workbench-browser-zoom-controls {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+
+.workbench-browser-zoom-row button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.workbench-browser-zoom-controls output {
+  min-width: 44px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.workbench-browser-zoom-row button:disabled,
+.workbench-browser-zoom-controls output {
+  opacity: 0.48;
+}
+
+.workbench-browser-loading-bar {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.workbench-browser-loading-bar > span {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #6aa9ff;
+  animation: workbench-browser-loading-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.workbench-browser-error {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border-bottom: 0.5px solid color-mix(in srgb, #ff716b 34%, transparent);
+  background: color-mix(in srgb, #ff716b 9%, var(--main));
+  color: var(--danger);
+  font-size: 11px;
+}
+
+.workbench-browser-import-banner {
+  min-height: 56px;
+  display: flex;
+  flex: 0 0 56px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 8px 8px 16px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--main);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+.workbench-browser-chrome-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  flex: 0 0 24px;
+  place-items: center;
+  border: 0.5px solid var(--border);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface-muted) 72%, transparent);
+  color: var(--text-muted);
+}
+
+.workbench-browser-chrome-icon > svg { width: 16px; height: 16px; }
+
+.workbench-browser-import-copy {
+  min-width: 160px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.workbench-browser-import-copy strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-import-copy small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-import-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.workbench-browser-import-action,
+.workbench-browser-import-dismiss {
+  height: 28px;
+  flex: 0 0 auto;
+  border: 0;
+  color: var(--text-secondary);
+}
+
+.workbench-browser-import-action {
+  padding: 0 11px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.workbench-browser-import-dismiss {
+  width: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+}
+
+.workbench-browser-import-action:hover,
+.workbench-browser-import-dismiss:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.workbench-browser-import-dismiss svg {
+  width: 14px;
+  height: 14px;
+}
+
+.workbench-browser-import-overlay {
+  position: absolute;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.workbench-browser-import-backdrop {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: rgb(0 0 0 / 30%);
+  backdrop-filter: brightness(0.55) saturate(0.86);
+  animation: workbench-browser-overlay-in 120ms ease-out;
+}
+
+.workbench-browser-import-backdrop:focus-visible {
+  outline: 0;
+}
+
+.workbench-browser-import-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  background: var(--main-raised);
+  color: var(--text);
+  box-shadow:
+    0 28px 80px rgb(0 0 0 / 55%),
+    0 0 0 0.5px color-mix(in srgb, var(--text) 5%, transparent) inset;
+  animation: workbench-browser-dialog-in 150ms cubic-bezier(0.2, 0.78, 0.25, 1);
+}
+
+.workbench-browser-import-dialog-brands {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.workbench-browser-import-dialog-brands .workbench-browser-chrome-icon {
+  width: 28px;
+  height: 28px;
+  flex-basis: 28px;
+}
+
+.workbench-browser-import-dialog-brands .workbench-browser-chrome-icon > svg {
+  width: 18px;
+  height: 18px;
+}
+
+.workbench-browser-import-dialog-brands > svg:first-of-type {
+  width: 20px;
+  height: 24px;
+  color: var(--text-muted);
+  opacity: 0.62;
+}
+
+.workbench-browser-import-dialog-brands > svg:last-child {
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  color: var(--text-secondary);
+}
+
+.workbench-browser-import-dialog h2 {
+  margin: -2px 0 0;
+  font-size: 16px;
+  font-weight: 620;
+  line-height: 22px;
+  letter-spacing: -0.012em;
+}
+
+.workbench-browser-import-dialog > p:not(.workbench-browser-import-unavailable) {
+  margin: -10px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.workbench-browser-import-benefits {
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--text) 1.5%, transparent);
+}
+
+.workbench-browser-import-benefits > div {
+  min-height: 57px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+.workbench-browser-import-benefits > div + div {
+  border-top: 1px solid var(--border);
+}
+
+.workbench-browser-import-benefits svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: var(--text-muted);
+}
+
+.workbench-browser-import-benefits span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.workbench-browser-import-benefits strong {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.workbench-browser-import-benefits small {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.workbench-browser-import-unavailable {
+  margin: -2px 0 0;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--text) 7%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.workbench-browser-import-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.workbench-browser-import-dialog-actions button {
+  min-width: 78px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.workbench-browser-import-dialog-actions button:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.workbench-browser-import-dialog-actions button.is-primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.workbench-browser-import-dialog-actions button:disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+
+.workbench-browser-home {
+  min-height: 0;
+  flex: 1;
+  padding: 32px 20px 48px;
+  overflow: auto;
+}
+
+.workbench-browser-home-inner {
+  width: 100%;
+  max-width: 768px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 0 auto;
+}
+
+.workbench-browser-home h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.workbench-browser-tools-section,
+.workbench-browser-recommendations-section {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.workbench-browser-recents-section {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workbench-browser-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.workbench-browser-recent-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.workbench-browser-recent-controls button {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.workbench-browser-recent-controls button:not(:disabled):hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.workbench-browser-recent-controls button:disabled {
+  opacity: 0.35;
+}
+
+.workbench-browser-recent-controls svg {
+  width: 12px;
+  height: 12px;
+}
+
+.workbench-browser-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 16px;
+  row-gap: 4px;
+}
+
+.workbench-browser-tool,
+.workbench-browser-recent {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.workbench-browser-tool {
+  position: relative;
+  min-width: 0;
+  min-height: 40px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+}
+
+.workbench-browser-tool-main {
+  min-width: 0;
+  min-height: 40px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: left;
+}
+
+.workbench-browser-tool:hover,
+.workbench-browser-tool:has(.workbench-browser-terminal-options-trigger[aria-expanded='true']),
+.workbench-browser-recent:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.workbench-browser-tool-main svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+}
+
+.workbench-browser-tool-main span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-tool-main kbd {
+  min-height: 20px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 10px;
+}
+
+.workbench-browser-terminal-options {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-self: stretch;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.workbench-browser-terminal-options-trigger {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.workbench-browser-terminal-options-trigger:hover,
+.workbench-browser-terminal-options-trigger[aria-expanded='true'] {
+  background: var(--surface-active);
+  color: var(--text);
+}
+
+.workbench-browser-terminal-options-trigger svg {
+  width: 14px;
+  height: 14px;
+}
+
+.workbench-browser-terminal-menu {
+  top: calc(100% + 4px);
+  right: 0;
+  width: 158px;
+}
+
+.workbench-browser-terminal-menu > button {
+  min-height: 32px;
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.workbench-browser-terminal-menu > button > span {
+  text-align: left;
+}
+
+.workbench-browser-terminal-menu kbd {
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.workbench-browser-recommendations {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.workbench-browser-recommendations::-webkit-scrollbar,
+.workbench-browser-recents::-webkit-scrollbar {
+  display: none;
+}
+
+.workbench-browser-recommendations > li {
+  position: relative;
+  min-width: 128px;
+  flex: 1;
+}
+
+.workbench-browser-recommendation {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.workbench-browser-recommendation:hover,
+.workbench-browser-recommendation:focus-visible {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.workbench-browser-recommendation-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  flex: 0 0 48px;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--text-secondary);
+}
+
+.workbench-browser-recommendation-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 1.6;
+}
+
+.workbench-browser-recommendation > span:last-child {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-recommendation-dismiss {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.workbench-browser-recommendation-dismiss:hover,
+.workbench-browser-recommendation-dismiss:focus-visible {
+  background: var(--surface-active);
+  color: var(--text);
+}
+
+.workbench-browser-recommendation-dismiss svg {
+  width: 13px;
+  height: 13px;
+}
+
+.workbench-browser-recommendations > li:hover .workbench-browser-recommendation-dismiss,
+.workbench-browser-recommendations > li:focus-within .workbench-browser-recommendation-dismiss {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.workbench-browser-recommendation-undo {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-raised, var(--surface));
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.workbench-browser-recommendation-undo span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-recommendation-undo button {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+}
+
+.workbench-browser-recommendation-undo button:hover {
+  background: var(--surface-hover);
+}
+
+.workbench-browser-recents {
+  --recent-row-height: 56px;
+
+  max-height: calc(var(--recent-row-height) * 6.5);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  overscroll-behavior-y: contain;
+  overflow-anchor: none;
+  scrollbar-width: none;
+  mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--recent-row-height) / 2),
+    transparent
+  );
+}
+
+.workbench-browser-recents[data-at-bottom='true'] {
+  mask-image: none;
+}
+
+.workbench-browser-recents > li {
+  border-bottom: 1px solid var(--border);
+  border-radius: 12px;
+  scroll-snap-align: start;
+}
+
+.workbench-browser-recents > li:hover,
+.workbench-browser-recents > li:focus-within {
+  border-bottom-color: transparent;
+  background: var(--surface-hover);
+}
+
+.workbench-browser-recent {
+  width: 100%;
+  min-height: 56px;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.workbench-browser-recent-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  flex: 0 0 28px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--surface-raised, var(--surface));
+  color: var(--text-secondary);
+}
+
+.workbench-browser-recent-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.workbench-browser-recent > span:not(.workbench-browser-recent-icon) {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.workbench-browser-recent strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workbench-browser-recent small,
+.workbench-browser-recent time {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.workbench-browser-recent time {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.workbench-browser-viewport {
+  min-width: 0;
+  min-height: 0;
+  display: none;
+  flex: 1;
+  background: #fff;
+}
+
+.workbench-browser-viewport.is-navigated {
+  display: block;
+}
+
+@keyframes workbench-browser-loading-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes workbench-browser-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes workbench-browser-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes workbench-browser-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+:root[data-theme='light'] .workbench-browser-menu {
+  background: color-mix(in srgb, var(--main-raised) 98%, transparent);
+  box-shadow:
+    0 16px 38px rgb(0 0 0 / 18%),
+    0 0 0 0.5px rgb(255 255 255 / 55%) inset;
+}
+
+:root[data-theme='light'] .workbench-browser-import-backdrop {
+  background: rgb(0 0 0 / 16%);
+  backdrop-filter: brightness(0.72) saturate(0.88);
+}
+
+:root[data-theme='light'] .workbench-browser-import-dialog {
+  box-shadow:
+    0 28px 72px rgb(0 0 0 / 24%),
+    0 0 0 0.5px rgb(255 255 255 / 72%) inset;
+}
+
+@container (min-width: 448px) {
+  .workbench-browser-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .workbench-browser-home { padding-bottom: 40px; }
+}
+
+@media (max-width: 420px) {
+  .workbench-browser-extensions-menu {
+    right: 8px;
+  }
+
+  .workbench-browser-import-banner {
+    flex-wrap: wrap;
+    flex-basis: auto;
+    height: auto;
+  }
+
+  .workbench-browser-import-actions {
+    margin-left: auto;
+  }
+
+  .workbench-browser-import-overlay {
+    padding: 12px;
+  }
+
+  .workbench-browser-import-dialog {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workbench-browser-loading-bar > span {
+    width: 100%;
+    animation: none;
+    opacity: 0.8;
+  }
+
+  .workbench-browser-menu,
+  .workbench-browser-import-backdrop,
+  .workbench-browser-import-dialog {
+    animation: none;
+  }
+}
+
+@media (hover: none) {
+  .workbench-browser-recommendation-dismiss {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

@@ -1,0 +1,154 @@
+.terminal-sheet.terminal-sheet-docked {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--main-bg, var(--main-raised));
+  animation: none;
+}
+
+.terminal-sheet-docked.terminal-placement-bottom {
+  width: 100%;
+  height: var(--terminal-panel-size, 280px);
+  flex: 0 0 var(--terminal-panel-size, 280px);
+  border-top: 1px solid var(--border);
+}
+
+.terminal-sheet-docked.terminal-placement-right {
+  width: var(--terminal-panel-size, 500px);
+  height: 100%;
+  flex: 0 0 var(--terminal-panel-size, 500px);
+  border-left: 1px solid var(--border);
+}
+
+.terminal-sheet-docked.terminal-panel-full-view {
+  width: 100%;
+  height: 100%;
+  flex: 1 1 0;
+}
+
+.terminal-sheet-docked .terminal-sheet-header {
+  min-height: 38px;
+  flex-basis: 38px;
+  gap: 8px;
+  padding: 0 8px 0 13px;
+  background: transparent;
+}
+
+.terminal-sheet-docked .terminal-sheet-title-icon {
+  width: 18px;
+  height: 18px;
+  flex-basis: 18px;
+  border-radius: 0;
+  background: transparent;
+}
+
+.terminal-sheet-docked .terminal-sheet-header > div:first-child {
+  gap: 7px;
+  overflow: hidden;
+}
+
+.terminal-sheet-docked .terminal-sheet-header h2 {
+  font-size: 12px;
+  font-weight: 540;
+  letter-spacing: 0;
+}
+
+.terminal-sheet-docked .terminal-sheet-header p {
+  display: none;
+}
+
+.terminal-sheet-docked .terminal-sheet-header-actions {
+  gap: 0;
+}
+
+.terminal-sheet-docked .terminal-sheet-header-actions .quiet-icon-button {
+  width: 27px;
+  height: 27px;
+}
+
+.terminal-sheet-docked .terminal-sheet-header-actions svg {
+  width: 14px;
+  height: 14px;
+}
+
+.terminal-sheet-docked .terminal-toolbar {
+  min-height: 34px;
+  flex-basis: 34px;
+  padding: 0 13px;
+}
+
+.terminal-sheet-docked .terminal-list {
+  padding: 6px 8px 8px;
+}
+
+.terminal-sheet-docked .terminal-row {
+  padding: 10px 7px;
+}
+
+.terminal-sheet-docked .terminal-empty-state {
+  min-height: 96px;
+  padding: 18px 12px;
+}
+
+.terminal-sheet-docked .terminal-empty-state > span {
+  max-width: 320px;
+  text-align: center;
+}
+
+.terminal-sheet-docked .terminal-error,
+.terminal-sheet-docked .terminal-operation-notice {
+  margin: 8px 10px 0;
+}
+
+.terminal-sheet-docked.terminal-placement-right .terminal-row {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.terminal-sheet-docked.terminal-placement-right .terminal-row-body {
+  flex-basis: calc(100% - 32px);
+}
+
+.terminal-sheet-docked.terminal-placement-right .terminal-terminate-button {
+  margin-left: 32px;
+}
+
+.terminal-sheet-docked.terminal-placement-right .terminal-confirmation {
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+}
+
+.terminal-panel-resize-handle {
+  position: absolute;
+  z-index: 3;
+  touch-action: none;
+  background: transparent;
+}
+
+.terminal-placement-bottom .terminal-panel-resize-handle {
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: row-resize;
+}
+
+.terminal-placement-right .terminal-panel-resize-handle {
+  top: 0;
+  bottom: 0;
+  left: -3px;
+  width: 6px;
+  cursor: col-resize;
+}
+
+.terminal-panel-resize-handle:hover,
+.terminal-panel-resize-handle:focus-visible,
+.terminal-panel-resizing .terminal-panel-resize-handle {
+  outline: none;
+  background: color-mix(in srgb, var(--accent) 50%, transparent);
+}

@@ -1,0 +1,227 @@
+{
+  "version": 1,
+  "scope": "Installed Codex macOS client: shipped-artifact reconstruction and editable source implementation",
+  "excluded": [
+    "Codex app-server implementation",
+    "OpenAI-hosted services",
+    "reproduction of OpenAI signing identities or hosted authorization",
+    "copying credentials, cookies, tokens, profiles, or user conversation data into reconstructed app artifacts"
+  ],
+  "evidenceIndex": "reverse/evidence-index.json",
+  "runtimeReconstruction": {
+    "command": "npm run reconstruct:mac",
+    "method": "REA shipped JavaScript/Electron artifact reconstruction; original renderer/assets retained locally",
+    "output": "release/local-runtime/Codex Study Final.app",
+    "evidence": "docs/reverse-engineering.md",
+    "status": "native-model-smoke-passed",
+    "sourceImplementationStatusesBelow": true,
+    "limits": [
+      "Retained original code is measured separately from editable implementation completeness",
+      "Ad-hoc signing cannot reproduce DeviceCheck, APNs or shared Keychain entitlements",
+      "Original codex:// OS handler is retained; replica updater is disabled",
+      "Runtime interaction and visual parity require independent verification",
+      "Local ad-hoc signing does not retain the production hardened-runtime flag; ASAR integrity and all original fuses remain enabled as shipped",
+      "Custom desktop --profile uses a second validated native/browser root under Library/Application Support/Codex Replica Local",
+      "Standalone helper signatures are preserved; the locally signed main runtime has no OpenAI Team identity, so native app-tools/Computer Use authorization still rejects it."
+    ],
+    "validation": {
+      "sourceVersion": "26.1016.62342",
+      "sourceBuild": "21477",
+      "identicalRendererFiles": 20364,
+      "originalSourceDiskUnchanged": true,
+      "originalFusesPreserved": true,
+      "codesignDeepStrictVerified": true,
+      "historicalProfilePathCasesPassed": 21,
+      "uiInteractionStatus": "Independent replica homepage/sidebar/settings/menu/window zoom passed; a separate native model fixture returned codex-replica-ok. Native app-tools and Computer Use remain rejected by the original signing-identity checks.",
+      "provenance": "reverse/source-provenance.json",
+      "currentProfilePathCasesPassed": 37
+    },
+    "currentBuild": "release/local-runtime/Codex Study Final.app"
+  },
+  "obligations": [
+    {
+      "id": "shell.window",
+      "area": "window",
+      "description": "Match the hidden-inset macOS window, traffic lights, titlebar drag regions, minimum size, vibrancy, and dark appearance.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/visual-baseline.md",
+        "docs/reverse-engineering.md"
+      ],
+      "validatedPartialProgress": "Native close strategy, CSS zoom, traffic-light placement and stale-document handling validated. Conversation actions now create cascaded managed windows with window-scoped, acknowledged thread routes that replay across renderer readiness/reload; cross-window local-state/focus edge cases, fullscreen and visual interaction remain pending."
+    },
+    {
+      "id": "nav.rail",
+      "area": "navigation",
+      "description": "Reproduce the 52 px icon rail, selected states, tooltips, settings entry, and workspace switch behavior.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/visual-baseline.md"
+      ],
+      "validatedPartialProgress": "Distinct draft/history scopes and guarded initial home/project restoration; empty-chat project heading uses installed Chinese wording. Native modal close routing tested with synthetic bindings; full visual interaction pending."
+    },
+    {
+      "id": "nav.sidebar",
+      "area": "navigation",
+      "description": "Reproduce thread search, new-thread entry, sections, unread/running states, context menus, and pagination.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/visual-baseline.md"
+      ],
+      "validatedPartialProgress": "Projects recent chats, title search, pagination and source SVG/menu paths connected; complete thread menus and live visual parity pending."
+    },
+    {
+      "id": "thread.lifecycle",
+      "area": "protocol",
+      "description": "List, read, start, resume, archive, rename, fork, compact, and delete threads where supported by the connected app-server.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/app-server-protocol.md",
+        "docs/thread-operations.md"
+      ],
+      "validatedPartialProgress": "Archive/delete foreground invalidation and separate draft recovery retained; background thread/start migrates original comment scope without consuming a newly selected draft. Complete lifecycle parity pending. Writer-conflict selection now reads native/legacy history without claiming resume ownership, preserves the composer draft and gates start/steer/interrupt/revert on a successful resume."
+    },
+    {
+      "id": "thread.goals",
+      "area": "protocol",
+      "description": "Create, hydrate, edit, pause, resume, replace, clear, and complete persistent thread goals against the connected app-server.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/reverse-engineering.md"
+      ],
+      "validatedPartialProgress": "The inspected 0.163 set/get/clear schemas and updated/cleared notifications are connected with stale-response guards. Goal composer submission, stacked status strip, edit/clear/pause, confirmed resume/replace, interrupt-to-pause, automatic completion clear and final-answer completion metadata are covered by source tests. Long-running/cross-client behavior and exact native visual acceptance remain."
+    },
+    {
+      "id": "turn.lifecycle",
+      "area": "protocol",
+      "description": "Start and interrupt turns; reconcile streaming notifications, reconnects, and out-of-order snapshots.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/app-server-protocol.md"
+      ],
+      "validatedPartialProgress": "Explicit existing WebSocket/Unix listeners and source-backed automatic socket reconnection added; dispatched unknown mutations are never replayed. Delivery-state markers survive Electron IPC. Real installed-CLI listener startup/second-client smoke and 52 transport tests pass. Broader lifecycle acceptance remains."
+    },
+    {
+      "id": "thread.items",
+      "area": "conversation",
+      "description": "Render user and agent messages, reasoning, commands, MCP calls, sub-agent activity, images, plans, diffs, errors, and citations.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "reverse/source-provenance.json"
+      ],
+      "validatedPartialProgress": "Direct shipped-label catalogs, MCP text/image/audio/resource/structured output and raw-output dialogs, Web query/domain rows, compaction/error activities and native tooltips added. Backend child transcripts and multi-avatar activity groups are connected; Final-package history hydration and representative activity rows passed; exhaustive media/group pixel acceptance remains."
+    },
+    {
+      "id": "composer",
+      "area": "conversation",
+      "description": "Match prompt editing, multiline growth, send/interrupt, attachments, model/effort/permission selectors, and working-directory context.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "reverse/source-provenance.json"
+      ],
+      "validatedPartialProgress": "Installed hero/startup directory and scoped local comment attachments connected. Submitted object identities/migration aliases preserve waiting edits and recreated objects. Composer ResizeObserver controls footer reserve and actual-bottom scroll alignment. Full IME/pixel parity pending."
+    },
+    {
+      "id": "approvals",
+      "area": "protocol",
+      "description": "Handle server-initiated command, file, and MCP approval requests without leaving RPC requests pending.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/app-server-protocol.md"
+      ],
+      "validatedPartialProgress": "Notification/deep-link navigation waits while server approval/question or close/project modals are active."
+    },
+    {
+      "id": "settings",
+      "area": "settings",
+      "description": "Reproduce relevant Codex settings, account state, model discovery, permission profiles, theme, and diagnostics.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/app-server-protocol.md",
+        "docs/settings-parity.md",
+        "docs/external-agent-import.md"
+      ],
+      "validatedPartialProgress": "Actual plugin read/install/uninstall, inventory-authorized enablement and skill/MCP controls are connected. Local Claude Code/Cursor/Cowork detection, review, completion, history and persisted sync now use native adapters. Isolated installed-CLI verification imported three persistent fixture sessions and validated plugin/MCP/skill configuration without model sampling. Async cancellation, disposal and late-result regression checks passed; exhaustive import formats and complete Settings pixel parity remain."
+    },
+    {
+      "id": "projects.worktrees",
+      "area": "workspace",
+      "description": "Represent projects, repositories, branches, worktrees, working-tree state, and folder selection.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "reverse/source-provenance.json",
+        "docs/reverse-engineering.md"
+      ],
+      "validatedPartialProgress": "Private managed detached create/list, cached ref selection and prepared-checkout reuse retained. Working-tree starts now replay binary tracked/staged/unstaged changes and copy non-ignored untracked paths without mutating the source. New-worktree chat forking validates an idle source, creates the checkout before the persistent mutation, and retains model, reasoning effort and resolved configuration. Finder home startup restores an existing saved catalog root or first catalog entry while explicit cwd/no-project choices and newer navigation remain authoritative. Setup, ignored/submodule edge policies and owner/attach/archive/restore/handoff remain pending."
+    },
+    {
+      "id": "terminal.diff",
+      "area": "workspace",
+      "description": "Provide terminal output, file/diff inspection, review surfaces, and external-editor handoff.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "reverse/source-provenance.json",
+        "docs/workspace-editor-parity.md",
+        "docs/workspace-filesystem-parity.md",
+        "reverse/editor-controls-evidence-2026-10-24.json"
+      ],
+      "validatedPartialProgress": "Persistent titlebar file tabs, CodeMirror source/editable Markdown modes, actual undo history, find/signed line preview, selection-to-composer, autosave, conflict and restart recovery are connected. Bounded native filesystem watches and tree open/save/copy/chat actions are implemented. Native save-dialog bytes, source/preview controls, Cmd+F, line cancellation, draft-only selection insertion, folded-file notifications and Settings reentry refresh passed. Remaining rich Markdown/Pierre decorations, direct inline selection-edit review and additional opener/manual-review modes are documented."
+    },
+    {
+      "id": "macos.integration",
+      "area": "platform",
+      "description": "Implement menus, keyboard shortcuts, Dock lifecycle, notifications, file dialogs, links, spellcheck, and accessibility semantics.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "reverse/source-provenance.json"
+      ],
+      "validatedPartialProgress": "Native editable UI checks covered directory/model/backend readiness, real history/diff, range labels, terminal behavior and keyboard new draft. Managed multi-window creation, cleanup and window-scoped thread routing are implemented; cross-window local-state/focus behavior has not received complete native acceptance. Original source/recording remain the comparison references. Complete native/AX/IME/notification parity pending."
+    },
+    {
+      "id": "visual.regression",
+      "area": "quality",
+      "description": "Maintain sanitized geometry/style snapshots and pixel comparisons at representative macOS window sizes.",
+      "status": "in-progress",
+      "evidence": [
+        "docs/feature-inventory.md",
+        "docs/visual-baseline.md"
+      ],
+      "validatedPartialProgress": "Source typechecks, tests and production build pass. Partial native UI checks include actual long-history collapse/expansion, inline command output and final reply above the composer. Full pixel and original interaction equivalence remain pending."
+    }
+  ],
+  "currentValidation": {
+    "date": "2026-10-26",
+    "sourceTarget": "26.1016.62342 / 21477",
+    "nativeWindowAcceptance": "Manually unlocked macOS. Representative independent replica UI and real model-turn checks passed; complete pixel/function parity remains in progress.",
+    "documents": [
+      "docs/workspace-editor-parity.md",
+      "docs/activity-parity.md",
+      "docs/settings-parity.md",
+      "docs/transport-recovery.md",
+      "docs/reconstruction-validation-current.md",
+      "docs/thread-writer-conflicts.md",
+      "docs/workspace-filesystem-parity.md",
+      "docs/external-agent-import.md",
+      "docs/source-validation-current.md"
+    ],
+    "sourceTestsPassed": 1388,
+    "sourcePackageOutputIdentical": "100/100",
+    "editorNativeAcceptance": "Earlier native Cmd+S/Cmd+W, exact save bytes, autosave/conflict and unified titlebar bounds passed. Additional native source/preview, Cmd+F, line cancel, selection-to-draft and real Save dialog checks passed. Final rebuilt package passed file notifications while folded and latest-disk refresh after Settings unmount/reentry, retaining file tabs and source mode; no model turn was submitted.",
+    "sourceTestFiles": 182,
+    "sourcePackageChecks": "Node/Web typechecks, production packaging, deep strict codesign, all configured Electron fuses and packaged-output hashes passed.",
+    "externalImportAcceptance": "Installed CLI, isolated temporary HOME/CODEX_HOME/project/profile, three durable imported sessions plus project/MCP/plugin/skill/generated-file validation; no real user import and no model turn."
+  }
+}

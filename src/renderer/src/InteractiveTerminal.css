@@ -1,0 +1,202 @@
+.interactive-terminal {
+  --color-codex-terminal-background: var(--main);
+  --color-codex-terminal-foreground: var(--text);
+  --color-codex-terminal-selection: var(--app-color-simple-scrim, #ffffff1a);
+  --color-codex-terminal-selection-inactive: var(--color-codex-terminal-selection);
+  --color-codex-terminal-ansi-black: var(--app-color-text-foreground-tertiary, var(--text-muted));
+  --color-codex-terminal-ansi-red: var(--app-color-accent-red, #ff6764);
+  --color-codex-terminal-ansi-green: var(--app-color-accent-green, #40c977);
+  --color-codex-terminal-ansi-yellow: var(--app-color-accent-yellow, #ffd240);
+  --color-codex-terminal-ansi-blue: var(--app-color-accent-blue, #339cff);
+  --color-codex-terminal-ansi-magenta: var(--app-color-accent-purple, #ad7bf9);
+  --color-codex-terminal-ansi-cyan: var(--color-codex-terminal-ansi-blue);
+  --color-codex-terminal-ansi-white: var(--color-codex-terminal-foreground);
+  --color-codex-terminal-ansi-bright-black: var(--app-color-text-foreground-secondary, var(--text-secondary));
+  --color-codex-terminal-ansi-bright-red: var(--color-codex-terminal-ansi-red);
+  --color-codex-terminal-ansi-bright-green: var(--color-codex-terminal-ansi-green);
+  --color-codex-terminal-ansi-bright-yellow: var(--color-codex-terminal-ansi-yellow);
+  --color-codex-terminal-ansi-bright-blue: var(--color-codex-terminal-ansi-blue);
+  --color-codex-terminal-ansi-bright-magenta: var(--color-codex-terminal-ansi-magenta);
+  --color-codex-terminal-ansi-bright-cyan: var(--color-codex-terminal-ansi-blue);
+  --color-codex-terminal-ansi-bright-white: var(--color-codex-terminal-foreground);
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--main);
+  color: var(--text);
+}
+
+:root[data-theme='light'] .interactive-terminal {
+  --color-codex-terminal-selection: var(--app-color-simple-scrim, #0000001a);
+  --color-codex-terminal-ansi-red: var(--app-color-accent-red, #e02e2a);
+  --color-codex-terminal-ansi-green: var(--app-color-accent-green, #00a240);
+  --color-codex-terminal-ansi-yellow: var(--app-color-accent-yellow, #ffc300);
+  --color-codex-terminal-ansi-magenta: var(--app-color-accent-purple, #924ff7);
+}
+
+.interactive-terminal.terminal-placement-bottom {
+  width: 100%;
+  height: var(--terminal-panel-size, 280px);
+  flex: 0 0 var(--terminal-panel-size, 280px);
+  border-top: 1px solid var(--border);
+}
+
+.interactive-terminal.terminal-placement-right {
+  width: var(--terminal-panel-size, 500px);
+  height: 100%;
+  flex: 0 0 var(--terminal-panel-size, 500px);
+  border-left: 1px solid var(--border);
+}
+
+.interactive-terminal.terminal-panel-full-view {
+  width: 100%;
+  height: 100%;
+  flex: 1 1 0;
+}
+
+.interactive-terminal-header {
+  height: 38px;
+  flex: 0 0 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 8px 0 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.interactive-terminal-title,
+.interactive-terminal-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.interactive-terminal-title {
+  min-width: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 540;
+}
+
+.interactive-terminal-title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.interactive-terminal-title svg,
+.interactive-terminal-actions svg {
+  width: 14px;
+  height: 14px;
+}
+
+.interactive-terminal-actions {
+  flex: 0 0 auto;
+  gap: 0;
+}
+
+.interactive-terminal-actions .quiet-icon-button {
+  width: 27px;
+  height: 27px;
+}
+
+.interactive-terminal-body {
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 0;
+  overflow: hidden;
+  padding: 8px 12px 10px;
+  background: var(--color-codex-terminal-background);
+  color: var(--color-codex-terminal-foreground);
+  cursor: text;
+}
+
+.interactive-terminal-body .xterm {
+  padding: 0;
+}
+
+.interactive-terminal-starting {
+  position: absolute;
+  inset: 38px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--main);
+  color: var(--text-muted);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.interactive-terminal-starting svg,
+.interactive-terminal-status svg {
+  width: 14px;
+  height: 14px;
+}
+
+.interactive-terminal-status {
+  min-height: 36px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.interactive-terminal-status.is-error {
+  color: var(--danger);
+}
+
+.interactive-terminal-status > span {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
+.interactive-terminal-status button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.interactive-terminal .terminal-panel-resize-handle {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  touch-action: none;
+  background: transparent;
+}
+
+.interactive-terminal.terminal-placement-bottom .terminal-panel-resize-handle {
+  right: 0;
+  height: 6px;
+  cursor: row-resize;
+}
+
+.interactive-terminal.terminal-placement-right .terminal-panel-resize-handle {
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+}
+
+.interactive-terminal .terminal-panel-resize-handle:hover,
+.interactive-terminal .terminal-panel-resize-handle:focus-visible,
+.interactive-terminal.terminal-panel-resizing .terminal-panel-resize-handle {
+  outline: none;
+  background: color-mix(in srgb, var(--accent) 50%, transparent);
+}

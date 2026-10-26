@@ -1,0 +1,407 @@
+.composer-template-tray {
+  width: calc(100% - 32px);
+  max-width: 736px;
+  margin: 0 auto 8px;
+  padding: 14px 16px 16px;
+  border: 1px solid rgb(252 252 252 / 9%);
+  border-radius: 22px;
+  background: #262626;
+  box-shadow: rgba(255 255 255 / 5%) 0 1px inset, rgb(0 0 0 / 16%) 0 12px 36px;
+  color: var(--text);
+  pointer-events: auto;
+}
+
+.composer-dock.has-template-tray {
+  flex-direction: column;
+  align-items: center;
+}
+
+.composer-template-tray-header {
+  height: 34px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.composer-template-tray-header h2 {
+  margin: 3px 0 0;
+  font-size: 14px;
+  font-weight: 520;
+  line-height: 20px;
+}
+
+.composer-template-tray-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.composer-template-create {
+  height: 28px;
+  margin-right: 4px;
+  padding: 0 11px;
+  border: 1px solid rgb(252 252 252 / 11%);
+  border-radius: 999px;
+  background: rgb(252 252 252 / 2%);
+  color: var(--text);
+  font-size: 12px;
+}
+
+.composer-template-create:hover,
+.composer-template-create:focus-visible,
+.composer-template-page:not(:disabled):hover,
+.composer-template-close:hover,
+.composer-template-close:focus-visible {
+  background: rgb(252 252 252 / 8%);
+}
+
+.composer-template-page,
+.composer-template-close {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.composer-template-page:disabled {
+  color: rgb(252 252 252 / 25%);
+}
+
+.composer-template-page svg,
+.composer-template-close svg {
+  width: 17px;
+  height: 17px;
+}
+
+.composer-template-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.composer-template-card,
+.composer-template-view-all {
+  position: relative;
+  min-width: 0;
+}
+
+.composer-template-use,
+.composer-template-view-all {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  border-radius: 12px;
+  background: transparent;
+  text-align: left;
+}
+
+.composer-template-preview,
+.composer-template-view-all > span {
+  width: 100%;
+  aspect-ratio: 0.86;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 22px 10px 10px;
+  border: 1px solid rgb(252 252 252 / 12%);
+  border-radius: 10px;
+  background: #f7f7f5;
+  color: #141414;
+}
+
+.composer-template-preview strong {
+  overflow: hidden;
+  font-family: Georgia, serif;
+  font-size: 8px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-template-preview small {
+  overflow: hidden;
+  margin: 3px 0 9px;
+  color: #595959;
+  font-family: Georgia, serif;
+  font-size: 4px;
+  font-style: italic;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-template-preview i {
+  width: 86%;
+  height: 3px;
+  display: block;
+  margin-top: 5px;
+  border-radius: 1px;
+  background: #b9c6d0;
+}
+
+.composer-template-preview i:nth-of-type(2) { width: 68%; }
+.composer-template-preview i:nth-of-type(3) { width: 92%; margin-top: 13px; }
+.composer-template-preview i:nth-of-type(4) { width: 54%; }
+
+.composer-template-use:hover .composer-template-preview,
+.composer-template-use:focus-visible .composer-template-preview {
+  border-color: rgb(120 173 231 / 65%);
+  box-shadow: 0 0 0 2px rgb(83 148 218 / 18%);
+}
+
+.composer-template-name {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 3px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 510;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-template-kind {
+  padding: 0 3px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.composer-template-more {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #1e1e1e;
+  color: var(--text-secondary);
+  opacity: 0;
+}
+
+.composer-template-card:hover .composer-template-more,
+.composer-template-more:focus-visible {
+  opacity: 1;
+}
+
+.composer-template-more svg {
+  width: 15px;
+  height: 15px;
+}
+
+.composer-template-view-all > span {
+  display: grid;
+  grid-template-columns: repeat(2, 9px);
+  grid-template-rows: repeat(2, 9px);
+  place-content: center;
+  gap: 3px;
+  background: #151515;
+}
+
+.composer-template-view-all > span i {
+  border: 1.5px solid var(--text);
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+.composer-template-view-all {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.composer-template-view-all:hover > span,
+.composer-template-view-all:focus-visible > span {
+  background: #1b1b1b;
+  box-shadow: 0 0 0 2px rgb(252 252 252 / 8%);
+}
+
+.composer-rich-attachments {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding: 0 4px 4px;
+  scrollbar-width: none;
+}
+
+.composer-template-attachment {
+  min-width: 184px;
+  max-width: min(260px, 100%);
+  height: 44px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  padding: 0 7px 0 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: 11px;
+  background: var(--main-raised);
+}
+
+.composer-template-attachment > svg {
+  width: 18px;
+  height: 18px;
+  color: #5798ed;
+}
+
+.composer-template-attachment-copy {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.composer-template-attachment-copy strong,
+.composer-template-attachment-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-template-attachment-copy strong {
+  font-size: 11px;
+  font-weight: 510;
+}
+
+.composer-template-attachment-copy small {
+  color: var(--text-muted);
+  font-size: 9px;
+}
+
+.composer-template-attachment button {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.composer-template-attachment button:hover { background: var(--surface-hover); color: var(--text); }
+.composer-template-attachment button svg { width: 13px; height: 13px; }
+
+.composer-editor-shell {
+  min-height: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: center;
+  gap: 4px 6px;
+  margin: 0 4px;
+  padding: 0;
+}
+
+.composer-editor-shell textarea {
+  width: 100%;
+  min-width: 160px;
+  flex: 1 1 100%;
+  margin: 0;
+}
+
+.composer-plugin-mentions {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 2px;
+}
+
+.composer-plugin-mention {
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 5px 0 6px;
+  border-radius: 7px;
+  background: rgb(81 144 229 / 10%);
+  color: #75aaf2;
+  font-size: 13px;
+  font-weight: 510;
+  line-height: 1;
+}
+
+.composer-plugin-mention.is-pdf { color: #de7077; background: rgb(222 112 119 / 10%); }
+.composer-plugin-mention.is-spreadsheets { color: #40bf9a; background: rgb(64 191 154 / 10%); }
+.composer-plugin-mention.is-presentations { color: #e6a15a; background: rgb(230 161 90 / 10%); }
+.composer-plugin-mention.is-template-creator { color: #c39ce7; background: rgb(195 156 231 / 10%); }
+
+.composer-plugin-mention > svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.7;
+}
+
+.composer-plugin-mention-remove {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  margin-left: -1px;
+  border-radius: 4px;
+  background: transparent;
+  color: currentColor;
+  opacity: 0;
+}
+
+.composer-plugin-mention:hover .composer-plugin-mention-remove,
+.composer-plugin-mention-remove:focus-visible { opacity: 0.8; }
+.composer-plugin-mention-remove:hover { background: rgb(252 252 252 / 8%); opacity: 1; }
+.composer-plugin-mention-remove svg { width: 10px; height: 10px; }
+
+@media (max-width: 720px) {
+  .composer-template-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .composer-template-grid > :nth-child(n + 3) { display: none; }
+}
+
+:root[data-theme='light'] .composer-template-tray {
+  border-color: rgb(0 0 0 / 10%);
+  background: #fff;
+  box-shadow:
+    0 0 0 0.5px rgb(0 0 0 / 5%),
+    0 12px 32px rgb(0 0 0 / 10%);
+}
+
+:root[data-theme='light'] .composer-template-view-all > span {
+  border-color: var(--border);
+  background: #f3f3f3;
+}
+
+:root[data-theme='light'] .composer-template-create {
+  border-color: var(--border);
+  background: transparent;
+}
+
+:root[data-theme='light'] .composer-template-create:hover,
+:root[data-theme='light'] .composer-template-create:focus-visible,
+:root[data-theme='light'] .composer-template-page:not(:disabled):hover,
+:root[data-theme='light'] .composer-template-close:hover,
+:root[data-theme='light'] .composer-template-close:focus-visible,
+:root[data-theme='light'] .composer-plugin-mention-remove:hover {
+  background: rgb(13 13 13 / 6%);
+}
+
+:root[data-theme='light'] .composer-template-page:disabled {
+  color: rgb(13 13 13 / 25%);
+}
+
+:root[data-theme='light'] .composer-template-more {
+  border: 1px solid var(--border);
+  background: rgb(255 255 255 / 96%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+:root[data-theme='light'] .composer-template-view-all:hover > span,
+:root[data-theme='light'] .composer-template-view-all:focus-visible > span {
+  background: #e9e9e9;
+  box-shadow: 0 0 0 2px rgb(13 13 13 / 8%);
+}

@@ -1,0 +1,18 @@
+.subagent-thread-panel { display: flex; flex: 1; width: 100%; min-width: 0; height: 100%; min-height: 0; flex-direction: column; overflow: hidden; background: var(--main); }
+.subagent-thread-panel-header { display: flex; height: 44px; min-width: 0; flex-shrink: 0; align-items: center; gap: 8px; padding: 0 16px; border-bottom: .5px solid var(--border); }
+.subagent-thread-panel-header .subagent-activity-avatar, .subagent-thread-panel-header .subagent-activity-avatar img { width: 24px; height: 24px; flex-basis: 24px; }
+.subagent-thread-panel-header button { display: inline-flex; width: 24px; height: 24px; padding: 4px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 6px; background: transparent; color: var(--text-secondary); }
+.subagent-thread-panel-header button:hover { background: var(--surface-hover); color: var(--text); }
+.subagent-thread-panel-header button:focus-visible { outline: 2px solid rgb(100 164 224 / 76%); }
+.subagent-thread-panel-header button svg { width: 16px; height: 16px; }
+.subagent-thread-panel-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 430; }
+.subagent-thread-panel-model { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-muted); font-size: 12px; }
+.subagent-thread-panel-header > .activity-tooltip-anchor:has(.subagent-thread-panel-model) { flex-shrink: 1; max-width: 50%; }
+.subagent-thread-panel-content { display: flex; flex: 1; min-width: 0; min-height: 0; overflow: hidden; }
+.subagent-thread-panel-content > .conversation { width: 100%; }
+.subagent-thread-panel-empty { display: flex; flex: 1; min-width: 0; align-items: center; justify-content: center; flex-direction: column; gap: 12px; padding: 24px; text-align: center; color: var(--text-muted); font-size: 14px; }
+.subagent-thread-panel-empty > span { max-width: 100%; overflow-wrap: anywhere; }
+.subagent-thread-panel-empty > svg { width: 20px; height: 20px; }
+.subagent-thread-panel-empty.is-loading { gap: 0; }
+.subagent-thread-panel-empty button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--surface); color: var(--text); font: inherit; }
+.subagent-thread-panel-empty button svg { width: 14px; height: 14px; }

@@ -1,0 +1,32 @@
+.collaboration-activity { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; font-size: 14px; line-height: 21px; }
+.collaboration-activity-heading {
+  position: relative; display: inline-flex; min-width: 0; max-width: 100%; align-items: center; gap: 6px;
+  border-radius: 6px; padding: 0; background: transparent; color: color-mix(in srgb, var(--text) 40%, transparent); font: inherit; text-align: left;
+}
+.collaboration-activity-heading:focus-visible { outline: none; box-shadow: inset 0 0 0 2px rgb(100 164 224 / 76%); }
+.collaboration-activity-icon { display: block; width: 14px; height: 14px; flex: 0 0 14px; color: color-mix(in srgb, var(--text) 60%, transparent); }
+.collaboration-activity-icon > svg { display: block; width: 100%; height: 100%; }
+.collaboration-header-copy { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.collaboration-header-action { color: color-mix(in srgb, var(--text) 54%, transparent); }
+.collaboration-activity-heading:hover .collaboration-header-action { color: var(--text); }
+.collaboration-disclosure { width: 12px; height: 12px; flex: 0 0 12px; opacity: 0; transition: opacity 120ms ease-out, transform 120ms ease-out; }
+.collaboration-disclosure.is-expanded { opacity: 1; transform: rotate(90deg); }
+.collaboration-activity-heading:hover .collaboration-disclosure,
+.collaboration-activity-heading:focus-visible .collaboration-disclosure { opacity: 1; }
+.collaboration-activity-body { align-self: stretch; min-width: 0; overflow: hidden; pointer-events: none; transition: height 300ms cubic-bezier(.19, 1, .22, 1), opacity 300ms cubic-bezier(.19, 1, .22, 1); }
+.collaboration-activity-body.is-expanded { overflow: visible; pointer-events: auto; }
+.collaboration-activity-rows { display: flex; min-width: 0; flex-direction: column; gap: var(--conversation-grouped-item-gap, 4px); padding-top: 4px; }
+.collaboration-activity-row { min-width: 0; color: color-mix(in srgb, var(--text) 60%, transparent); font-size: 14px; line-height: 21px; }
+.collaboration-activity-row > * { color: color-mix(in srgb, var(--text) 50%, transparent); }
+.collaboration-activity-row.is-spawn,
+.collaboration-activity-row.is-message { display: flex; min-width: 0; align-items: baseline; gap: 4px; overflow: hidden; white-space: nowrap; }
+.collaboration-activity-row.is-spawn > span:not(.collaboration-prompt-preview),
+.collaboration-activity-row.is-message > span:not(.collaboration-prompt-preview) { flex-shrink: 0; }
+.collaboration-agent { display: inline; }
+.collaboration-agent-name { display: inline; padding: 0; background: transparent; color: inherit; font: inherit; font-weight: 500; vertical-align: baseline; }
+button.collaboration-agent-name:hover { color: var(--text); }
+button.collaboration-agent-name:focus-visible { outline: 2px solid rgb(100 164 224 / 76%); border-radius: 3px; }
+.collaboration-prompt-preview { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; color: color-mix(in srgb, var(--text) 40%, transparent); white-space: nowrap; }
+.collaboration-prompt-preview > .activity-tooltip-anchor { display: block; overflow: hidden; text-overflow: ellipsis; }
+.collaboration-prompt-detail { overflow-wrap: anywhere; white-space: pre-wrap; }
+@media (prefers-reduced-motion: reduce) { .collaboration-activity-body, .collaboration-disclosure { transition: none; } }

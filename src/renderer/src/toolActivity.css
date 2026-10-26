@@ -1,0 +1,61 @@
+.tool-activity, .tool-activity-static, .tool-web-search { min-width: 0; color: color-mix(in srgb, var(--text) 54%, transparent); font: 430 14px/21px -apple-system, system-ui, sans-serif; }
+.tool-activity-heading { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.tool-activity-disclosure { display: inline-flex; max-width: 100%; min-width: 0; align-items: center; gap: 8px; padding: 0; border-radius: 6px; background: transparent; color: inherit; font: inherit; text-align: left; }
+.tool-activity-disclosure > svg:first-child, .tool-activity-static > svg, .tool-web-search > svg { width: 16px; height: 16px; flex: 0 0 16px; color: color-mix(in srgb, var(--text) 60%, transparent); }
+.tool-activity-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tool-activity-disclosure > svg:last-child { width: 12px; height: 12px; flex-shrink: 0; opacity: 0; transition: transform 120ms ease-out, opacity 120ms ease-out; }
+.tool-activity-disclosure:hover, .tool-activity-disclosure:focus-visible { color: var(--text); }
+.tool-activity-disclosure > svg.is-expanded { transform: rotate(90deg); opacity: 1; }
+.tool-activity-disclosure:hover > svg:last-child, .tool-activity-disclosure:focus-visible > svg:last-child { opacity: 1; }
+.tool-activity-disclosure:focus-visible { outline: 2px solid rgb(100 164 224 / 76%); }
+.tool-activity-body { display: flex; min-width: 0; flex-direction: column; gap: 4px; margin: 4px 0 0 24px; color: color-mix(in srgb, var(--text) 50%, transparent); }
+.tool-activity-body pre { max-height: 192px; overflow: auto; margin: 0; padding: 8px; border-radius: 6px; background: var(--surface); font: 12px/18px "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.tool-result-text { white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.tool-result-image { display: block; max-width: min(100%, 420px); max-height: 300px; border-radius: 8px; object-fit: contain; }
+.tool-result-audio { max-width: 100%; height: 36px; }
+.tool-result-resource-link { display: inline-flex; min-width: 0; max-width: 100%; align-items: center; gap: 8px; color: inherit; text-decoration: none; }
+.tool-result-resource-link > svg { width: 16px; height: 16px; flex-shrink: 0; }
+.tool-result-resource-link > span { display: flex; min-width: 0; flex-direction: column; }
+.tool-result-resource-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+a.tool-result-resource-link:hover { color: var(--text); }
+.tool-result-resource-description { color: var(--text-muted); font-size: 12px; }
+.tool-result-resource { min-width: 0; }
+.tool-result-resource summary { display: flex; min-width: 0; align-items: center; gap: 6px; cursor: pointer; list-style: none; }
+.tool-result-resource summary::-webkit-details-marker { display: none; }
+.tool-result-resource summary svg { width: 14px; height: 14px; flex-shrink: 0; }
+.tool-result-resource summary span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tool-result-resource[open] summary > svg:last-child { transform: rotate(90deg); }
+.tool-result-resource dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 8px; margin: 8px 0; font-size: 12px; }
+.tool-result-resource dd { margin: 0; overflow-wrap: anywhere; }
+.tool-result-caption { display: block; margin: 6px 0 3px; color: var(--text-muted); font-size: 12px; }
+.tool-activity-error { max-height: 192px; overflow: auto; padding: 8px 10px; border-radius: 6px; background: color-mix(in srgb, var(--danger) 10%, transparent); color: var(--danger); white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.tool-activity-progress { display: flex; flex-direction: column; gap: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tool-activity-empty { margin: 0; color: var(--text-muted); }
+.tool-activity-system-error { display: flex; align-items: baseline; gap: 8px; color: var(--danger); font-size: 14px; line-height: 21px; }
+.tool-activity-system-error.is-retrying { color: var(--text-secondary); }
+.tool-activity-system-error > svg { width: 16px; height: 16px; flex: 0 0 16px; align-self: flex-start; margin-top: 2px; }
+.tool-activity-system-error > div { min-width: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.tool-activity-system-error details { margin-top: 4px; color: var(--text-secondary); }
+.tool-activity-system-error pre { max-height: 192px; overflow: auto; margin: 4px 0 0; white-space: pre-wrap; font: 12px/18px "SFMono-Regular", Consolas, monospace; }
+.tool-activity-raw-trigger, .tool-activity-open-thread { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 6px; padding: 4px; background: transparent; color: var(--text-muted); }
+.tool-activity-raw-trigger:hover, .tool-activity-open-thread:hover { background: var(--surface-hover); color: var(--text); }
+.tool-activity-raw-trigger svg, .tool-activity-open-thread svg { width: 14px; height: 14px; }
+.tool-activity-open-thread { opacity: 0; }
+.tool-activity-heading:hover .tool-activity-open-thread, .tool-activity-open-thread:focus-visible { opacity: 1; }
+.tool-activity-static, .tool-web-search { display: flex; align-items: center; gap: 8px; }
+.tool-web-search-copy { display: flex; min-width: 0; align-items: center; }
+.tool-web-search-detail { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: color-mix(in srgb, var(--text) 40%, transparent); }
+.tool-web-search-copy > .cadenced-shimmer { flex-shrink: 0; }
+.tool-web-search:hover .tool-web-search-detail { color: var(--text); }
+.tool-activity.is-compact { color: color-mix(in srgb, var(--text) 40%, transparent); }
+.tool-raw-output-backdrop { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgb(0 0 0 / 40%); }
+.tool-raw-output-dialog { display: flex; min-width: 0; flex-direction: column; width: min(640px, 100%); max-height: min(680px, 90vh); border: 1px solid var(--border-strong); border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: 0 20px 70px rgb(0 0 0 / 30%); outline: none; }
+.tool-raw-output-dialog header { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 16px; padding: 16px; font-size: 14px; }
+.tool-raw-output-dialog header strong { overflow-wrap: anywhere; }
+.tool-raw-output-dialog button { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 5px; border-radius: 6px; background: transparent; color: var(--text-secondary); flex-shrink: 0; }
+.tool-raw-output-dialog button:hover { background: var(--surface-hover); color: var(--text); }
+.tool-raw-output-dialog button svg { width: 16px; height: 16px; }
+.tool-raw-output-code { position: relative; overflow: auto; margin: 0 16px 16px; border-radius: 8px; background: var(--surface-code, var(--main)); }
+.tool-raw-output-code pre { margin: 0; padding: 12px; font: 12px/18px "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.tool-raw-output-code button { position: sticky; left: calc(100% - 32px); bottom: 4px; margin-top: -32px; background: var(--surface); }
+@media (prefers-reduced-motion: reduce) { .tool-activity-disclosure > svg:last-child { transition: none; } }

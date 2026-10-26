@@ -1,0 +1,225 @@
+.markdown-code-block {
+  overflow: hidden;
+  margin: 14px 0;
+  border: 1px solid rgb(252 252 252 / 7%);
+  border-radius: 17px;
+  background: #222;
+}
+
+.markdown-code-block figcaption {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px 0 20px;
+  background: transparent;
+  color: #f1f1f1;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 13px;
+  font-weight: 570;
+  line-height: 1;
+  text-transform: none;
+}
+
+.markdown-code-language,
+.markdown-code-actions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.markdown-code-language {
+  gap: 10px;
+}
+
+.markdown-code-actions {
+  gap: 4px;
+}
+
+.markdown-code-block figcaption button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #f1f1f1;
+}
+
+.markdown-code-block figcaption button:hover,
+.markdown-code-block figcaption button:focus-visible,
+.markdown-code-block figcaption button.is-active {
+  background: rgb(252 252 252 / 6%);
+  color: #fff;
+}
+
+.markdown-code-block figcaption svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.8;
+}
+
+.markdown-code-block > pre,
+.markdown-body .markdown-code-block > pre {
+  max-height: min(560px, 64vh);
+  overflow: auto;
+  margin: 0;
+  padding: 0 20px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  scrollbar-color: rgb(252 252 252 / 15%) transparent;
+  scrollbar-width: thin;
+}
+
+.markdown-code-block code.hljs {
+  display: block;
+  padding: 0;
+  background: transparent;
+  color: #d4d4d4;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 19px;
+  white-space: pre;
+}
+
+.markdown-code-block.is-wrapped code.hljs {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.markdown-code-block .hljs-comment,
+.markdown-code-block .hljs-quote {
+  color: #727272;
+  font-style: italic;
+}
+
+.markdown-code-block .hljs-keyword,
+.markdown-code-block .hljs-selector-tag,
+.markdown-code-block .hljs-literal,
+.markdown-code-block .hljs-section,
+.markdown-code-block .hljs-link {
+  color: #c586c0;
+}
+
+.markdown-code-block .hljs-string,
+.markdown-code-block .hljs-title,
+.markdown-code-block .hljs-name,
+.markdown-code-block .hljs-type,
+.markdown-code-block .hljs-attribute,
+.markdown-code-block .hljs-symbol,
+.markdown-code-block .hljs-bullet,
+.markdown-code-block .hljs-addition,
+.markdown-code-block .hljs-variable,
+.markdown-code-block .hljs-template-tag,
+.markdown-code-block .hljs-template-variable {
+  color: #9ecb8f;
+}
+
+.markdown-code-block .hljs-number,
+.markdown-code-block .hljs-meta,
+.markdown-code-block .hljs-built_in,
+.markdown-code-block .hljs-builtin-name,
+.markdown-code-block .hljs-params {
+  color: #d9a56c;
+}
+
+.markdown-code-block .hljs-function,
+.markdown-code-block .hljs-title.function_,
+.markdown-code-block .hljs-title.class_ {
+  color: #dcdcaa;
+}
+
+.markdown-code-block .hljs-attr,
+.markdown-code-block .hljs-property,
+.markdown-code-block .hljs-selector-class,
+.markdown-code-block .hljs-selector-id {
+  color: #83b7df;
+}
+
+.markdown-code-block .hljs-deletion {
+  color: #e68787;
+  background: rgb(135 38 38 / 16%);
+}
+
+:root[data-theme='light'] .markdown-code-block {
+  border-color: rgb(0 0 0 / 8%);
+  background: #f9f9f9;
+}
+
+:root[data-theme='light'] .markdown-code-block figcaption {
+  color: #242424;
+}
+
+:root[data-theme='light'] .markdown-code-block figcaption button {
+  color: #3c3c39;
+}
+
+:root[data-theme='light'] .markdown-code-block figcaption button:hover,
+:root[data-theme='light'] .markdown-code-block figcaption button:focus-visible,
+:root[data-theme='light'] .markdown-code-block figcaption button.is-active {
+  background: rgb(13 13 13 / 6%);
+  color: #0d0d0d;
+}
+
+:root[data-theme='light'] .markdown-code-block code.hljs {
+  color: #242424;
+}
+
+:root[data-theme='light'] .markdown-code-block > pre,
+:root[data-theme='light'] .markdown-body .markdown-code-block > pre {
+  scrollbar-color: rgb(13 13 13 / 18%) transparent;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-comment,
+:root[data-theme='light'] .markdown-code-block .hljs-quote {
+  color: #008000;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-keyword,
+:root[data-theme='light'] .markdown-code-block .hljs-selector-tag,
+:root[data-theme='light'] .markdown-code-block .hljs-literal,
+:root[data-theme='light'] .markdown-code-block .hljs-section,
+:root[data-theme='light'] .markdown-code-block .hljs-link {
+  color: #af00db;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-string,
+:root[data-theme='light'] .markdown-code-block .hljs-title,
+:root[data-theme='light'] .markdown-code-block .hljs-name,
+:root[data-theme='light'] .markdown-code-block .hljs-type,
+:root[data-theme='light'] .markdown-code-block .hljs-attribute,
+:root[data-theme='light'] .markdown-code-block .hljs-symbol,
+:root[data-theme='light'] .markdown-code-block .hljs-bullet,
+:root[data-theme='light'] .markdown-code-block .hljs-addition,
+:root[data-theme='light'] .markdown-code-block .hljs-variable,
+:root[data-theme='light'] .markdown-code-block .hljs-template-tag,
+:root[data-theme='light'] .markdown-code-block .hljs-template-variable {
+  color: #a31515;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-number,
+:root[data-theme='light'] .markdown-code-block .hljs-meta,
+:root[data-theme='light'] .markdown-code-block .hljs-built_in,
+:root[data-theme='light'] .markdown-code-block .hljs-builtin-name,
+:root[data-theme='light'] .markdown-code-block .hljs-params {
+  color: #098658;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-function,
+:root[data-theme='light'] .markdown-code-block .hljs-title.function_,
+:root[data-theme='light'] .markdown-code-block .hljs-title.class_ {
+  color: #795e26;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-attr,
+:root[data-theme='light'] .markdown-code-block .hljs-property,
+:root[data-theme='light'] .markdown-code-block .hljs-selector-class,
+:root[data-theme='light'] .markdown-code-block .hljs-selector-id {
+  color: #267f99;
+}
+
+:root[data-theme='light'] .markdown-code-block .hljs-deletion {
+  color: #b42318;
+  background: rgb(180 35 24 / 10%);
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/codex-app/baseline.schema.json",
+  "title": "Codex desktop reverse-engineering baseline",
+  "type": "object",
+  "required": ["capturedAt", "host", "application", "codexServer", "renderer"],
+  "properties": {
+    "capturedAt": { "type": "string" },
+    "host": { "type": "object" },
+    "application": { "type": "object" },
+    "codexServer": { "type": "object" },
+    "rea": { "type": "object" },
+    "fuses": { "type": "object" },
+    "renderer": { "type": "object" }
+  },
+  "additionalProperties": true
+}
