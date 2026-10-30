@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-28T16:56:56.368Z",
+  "status": "implementation-and-partial-acceptance",
+  "completeApplicationParity": false,
+  "method": {
+    "project": "https://github.com/morluto/rea",
+    "workflow": "https://github.com/morluto/rea/blob/main/docs/javascript-application-workflows.md",
+    "cleanRoom": false,
+    "analysis": "Selected shipped JS/CSS extracted as lazy files and analyzed statically; source behavior compared with offline recording frames.",
+    "extractedRendererExecuted": false,
+    "reaVersion": "6.7",
+    "evidenceId": "ev_970b5655a923bb7d23e84555788cf24d1818a199e4b98871c57e133e9582dee5",
+    "scope": "Selected modules with unresolved external dependencies, not a complete application execution graph."
+  },
+  "installedSource": {
+    "application": "/Applications/ChatGPT.app",
+    "product": "Codex",
+    "version": "26.1023.50603",
+    "build": "22391",
+    "archiveSHA256": "94a7fac7fdf222261170204df0406249822431cf4db3627d5524b6ba033ce3e6"
+  },
+  "recording": {
+    "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+    "version": "26.1016.61520",
+    "build": "21421",
+    "frames": [
+      {
+        "seconds": 8,
+        "observation": "File navigator and actually opened tabs"
+      },
+      {
+        "seconds": 134,
+        "observation": "File navigator and actually opened tabs"
+      },
+      {
+        "seconds": 152,
+        "observation": "File navigator and actually opened tabs"
+      },
+      {
+        "seconds": 299.5,
+        "observation": "Thinking-only activity"
+      },
+      {
+        "seconds": 315,
+        "observation": "Full-width divider below activity heading"
+      },
+      {
+        "seconds": 401.5,
+        "observation": "Work duration remains fixed after final answer begins, while generation continues"
+      }
+    ]
+  },
+  "selectedShippedModules": [
+    {
+      "path": "agent-activity-item-bb903e037936.js",
+      "sha256": "20015e1c08010e3df6ba2b112fd7d8bfe400f7fbdcac96b5a28d7eeceac60945",
+      "bytes": 23395
+    },
+    {
+      "path": "agent-activity-item-row-4e1fb3dac259.js",
+      "sha256": "1139d1ad6aa7dcebc0158eb678a241d1ae46568dc2ccac132d73892d28f7a1ca",
+      "bytes": 5641
+    },
+    {
+      "path": "agent-activity-item-row-779f1a71f8f1.css",
+      "sha256": "c9f2c6ac2f04bad1977ac850c6bede515eeef520e7f88cb50d0ee8b32d68d96f",
+      "bytes": 470
+    },
+    {
+      "path": "command-execution-command-615dea847916.js",
+      "sha256": "14f00c950de70f6ce1bf85b4532319fe05a53488addd04622eddbf4d97391a56",
+      "bytes": 475
+    },
+    {
+      "path": "local-conversation-turn-e0fac19c5c86.js",
+      "sha256": "edf7ab686be09d17549d8cd5978931be629dde28bb21368e217e2478e7070f19",
+      "bytes": 95726
+    },
+    {
+      "path": "new-tab-button-19351a040766.css",
+      "sha256": "c32a4a90670cc16ec7f8326c8d5b13770e48e36db1d2933fb7d4c0c2d55536be",
+      "bytes": 229
+    },
+    {
+      "path": "new-tab-button-501eacd09052.js",
+      "sha256": "4050327c1c7f14fdb27f65418d06e1166255dd89716cf9a674741111976850a8",
+      "bytes": 6354
+    },
+    {
+      "path": "panel-tabs-4cd8b7f45594.js",
+      "sha256": "780aaea020202faaf5f6684c8832cb25c6d847c07258b06ff3b0ccb1b05bc219",
+      "bytes": 159
+    },
+    {
+      "path": "thread-right-panel-state-efc1a97004ec.js",
+      "sha256": "ee96cc4fbb959cc27463655efbee8ecce2449ee06db42d65a5226b5ea2e508e4",
+      "bytes": 100
+    },
+    {
+      "path": "thread-side-panel-new-tab-2a896983c7bf.js",
+      "sha256": "e802b8bf3a94c29f10521b979ed689fdd7396295d5e8706459b2d10c3269b406",
+      "bytes": 26273
+    },
+    {
+      "path": "thread-side-panel-new-tab-7be5a9529dbf.css",
+      "sha256": "5848f498aefc0893ec38c3bee063028a48a33ab9bb040339370578cd62365309",
+      "bytes": 924
+    },
+    {
+      "path": "thread-side-panel-tabs-3208f10133f8.js",
+      "sha256": "99e7dd20e70e6298a58aa804f3fa375c406be82046efb6ec6688a712d84c90cb",
+      "bytes": 313
+    },
+    {
+      "path": "thread-side-panel-tabs-91e42fbf8ef1.js",
+      "sha256": "976e68efe665ee2558a3fb0a5a7772a16242743bbae9c3f265adc38b7dbe4c90",
+      "bytes": 363
+    }
+  ],
+  "editableSource": {
+    "application": "release/mac-arm64/Codex.app",
+    "bundleId": "com.openai.codex.replica",
+    "sourceSHA256": {
+      "src/main/browserViews.ts": "df54697ba6f262b748cf4fdc2aca31cca3cce5b5d6f2a990bc73064248af8a8c",
+      "src/renderer/src/App.tsx": "6152b0af391aa1c80212c58fe0a7c62248705f90bec265f5cba19176edb8fca3",
+      "src/renderer/src/WorkspacePane.tsx": "ea962824064cb4a80968819c580b7d58de321f96b004b683a2736b8608688a3c",
+      "src/renderer/src/WorkbenchBrowser.tsx": "18e63e5efd17665546b5da94729f53aec3ea928027adf836c5ed625925f1ebae",
+      "src/renderer/src/rightWorkbenchSessions.ts": "f6f9202fcd71b7f1ea9fa8ff325f319b52b1dd63a76ce9c8a11b0fc0859cc01c",
+      "src/renderer/src/turnTiming.ts": "e11cbffddda6ba9276f37945838a12ecf61fdf049ad8c8bef14d45deed6dca99",
+      "src/renderer/src/state/sessionReducer.ts": "157f9a07819d39285065fcffce6de5195a482f3110d796cd53b6e3de06d6b333"
+    },
+    "checks": {
+      "tests": {
+        "files": 184,
+        "passed": 1401,
+        "failed": 0,
+        "success": true
+      },
+      "typecheck": {
+        "node": "passed",
+        "web": "passed",
+        "log": "reverse/raw/parity-2026-10-28/typecheck-delivery.log"
+      },
+      "package": {
+        "command": "npm run package:mac",
+        "exitCode": 0,
+        "archiveSHA256": "a94d1fc13cfbdb4a9dc491ce3a88c06ca7c93165254e6b3956129bbb2501ebc7",
+        "files": 70,
+        "identical": 70,
+        "codesignDeepStrictVerified": true,
+        "fusesReadBack": true,
+        "log": "reverse/raw/parity-2026-10-28/package-delivery.log"
+      },
+      "finalSourceGraphicalAcceptance": false
+    },
+    "realModelAcceptance": {
+      "backend": {
+        "state": "ready",
+        "mode": "direct"
+      },
+      "model": "gpt-6.1-sol",
+      "completed": true,
+      "commandCount": 2,
+      "commandExitCodes": [
+        0,
+        0
+      ],
+      "final": "codex-workbench-stream-ok",
+      "notificationMethods": {
+        "thread/settings/updated": 1,
+        "thread/status/changed": 2,
+        "turn/started": 1,
+        "mcpServer/startupStatus/updated": 4,
+        "item/started": 5,
+        "item/completed": 5,
+        "item/agentMessage/delta": 15,
+        "thread/tokenUsage/updated": 2,
+        "turn/completed": 1
+      },
+      "graphicalAcceptance": false,
+      "runtimeExceptions": 0,
+      "report": "reverse/raw/parity-2026-10-28/live-backend/report.json",
+      "timing": "Before the final terminal-focus and find-lifecycle fixes; verifies the unchanged backend/streaming path, not final GUI parity."
+    },
+    "nativeBrowserAcceptance": {
+      "tool": "Computer Use, own Electron replica only",
+      "passed": [
+        "Load the local fixture URL by native address entry and Enter",
+        "With webpage focus, Cmd+F opens and focuses page find; three matches show 1/3",
+        "Cmd+G advances to 2/3"
+      ],
+      "status": "partial-before-final-source-fixes",
+      "pending": [
+        "Shift+Cmd+G, Escape and remaining native browser shortcuts",
+        "Close/full/split workbench transitions",
+        "Different-project restore and retained-terminal/browser focus",
+        "Complete streaming visual comparison at representative window sizes"
+      ],
+      "blocker": "Mac locked; automatic unlock failed. Manual unlock requested. No locked-session UI workaround used."
+    },
+    "earlierDiagnosticObservations": [
+      "File opens without an unsolicited Changes tab",
+      "Find 1/3 to 2/3",
+      "Zoom 110% and reset 100%",
+      "Same-project chat A/B/A preserves the same native page and active browser tab"
+    ],
+    "diagnosticLimit": "Earlier CDP observations are separate from native keyboard acceptance; the revised workbench GUI harness has not completed a fresh successful run.",
+    "ownNativeFixtureCleanup": {
+      "threadsRemoved": true,
+      "serverStopped": true,
+      "directoryRemoved": true
+    }
+  },
+  "resourceReconstruction": {
+    "application": "release/local-runtime/Codex Study 2026-10-29.app",
+    "report": "release/local-runtime/Codex Study 2026-10-29.reconstruction/report.json",
+    "status": "static-verification-passed",
+    "entries": 22824,
+    "files": 22443,
+    "identicalFiles": 22433,
+    "identicalRendererFiles": 21459,
+    "archiveIntegrityValidated": true,
+    "sourceDiskUnchanged": true,
+    "originalFusesPreserved": true,
+    "helperSignaturePreservation": {
+      "allFilesByteIdentical": true,
+      "nativeFiles": 50,
+      "nestedBundles": 15
+    },
+    "codesign": {
+      "identity": "ad-hoc",
+      "hardenedRuntime": false,
+      "deepStrictVerified": true,
+      "originalMainTeamAndKeychainEntitlementsCopied": false,
+      "unmodifiedChildSignaturesPreserved": true
+    },
+    "infrastructurePatches": [
+      ".vite/build/early-bootstrap.js",
+      ".vite/build/file-based-logger-DLlkSHbU.js",
+      ".vite/build/bootstrap-BLyztc2V.js"
+    ],
+    "backendHandshake": {
+      "passed": true,
+      "state": "ready",
+      "methods": [
+        "initialize",
+        "getAuthStatus",
+        "model/list",
+        "thread/list"
+      ],
+      "desktopProfileIndependent": true,
+      "serverHomeRestored": true
+    },
+    "currentBuildGraphicalAcceptance": false
+  },
+  "remainingLimits": [
+    "Editable workbench and navigator presentation caches are in memory; browser tabs are not restored across application restart.",
+    "Editable browser profile import, extensions, embedded tools, side-chat and window lifecycle remain incomplete.",
+    "Complete pixel and dynamic interaction equivalence has not been established.",
+    "Local signing cannot reproduce OpenAI Team identity, DeviceCheck, APNs or signing-bound native authorization."
+  ],
+  "privacy": "Only hashes, source/version identifiers, fixed fixture results and validation summaries are included. Original source content, private chat data and screenshots remain in ignored local directories."
+}

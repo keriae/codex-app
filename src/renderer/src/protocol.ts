@@ -87,6 +87,7 @@ export interface CommandItem {
   commandActions?: CommandAction[]
   cwd?: string
   status?: 'inProgress' | 'completed' | 'failed' | 'declined'
+  executionStatus?: string
   aggregatedOutput?: string | null
   exitCode?: number | null
   durationMs?: number | null
@@ -190,6 +191,7 @@ export interface Turn {
   startedAt?: number | null
   completedAt?: number | null
   durationMs?: number | null
+  activityCompletedAtMs?: number | null
   itemsView?: unknown
 }
 

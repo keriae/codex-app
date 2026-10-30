@@ -191,6 +191,14 @@ export interface BrowserViewBounds {
   height: number
 }
 
+export interface BrowserFindResult {
+  requestId: number
+  activeMatchOrdinal: number
+  matches: number
+  finalUpdate: boolean
+}
+export type BrowserShortcut = 'address' | 'find' | 'find-next' | 'find-previous' | 'close-tab' | 'new-tab'
+
 export interface BrowserViewState {
   id: string
   url: string
@@ -198,6 +206,7 @@ export interface BrowserViewState {
   loading: boolean
   canGoBack: boolean
   canGoForward: boolean
+  zoomFactor?: number
   error: string | null
 }
 
@@ -210,6 +219,8 @@ export interface BrowserTopSite {
 
 export type BrowserViewEvent =
   | { type: 'state'; state: BrowserViewState }
+  | { type: 'find-result'; id: string; result: BrowserFindResult }
+  | { type: 'shortcut'; id: string; shortcut: BrowserShortcut }
   | { type: 'open-new-tab'; sourceId: string; url: string }
 
 export interface AppContext {
@@ -596,6 +607,9 @@ export interface CodexDesktopApi {
   goForwardBrowserView(id: string): Promise<void>
   reloadBrowserView(id: string): Promise<void>
   stopBrowserView(id: string): Promise<void>
+  findBrowserView(id: string, query: string, options: { forward: boolean; findNext: boolean }): Promise<number>
+  stopFindingBrowserView(id: string): Promise<void>
+  setBrowserViewZoom(id: string, factor: number): Promise<void>
   setBrowserViewBounds(id: string, bounds: BrowserViewBounds): Promise<void>
   setBrowserViewActive(id: string, active: boolean): Promise<void>
   closeBrowserView(id: string): Promise<void>
@@ -621,6 +635,7 @@ export interface CodexDesktopApi {
   readThreadImage(path: string): Promise<ThreadImageResult>
   copyThreadImage(path: string): Promise<void>
   copyInlineImage(source: string): Promise<void>
+  copyText(text: string): Promise<void>
   pickDirectory(): Promise<AppContext | null>
   pickComposerAttachments(): Promise<ComposerAttachmentSelection[]>
   openWorkingDirectory(cwd: string, target: 'finder' | 'terminal'): Promise<void>

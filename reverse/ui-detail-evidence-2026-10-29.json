@@ -1,0 +1,431 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-28T17:34:47.428760+00:00",
+  "status": "source-implementation-validated-native-acceptance-pending",
+  "completeApplicationParity": false,
+  "method": {
+    "project": "https://github.com/morluto/rea",
+    "workflow": "https://github.com/morluto/rea/blob/main/docs/javascript-application-workflows.md",
+    "cleanRoom": false,
+    "analysis": "Selected shipped JS/CSS extracted as lazy files and analyzed statically; source behavior compared with offline recording frames.",
+    "extractedRendererExecuted": false,
+    "reaVersion": "6.7",
+    "evidenceId": "ev_970b5655a923bb7d23e84555788cf24d1818a199e4b98871c57e133e9582dee5",
+    "scope": "Selected modules with unresolved external dependencies, not a complete application execution graph.",
+    "thisPass": "Additional static JS/CSS/export/SVG analysis and offline frame comparison; original renderer modules were not executed."
+  },
+  "installedSource": {
+    "application": "/Applications/ChatGPT.app",
+    "product": "Codex",
+    "version": "26.1023.50603",
+    "build": "22391",
+    "archiveSHA256": "94a7fac7fdf222261170204df0406249822431cf4db3627d5524b6ba033ce3e6"
+  },
+  "recording": {
+    "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+    "version": "26.1016.61520",
+    "build": "21421",
+    "frames": [
+      {
+        "seconds": 8,
+        "observation": "File navigator and actually opened tabs"
+      },
+      {
+        "seconds": 134,
+        "observation": "File navigator and actually opened tabs"
+      },
+      {
+        "seconds": 152,
+        "observation": "File navigator and actually opened tabs"
+      },
+      {
+        "seconds": 299.5,
+        "observation": "Thinking-only activity"
+      },
+      {
+        "seconds": 315,
+        "observation": "Full-width divider below activity heading"
+      },
+      {
+        "seconds": 401.5,
+        "observation": "Work duration remains fixed after final answer begins, while generation continues"
+      }
+    ],
+    "framePixelSize": [
+      3878,
+      2282
+    ],
+    "cssSizeAtDpr2": [
+      1939,
+      1141
+    ]
+  },
+  "comparisonConditions": {
+    "previousReplicaPixelSize": [
+      4112,
+      2406
+    ],
+    "previousReplicaCssSize": [
+      2056,
+      1203
+    ],
+    "recordingSavedSidebarCssWidth": 468,
+    "previousReplicaDefaultSidebarCssWidth": 288,
+    "sameWindowNativePixelComparisonPerformed": false
+  },
+  "selectedShippedModules": [
+    {
+      "path": "webview/assets/collapsed-turn-disclosure-11d226b3cd8b.js",
+      "bytes": 4414,
+      "sha256": "5bd599829d2142b28699eff1c95e6ec00e6c38f4e5feaf8a5cdd7dcdecbb9a1b"
+    },
+    {
+      "path": "webview/assets/conversation-gap-a4c6952ec59b.js",
+      "bytes": 583,
+      "sha256": "3f8b915f8f48c4f4cdb50612a2059db60fb2ac3172960c8e7b82b51c8a65d968"
+    },
+    {
+      "path": "webview/assets/thread-side-panel-tab-bb9be6093396.js",
+      "bytes": 390,
+      "sha256": "4e661edb06b7042090ba024e6d84cfe9abc0d23485957ffdcb8a2151c54802af"
+    },
+    {
+      "path": "webview/assets/thread-summary-panel-components-70b458e6e81e.js",
+      "bytes": 32275,
+      "sha256": "fa1a2c4aca2857dafe6a4fef8bfb0ff2c662d792d498e68b5aec7babef19ca3f"
+    },
+    {
+      "path": "webview/assets/thread-summary-panel-layout-488b931a4b80.js",
+      "bytes": 611,
+      "sha256": "fdf94e722871a901fb9761df2aadc4af118464f77911c879f4137883dc339f39"
+    },
+    {
+      "path": "webview/assets/toolbar-breadcrumb-a553e6b59fee.js",
+      "bytes": 1810,
+      "sha256": "1a5f2fa56e2dd8ffd2165027eae9b06aba5f3f8496209ca362d7f5432e4888a7"
+    },
+    {
+      "path": "webview/assets/worked-for-item-content-1cb0d8eecc62.js",
+      "bytes": 4196,
+      "sha256": "8b0a517a7e7cfc1a41afec0c2e92a0b086d91484500806d1144ce99e7194040a"
+    },
+    {
+      "path": "webview/assets/pierre-file-editor-13c5031abd63.js",
+      "bytes": 95080,
+      "sha256": "7171fa640a14cbb9e88f432dbd508a741e3581267ec29a61069ef396a6329f92"
+    },
+    {
+      "path": "webview/assets/pierre-file-editor-61321c9dabf9.css",
+      "bytes": 317,
+      "sha256": "ddcb5fc1b0710dd9d7b6c50f2541d51e479414bbb3c2fb4495f9e1167c019014"
+    },
+    {
+      "path": "webview/assets/thread-summary-panel-components-c162310c9992.css",
+      "bytes": 616,
+      "sha256": "82410a14f21c6333b4a9c5ff8915c6542da0774c001585831c9e883cb1676afd"
+    },
+    {
+      "path": "webview/assets/app-primary-4ccde6131b6d.css",
+      "bytes": 132815,
+      "sha256": "ac2a000ebf89666fcdcc1b3481d8246ae30e06f159f1c8fa244c194555707f97"
+    },
+    {
+      "path": "webview/assets/app-initial-161052524772.css",
+      "bytes": 186459,
+      "sha256": "3dc5c93ba624fdb74c855721df1d353b2c79f65fb5793f27ef179ef463847fb5"
+    },
+    {
+      "path": "webview/assets/subagent-activity-chip-group-55024cb7e303.js",
+      "bytes": 453283,
+      "sha256": "f0a9f040a609219026e92ef9e83f556497a9c414e1ed395d64781d541bc14007"
+    },
+    {
+      "path": "webview/assets/app-initial-b539f0af92f3.js",
+      "bytes": 10269610,
+      "sha256": "96d8d335e8bd4612da5f0f370c6fc2bdee5fccdbbc269d6d6db7ae899e2aa81f"
+    },
+    {
+      "path": "webview/assets/app-shared-2864d2ff2296.js",
+      "bytes": 6119162,
+      "sha256": "f15485482923dd016959091f70166c9f0146d6a4f9d5474cd0b8be6c22603dae"
+    },
+    {
+      "path": "webview/assets/thread-side-panel-tabs-91e42fbf8ef1.js",
+      "bytes": 363,
+      "sha256": "976e68efe665ee2558a3fb0a5a7772a16242743bbae9c3f265adc38b7dbe4c90"
+    },
+    {
+      "path": "webview/assets/app-primary-8a31c4436352.js",
+      "bytes": 5075485,
+      "sha256": "eef9f6e3e57b996e3a07f3e2015e786c9b8f41f6fe02758db15e4777ba4e573d"
+    },
+    {
+      "path": "webview/assets/review-file-source-breadcrumb-59c8bd850f17.js",
+      "bytes": 39132,
+      "sha256": "ad1a65aab1d9fe61332a7f4b124ac348cd84687cd2a4d00c6ad891de25564db6"
+    },
+    {
+      "path": "webview/assets/book-open-d3d308eb0cc1.js",
+      "bytes": 2075,
+      "sha256": "19153804a222d3b6c08fcfc7cb55fe115e72c3fbf48958fa7d80d48b1e3115e9"
+    },
+    {
+      "path": "webview/assets/agent-activity-item-row-779f1a71f8f1.css",
+      "bytes": 470,
+      "sha256": "c9f2c6ac2f04bad1977ac850c6bede515eeef520e7f88cb50d0ee8b32d68d96f"
+    },
+    {
+      "path": "webview/assets/thread-side-panel-tabs-3208f10133f8.js",
+      "bytes": 313,
+      "sha256": "99e7dd20e70e6298a58aa804f3fa375c406be82046efb6ec6688a712d84c90cb"
+    },
+    {
+      "path": "webview/assets/base-file-tree-967143e06bea.js",
+      "bytes": 31806,
+      "sha256": "5f072c006cd7e5708b9c2815affcfeddc1ba2663c3c94ccc9e443e9496bfe19c"
+    },
+    {
+      "path": "webview/assets/app-shared-398c891a59df.css",
+      "bytes": 1355325,
+      "sha256": "fbeecf83dfe33c2780d527e361fde5003bbcca7dda660922a371aa6a11ce3497"
+    },
+    {
+      "path": "webview/assets/review-file-tree-decoration-1630d78dccd9.js",
+      "bytes": 7538,
+      "sha256": "32f73006dbba83c8958b3c11e53128a6d0a59897a60721306bd55650b00fca43"
+    }
+  ],
+  "recoveredGlyphs": [
+    {
+      "kind": "search",
+      "asset": "magnifying-glass-md-light-16",
+      "variable": "I7",
+      "bodySha256": "7740a8f057b3003df172e4ac6bc912fd6e16690032e836b68bf26be65fdca64c"
+    },
+    {
+      "kind": "listFiles",
+      "asset": "folder-light-16",
+      "variable": "BWt",
+      "bodySha256": "276f9eb1078424310ce03a3edb03e6e93709acc966e1c5f8037c9c11898d744b"
+    },
+    {
+      "kind": "edits",
+      "asset": "pencil-light-16",
+      "variable": "KJt",
+      "bodySha256": "a1531d7aab210b83a752fcd285f8d1a386638095e897953fd64c956b04549e6c"
+    },
+    {
+      "kind": "command",
+      "asset": "terminal-light-16",
+      "variable": "n$t",
+      "bodySha256": "815d072f5f683233f9b397a9ef612c7b84987ee01a3243020f3fa655462af71f"
+    },
+    {
+      "kind": "webSearch",
+      "asset": "globe-light-16",
+      "variable": "U1",
+      "bodySha256": "4e3ca189693aa600e32c18d633badca56984fff67c13d53c3426012a8400bc84"
+    },
+    {
+      "kind": "tools",
+      "asset": "wrench-light-16",
+      "variable": "g1t",
+      "bodySha256": "2b96c2ad808c81e3197c80aebe443bff0e19b8738f8ed18d41387498bd67d674"
+    },
+    {
+      "kind": "check",
+      "asset": "checkmark-lg-light-12",
+      "variable": "ybn",
+      "bodySha256": "2c3107a59bed031f4b6c79fc54920bfd8731231e82b1ce53384dac6b8e3c03af"
+    },
+    {
+      "kind": "stopped",
+      "asset": "stop-fill-light-16",
+      "variable": "oYn",
+      "bodySha256": "9593b329422552ba3286114aad14c387ac1d70374267c7bd222e3bcf54224088"
+    },
+    {
+      "kind": "read",
+      "variable": "i",
+      "component": "book-open-d3d308eb0cc1.js",
+      "pathsSha256": "74455eb58049b67a24531ea73e388437a2f5bbdf0bf7b9d090dc973a0fe103be"
+    },
+    {
+      "kind": "chevron",
+      "variable": "k3",
+      "component": "app-shared-2864d2ff2296.js",
+      "pathsSha256": "3eeac7569720edd8c3a59cf69691e6c7cc97f373347820dea76cb66bb56deb8d"
+    },
+    {
+      "kind": "copy",
+      "variable": "VWn",
+      "component": "app-shared-2864d2ff2296.js",
+      "pathsSha256": "995464cfe631f1a0418de2486a2a75abc8af4b2f09d408efd6730a7f4799b299"
+    },
+    {
+      "kind": "copied",
+      "variable": "D3",
+      "component": "app-shared-2864d2ff2296.js",
+      "pathsSha256": "e2d4ff33138c6b8a2de2f9bde650656490a5b3a48087893de1238d6d398c15d5"
+    }
+  ],
+  "glyphVerification": {
+    "method": "Static AST comparison against extracted original SVG geometry; no shipped module execution",
+    "checks": [
+      {
+        "kind": "search",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "listFiles",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "edits",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "command",
+        "pathCount": 3,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "webSearch",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "tools",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "check",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "stopped",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "read",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "chevron",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "copy",
+        "pathCount": 1,
+        "geometryIdentical": true
+      },
+      {
+        "kind": "copied",
+        "pathCount": 1,
+        "geometryIdentical": true
+      }
+    ],
+    "passed": true
+  },
+  "implementedSourceFiles": [
+    {
+      "path": "src/renderer/src/ActivityGlyph.tsx",
+      "sha256": "40999bf7c740e53e7b250756ff6a6e5d238f2b2cae21c40e76c6462723e8823e"
+    },
+    {
+      "path": "src/renderer/src/ConversationActivity.tsx",
+      "sha256": "e28a045deedc26d9e9f77e0d09102e96e1a7217ad15dabc9dc46e7670ea6a7cc"
+    },
+    {
+      "path": "src/renderer/src/commandOutput.ts",
+      "sha256": "5f4c618f6c670194ba2db679bdda3cc3f9521a26acac5e55c30589bdcf35e2fd"
+    },
+    {
+      "path": "src/renderer/src/conversationActivity.css",
+      "sha256": "70621d387720f34450766a677df85e1585fce2b42fe9aea3c512212f78a18b08"
+    },
+    {
+      "path": "src/renderer/src/WorkspacePane.css",
+      "sha256": "72bc4899279d751c73111bfc0b7cfe421d5043aaa40f2247ffe7a14ece6c500d"
+    },
+    {
+      "path": "src/renderer/src/styles.css",
+      "sha256": "f051ac645d189b354dd2d672770e90dba7f03ea5428fa730101fbd03a4e4bea0"
+    },
+    {
+      "path": "src/renderer/src/App.tsx",
+      "sha256": "95c9ff79cd8bc47f4f9bcbb859259164b15a9a8046edcb1d0b4e78a802d75b62"
+    },
+    {
+      "path": "src/renderer/src/protocol.ts",
+      "sha256": "1a3b2034a43b0a77bc2c7014b582643fe08a2c376c3e35fd8624212af8d63ee5"
+    },
+    {
+      "path": "src/renderer/src/commandActivity.ts",
+      "sha256": "6ab09567ce65c75e8e7b078321ef1f10263fdfe85fcffc5075b47d94a827af75"
+    }
+  ],
+  "versionDifferences": [
+    {
+      "detail": "File filter corners",
+      "recording": "Small-radius rounded rectangle; approximate encoded-pixel bounds x=3422..3862, y=195..248 at 8s",
+      "installedSource": "hyn toolbar-action uses rounded-full",
+      "implementation": "Current installed search-control shape retained; gap and font updated. No claim that the recording CSS radius was measured exactly."
+    },
+    {
+      "detail": "Embedded shell heading",
+      "recording": "152s expanded output starts with $ and has no Shell/cwd heading",
+      "installedSource": "Xw may display a shell-type row for default embedded appearance; plain appearance omits it. Cwd belongs to default Shell panel header.",
+      "implementation": "Recorded inline presentation used without an extra heading; other shipped Shell variants are not all implemented."
+    }
+  ],
+  "validation": {
+    "tests": {
+      "files": 185,
+      "passed": 1413,
+      "failed": 0,
+      "success": true
+    },
+    "typecheckNode": true,
+    "typecheckWeb": true,
+    "macArm64Package": true,
+    "packageChecks": {
+      "codesignDeepStrict": true,
+      "fusesReadBack": true,
+      "latestOutputPackaged": true
+    },
+    "packagedOutput": {
+      "files": 70,
+      "identical": 70
+    },
+    "asarSha256": "b61676ffa4496651a838e086a5f3e4bcb4d06281f015bee1cc2864b574f2ee22",
+    "nativeUi": {
+      "performed": false,
+      "reason": "Computer Use reported Mac locked; no manual unlock response received. Hover, transitions, clipboard, scrolling and same-size pixel parity for these changes remain unverified."
+    },
+    "priorBackendAcceptance": {
+      "evidence": "reverse/workbench-activity-evidence-2026-10-29.json",
+      "rerunForUiOnlyChanges": false,
+      "description": "Prior ready/direct real model turn completed with two zero-exit commands and 15 final-answer deltas. Does not validate this UI patch."
+    },
+    "rawEvidenceDirectory": "reverse/raw/ui-detail-2026-10-29",
+    "package": "release/mac-arm64/Codex.app"
+  },
+  "remaining": [
+    "Native same-window and same-sidebar pixel/interaction comparison",
+    "Narrow breadcrumb ancestor collapse and directory menus",
+    "Full file-tree selection/focus styling",
+    "Nonactive right-workbench tab close states",
+    "Full/split/collapsed workbench states after final changes",
+    "Complete Pierre editor decorations and broader cloud/voice functionality"
+  ],
+  "originalInstallationModified": false
+}

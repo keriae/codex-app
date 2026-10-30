@@ -41,6 +41,7 @@
   --sidebar-width: var(--codex-sidebar-preferred-width);
   --titlebar-height: 44px;
   --output-track-width: 305px;
+  --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   font-family: -apple-system, system-ui, "Segoe UI", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -6127,14 +6128,11 @@ select.request-text-input {
  * the upper-right instead of pulling the conversation left.
  */
 @container (min-width: 1537px) {
-  .conversation-scroll,
-  .conversation-bottom-fade,
-  .composer-dock,
-  .scroll-to-latest {
+  .main-panel:not(:has(> .workspace-pane-expanded:not(.is-workbench-inactive))) > :is(.conversation-scroll, .conversation-bottom-fade, .composer-dock, .scroll-to-latest) {
     --output-track-width: 0px;
   }
 
-  .conversation-scroll {
+  .main-panel:not(:has(> .workspace-pane-expanded:not(.is-workbench-inactive))) > .conversation-scroll {
     --conversation-track-width: 100%;
   }
 }
@@ -6716,6 +6714,7 @@ details.activity-item {
   font-variant-numeric: tabular-nums;
 }
 
+.turn-activity.is-live .activity-section-heading,
 .turn-activity.is-terminal .activity-section-heading {
   height: auto;
   flex-direction: column;
@@ -6723,6 +6722,7 @@ details.activity-item {
   gap: 8px;
 }
 
+.turn-activity.is-live .activity-section-heading > .activity-heading-divider,
 .turn-activity.is-terminal .activity-section-heading > .activity-heading-divider {
   width: 100%;
   flex: 0 0 auto;
@@ -8039,3 +8039,5 @@ details.activity-item {
   --conversation-track-width: 100%;
 }
 .main-panel[data-workspace-layout='full'] > .workspace-pane-collapsed { display: none; }
+
+:root[data-reduced-motion="true"] .activity-collapse { transition: none; }

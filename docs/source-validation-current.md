@@ -1,6 +1,10 @@
 # Editable macOS source validation — 2026-10-26
 
-The current editable package is `release/mac-arm64/Codex.app`, bundle ID `com.openai.codex.replica`. Its implementation baseline directly inspected the captured **26.1016.62342 / 21477** artifacts through REA and the supplied recording. The installed application may update independently; the original installation and its native authorization checks remain unchanged.
+The latest source/package results are recorded in [UI detail comparison — 2026-10-30](ui-detail-parity-2026-10-30.md): **187 files / 1,422 tests**, Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and **70/70** packaged output comparisons passed. The current dev renderer received bounded native command/copy, breadcrumb, responsive file-controls, full/split and 110% zoom acceptance, plus a completed native readonly model turn. The final production package's full native UI matrix was not rerun. Raw current checks are in `reverse/raw/ui-detail-2026-10-30/`, with [sanitized evidence](../reverse/ui-detail-evidence-2026-10-30.json).
+
+The checks below describe the earlier 2026-10-26 snapshot, including its GUI acceptance, and do not apply automatically to a rebuilt package. The preceding [2026-10-29 UI detail](ui-detail-parity-2026-10-29.md) and [workbench/activity](workbench-activity-parity-2026-10-29.md) results retain their snapshot attribution.
+
+That editable package used `release/mac-arm64/Codex.app`, bundle ID `com.openai.codex.replica`. Its implementation baseline directly inspected the captured **26.1016.62342 / 21477** artifacts through REA and the supplied recording. The installed application may update independently; the original installation and its native authorization checks remain unchanged.
 
 ## Final source and package checks
 

@@ -57,7 +57,7 @@ describe('measured macOS shell geometry', () => {
       /\.conversation-bottom-fade\s*\{[^}]*position: absolute;[^}]*z-index: 8;[^}]*right: calc\(var\(--output-track-width\) \+ 8px\);[^}]*height: calc\([^}]*var\(--conversation-footer-height, 114px\)[^}]*linear-gradient\([^}]*transparent 0,[^}]*var\(--main\) var\(--conversation-bottom-fade-distance\)[^}]*pointer-events: none;/s
     )
     expect(styles).toMatch(
-      /@container \(min-width: 1537px\)\s*\{[^}]*\.conversation-scroll,[^}]*\.conversation-bottom-fade,[^}]*\.composer-dock,[^}]*\.scroll-to-latest\s*\{[^}]*--output-track-width: 0px;/s
+      /@container \(min-width: 1537px\)\s*\{[^}]*\.main-panel:not\(:has\(> \.workspace-pane-expanded:not\(\.is-workbench-inactive\)\)\) > :is\(\.conversation-scroll, \.conversation-bottom-fade, \.composer-dock, \.scroll-to-latest\)\s*\{[^}]*--output-track-width: 0px;/s
     )
     expect(styles).toMatch(
       /@container \(min-width: 1537px\)[\s\S]*?\.conversation-scroll\s*\{[^}]*--conversation-track-width: 100%;/

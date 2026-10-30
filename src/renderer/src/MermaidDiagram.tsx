@@ -1,3 +1,4 @@
+import { copyTextToClipboard } from './clipboard'
 import {
   Check,
   Code2,
@@ -1174,7 +1175,7 @@ export function MermaidSourceFallback({
 
   const copySource = async (): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(source)
+      await copyTextToClipboard(source)
       setCopied(true)
       if (resetTimerRef.current !== null) window.clearTimeout(resetTimerRef.current)
       resetTimerRef.current = window.setTimeout(() => setCopied(false), 1_500)
@@ -1377,7 +1378,7 @@ export function MermaidDiagram({
 
   const copyCode = async (): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(source)
+      await copyTextToClipboard(source)
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1_200)
     } catch {

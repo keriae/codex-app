@@ -81,7 +81,7 @@ function meaningfulActions(item: CommandItem): CommandAction[] {
 }
 
 function isInterrupted(item: CommandItem): boolean {
-  return (item as unknown as Record<string, unknown>).executionStatus === 'interrupted'
+  return item.executionStatus === 'interrupted'
 }
 
 function unwrapCompletedSingleton(item: ThreadItem): boolean {

@@ -156,7 +156,7 @@ describe('conversation activity disclosure ordering', () => {
 
   it('derives compact command tones from the active theme text token', () => {
     const rowRule = activityStyles.match(/\.conversation-command-item\.is-compact \.conversation-command-row\s*\{([^}]*)\}/)?.[1] || ''
-    const detailRule = activityStyles.match(/\.conversation-command-item\.is-compact \.command-activity-detail\s*\{([^}]*)\}/)?.[1] || ''
+    const detailRule = activityStyles.match(/\.conversation-command-item\.is-compact \.conversation-command-row:not\(\[data-command-activity-kind='command'\]\) \.activity-item-copy\s*\{([^}]*)\}/)?.[1] || ''
     expect(rowRule).toContain('var(--text) 40%')
     expect(detailRule).toContain('var(--text) 30%')
     expect(`${rowRule}${detailRule}`).not.toContain('rgb(252 252 252')
@@ -164,13 +164,15 @@ describe('conversation activity disclosure ordering', () => {
 
   it('matches the shipped activity-header icon, label and disclosure spacing', () => {
     const commandRule = activityStyles.match(/\.conversation-command-row\s*\{([^}]*)\}/)?.[1] || ''
+    const summaryRule = activityStyles.match(/\.conversation-command-summary\s*\{([^}]*)\}/)?.[1] || ''
     const groupIconRule = activityStyles.match(/\.conversation-activity-group-heading > \.conversation-activity-icon\s*\{([^}]*)\}/)?.[1] || ''
     const chevronRule = activityStyles.match(/\.activity-group-chevron\s*\{([^}]*)\}/)?.[1] || ''
 
-    expect(commandRule).toContain('gap: 6px')
+    expect(commandRule).toContain('gap: 4px')
+    expect(summaryRule).toContain('gap: 6px')
     expect(groupIconRule).toContain('margin-right: 2px')
     expect(chevronRule).toContain('var(--text) 60%')
-    expect(activityStyles).toContain('.conversation-command-item:not(.is-compact) .conversation-command-row > .conversation-activity-icon')
+    expect(activityStyles).toContain('.conversation-command-summary > .conversation-activity-icon')
   })
 })
 
@@ -233,7 +235,7 @@ describe('turn activity lifecycle', () => {
       items: [...base.items, command('command', 'completed'), { type: 'agentMessage', id: 'final', phase: 'final_answer', text: 'Done.' }]
     }, false, false)
     expect(complete.match(/data-activity-group="turn"/g)).toHaveLength(1)
-    expect(complete).toContain('用时 5s')
+    expect(complete).toContain('用时 5秒')
     expect(complete).toContain('aria-expanded="false"')
     expect(complete).toContain('Done.')
   })

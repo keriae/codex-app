@@ -14,7 +14,7 @@
   "scripts": {
     "prepare:native": "node scripts/prepare-node-pty.cjs",
     "postinstall": "npm run prepare:native",
-    "dev": "npm run prepare:native && electron-vite dev",
+    "dev": "npm run prepare:native && node scripts/dev.mjs",
     "build": "electron-vite build",
     "package:mac": "npm run prepare:native && npm run build && electron-builder --mac dir --publish never",
     "dist:mac": "npm run prepare:native && npm run build && electron-builder --mac dmg zip --publish never",

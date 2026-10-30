@@ -1,3 +1,4 @@
+import { copyTextToClipboard } from './clipboard'
 import { Check, CodeXml, Copy, WrapText } from 'lucide-react'
 import hljs from 'highlight.js/lib/core'
 import bash from 'highlight.js/lib/languages/bash'
@@ -117,7 +118,7 @@ export function CodeBlock({
 
   const copy = async (): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(code)
+      await copyTextToClipboard(code)
       setCopied(true)
       if (resetTimer.current !== null) window.clearTimeout(resetTimer.current)
       resetTimer.current = window.setTimeout(() => setCopied(false), 1_500)

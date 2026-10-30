@@ -1,3 +1,4 @@
+import { copyTextToClipboard } from './clipboard'
 import {
   Bot,
   Braces,
@@ -34,6 +35,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -76,7 +78,6 @@ import {
 import {
   languageForWorkspaceFile,
   tokenizeWorkspaceCodeLine,
-  workspaceBreadcrumbs,
   workspaceErrorMessage,
   workspacePathName,
   workspaceRelativePath
@@ -113,6 +114,9 @@ import {
   collectWorkspaceSummaryPanelsModel
 } from './workspaceSummaryPanelsModel'
 import { readDesktopSettings } from './desktopSettings'
+import { WorkspaceBreadcrumbs } from './WorkspaceBreadcrumbs'
+import { WorkspaceFileToolbar } from './WorkspaceFileToolbar'
+import { WorkspaceToolbarControls } from './WorkspaceToolbarControls'
 
 export interface WorkspacePaneProps extends WorkspaceDiffCommentProps {
   chromeTarget?: HTMLElement | null
@@ -880,6 +884,8 @@ export function CodeViewer({
   file,
   targetLine,
   onRetry,
+  onSelectFile,
+  toolbarTarget,
   toolbarActions
 }: {
   cwd: string | null | undefined
@@ -887,10 +893,11 @@ export function CodeViewer({
   file: FileLoadState
   targetLine: number | null
   onRetry(): void
+  onSelectFile?(path: string): void
+  toolbarTarget?: HTMLElement | null
   toolbarActions?: ReactNode
 }): ReactNode {
   const targetLineRef = useRef<HTMLSpanElement>(null)
-  const breadcrumbs = cwd && path ? workspaceBreadcrumbs(cwd, path) : []
   const textResult = file.result?.kind === 'text' ? file.result : null
   const language = path ? languageForWorkspaceFile(path, textResult?.mimeType) : null
   const allLines = textResult ? textResult.text.split('\n') : []
@@ -921,24 +928,10 @@ export function CodeViewer({
 
   return (
     <section className="workspace-code-viewer" aria-label="Code preview">
-      <header className="workspace-code-toolbar">
-        <div className="workspace-breadcrumbs" title={path || cwd || 'Workspace'}>
-          {breadcrumbs.length > 0 ? (
-            breadcrumbs.map((part, index) => (
-              <span key={`${part}:${index}`}>
-                {index > 0 && <ChevronRight />}
-                <span>{part}</span>
-              </span>
-            ))
-          ) : (
-            <span>
-              <Folder />
-              <span>{cwd ? workspacePathName(cwd) : 'Workspace'}</span>
-            </span>
-          )}
-        </div>
+      <WorkspaceFileToolbar target={toolbarTarget}>
+        <WorkspaceBreadcrumbs root={cwd} path={path} onSelectFile={onSelectFile} />
         {toolbarActions || (language && <span className="workspace-code-language">{language}</span>)}
-      </header>
+      </WorkspaceFileToolbar>
       <div className="workspace-code-content">
         {!path && (
           <div className="workspace-code-empty">
@@ -1015,6 +1008,19 @@ export function CodeViewer({
   )
 }
 
+interface WorkspacePresentation {
+  activeTab: WorkspaceToolTab
+  filter: string
+  expandedDirectories: Set<string>
+  selectedChange: WorkspaceChangeEntry | null
+  changeView: 'overview' | 'selection'
+  showSelectedDiff: boolean
+  changeSource: WorkspaceChangeSource
+  toolsVisible: boolean
+  openedToolTabs: WorkspaceToolTab[]
+}
+const workspacePresentations = new Map<string, WorkspacePresentation>()
+
 export function WorkspacePane({
   chromeTarget,
   session,
@@ -1033,21 +1039,26 @@ export function WorkspacePane({
   onCommentsChange,
   commentScopeKey
 }: WorkspacePaneProps): ReactNode {
+  const presentationKey = `${commentScopeKey || 'workspace'}:${cwd || '/'}`
+  const restoredPresentation = workspacePresentations.get(presentationKey)
+  const presentationKeyRef = useRef(presentationKey)
   const [expanded, setExpanded] = useState(initialExpanded)
   const paneRef = useRef<HTMLElement>(null)
+  const [toolbarHost, setToolbarHost] = useState<HTMLDivElement | null>(null)
   const expandedChangeCallback = useRef(onExpandedChange)
   expandedChangeCallback.current = onExpandedChange
   const chromeStateCallback = useRef(onChromeStateChange)
   chromeStateCallback.current = onChromeStateChange
-  const [toolsVisible, setToolsVisible] = useState(true)
+  const [toolsVisible, setToolsVisible] = useState(restoredPresentation?.toolsVisible ?? true)
   const [localLayoutMode, setLocalLayoutMode] = useState<WorkspaceLayoutMode>('split')
   const effectiveLayoutMode = layoutMode ?? localLayoutMode
   const unifiedChrome = Boolean(chromeTarget) || integratedChrome
   const surfaceLayout = workspaceSurfaceLayout(effectiveLayoutMode, expanded)
-  const [activeTab, setActiveTab] = useState<WorkspaceToolTab>('changes')
-  const [filter, setFilter] = useState('')
+  const [activeTab, setActiveTab] = useState<WorkspaceToolTab>(restoredPresentation?.activeTab ?? 'changes')
+  const [openedToolTabs, setOpenedToolTabs] = useState<WorkspaceToolTab[]>(restoredPresentation?.openedToolTabs ?? [])
+  const [filter, setFilter] = useState(restoredPresentation?.filter ?? '')
   const [directories, setDirectories] = useState<Record<string, DirectoryLoadState>>({})
-  const [expandedDirectories, setExpandedDirectories] = useState<Set<string>>(new Set())
+  const [expandedDirectories, setExpandedDirectories] = useState<Set<string>>(restoredPresentation?.expandedDirectories ?? new Set(cwd ? [cwd] : []))
   const documentsStore = useMemo(() => workspaceDocumentsForScope(commentScopeKey || 'workspace', cwd || '/', {
     readWorkspaceFile: (root, path) => window.codex.readWorkspaceFile(root, path),
     saveWorkspaceFile: (root, path, text, expectedText) => window.codex.saveWorkspaceFile(root, path, text, expectedText)
@@ -1055,10 +1066,10 @@ export function WorkspacePane({
   const documentState = useSyncExternalStore(documentsStore.subscribe, documentsStore.getSnapshot, documentsStore.getSnapshot)
   const selectedFile = documentState.activePath
   const activeDocument = selectedFile ? documentsStore.find(selectedFile) : undefined
-  const [selectedChange, setSelectedChange] = useState<WorkspaceChangeEntry | null>(null)
-  const [changeView, setChangeView] = useState<'overview' | 'selection'>('overview')
-  const [showSelectedDiff, setShowSelectedDiff] = useState(true)
-  const [changeSource, setChangeSource] = useState<WorkspaceChangeSource>('上一轮')
+  const [selectedChange, setSelectedChange] = useState<WorkspaceChangeEntry | null>(restoredPresentation?.selectedChange ?? null)
+  const [changeView, setChangeView] = useState<'overview' | 'selection'>(restoredPresentation?.changeView ?? 'overview')
+  const [showSelectedDiff, setShowSelectedDiff] = useState(restoredPresentation?.showSelectedDiff ?? true)
+  const [changeSource, setChangeSource] = useState<WorkspaceChangeSource>(restoredPresentation?.changeSource ?? '上一轮')
   const [changeSourceMenu, setChangeSourceMenu] = useState(false)
   const changeSourceMenuRef = useRef<HTMLDivElement>(null)
   const changeSourceButtonRef = useRef<HTMLButtonElement>(null)
@@ -1070,6 +1081,7 @@ export function WorkspacePane({
   const [fileMenu, setFileMenu] = useState<WorkspaceFileMenu | null>(null)
   const [openTargets, setOpenTargets] = useState<WorkspaceOpenTarget[] | null>(null)
   const [toolbarOpenMenu, setToolbarOpenMenu] = useState(false)
+  const resetToolbarOpenMenu = useCallback(() => setToolbarOpenMenu(false), [])
   const toolbarOpenMenuRef = useRef<HTMLDivElement>(null)
   const toolbarOpenMenuButtonRef = useRef<HTMLButtonElement>(null)
   const [navigatorWidthState, setNavigatorWidthState] = useState(
@@ -1115,6 +1127,24 @@ export function WorkspacePane({
     [cwd, directories, filter]
   )
 
+  useLayoutEffect(() => {
+    workspacePresentations.delete(presentationKey)
+    workspacePresentations.set(presentationKey, { activeTab, filter, expandedDirectories, selectedChange, changeView, showSelectedDiff, changeSource, toolsVisible, openedToolTabs })
+    if (workspacePresentations.size > 32) workspacePresentations.delete(workspacePresentations.keys().next().value!)
+  }, [presentationKey, activeTab, filter, expandedDirectories, selectedChange, changeView, showSelectedDiff, changeSource, toolsVisible, openedToolTabs])
+
+  useEffect(() => {
+    if (expanded && activeTab !== 'files' && !(activeTab === 'changes' && changeView === 'selection')) setOpenedToolTabs((current) => current.includes(activeTab) ? current : [...current, activeTab])
+  }, [activeTab, expanded, changeView])
+
+  const closeToolTab = (id: WorkspaceToolTab): void => {
+    const remaining = openedToolTabs.filter((tab) => tab !== id)
+    setOpenedToolTabs(remaining)
+    if (activeTab !== id || (id === 'changes' && changeView === 'selection' && selectedChange)) return
+    setActiveTab(selectedFile || sourceImage ? 'files' : remaining.at(-1) ?? 'files')
+    if (!selectedFile && !sourceImage && remaining.length === 0 && !selectedChange) setExpanded(false)
+  }
+
   useEffect(() => {
     expandedChangeCallback.current?.(expanded)
   }, [expanded])
@@ -1143,6 +1173,7 @@ export function WorkspacePane({
     const key = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         event.preventDefault()
+        event.stopImmediatePropagation()
         setToolbarOpenMenu(false)
         toolbarOpenMenuButtonRef.current?.focus()
         return
@@ -1160,11 +1191,11 @@ export function WorkspacePane({
       toolbarOpenMenuRef.current?.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus()
     })
     window.addEventListener('pointerdown', close)
-    window.addEventListener('keydown', key)
+    window.addEventListener('keydown', key, true)
     return () => {
       window.cancelAnimationFrame(frame)
       window.removeEventListener('pointerdown', close)
-      window.removeEventListener('keydown', key)
+      window.removeEventListener('keydown', key, true)
     }
   }, [toolbarOpenMenu])
 
@@ -1287,6 +1318,11 @@ export function WorkspacePane({
     [cwd, documentsStore]
   )
 
+  const openBreadcrumbFile = useCallback((path: string): void => {
+    setActiveTab('files')
+    void openFile(path)
+  }, [openFile])
+
   const openSourceImage = useCallback(async (path: string): Promise<void> => {
     const workspacePath = cwd ? resolveWorkspaceFileLink(cwd, path) : null
     if (workspacePath) {
@@ -1330,7 +1366,11 @@ export function WorkspacePane({
     directoriesRef.current = {}
     directoryLoads.current.clear()
     setDirectories({})
+    if (presentationKeyRef.current === presentationKey) return
+    presentationKeyRef.current = presentationKey
     setExpandedDirectories(cwd ? new Set([cwd]) : new Set())
+    setOpenedToolTabs([])
+    setActiveTab('files')
     setNavigatorSections(readWorkspaceNavigatorSections(workspaceNavigatorStorage(), cwd))
     setSearchingFiles(false)
     setSelectedChange(null)
@@ -1344,7 +1384,7 @@ export function WorkspacePane({
     setWatchError(null)
     sourceImageRequest.current += 1
     setSourceImage(null)
-  }, [cwd])
+  }, [cwd, presentationKey])
 
   useEffect(() => {
     const query = filter.trim()
@@ -1481,8 +1521,8 @@ export function WorkspacePane({
   }, [tabMenu])
 
   useEffect(() => {
-    if (expanded && cwd) void loadDirectory(cwd)
-  }, [cwd, expanded, loadDirectory])
+    if (expanded && cwd) for (const path of expandedDirectories) void loadDirectory(path)
+  }, [cwd, expanded, expandedDirectories, loadDirectory])
 
   useEffect(() => {
     const handleWorkspaceFileLink = (event: Event): void => {
@@ -1536,13 +1576,14 @@ export function WorkspacePane({
         hasActiveDocument: Boolean(path)
       })
       if (action === 'close-summary') {
-        setActiveTab(sourceImage || path ? 'files' : selectedChange ? 'changes' : 'files')
+        closeToolTab(activeTab)
         return
       }
       if (action === 'close-change') {
         setSelectedChange(null)
         setChangeView('overview')
         setShowSelectedDiff(true)
+        setActiveTab('files')
         return
       }
       if (action === 'close-source-image') {
@@ -1567,7 +1608,7 @@ export function WorkspacePane({
       window.removeEventListener(CLOSE_WORKSPACE_CONTENT_EVENT, closeContent)
       window.removeEventListener(CLOSE_WORKSPACE_FILE_EVENT, closeActiveContent)
     }
-  }, [activeTab, changeView, documentsStore, selectedChange, sourceImage])
+  }, [activeTab, changeView, documentsStore, selectedChange, sourceImage, openedToolTabs])
 
   const toggleLayout = (): void => {
     const next = effectiveLayoutMode === 'full' ? 'split' : 'full'
@@ -1624,7 +1665,7 @@ export function WorkspacePane({
       ? fileTabs.filter((tab) => tab.path !== retainedChange.path)
       : fileTabs
     const retainedTabs: WorkspaceChromeTab[] = [
-      ...(snapshot.changes.length > 0 || retainedChange ? [changesTab] : []),
+      ...openedToolTabs.map((id): WorkspaceChromeTab => id === 'changes' ? changesTab : { id, label: id === 'sources' ? '来源' : id === 'subagents' ? '子智能体' : '输出', kind: id as WorkspaceChromeState['kind'] }),
       ...(retainedChangeTab ? [retainedChangeTab] : []),
       ...visibleFileTabs
     ]
@@ -1642,7 +1683,7 @@ export function WorkspacePane({
       tabs: retainedTabs.some((tab) => tab.id === active.id) ? retainedTabs : [...retainedTabs, active],
       activeTabId: active.id
     }
-  }, [activeDocument, activeTab, changeView, cwd, documentState.documents, previewingSelectedChange, retainedChange, snapshot.changes.length, sourceImage])
+  }, [activeDocument, activeTab, changeView, cwd, documentState.documents, previewingSelectedChange, retainedChange, openedToolTabs, sourceImage])
   useEffect(() => {
     chromeStateCallback.current?.(chromeState)
   }, [chromeState, expanded])
@@ -1677,6 +1718,7 @@ export function WorkspacePane({
       const id = (event as CustomEvent<string>).detail
       const tab = chromeState.tabs.find((entry) => entry.id === id)
       if (!tab) return
+      if (['changes', 'sources', 'subagents', 'output'].includes(id)) { closeToolTab(id as WorkspaceToolTab); return }
       if (id === chromeState.activeTabId) {
         window.dispatchEvent(new CustomEvent(CLOSE_WORKSPACE_FILE_EVENT))
         return
@@ -1685,6 +1727,7 @@ export function WorkspacePane({
         setSelectedChange(null)
         setChangeView('overview')
         setShowSelectedDiff(true)
+        if (activeTab === 'changes' && changeView === 'selection') setActiveTab('files')
         return
       }
       if (tab.path && id.startsWith('file:')) void closeFile(tab.path)
@@ -1695,7 +1738,7 @@ export function WorkspacePane({
       window.removeEventListener(ACTIVATE_WORKSPACE_TAB_EVENT, activateTab)
       window.removeEventListener(CLOSE_WORKSPACE_TAB_EVENT, closeTab)
     }
-  }, [chromeState, documentsStore])
+  }, [chromeState, documentsStore, openedToolTabs, activeTab, selectedFile, sourceImage, selectedChange, changeView])
   const closeFile = async (path: string, discard = false): Promise<void> => {
     if (!await documentsStore.close(path, discard)) setCloseFailure(path)
     else setCloseFailure(null)
@@ -1808,7 +1851,7 @@ export function WorkspacePane({
           <span>{source}</span>{source === changeSource && <Check />}
         </button>)}
       </div>}
-      {leadingActions ? <div className="workspace-diff-native-controls">
+      <WorkspaceToolbarControls onPresentationChange={resetToolbarOpenMenu}>{leadingActions ? <div className="workspace-diff-native-controls">
         {leadingActions}
         {editorTools}
         <button
@@ -1866,7 +1909,7 @@ export function WorkspacePane({
                 <WorkspaceOpenTargetIcon target={target.id} /><span>在 {target.label} 中打开</span>
               </button>)}
         </div>}
-      </div>}
+      </div>}</WorkspaceToolbarControls>
     </div>
   )
   const changeSummary = summaryItems.find((item) => item.kind === 'changes') || {
@@ -2069,7 +2112,7 @@ export function WorkspacePane({
         <button type="button" role="menuitem" onClick={() => {
           const path = tabMenu.path
           setTabMenu(null)
-          void Promise.resolve().then(() => navigator.clipboard.writeText(path)).catch((error) => {
+          void Promise.resolve().then(() => copyTextToClipboard(path)).catch((error) => {
             setFileActionError(workspaceErrorMessage(error))
           })
         }}>复制路径</button>
@@ -2099,7 +2142,7 @@ export function WorkspacePane({
         </nav>
       )}
 
-      <div className="workspace-pane-body">
+      <div className="workspace-pane-body" ref={setToolbarHost}>
         {activeTab === 'sources' ? (
           <SourcesSidePanel
             snapshot={snapshot}
@@ -2154,13 +2197,16 @@ export function WorkspacePane({
             toolbarActions={unifiedChrome ? (leadingControls, fileControls) => renderToolbarActions(fileControls, leadingControls) : undefined}
             comments={comments} onCommentsChange={onCommentsChange} commentScopeKey={commentScopeKey}
             onRefresh={refreshSelectedChange}
-            onOpenFile={showSelectedChangeFile} /> : activeDocument?.status === 'ready' && activeDocument.result?.kind === 'text' && !sourceImage ? <div className="workspace-editor-stack">
-              {documentState.documents.filter((doc) => doc.status === 'ready' && doc.result?.kind === 'text').map((doc) => <WorkspaceTextEditor key={doc.id} document={doc} store={documentsStore} active={doc.path === selectedFile} toolbarActions={unifiedChrome ? renderToolbarActions : undefined} />)}
+            toolbarTarget={unifiedChrome ? toolbarHost : undefined}
+            onOpenFile={showSelectedChangeFile} onSelectFile={openBreadcrumbFile} /> : activeDocument?.status === 'ready' && activeDocument.result?.kind === 'text' && !sourceImage ? <div className="workspace-editor-stack">
+              {documentState.documents.filter((doc) => doc.status === 'ready' && doc.result?.kind === 'text').map((doc) => <WorkspaceTextEditor key={doc.id} document={doc} store={documentsStore} active={doc.path === selectedFile} onSelectFile={openBreadcrumbFile} toolbarTarget={unifiedChrome ? toolbarHost : undefined} toolbarActions={unifiedChrome ? renderToolbarActions : undefined} />)}
             </div> : <CodeViewer
             cwd={cwd}
             path={previewPath}
             file={previewFile}
             targetLine={previewTargetLine}
+            onSelectFile={sourceImage ? undefined : openBreadcrumbFile}
+            toolbarTarget={unifiedChrome ? toolbarHost : undefined}
             onRetry={() => sourceImage ? void openSourceImage(sourceImage.path) : selectedFile && void documentsStore.reload(selectedFile)}
             toolbarActions={unifiedChrome ? renderToolbarActions() : undefined}
           />}

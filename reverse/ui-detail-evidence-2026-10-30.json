@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-29T17:45:20.998090+00:00",
+  "date": "2026-10-30",
+  "status": "source-package-and-bounded-native-ui-validated",
+  "completeApplicationParity": false,
+  "method": {
+    "project": "https://github.com/morluto/rea",
+    "workflow": "https://github.com/morluto/rea/blob/main/docs/javascript-application-workflows.md",
+    "cleanRoom": false,
+    "thisPass": "Static selected JS/CSS/export recovery, offline recording comparison, editable-replica native UI acceptance. Reuses preceding REA analysis; no new full execution graph.",
+    "precedingEvidence": "reverse/ui-detail-evidence-2026-10-29.json",
+    "originalRendererExecuted": false,
+    "originalApplicationUiControlled": false,
+    "computerInteraction": "cua_repl native replica input and screenshots; CDP limited to window.codex backend API calls."
+  },
+  "installedSource": {
+    "application": "/Applications/ChatGPT.app",
+    "product": "Codex",
+    "version": "26.1023.50603",
+    "build": "22391",
+    "archiveSHA256": "94a7fac7fdf222261170204df0406249822431cf4db3627d5524b6ba033ce3e6"
+  },
+  "recording": {
+    "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+    "version": "26.1016.61520",
+    "build": "21421",
+    "pixelSize": [
+      3878,
+      2282
+    ],
+    "framesUsedSeconds": [
+      8,
+      134,
+      152
+    ]
+  },
+  "comparisonConditions": {
+    "replicaPixelSize": [
+      4112,
+      2402
+    ],
+    "dpr": 2,
+    "replicaDefaultSidebarCssWidth": 288,
+    "recordingSavedSidebarCssWidth": 468,
+    "workbenchCssWidths": [
+      320,
+      620,
+      630
+    ],
+    "zoomFactors": [
+      1,
+      1.1
+    ],
+    "wholeWindowPixelSimilarityComputed": false
+  },
+  "selectedSources": [
+    {
+      "path": "reverse/raw/ui-detail-2026-10-29/source/review-file-source-breadcrumb-59c8bd850f17.js.pretty",
+      "sha256": "fe795af9a0cdcd88879769c4887218d7dbc019c821a24bc5d87733f448f67d03"
+    },
+    {
+      "path": "reverse/raw/ui-detail-2026-10-29/source/app-initial-b539f0af92f3.js.pretty",
+      "sha256": "6f980224ad4f622efe4381434c218ff08500db89ba499d923501758487914044"
+    },
+    {
+      "path": "reverse/raw/ui-detail-2026-10-29/source/app-primary-8a31c4436352.js.pretty",
+      "sha256": "f5cb7f588d7cc5b4af978a467cfffb51178ad7f678acf5ac244345d72905fea0"
+    },
+    {
+      "path": "reverse/raw/ui-detail-2026-10-29/source/app-shared-2864d2ff2296.js.pretty",
+      "sha256": "01898407bf6f431227aace65c1d3981acda033c0399d90e7730b3aab04d14f14"
+    },
+    {
+      "path": "reverse/raw/ui-detail-2026-10-29/source/app-shared-398c891a59df.css",
+      "sha256": "fbeecf83dfe33c2780d527e361fde5003bbcca7dda660922a371aa6a11ce3497"
+    }
+  ],
+  "nativeAcceptance": {
+    "surface": "current editable development renderer on localhost:5173",
+    "checks": [
+      {
+        "id": "command-output",
+        "status": "bounded-native-check-passed",
+        "observation": "Command disclosure, bottom-visible 40-line output, exit 0, command and output copy feedback; output pasted into disposable draft and cleared."
+      },
+      {
+        "id": "filename-directory",
+        "status": "bounded-native-check-passed",
+        "observation": "Hidden entry, current filename selection, Down + Return opens sibling.json in preview."
+      },
+      {
+        "id": "ancestor-directory",
+        "status": "bounded-native-check-passed",
+        "observation": "Clicked ancestor selected and expanded in its containing directory; Left/Right and Escape restore trigger."
+      },
+      {
+        "id": "responsive-workbench",
+        "status": "bounded-native-check-passed",
+        "observation": "Keyboard Home to 320; Left to 620 then 630; compact at 620, inline at 630; filename retained at 320."
+      },
+      {
+        "id": "file-controls",
+        "status": "bounded-native-check-passed",
+        "observation": "File find opens and finds parity; tree hides and restores; nested Escape closes child only; outside dismissal and reopen clear child state."
+      },
+      {
+        "id": "toolbar-surface",
+        "status": "bounded-native-check-passed",
+        "observation": "Shared toolbar host removes clipping; portal uses original button sizing; final inline and compact screenshots inspected."
+      },
+      {
+        "id": "workbench-layout",
+        "status": "bounded-native-check-passed",
+        "observation": "Expanded workbench no longer overlaps transcript/composer on wide window; full view selects chat/file and split restores 630px width."
+      },
+      {
+        "id": "inactive-tab",
+        "status": "bounded-native-check-passed",
+        "observation": "File close affordance hidden while chat selected and composer focused; hover/focus/close matrix remains unverified."
+      },
+      {
+        "id": "window-zoom",
+        "status": "bounded-native-check-passed",
+        "observation": "Native Cmd+Plus; getWindowZoom API returned 1.1; directory popup observed scaled and anchored. Cmd+0 restored 1."
+      }
+    ],
+    "packagedNativeUiMatrixRepeated": false,
+    "rawDirectory": "reverse/raw/ui-detail-2026-10-30/native"
+  },
+  "realBackend": {
+    "method": "Native composer submission; thread/read verification via existing server",
+    "turnStatus": "completed",
+    "commandCount": 2,
+    "exitCodes": [
+      0,
+      0
+    ],
+    "outputLines": 40,
+    "firstOutput": "native-output-01",
+    "lastOutput": "native-output-40",
+    "requestReadonly": true,
+    "temporaryThreadsCreated": 2,
+    "temporaryThreadsDeleted": 2,
+    "cleanupVerified": true,
+    "rawTranscript": "reverse/raw/ui-detail-2026-10-30/native/backend-thread.json"
+  },
+  "sanitizedImages": [
+    {
+      "path": "docs/media/ui-detail-2026-10-30/breadcrumb-menu-110.png",
+      "sha256": "0f5c635be6e378a4603f65d80107c98bbfc1c743299a1b9ab8e3348fe61ec46b",
+      "content": "Only disposable fixture files and workspace controls; no conversation catalog."
+    },
+    {
+      "path": "docs/media/ui-detail-2026-10-30/compact-controls.png",
+      "sha256": "06a8e0881d559689f504fe48b0d34af7168166e0e228ae22f00c8e6f3f6f67ad",
+      "content": "Only disposable fixture files and workspace controls; no conversation catalog."
+    },
+    {
+      "path": "docs/media/ui-detail-2026-10-30/file-toolbar.png",
+      "sha256": "af81f7aedd914548fd6cb5c169bc9c535f6a2bd8dc0b90189db38b4d93917b29",
+      "content": "Only disposable fixture files and workspace controls; no conversation catalog."
+    }
+  ],
+  "validation": {
+    "testFiles": 187,
+    "testsPassed": 1422,
+    "testsFailed": 0,
+    "success": true,
+    "nodeTypecheck": true,
+    "webTypecheck": true,
+    "diffWhitespaceCheck": true,
+    "macArm64Package": true,
+    "codesignDeepStrict": true,
+    "fusesReadBack": true,
+    "packagedOutput": {
+      "files": 70,
+      "identical": 70
+    },
+    "asarSha256": "a5f3e31634ae2603905af77bc0075f021a804fd048adcce98f25076334fdb138",
+    "bundle": "release/mac-arm64/Codex.app",
+    "rawReport": "reverse/raw/ui-detail-2026-10-30/report.json"
+  },
+  "remaining": [
+    "Native breadcrumb text-selection copy",
+    "Root/empty/error directory popover matrix",
+    "Small viewport positioning and complete light/zoom matrix",
+    "Mouse resize drag; keyboard resizing passed",
+    "Inactive-tab hover/focus/close matrix",
+    "Different-project chat and terminal/browser restoration",
+    "Long command and multi-action group native acceptance",
+    "Animation timing/visual transitions",
+    "Main tree old focus ring, spacing and decoration set",
+    "Complete Pierre/rich Markdown, hosted and voice features"
+  ],
+  "summary": "docs/ui-detail-parity-2026-10-30.md"
+}

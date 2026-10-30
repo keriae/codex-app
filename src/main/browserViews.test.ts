@@ -31,6 +31,11 @@ class FakeWebContents extends EventEmitter {
   readonly close = vi.fn((_options: { waitForBeforeUnload: boolean }) => {
     this.destroyed = true
   })
+  zoom = 1
+  readonly getZoomFactor = vi.fn(() => this.zoom)
+  readonly setZoomFactor = vi.fn((factor: number) => { this.zoom = factor })
+  readonly findInPage = vi.fn(() => 77)
+  readonly stopFindInPage = vi.fn()
   destroyed = false
   windowOpenHandler: ((details: { url: string }) => { action: string }) | null = null
 
@@ -65,6 +70,7 @@ function fixture(contentBounds: Rectangle = { x: 50, y: 70, width: 800, height: 
   const contentView = new FakeContentView()
   const window = {
     contentView,
+    webContents: { focus: vi.fn() },
     getContentBounds: () => ({ ...contentBounds }),
     isDestroyed: () => false
   } as unknown as BrowserWindow
@@ -93,7 +99,7 @@ describe('native browser view security', () => {
     const test = fixture()
     expect(test.browserViews.create('browser:one')).toEqual({
       id: 'browser:one', url: '', title: '', loading: false,
-      canGoBack: false, canGoForward: false, error: null
+      canGoBack: false, canGoForward: false, zoomFactor: 1, error: null
     })
     expect(test.created).toHaveLength(1)
     expect(test.created[0].options.webPreferences).toEqual(SECURE_BROWSER_VIEW_WEB_PREFERENCES)
@@ -228,6 +234,7 @@ describe('native browser view lifecycle and state', () => {
         loading: false,
         canGoBack: true,
         canGoForward: true,
+        zoomFactor: 1,
         error: null
       }
     })
@@ -288,5 +295,50 @@ describe('native browser view lifecycle and state', () => {
     test.browserViews.dispose()
     expect(test.contentView.children).toHaveLength(0)
     expect(() => test.browserViews.create('browser:disposed')).toThrow('Browser window is unavailable')
+  })
+})
+
+describe('browser find, zoom and native macOS input', () => {
+  it('drops stale or cancelled search results and rejects malformed requests', () => {
+    const { browserViews, created, events } = fixture()
+    browserViews.create('find')
+    expect(browserViews.find('find', 'needle', { forward: true, findNext: false })).toBe(77)
+    const contents = created[0].view.webContents
+    expect(contents.findInPage).toHaveBeenCalledWith('needle', { forward: true, findNext: false })
+    contents.emit('found-in-page', {}, { requestId: 76, matches: 9 })
+    expect(events.filter(e => e.type === 'find-result')).toHaveLength(0)
+    contents.emit('found-in-page', {}, { requestId: 77, matches: 3, activeMatchOrdinal: 1, finalUpdate: true })
+    expect(events.at(-1)).toMatchObject({ type: 'find-result', id: 'find', result: { matches: 3 } })
+    browserViews.stopFinding('find')
+    contents.emit('found-in-page', {}, { requestId: 77, matches: 4 })
+    expect(events.filter(e => e.type === 'find-result')).toHaveLength(1)
+    expect(contents.stopFindInPage).toHaveBeenCalledWith('clearSelection')
+    for (const query of ['', '\0', 'a'.repeat(1025)]) expect(() => browserViews.find('find', query, { forward: true, findNext: false })).toThrow()
+    expect(() => browserViews.find('find', 'ok', { forward: 1, findNext: false })).toThrow()
+  })
+  it('publishes real native zoom and validates limits', () => {
+    const { browserViews, created, events } = fixture()
+    browserViews.create('zoom')
+    browserViews.setZoom('zoom', 1.25)
+    expect(created[0].view.webContents.setZoomFactor).toHaveBeenCalledWith(1.25)
+    expect(events.at(-1)).toMatchObject({ type: 'state', state: { zoomFactor: 1.25 } })
+    for (const factor of [NaN, Infinity, .49, 3.01, '1']) expect(() => browserViews.setZoom('zoom', factor)).toThrow()
+  })
+  it('routes shortcuts only from an active native page', () => {
+    const { browserViews, created, events } = fixture()
+    browserViews.create('keys')
+    const contents = created[0].view.webContents
+    const event = { preventDefault: vi.fn() }
+    contents.emit('before-input-event', event, { type: 'keyDown', key: 'f', meta: true })
+    expect(event.preventDefault).not.toHaveBeenCalled()
+    browserViews.setActive('keys', true)
+    contents.emit('before-input-event', event, { type: 'keyDown', key: 'f', meta: true })
+    expect(events.at(-1)).toEqual({ type: 'shortcut', id: 'keys', shortcut: 'find' })
+    contents.emit('before-input-event', event, { type: 'keyDown', key: 'g', meta: true, shift: true })
+    expect(events.at(-1)).toMatchObject({ shortcut: 'find-previous' })
+    contents.emit('before-input-event', event, { type: 'keyDown', key: '+', meta: true })
+    expect(contents.getZoomFactor()).toBe(1.1)
+    contents.emit('before-input-event', event, { type: 'keyDown', key: '0', meta: true })
+    expect(contents.getZoomFactor()).toBe(1)
   })
 })

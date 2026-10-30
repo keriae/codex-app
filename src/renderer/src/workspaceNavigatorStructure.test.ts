@@ -30,7 +30,8 @@ describe('workspace navigator parity structure', () => {
     expect(html).toContain('aria-label="调整文件导航宽度"')
     expect(html).toContain('--workspace-navigator-width:250px')
     expect(source).toContain('aria-label="清除文件筛选"')
-    expect(styles).toMatch(/\.workspace-pane-unified \.workspace-text-editor > \.workspace-code-toolbar\s*\{[^}]*right:\s*calc\(-1 \* var\(--workspace-navigator-width,\s*250px\)\);/s)
+    expect(source).toContain('className="workspace-pane-body" ref={setToolbarHost}')
+    expect(source).toContain('toolbarTarget={unifiedChrome ? toolbarHost : undefined}')
     expect(styles).toMatch(/\.workspace-navigator-resize-handle\s*\{[^}]*margin-top:\s*48px;/s)
   })
 

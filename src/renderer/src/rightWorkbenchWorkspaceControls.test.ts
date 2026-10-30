@@ -31,7 +31,8 @@ describe('workspace toolbar open-target integration', () => {
 
   it('matches the native diff action geometry and retains its change tabs', () => {
     expect(workspace).toContain("const WORKSPACE_CHANGE_SOURCES = ['上一轮', '未提交', '未暂存', '已暂存', '已提交', '分支']")
-    expect(workspace).toContain("...(snapshot.changes.length > 0 || retainedChange ? [changesTab] : [])")
+    expect(workspace).not.toContain("...(snapshot.changes.length > 0 || retainedChange ? [changesTab] : [])")
+    expect(workspace).toContain("...openedToolTabs.map")
     expect(workspace).toContain("...(retainedChangeTab ? [retainedChangeTab] : [])")
     expect(workspace).toContain("onOpenFile={showSelectedChangeFile}")
     expect(workspace).toContain("onRefresh={refreshSelectedChange}")

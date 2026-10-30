@@ -1,3 +1,4 @@
+import { copyTextToClipboard } from './clipboard'
 import {
   ArrowRight,
   Check,
@@ -108,7 +109,7 @@ function FileDiffPanel({
     event.preventDefault()
     event.stopPropagation()
     if (!canCopyPath) return
-    void navigator.clipboard.writeText(displayedPath).then(
+    void copyTextToClipboard(displayedPath).then(
       () => setCopied(true),
       () => setCopied(false)
     )

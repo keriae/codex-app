@@ -263,5 +263,32 @@
     "No compare_source_to_bundle or compare_javascript_export_shapes result validates the editable implementation against recovered export contracts.",
     "No reconcile_javascript_runtime result joins current static evidence to passive runtime evidence from the locally reconstructed application.",
     "The original application cannot be controlled through Computer Use; original dynamic evidence is bounded to the supplied recording and passive/static inspection."
+  ],
+  "latestUiDetailValidation": {
+    "date": "2026-10-30",
+    "installedTarget": "26.1023.50603 / 22391",
+    "summary": "docs/ui-detail-parity-2026-10-30.md",
+    "evidence": "reverse/ui-detail-evidence-2026-10-30.json",
+    "precedingUiDetailEvidence": "reverse/ui-detail-evidence-2026-10-29.json",
+    "testsPassed": 1422,
+    "testFiles": 187,
+    "packagedOutputIdentical": "70/70",
+    "nativeUiAcceptance": "Bounded current-dev native command/copy, breadcrumb, responsive file-controls, nested menu, full/split and 110% zoom checks passed; complete pixel/function/package-native matrix remains in progress."
+  },
+  "uiDetailValidationHistory": [
+    {
+      "date": "2026-10-29",
+      "installedTarget": "26.1023.50603 / 22391",
+      "capturedTargetsAbove": "The targets and original evidence above retain their 2026-10-24 snapshot attribution.",
+      "summary": "docs/ui-detail-parity-2026-10-29.md",
+      "evidence": "reverse/ui-detail-evidence-2026-10-29.json",
+      "precedingWorkbenchEvidence": "reverse/workbench-activity-evidence-2026-10-29.json",
+      "selectedStaticModuleCount": 24,
+      "originalSvgGeometryChecks": 12,
+      "testsPassed": 1413,
+      "testFiles": 185,
+      "packagedOutputIdentical": "70/70",
+      "nativeUiAcceptance": "Pending manual Mac unlock; this UI patch has no new native pixel/interaction acceptance."
+    }
   ]
 }

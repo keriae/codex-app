@@ -5,7 +5,7 @@ import type {
   WebContentsViewConstructorOptions,
   WebPreferences
 } from 'electron'
-import type { BrowserViewBounds, BrowserViewEvent, BrowserViewState } from '../shared/api'
+import type { BrowserFindResult, BrowserShortcut, BrowserViewBounds, BrowserViewEvent, BrowserViewState } from '../shared/api'
 import type { BrowserHistoryRecorder } from './browserHistory'
 
 const MAX_BROWSER_VIEWS = 16
@@ -43,6 +43,7 @@ interface BrowserViewEntry {
   loading: boolean
   error: string | null
   navigation: number
+  findRequestId: number | null
 }
 
 function validId(value: unknown): value is string {
@@ -167,7 +168,8 @@ export class BrowserViews {
       title: '',
       loading: false,
       error: null,
-      navigation: 0
+      navigation: 0,
+      findRequestId: null
     }
     this.entries.set(id, entry)
     try {
@@ -246,6 +248,31 @@ export class BrowserViews {
     this.emitState(entry)
   }
 
+  find(idValue: unknown, query: unknown, options: unknown): number {
+    const entry = this.requireEntry(idValue)
+    if (typeof query !== 'string' || !query.trim() || query.length > 1_024 || query.includes('\0')) throw new Error('Invalid browser find query')
+    if (!options || typeof options !== 'object') throw new Error('Invalid browser find options')
+    const { forward, findNext } = options as Record<string, unknown>
+    if (typeof forward !== 'boolean' || typeof findNext !== 'boolean') throw new Error('Invalid browser find options')
+    const id = entry.view.webContents.findInPage(query, { forward, findNext })
+    entry.findRequestId = id
+    return id
+  }
+
+  stopFinding(idValue: unknown): void {
+    const entry = this.requireEntry(idValue)
+    entry.findRequestId = null
+    entry.view.webContents.stopFindInPage('clearSelection')
+  }
+
+  setZoom(idValue: unknown, factor: unknown): void {
+    const entry = this.requireEntry(idValue)
+    if (typeof factor !== 'number' || !Number.isFinite(factor) || factor < .5 || factor > 3) throw new Error('Invalid browser zoom factor')
+    entry.view.webContents.setZoomFactor(factor)
+    // Chromium shares zoom between same-origin pages; publish their actual value.
+    for (const candidate of this.entries.values()) this.emitState(candidate)
+  }
+
   setBounds(idValue: unknown, value: unknown): void {
     const entry = this.requireEntry(idValue)
     const bounds = fitBoundsToWindow(parseBounds(value), this.window.getContentBounds())
@@ -296,6 +323,27 @@ export class BrowserViews {
 
   private installNavigationPolicy(entry: BrowserViewEntry): void {
     const contents = entry.view.webContents
+    contents.on('found-in-page', (_event, result: BrowserFindResult) => {
+      if (this.entries.get(entry.id) === entry && entry.findRequestId === result.requestId) {
+        this.emit({ type: 'find-result', id: entry.id, result })
+      }
+    })
+    contents.on('before-input-event', (event, input) => {
+      if (!entry.active || input.type !== 'keyDown' || !input.meta || input.control || input.alt) return
+      const key = input.key.toLowerCase()
+      const shortcut: BrowserShortcut | undefined = {
+        l: 'address', f: 'find', g: input.shift ? 'find-previous' : 'find-next', w: 'close-tab', t: 'new-tab'
+      }[key] as BrowserShortcut | undefined
+      if (shortcut) {
+        event.preventDefault()
+        this.window.webContents.focus()
+        this.emit({ type: 'shortcut', id: entry.id, shortcut })
+      } else if (['+', '=', '-', '0'].includes(key)) {
+        event.preventDefault()
+        const factor = key === '0' ? 1 : Math.min(3, Math.max(.5, contents.getZoomFactor() + (key === '-' ? -.1 : .1)))
+        this.setZoom(entry.id, Math.round(factor * 100) / 100)
+      } else if (key === 'r') { event.preventDefault(); this.reload(entry.id) }
+    })
     contents.setWindowOpenHandler(({ url }) => {
       const normalized = normalizeBrowserViewUrl(url)
       if (normalized && this.entries.get(entry.id) === entry) {
@@ -383,6 +431,7 @@ export class BrowserViews {
       loading: entry.loading,
       canGoBack: !contents.isDestroyed() && contents.navigationHistory.canGoBack(),
       canGoForward: !contents.isDestroyed() && contents.navigationHistory.canGoForward(),
+      zoomFactor: contents.isDestroyed() ? 1 : contents.getZoomFactor(),
       error: entry.error
     }
   }

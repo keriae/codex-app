@@ -21,7 +21,7 @@ describe('WorkspacePane primary surface rendering', () => {
   it('keeps the tab context menu keyboard-operable and reports clipboard failures', () => {
     expect(workspacePaneSource).toContain('aria-label="标签页操作"')
     expect(workspacePaneSource).toContain("event.key !== 'ArrowDown' && event.key !== 'ArrowUp'")
-    expect(workspacePaneSource).toContain('navigator.clipboard.writeText(path)')
+    expect(workspacePaneSource).toContain('copyTextToClipboard(path)')
     expect(workspacePaneSource).toContain('setFileActionError(workspaceErrorMessage(error))')
     expect(workspacePaneSource).toContain('aria-expanded={entry.isDirectory ? isExpanded : undefined}')
   })

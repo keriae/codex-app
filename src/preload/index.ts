@@ -161,6 +161,9 @@ const api: CodexDesktopApi = {
   goForwardBrowserView: (id: string) => ipcRenderer.invoke('app:browser-view-forward', id) as Promise<void>,
   reloadBrowserView: (id: string) => ipcRenderer.invoke('app:browser-view-reload', id) as Promise<void>,
   stopBrowserView: (id: string) => ipcRenderer.invoke('app:browser-view-stop', id) as Promise<void>,
+  findBrowserView: (id, query, options) => ipcRenderer.invoke('app:browser-view-find', id, query, options) as Promise<number>,
+  stopFindingBrowserView: (id) => ipcRenderer.invoke('app:browser-view-stop-finding', id) as Promise<void>,
+  setBrowserViewZoom: (id, factor) => ipcRenderer.invoke('app:browser-view-zoom', id, factor) as Promise<void>,
   setBrowserViewBounds: (id, bounds) => ipcRenderer.invoke('app:browser-view-bounds', id, bounds) as Promise<void>,
   setBrowserViewActive: (id: string, active: boolean) => ipcRenderer.invoke('app:browser-view-active', id, active) as Promise<void>,
   closeBrowserView: (id: string) => ipcRenderer.invoke('app:browser-view-close', id) as Promise<void>,
@@ -204,6 +207,7 @@ const api: CodexDesktopApi = {
     ipcRenderer.invoke('app:copy-thread-image', path) as Promise<void>,
   copyInlineImage: (source: string) =>
     ipcRenderer.invoke('app:copy-inline-image', source) as Promise<void>,
+  copyText: (text: string) => ipcRenderer.invoke('app:copy-text', text) as Promise<void>,
   pickDirectory: () => ipcRenderer.invoke('app:pick-directory') as Promise<AppContext | null>,
   pickComposerAttachments: () =>
     ipcRenderer.invoke('app:pick-composer-attachments') as Promise<

@@ -7,8 +7,10 @@ import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { python } from '@codemirror/lang-python'
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { tags } from '@lezer/highlight'
-import { Check, ChevronRight, CircleAlert, LoaderCircle, RefreshCw, Save } from 'lucide-react'
-import { languageForWorkspaceFile, workspaceBreadcrumbs } from './workspaceFileModel'
+import { Check, CircleAlert, LoaderCircle, RefreshCw, Save } from 'lucide-react'
+import { languageForWorkspaceFile } from './workspaceFileModel'
+import { WorkspaceBreadcrumbs } from './WorkspaceBreadcrumbs'
+import { WorkspaceFileToolbar } from './WorkspaceFileToolbar'
 import { documentIsDirty, type WorkspaceDocument, type WorkspaceDocuments } from './workspaceDocuments'
 import { useWorkspaceEditorRuntime } from './workspaceEditorRuntime'
 import './WorkspaceTextEditor.css'
@@ -32,10 +34,12 @@ const sourceHighlight = HighlightStyle.define([
   { tag: [tags.typeName, tags.className], color: 'var(--editor-type, #4ec9b0)' }
 ])
 
-export function WorkspaceTextEditor({ document, store, active, toolbarActions }: {
+export function WorkspaceTextEditor({ document, store, active, onSelectFile, toolbarActions, toolbarTarget }: {
   document: WorkspaceDocument
   store: WorkspaceDocuments
   active: boolean
+  onSelectFile?(path: string): void
+  toolbarTarget?: HTMLElement | null
   toolbarActions?: ReactNode | ((editorTools: ReactNode) => ReactNode)
 }) {
   const parent = useRef<HTMLDivElement>(null)
@@ -43,13 +47,8 @@ export function WorkspaceTextEditor({ document, store, active, toolbarActions }:
     [languageExtension(document.path), syntaxHighlighting(sourceHighlight)], languageForWorkspaceFile(document.path) === 'markdown')
   const dirty = documentIsDirty(document)
   return <section className={`workspace-text-editor is-${editor.mode}`} hidden={!active} aria-label="文件编辑器" data-editor-mode={editor.mode}>
-    <header className="workspace-code-toolbar">
-      <div className="workspace-breadcrumbs" title={document.path}>
-        {workspaceBreadcrumbs(store.root, document.path).map((part, index) => <span key={`${part}:${index}`}>
-          {index > 0 && <ChevronRight />}
-          <span>{part}</span>
-        </span>)}
-      </div>
+    {active && <WorkspaceFileToolbar target={toolbarTarget}>
+      <WorkspaceBreadcrumbs root={store.root} path={document.path} onSelectFile={onSelectFile} />
       {typeof toolbarActions === 'function' ? toolbarActions(editor.toolbar) : <>
         <div className="workspace-editor-file-controls">
           {editor.toolbar}
@@ -60,7 +59,7 @@ export function WorkspaceTextEditor({ document, store, active, toolbarActions }:
         </div>
         {toolbarActions}
       </>}
-    </header>
+    </WorkspaceFileToolbar>}
     {editor.panels}
     {document.conflict !== undefined && <div className="workspace-editor-conflict" role="alert"><CircleAlert /><span>磁盘上的文件已更改。</span><button onClick={() => void store.resolveConflict(document.path, 'disk')}>使用磁盘内容</button><button onClick={() => void store.resolveConflict(document.path, 'local')}>保留我的更改</button></div>}
     {document.error && <div className="workspace-editor-conflict" role="alert"><CircleAlert /><span>{document.error}</span><button onClick={() => void store.save(document.path)}>重试保存</button></div>}

@@ -1,15 +1,3 @@
-import {
-  BookOpen,
-  Check,
-  ChevronDown,
-  Copy,
-  Folder,
-  Globe,
-  Pencil,
-  Search,
-  SquareTerminal,
-  Wrench
-} from 'lucide-react'
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import type { CommandItem, ThreadItem } from './protocol'
 import {
@@ -28,70 +16,136 @@ import {
 } from './conversationActivityModel'
 import './conversationActivity.css'
 import { SubagentActivityGroup } from './SubagentActivity'
+import { ActivityGlyph } from './ActivityGlyph'
+import { commandOutputDisplayCommand, commandOutputText } from './commandOutput'
+import { copyTextToClipboard } from './clipboard'
+
+function useActivityDisclosure(): { expanded: boolean; mounted: boolean; setOpen(open: boolean): void } {
+  const [expanded, setExpanded] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const frame = useRef<number | null>(null)
+  const timer = useRef<number | null>(null)
+  useEffect(() => () => {
+    if (frame.current !== null) cancelAnimationFrame(frame.current)
+    if (timer.current !== null) window.clearTimeout(timer.current)
+  }, [])
+  return { expanded, mounted, setOpen(open) {
+    if (frame.current !== null) cancelAnimationFrame(frame.current)
+    if (timer.current !== null) window.clearTimeout(timer.current)
+    if (open) {
+      setMounted(true)
+      frame.current = requestAnimationFrame(() => setExpanded(true))
+    } else {
+      setExpanded(false)
+      timer.current = window.setTimeout(() => setMounted(false), 300)
+    }
+  } }
+}
 
 export function CommandActivityIcon({ kind }: { kind: CommandActivityKind | CompletedActivitySummary['kind'] }): ReactNode {
-  if (kind === 'tools') return <span className="conversation-activity-icon" aria-hidden="true"><Wrench /></span>
-  if (kind === 'webSearch') return <span className="conversation-activity-icon" aria-hidden="true"><Globe /></span>
-  const Icon = kind === 'read' || kind === 'exploration' ? BookOpen : kind === 'search' ? Search
-    : kind === 'listFiles' ? Folder : kind === 'edits' ? Pencil : SquareTerminal
-  return <span className="conversation-activity-icon" aria-hidden="true"><Icon /></span>
+  const glyph = kind === 'exploration' ? 'read' : kind === 'commands' ? 'command' : kind
+  return <span className="conversation-activity-icon" aria-hidden="true"><ActivityGlyph kind={glyph} /></span>
+}
+
+function CommandCopyButton({ text, label }: { text: string; label: string }): ReactNode {
+  const [copied, setCopied] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const pending = useRef(false)
+  const mounted = useRef(true)
+  const timer = useRef<number | null>(null)
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+      if (timer.current !== null) window.clearTimeout(timer.current)
+    }
+  }, [])
+  const copy = async (): Promise<void> => {
+    if (pending.current) return
+    pending.current = true
+    setBusy(true)
+    try {
+      await copyTextToClipboard(text)
+      if (!mounted.current) return
+      setCopied(true)
+      if (timer.current !== null) window.clearTimeout(timer.current)
+      timer.current = window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // A rejected clipboard write must never display the success state.
+    } finally {
+      pending.current = false
+      if (mounted.current) setBusy(false)
+    }
+  }
+  const description = copied ? '已复制' : label
+  return <button type="button" className="conversation-command-copy" aria-label={description} title={description}
+    aria-busy={busy || undefined} onClick={copied ? undefined : (event) => { event.stopPropagation(); void copy() }}
+  ><ActivityGlyph kind={copied ? 'copied' : 'copy'} /></button>
+}
+
+export function CommandOutput({ item, command: rawCommand, id }: { item: CommandItem; command: string; id?: string }): ReactNode {
+  const [commandExpanded, setCommandExpanded] = useState(false)
+  const command = commandOutputDisplayCommand(rawCommand)
+  const output = commandOutputText(item)
+  return (
+    <div className="conversation-command-output" id={id}>
+      {command && <div className="conversation-command-code conversation-command-line">
+        <div className={`conversation-command-source${commandExpanded ? ' is-expanded' : ''}`}
+          role="button" tabIndex={0} aria-label={`$ ${command}`} aria-expanded={commandExpanded}
+          onClick={() => setCommandExpanded(true)}
+          onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setCommandExpanded(true) } }}
+        ><span className="conversation-command-prompt" aria-hidden="true">$</span>{command}</div>
+        <CommandCopyButton text={command} label="复制命令" />
+      </div>}
+      <div className="conversation-command-code conversation-command-stream">
+        <div className="conversation-command-scroll"><pre className="conversation-command-text">{output}</pre></div>
+        {item.aggregatedOutput && <CommandCopyButton text={item.aggregatedOutput} label="复制输出" />}
+      </div>
+      <div className="conversation-command-exit">{item.status === 'inProgress' ? null : item.executionStatus === 'interrupted' ? '已停止' : item.exitCode === 0 ? <><ActivityGlyph kind="check" />成功</> : `退出码 ${item.exitCode ?? '未知'}`}</div>
+    </div>
+  )
 }
 
 export function CommandActivity({ item, compact = false }: { item: CommandItem; compact?: boolean }): ReactNode {
-  const [expanded, setExpanded] = useState(false)
+  const { expanded, mounted, setOpen } = useActivityDisclosure()
   const [selectedRow, setSelectedRow] = useState(0)
-  const [commandExpanded, setCommandExpanded] = useState(false)
   const contentId = useId()
   const detailedRows = commandActivityRows(item)
   const rows = compact || !detailedRows.length ? [commandActivityCopy(item)] : detailedRows
-  const command = detailedRows[selectedRow]?.command || detailedRows.at(-1)?.command || item.command
+  const command = (compact ? detailedRows.at(-1)?.command : detailedRows[selectedRow]?.command) || item.command
   return (
     <div className={`conversation-command-item${compact ? ' is-compact' : ''}`} data-status={item.status}>
       <div className="conversation-command-rows">
-        {rows.map((row, index) => (
-          <button type="button" key={index} className="conversation-command-row"
-            data-command-activity-kind={row.kind} aria-expanded={expanded && selectedRow === index} aria-controls={contentId}
-            onClick={() => { setSelectedRow(index); setCommandExpanded(false); setExpanded((value) => selectedRow !== index || !value) }}>
-            <CommandActivityIcon kind={row.kind} />
+        {rows.map((row, index) => {
+          const filePath = row.kind === 'read'
+            ? ('path' in row && row.path ? String(row.path) : detailedRows.at(-1)?.path || null)
+            : null
+          const disclosure = row.kind === 'command'
+          const rowExpanded = expanded && selectedRow === index
+          return <div key={index} className={`conversation-command-row${disclosure ? ' has-disclosure' : ''}`}
+            data-command-activity-kind={row.kind}>
+            {disclosure && <button type="button" className="conversation-command-toggle"
+              aria-labelledby={`${contentId}-row-${index}`} aria-expanded={rowExpanded} aria-controls={contentId}
+              onClick={() => { setSelectedRow(index); setOpen(selectedRow !== index || !expanded) }} />}
+            <span className="conversation-command-summary" id={`${contentId}-row-${index}`}>
+            {row.kind === 'command' && item.executionStatus === 'interrupted'
+              ? <span className="conversation-activity-icon" aria-hidden="true"><ActivityGlyph kind="stopped" /></span>
+              : <CommandActivityIcon kind={row.kind} />}
             <span className="activity-item-copy" style={{ gap: (row.kind === 'search' && (row.action === '已对' || row.detail === '文件')) || (row.kind === 'listFiles' && row.detail === '文件') ? 0 : 5 }}>
-              <CadencedShimmer active={item.status === 'inProgress'}>{row.action}</CadencedShimmer>{row.detail && <span
-                className={`command-activity-detail${row.kind === 'read' ? ' is-file' : ''}`}
-                title={'path' in row && row.path ? String(row.path) : undefined}
-                role={row.kind === 'read' && 'path' in row && row.path ? 'link' : undefined}
-                tabIndex={row.kind === 'read' && 'path' in row && row.path ? 0 : undefined}
-                onClick={(event) => {
-                  if (row.kind !== 'read' || !('path' in row) || !row.path) return
-                  event.stopPropagation()
-                  dispatchWorkspaceFileLink({ path: String(row.path), line: 1 })
-                }}
-                onKeyDown={(event) => {
-                  if (event.key !== 'Enter' && event.key !== ' ') return
-                  if (row.kind !== 'read' || !('path' in row) || !row.path) return
-                  event.preventDefault(); event.stopPropagation()
-                  dispatchWorkspaceFileLink({ path: String(row.path), line: 1 })
-                }}
-              >{row.detail}</span>}
+              <CadencedShimmer active={item.status === 'inProgress'}>{row.action}</CadencedShimmer>
+              {row.detail && (filePath ? <button type="button" className="command-activity-detail is-file"
+                data-agent-activity-file-link="" title={filePath}
+                onClick={() => dispatchWorkspaceFileLink({ path: filePath, line: 1 })}
+              >{row.detail}</button> : <span className="command-activity-detail">{row.detail}</span>)}
             </span>
-          </button>
-        ))}
+            </span>
+            {disclosure && <ActivityGlyph kind="chevron" className={`activity-command-chevron${rowExpanded ? ' is-expanded' : ''}`} aria-hidden="true" />}
+          </div>
+        })}
       </div>
-      {expanded && (
-        <div className="conversation-command-output" id={contentId}>
-          <div className="conversation-command-caption">Shell{item.cwd && <span>{item.cwd}</span>}</div>
-          <div className="conversation-command-code">
-            <pre className={`conversation-command-source${commandExpanded ? ' is-expanded' : ''}`} tabIndex={0}
-              onClick={() => setCommandExpanded((value) => !value)}
-              onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setCommandExpanded((value) => !value) } }}
-            >{command}</pre>
-            <button type="button" className="conversation-command-copy" aria-label="复制命令" onClick={() => void navigator.clipboard?.writeText(command)}><Copy /></button>
-          </div>
-          <div className="conversation-command-code">
-            <pre className="conversation-command-text">{item.aggregatedOutput || (item.status === 'inProgress' ? '' : '无输出')}</pre>
-            {item.aggregatedOutput && <button type="button" className="conversation-command-copy" aria-label="复制输出" onClick={() => void navigator.clipboard?.writeText(item.aggregatedOutput || '')}><Copy /></button>}
-          </div>
-          <div className="conversation-command-exit">{item.status === 'inProgress' ? null : item.exitCode === 0 ? <><Check />成功</> : item.exitCode !== null && item.exitCode !== undefined ? `退出码 ${item.exitCode}` : '未知'}</div>
-        </div>
-      )}
+      {mounted && <div className={`conversation-command-collapse${expanded ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>
+        <div><CommandOutput key={selectedRow} item={item} command={command} id={contentId} /></div>
+      </div>}
     </div>
   )
 }
@@ -104,26 +158,8 @@ function ActivityGroup({
   kind: CompletedActivitySummary['kind']
   renderItem(item: ThreadItem, grouped: boolean): ReactNode
 }): ReactNode {
-  const [expanded, setExpanded] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const frame = useRef<number | null>(null)
-  const timer = useRef<number | null>(null)
+  const { expanded, mounted, setOpen } = useActivityDisclosure()
   const contentId = useId()
-  useEffect(() => () => {
-    if (frame.current !== null) cancelAnimationFrame(frame.current)
-    if (timer.current !== null) window.clearTimeout(timer.current)
-  }, [])
-  const toggle = (): void => {
-    if (frame.current !== null) cancelAnimationFrame(frame.current)
-    if (timer.current !== null) window.clearTimeout(timer.current)
-    if (expanded) {
-      setExpanded(false)
-      timer.current = window.setTimeout(() => setMounted(false), 300)
-    } else {
-      setMounted(true)
-      frame.current = requestAnimationFrame(() => setExpanded(true))
-    }
-  }
   return (
     <div className="conversation-activity-group" data-command-activity-summary={kind}>
       <button
@@ -131,11 +167,11 @@ function ActivityGroup({
         className="conversation-activity-group-heading"
         aria-expanded={expanded}
         aria-controls={contentId}
-        onClick={toggle}
+        onClick={() => setOpen(!expanded)}
       >
         <CommandActivityIcon kind={kind} />
         <span>{label}</span>
-        <ChevronDown className={`activity-group-chevron${expanded ? ' is-expanded' : ''}`} />
+        <ActivityGlyph kind="chevron" className={`activity-group-chevron${expanded ? ' is-expanded' : ''}`} aria-hidden="true" />
       </button>
       {mounted && (
         <div className={`conversation-activity-group-collapse${expanded ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>

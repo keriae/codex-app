@@ -1,10 +1,13 @@
-import { Check, ChevronDown, ChevronRight, Clipboard, Columns2, FileCode2, GitCompareArrows, MoreHorizontal, RefreshCw, Search, WrapText } from 'lucide-react'
+import { copyTextToClipboard } from './clipboard'
+import { Check, ChevronDown, Clipboard, Columns2, FileCode2, GitCompareArrows, MoreHorizontal, RefreshCw, Search, WrapText } from 'lucide-react'
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { collapseDiffLines, parseUnifiedDiff, type ParsedDiffLine } from './unifiedDiff'
 import { tokenizeWorkspaceCodeLine, workspaceBreadcrumbs, workspaceRelativePath } from './workspaceFileModel'
 import type { WorkspaceChangeEntry } from './workspacePaneModel'
 import { parseWorkspaceDiffPreferences, splitWorkspaceDiffLines, workspaceDiffSeparatorLabels, WORKSPACE_DIFF_PREFERENCES_KEY } from './workspaceDiffModel'
 import './WorkspaceDiffViewer.css'
+import { WorkspaceBreadcrumbs } from './WorkspaceBreadcrumbs'
+import { WorkspaceFileToolbar } from './WorkspaceFileToolbar'
 import { beginEditingDiffComment, diffCommentMatchesFile, diffCommentText, formatDiffCommentLines,
   isDiffCommentLineSelected, saveDiffCommentDraft, selectDiffCommentLine,
   type DiffCommentAttachment, type DiffCommentDraft, type DiffCommentLine, type DiffCommentSide } from './diffComments'
@@ -23,10 +26,12 @@ function Source({ line }: { line: ParsedDiffLine | null }): ReactNode {
     <span className={`workspace-token is-${token.kind}`} key={i}>{token.text}</span>)}</code>
 }
 
-export function WorkspaceDiffViewer({ change, cwd, onOpenFile, onRefresh, comments = NO_COMMENTS, onCommentsChange, commentScopeKey, toolbarActions }: {
+export function WorkspaceDiffViewer({ change, cwd, onOpenFile, onSelectFile, onRefresh, comments = NO_COMMENTS, onCommentsChange, commentScopeKey, toolbarActions, toolbarTarget }: {
   change: WorkspaceChangeEntry
   cwd: string | null | undefined
   onOpenFile(): void
+  onSelectFile?(path: string): void
+  toolbarTarget?: HTMLElement | null
   onRefresh?(): void
   toolbarActions?: ReactNode | ((leadingControls: ReactNode, fileControls: ReactNode) => ReactNode)
 } & WorkspaceDiffCommentProps): ReactNode {
@@ -152,7 +157,7 @@ export function WorkspaceDiffViewer({ change, cwd, onOpenFile, onRefresh, commen
   }
   const copyPath = async (value: string): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(value)
+      await copyTextToClipboard(value)
       setCopied(true); setCopyError(null)
     } catch { setCopyError('无法复制路径') }
   }
@@ -190,17 +195,12 @@ export function WorkspaceDiffViewer({ change, cwd, onOpenFile, onRefresh, commen
       onClick={() => updatePreferences({ ...preferences, style: preferences.style === 'split' ? 'unified' : 'split' })}><Columns2 /></button>
   </div>
   return <section className={`workspace-diff-viewer${preferences.wrap ? ' is-wrapped' : ''}${collapsedAll ? ' is-collapsed' : ''}`} aria-label={`${path} 中的更改`}>
-    <header className="workspace-code-toolbar workspace-diff-toolbar">
-      <div className="workspace-breadcrumbs" title={change.path}>
-        {breadcrumbs.map((part, index) => <span key={`${part}:${index}`}>
-          {index > 0 && <ChevronRight />}
-          <span>{part}</span>
-        </span>)}
-      </div>
+    <WorkspaceFileToolbar target={toolbarTarget} className="workspace-diff-toolbar">
+      <WorkspaceBreadcrumbs root={cwd} path={change.path} onSelectFile={onSelectFile} />
       {typeof toolbarActions === 'function'
         ? toolbarActions(diffLeadingControls, diffFileControls)
         : <>{diffLeadingControls}{diffFileControls}{toolbarActions}</>}
-    </header>
+    </WorkspaceFileToolbar>
     {searchOpen && <div className="workspace-file-search-overlay" role="presentation" onMouseDown={() => { setSearchOpen(false); setSearchQuery('') }}>
       <section className="workspace-file-search-dialog" role="dialog" aria-modal="true" aria-label="在文件中搜索" onMouseDown={(event) => event.stopPropagation()}>
         <div className="workspace-file-search-filters" aria-label="搜索类型">

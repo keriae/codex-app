@@ -28,7 +28,7 @@ describe('right workbench titlebar parity', () => {
   })
 
   it('keeps the full-view tab strip mounted when chat becomes the selected tab', () => {
-    expect(app).toContain('const [rightWorkbenchView, setRightWorkbenchView] = useState(initialRightWorkbenchViewState)')
+    expect(app).toContain('useRightWorkbenchSessions(rightWorkbenchScope)')
     expect(app).toContain('rightWorkbenchViewFlags(rightWorkbenchView)')
     expect(app).toContain('const visibleRightSurface = rightWorkbenchOpen && rightWorkbenchSurfaceVisible ? rightSurface : null')
     expect(app).toContain('onShowChat={showRightWorkbenchChat}')

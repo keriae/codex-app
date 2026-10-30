@@ -41,6 +41,8 @@ The client can discover the installed application's companion CLI, a `codex` on 
 
 Development and packaged builds use separate app-data directories.
 
+The packaged macOS app uses the original Codex application icon; its source and checksum are recorded in [resources](resources/README.md).
+
 ## What works today
 
 | Experience | Included capability |
@@ -68,7 +70,7 @@ Visual fidelity is treated as a functional requirement. Titlebar geometry, navig
 | Best for | Building features, changing UI, protocol experiments | Studying the installed renderer/runtime locally |
 | Stack | Electron + React + TypeScript + Vite | Retained installed renderer/runtime with isolated routing |
 | App-server | Existing Codex app-server | Existing Codex app-server |
-| Output | `release/mac-arm64/Codex.app` | `release/local-runtime/Codex Study Final.app` |
+| Output | `release/mac-arm64/Codex.app` | `release/local-runtime/Codex Study 2026-10-29.app` |
 | Distribution | Source in this repository | Generated locally and Git-ignored |
 
 ```mermaid
@@ -83,6 +85,12 @@ The server is reused, not reimplemented. The editable client is for building; th
 ## How the `codex-app` reconstruction was built
 
 The reconstruction combines interaction study, captured geometry, source inspection, protocol traces, and native runtime checks. Claims are scoped deliberately: complete pixel and functional parity are still in progress, and the exact boundary is recorded in the [feature inventory](docs/feature-inventory.md) and [obligation ledger](reverse/obligations.json).
+
+The [2026-10-29 workbench/activity update](docs/workbench-activity-parity-2026-10-29.md) records per-chat tab/browser restoration, page find/zoom, streamed work-duration fixes, **1,401 passing tests**, final package checks and the remaining native acceptance blocked by macOS lock. Its [sanitized evidence](reverse/workbench-activity-evidence-2026-10-29.json) separates source, real-backend and original-resource reconstruction results.
+
+The [2026-10-29 UI detail comparison](docs/ui-detail-parity-2026-10-29.md) documents activity icons, disclosure/link behavior, embedded output, file toolbar and composer refinements. Its 1,413-test snapshot is retained as historical evidence.
+
+The [latest detailed UI comparison](docs/ui-detail-parity-2026-10-30.md) adds real breadcrumb directory menus, responsive file controls, unclipped toolbars, native text copying and wide-workbench layout fixes. **1,422 tests in 187 files**, typechecks, macOS packaging and **70/70** ASAR comparisons pass. Bounded native checks cover command/output copying, directory navigation, 320/620/630px workbench states, nested menus, full/split views and 110% zoom. Sanitized fixture screenshots and remaining differences are included; whole-application pixel and functional parity remain in progress.
 
 ```text
 src/main         Electron lifecycle, native services, IPC, transport

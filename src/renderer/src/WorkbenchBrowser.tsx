@@ -28,7 +28,7 @@ import {
   useRef,
   useState
 } from 'react'
-import type { BrowserTopSite, BrowserViewBounds, BrowserViewState } from '../../shared/api'
+import type { BrowserFindResult, BrowserShortcut, BrowserTopSite, BrowserViewBounds, BrowserViewState } from '../../shared/api'
 import {
   hasWorkbenchBrowserPage,
   normalizeWorkbenchBrowserAddress,
@@ -48,6 +48,7 @@ export interface WorkbenchBrowserProps {
   active: boolean
   state: BrowserViewState | null
   onStateChange(state: BrowserViewState): void
+  onCloseTab?(): void
   onOpenNewTab(url?: string): void
   onOpenChanges(): void
   onOpenFiles(): void
@@ -95,6 +96,7 @@ export function WorkbenchBrowser({
   state,
   onStateChange,
   onOpenNewTab,
+  onCloseTab,
   onOpenChanges,
   onOpenFiles,
   onOpenSideChat,
@@ -103,6 +105,15 @@ export function WorkbenchBrowser({
   recentItems,
   onOpenRecent
 }: WorkbenchBrowserProps): ReactNode {
+  const browserRef = useRef<HTMLElement>(null)
+  const addressRef = useRef<HTMLInputElement>(null)
+  const findInputRef = useRef<HTMLInputElement>(null)
+  const findRequestRef = useRef<number | null>(null)
+  const findGenerationRef = useRef(0)
+  const earlyFindResultsRef = useRef(new Map<number, BrowserFindResult>())
+  const [findOpen, setFindOpen] = useState(false)
+  const [findQuery, setFindQuery] = useState('')
+  const [findResult, setFindResult] = useState<BrowserFindResult | null>(null)
   const viewportRef = useRef<HTMLDivElement>(null)
   const creationRef = useRef<Promise<BrowserViewState> | null>(null)
   const lastBoundsRef = useRef<BrowserViewBounds | null>(null)
@@ -271,6 +282,78 @@ export function WorkbenchBrowser({
     }, () => setRequestedUrl((current) => current === url ? null : current))
   }, [ensureView, runCommand, tabId])
 
+  const closeFind = useCallback((): void => {
+    findGenerationRef.current += 1
+    findRequestRef.current = null
+    earlyFindResultsRef.current.clear()
+    setFindOpen(false)
+    setFindResult(null)
+    if (viewCreated) void window.codex.stopFindingBrowserView(tabId).catch(() => undefined)
+  }, [tabId, viewCreated])
+  const showFind = useCallback((): void => {
+    closeToolbarMenu()
+    setFindOpen(true)
+    window.requestAnimationFrame(() => { findInputRef.current?.focus(); findInputRef.current?.select() })
+  }, [closeToolbarMenu])
+  const find = useCallback(async (forward = true, findNext = false): Promise<void> => {
+    if (!findQuery.trim() || !viewCreated) return
+    const generation = ++findGenerationRef.current
+    try {
+      const request = await window.codex.findBrowserView(tabId, findQuery, { forward, findNext: findNext || findRequestRef.current === null })
+      if (generation === findGenerationRef.current) {
+        findRequestRef.current = request
+        const early = earlyFindResultsRef.current.get(request)
+        if (early) setFindResult(early)
+        earlyFindResultsRef.current.clear()
+      }
+    } catch (error) {
+      if (generation === findGenerationRef.current) setCommandError(error instanceof Error ? error.message : String(error))
+    }
+  }, [findQuery, tabId, viewCreated])
+  useEffect(() => {
+    findGenerationRef.current += 1
+    findRequestRef.current = null
+    earlyFindResultsRef.current.clear()
+    setFindResult(null)
+    if (!findOpen || !viewCreated || state?.loading) return
+    if (!findQuery.trim()) { void window.codex.stopFindingBrowserView(tabId).catch(() => undefined); return }
+    const timer = window.setTimeout(() => void find(true, true), 120)
+    return () => window.clearTimeout(timer)
+  }, [findOpen, findQuery, find, tabId, viewCreated, state?.url, state?.loading])
+  const shortcut = useCallback((command: BrowserShortcut): void => {
+    if (command === 'address') { closeToolbarMenu(); addressRef.current?.focus(); addressRef.current?.select() }
+    else if (command === 'find') showFind()
+    else if (command === 'find-next' || command === 'find-previous') {
+      if (!findOpen) showFind()
+      else void find(command === 'find-next')
+    } else if (command === 'close-tab') onCloseTab?.()
+    else if (command === 'new-tab') onOpenNewTab()
+  }, [closeToolbarMenu, find, findOpen, onCloseTab, onOpenNewTab, showFind])
+  useEffect(() => window.codex.onBrowserViewEvent((event) => {
+    if (event.type === 'find-result' && event.id === tabId && findOpen) {
+      if (event.result.requestId === findRequestRef.current) setFindResult(event.result)
+      else {
+        // Electron can publish a result before the invoke promise is delivered.
+        earlyFindResultsRef.current.set(event.result.requestId, event.result)
+        if (earlyFindResultsRef.current.size > 4) earlyFindResultsRef.current.delete(earlyFindResultsRef.current.keys().next().value!)
+      }
+    }
+    if (event.type === 'shortcut' && event.id === tabId && active) shortcut(event.shortcut)
+  }), [active, findOpen, shortcut, tabId])
+  useEffect(() => {
+    if (!active) return
+    const key = (event: KeyboardEvent): void => {
+      if (!(event.target instanceof Node) || !browserRef.current?.contains(event.target)) return
+      if (event.isComposing) return
+      if (event.key === 'Escape' && findOpen) { event.preventDefault(); closeFind(); return }
+      if (!event.metaKey || event.ctrlKey || event.altKey) return
+      const command = ({ l: 'address', f: 'find', g: event.shiftKey ? 'find-previous' : 'find-next', w: 'close-tab', t: 'new-tab' } as Record<string, BrowserShortcut>)[event.key.toLowerCase()]
+      if (command) { event.preventDefault(); event.stopImmediatePropagation(); shortcut(command) }
+    }
+    window.addEventListener('keydown', key, true)
+    return () => window.removeEventListener('keydown', key, true)
+  }, [active, closeFind, findOpen, shortcut])
+
   const submitAddress = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
     editingAddressRef.current = false
@@ -319,6 +402,7 @@ export function WorkbenchBrowser({
 
   return (
     <section
+      ref={browserRef}
       className={`workbench-browser${active ? ' is-active' : ''}`}
       aria-label={state?.title || '新标签页'}
       aria-hidden={!active}
@@ -356,9 +440,21 @@ export function WorkbenchBrowser({
         </div>
         <form className="workbench-browser-address" onSubmit={submitAddress}>
           <input
+            ref={addressRef}
             value={address}
             autoFocus={!navigated && active}
             onChange={(event) => setAddress(event.currentTarget.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+                event.preventDefault()
+                editingAddressRef.current = false
+                navigate(address)
+              } else if (event.key === 'Escape') {
+                event.preventDefault()
+                setAddress(requestedUrl || workbenchBrowserAddress(state))
+                event.currentTarget.blur()
+              }
+            }}
             onFocus={(event) => {
               editingAddressRef.current = true
               event.currentTarget.select()
@@ -432,16 +528,16 @@ export function WorkbenchBrowser({
             role="menu"
             aria-label="浏览器选项"
           >
-            <button type="button" role="menuitem" disabled title="当前构建尚未连接页内查找服务">在页面中查找</button>
+            <button type="button" role="menuitem" disabled={!navigated} onClick={showFind}>在页面中查找<kbd>⌘F</kbd></button>
             <div className="workbench-browser-menu-separator" role="separator" />
             <div className="workbench-browser-zoom-row" role="group" aria-label="缩放">
               <span>缩放</span>
               <span className="workbench-browser-zoom-controls">
-                <button type="button" aria-label="缩小" disabled>−</button>
-                <output aria-label="当前缩放比例">100%</output>
-                <button type="button" aria-label="放大" disabled>+</button>
+                <button type="button" aria-label="缩小" disabled={!viewCreated || (state?.zoomFactor ?? 1) <= .5} onClick={() => runCommand(() => window.codex.setBrowserViewZoom(tabId, Math.max(.5, (state?.zoomFactor ?? 1) - .1)))}>−</button>
+                <output aria-label="当前缩放比例">{Math.round((state?.zoomFactor ?? 1) * 100)}%</output>
+                <button type="button" aria-label="放大" disabled={!viewCreated || (state?.zoomFactor ?? 1) >= 3} onClick={() => runCommand(() => window.codex.setBrowserViewZoom(tabId, Math.min(3, (state?.zoomFactor ?? 1) + .1)))}>+</button>
               </span>
-              <button type="button" aria-label="重置缩放" disabled>↺</button>
+              <button type="button" aria-label="重置缩放" disabled={!viewCreated} onClick={() => runCommand(() => window.codex.setBrowserViewZoom(tabId, 1))}>↺</button>
             </div>
             <div className="workbench-browser-menu-separator" role="separator" />
             <button
@@ -458,6 +554,17 @@ export function WorkbenchBrowser({
           <div className="workbench-browser-loading-bar" aria-hidden="true"><span /></div>
         )}
       </header>
+      {findOpen && (
+        <form className="workbench-browser-find" role="search" aria-label="在页面中查找" onSubmit={(event) => { event.preventDefault(); void find() }}>
+          <input ref={findInputRef} value={findQuery} onChange={(event) => setFindQuery(event.currentTarget.value)} aria-label="查找文本" placeholder="在页面中查找" onKeyDown={(event) => {
+            if (event.key === 'Enter' && !event.nativeEvent.isComposing) { event.preventDefault(); void find(!event.shiftKey) }
+          }} />
+          <output aria-live="polite" aria-label="匹配数量">{findResult ? `${findResult.activeMatchOrdinal}/${findResult.matches}` : '0/0'}</output>
+          <button type="button" aria-label="上一个匹配" disabled={!findQuery.trim()} onClick={() => void find(false)}><ChevronUp /></button>
+          <button type="button" aria-label="下一个匹配" disabled={!findQuery.trim()} onClick={() => void find()}><ChevronDown /></button>
+          <button type="button" aria-label="关闭页内查找" onClick={closeFind}><X /></button>
+        </form>
+      )}
       {visibleError && <div className="workbench-browser-error" role="status">{visibleError}</div>}
       {!navigated && showImportBanner && (
         <aside

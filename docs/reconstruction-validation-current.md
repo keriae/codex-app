@@ -1,5 +1,9 @@
 # Current macOS reconstruction validation
 
+The latest installed-version reconstruction is [Codex Study 2026-10-29](workbench-activity-parity-2026-10-29.md), based on **26.1023.50603 / 22391**. The native UI/model acceptance below belongs to the earlier build; the latest build has static and backend-handshake acceptance.
+
+The separate editable client now has [2026-10-30 UI/native acceptance](ui-detail-parity-2026-10-30.md), including real clipboard copying, breadcrumb/compact-controls and full/split/zoom states, a readonly model fixture, and 1,422 passing tests with a rebuilt package. These results do not revalidate or replace the retained-runtime build described below.
+
 On **2026-10-24**, the installed **26.1016.62342 / 21477** runtime was rebuilt into:
 
 ```text

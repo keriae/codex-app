@@ -185,7 +185,7 @@ describe('turn activity partition rendering', () => {
       ]
     })
 
-    expect(html).toContain(`用时 ${formatTurnDuration(3_250)}`)
+    expect(html).toContain(`用时 ${formatTurnDuration(3_250, 'zh-CN')}`)
     expect(html).not.toContain('用时 1分钟 39秒')
     expect(html).not.toContain('已使用 worked-for')
   })
@@ -258,7 +258,7 @@ describe('turn activity partition rendering', () => {
 
     expect(html).toContain('class="turn-activity is-open is-terminal"')
     expect(html).toContain('<span>活动</span>')
-    expect(html).not.toContain('你在 14s 后停止了')
+    expect(html).not.toContain('你在 14秒 后停止了')
     expect(html).toContain('activity-commentary')
     expect(html.indexOf('<span>活动</span>')).toBeLessThan(html.indexOf('activity-commentary'))
     expect(html.indexOf('activity-commentary')).toBeLessThan(html.indexOf('运行了命令'))
@@ -302,9 +302,9 @@ describe('turn activity partition rendering', () => {
     }
 
     expect(renderTurn(turn)).toContain('<span>活动</span>')
-    expect(renderTurn(turn)).not.toContain('你在 14s 后停止了')
+    expect(renderTurn(turn)).not.toContain('你在 14秒 后停止了')
     expect(renderTurn(turn, false, { interruptedByThisClient: true }))
-      .toContain('你在 14s 后停止了')
+      .toContain('你在 14秒 后停止了')
   })
 
   it('keeps actions visible for the latest completed user message', () => {

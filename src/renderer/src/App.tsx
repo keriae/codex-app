@@ -1,3 +1,6 @@
+import { copyTextToClipboard } from './clipboard'
+import { shouldActivateWorkbenchTerminal, useRightWorkbenchSessions } from './rightWorkbenchSessions'
+import { hasVisibleFinalAnswer, turnWorkDuration } from './turnTiming'
 import {
   Archive,
   ArrowDown,
@@ -322,6 +325,7 @@ import {
   activateRightWorkbenchTab,
   closeRightWorkbenchTab,
   moveRightWorkbenchTab,
+  openRightWorkbenchTab,
   reconcileRightWorkbenchTabs,
   rightWorkbenchTabKind,
   rightWorkbenchTabValue,
@@ -340,7 +344,6 @@ import {
   activateRightWorkbenchSurface,
   collapseRightWorkbenchView,
   enterRightWorkbenchFullView,
-  initialRightWorkbenchViewState,
   revealRightWorkbenchView,
   rightWorkbenchViewFlags,
   selectRightWorkbenchChat,
@@ -402,14 +405,6 @@ const browserWorkbenchTabId = (id: string): RightWorkbenchTabId => `browser:${id
 const RIGHT_WORKBENCH_TAB_DRAG_TYPE = 'application/x-codex-right-workbench-tab'
 const PROJECT_SUMMARY_PINNED_KEY = 'codex-project-summary-pinned'
 
-function defaultWorkspaceChromeState(label = '工作区'): WorkspaceChromeState {
-  return {
-    label,
-    kind: 'workspace',
-    tabs: [{ id: 'workspace', label, kind: 'workspace' }],
-    activeTabId: 'workspace'
-  }
-}
 
 const THREAD_PREFERENCES_KEY = 'codex-thread-preferences-v1'
 const QUEUEING_ENABLED_KEY = 'codex-composer-queueing-enabled-v1'
@@ -528,12 +523,6 @@ interface ThreadQueueStartResponse {
   turn: Turn
 }
 
-interface OpenedSubagentTab {
-  threadId: string
-  name: string
-  thread?: Thread
-}
-
 interface RightWorkbenchTitleTab {
   id: RightWorkbenchTabId
   label: string
@@ -550,7 +539,6 @@ function browserTabLabel(tab: WorkbenchBrowserTab): string {
   }
   return '新标签页'
 }
-
 
 function displayError(error: unknown): string {
   return error instanceof Error ? error.message : String(error)
@@ -843,11 +831,23 @@ function App(): ReactNode {
   const desktopSettings = useDesktopSettings()
   const [desktopPreferencesReady, setDesktopPreferencesReady] = useState(false)
   const [workspaceLayouts, setWorkspaceLayouts] = useState(() => parseWorkspaceLayouts(localStorage.getItem(WORKSPACE_LAYOUTS_KEY)))
-  const [workspaceOpen, setWorkspaceOpen] = useState(false)
+  const [state, dispatch] = useReducer(sessionReducer, initialSessionState)
+  const [draftTerminalScope, setDraftTerminalScope] = useState(() => `draft:${crypto.randomUUID()}`)
+  const draftTerminalScopeRef = useRef(draftTerminalScope)
+  const terminalScopes = useRef(new Map<string, string>())
+  const rightWorkbenchScope = state.selectedThreadId
+    ? terminalScopes.current.get(state.selectedThreadId) || state.selectedThreadId
+    : draftTerminalScope
+  const {
+    store: workbenchSessions, workspaceOpen, setWorkspaceOpen,
+    workspaceChromeState, setWorkspaceChromeState, rightWorkbenchTabs, setRightWorkbenchTabsState,
+    rightWorkbenchView, setRightWorkbenchView, browserTabs, setBrowserTabs, allBrowserTabs,
+    openedSubagents, setOpenedSubagents, activeSubagentId, setActiveSubagentId
+  } = useRightWorkbenchSessions(rightWorkbenchScope)
   const workspaceOwnerScopeRef = useRef<string | null>(null)
-  const [workspaceChromeState, setWorkspaceChromeState] = useState<WorkspaceChromeState>(() => defaultWorkspaceChromeState())
-  const [rightWorkbenchTabs, setRightWorkbenchTabsState] = useState<RightWorkbenchTabsState>({order: [], activeId: null})
-  const [rightWorkbenchView, setRightWorkbenchView] = useState(initialRightWorkbenchViewState)
+  useLayoutEffect(() => {
+    workspaceOwnerScopeRef.current = workspaceOpen ? rightWorkbenchScope : null
+  }, [rightWorkbenchScope, workspaceOpen])
   const {
     open: rightWorkbenchVisible,
     fullView: rightWorkbenchFullView,
@@ -861,23 +861,21 @@ function App(): ReactNode {
   const [rendererOverlayOpen, setRendererOverlayOpen] = useState(false)
   const projectSummaryAnchorRef = useRef<HTMLButtonElement>(null)
   const rightWorkbenchTabsRef = useRef(rightWorkbenchTabs)
+  rightWorkbenchTabsRef.current = rightWorkbenchTabs
   const setRightWorkbenchTabs = (update: RightWorkbenchTabsState | ((current: RightWorkbenchTabsState) => RightWorkbenchTabsState)): void => {
     const next = typeof update === 'function' ? update(rightWorkbenchTabsRef.current) : update
     rightWorkbenchTabsRef.current = next
     setRightWorkbenchTabsState(next)
   }
   const [newThreadWorkspaceLayout, setNewThreadWorkspaceLayout] = useState<WorkspaceLayoutMode>(() => desktopSettings.defaultFullView ? 'full' : 'split')
-  const [state, dispatch] = useReducer(sessionReducer, initialSessionState)
   const [bootstrapReady, setBootstrapReady] = useState(false)
   const [backend, setBackend] = useState<BackendStatus>({ state: 'starting', mode: 'direct' })
   const [context, setContextState] = useState<AppContext | null>(null)
   const contextRef = useRef<AppContext | null>(context)
   const setContext = (next: AppContext | null): void => { contextRef.current = next; setContextState(next) }
-  const [draftTerminalScope, setDraftTerminalScope] = useState(() => `draft:${crypto.randomUUID()}`)
-  const draftTerminalScopeRef = useRef(draftTerminalScope)
-  const terminalScopes = useRef(new Map<string, string>())
   const terminalController = useTerminalTabsController(state.selectedThreadId ? terminalScopes.current.get(state.selectedThreadId) || state.selectedThreadId : draftTerminalScope)
   const terminalState = useTerminalTabsSnapshot(terminalController)
+  const terminalWorkbenchSelectionRef = useRef({ scope: rightWorkbenchScope, id: null as string | null })
   const preparedWorktrees = useRef(new PreparedWorktreeCache())
   const [modelId, setModelId] = useState('')
   const [effort, setEffort] = useState<ReasoningEffort>('medium')
@@ -1004,9 +1002,6 @@ function App(): ReactNode {
   const [terminalSheetOpen, setTerminalSheetOpen] = useState(false)
   const [backgroundTerminalSize, setBackgroundTerminalSize] = useState(500)
   const [sideChatOpen, setSideChatOpen] = useState(false)
-  const [browserTabs, setBrowserTabs] = useState<WorkbenchBrowserTab[]>([])
-  const [openedSubagents, setOpenedSubagents] = useState<OpenedSubagentTab[]>([])
-  const [activeSubagentId, setActiveSubagentId] = useState<string | null>(null)
   const openedSubagent = openedSubagents.find((entry) => entry.threadId === activeSubagentId)
     || openedSubagents.at(-1)
     || null
@@ -2215,14 +2210,17 @@ function App(): ReactNode {
     resetSideChat(false)
     activateAdjacentAfterClose(next, 'side-chat')
   }
-  const openNewWorkbenchTab = (url?: string): void => {
+  const openNewWorkbenchTab = (url?: string, ownerScope = workbenchSessions.scope): void => {
+    const browserCount = Object.values(workbenchSessions.getSnapshot()).reduce((count, session) => count + session.browsers.length, 0)
+    if (browserCount >= 16) { setThreadNotice({ message: '最多可打开16个浏览器标签页' }); return }
     const tab = createWorkbenchBrowserTab()
-    setBrowserTabs((current) => [...current, tab])
-    activateRightTab(browserWorkbenchTabId(tab.id))
+    workbenchSessions.update('browsers', (current) => [...current, tab], ownerScope)
+    if (ownerScope === workbenchSessions.scope) activateRightTab(browserWorkbenchTabId(tab.id))
+    else workbenchSessions.update('tabs', (current) => openRightWorkbenchTab(current, browserWorkbenchTabId(tab.id), false), ownerScope)
     if (url) {
       void window.codex.createBrowserView(tab.id)
         .then((created) => {
-          setBrowserTabs((current) => current.map((entry) => entry.id === created.id ? {...entry, state: created} : entry))
+          workbenchSessions.updateBrowser(created)
           return window.codex.navigateBrowserView(tab.id, url)
         })
         .catch((error) => setThreadNotice({message: displayError(error)}))
@@ -2301,7 +2299,8 @@ function App(): ReactNode {
     })
   }
   const handleWorkspaceExpandedChange = (open: boolean): void => {
-    workspaceOwnerScopeRef.current = open ? selectedThread?.id || draftTerminalScope : null
+    if (open === workspaceOpen) return
+    workspaceOwnerScopeRef.current = open ? rightWorkbenchScope : null
     setWorkspaceOpen(open)
     if (open) {
       const layoutMode = selectedThread
@@ -2381,7 +2380,7 @@ function App(): ReactNode {
   }, [availableRightWorkbenchTabs.length])
 
   useEffect(() => {
-    const currentScope = selectedThread?.id || draftTerminalScope
+    const currentScope = rightWorkbenchScope
     const layout = workspaceLayoutForRightWorkbenchView(
       rightWorkbenchView,
       workspaceOpen && workspaceOwnerScopeRef.current === currentScope
@@ -2394,36 +2393,25 @@ function App(): ReactNode {
     } else {
       setNewThreadWorkspaceLayout((current) => current === layout ? current : layout)
     }
-  }, [rightWorkbenchView, selectedThread, workspaceOpen])
+  }, [rightWorkbenchView, selectedThread, workspaceOpen, rightWorkbenchScope])
 
   useEffect(() => {
     const terminalId = terminalState.visible.right ? terminalState.active.right : null
-    if (terminalId) activateRightTab(`terminal:${terminalId}`)
-  }, [terminalState.active.right, terminalState.visible.right])
+    const next = { scope: rightWorkbenchScope, id: terminalId }
+    const activate = shouldActivateWorkbenchTerminal(terminalWorkbenchSelectionRef.current, next)
+    terminalWorkbenchSelectionRef.current = next
+    if (activate && terminalId) activateRightTab(`terminal:${terminalId}`)
+  }, [rightWorkbenchScope, terminalState.active.right, terminalState.visible.right])
 
   useEffect(() => window.codex.onBrowserViewEvent((event: BrowserViewEvent) => {
     if (event.type === 'open-new-tab') {
-      openNewWorkbenchTab(event.url)
+      const ownerScope = workbenchSessions.browserOwner(event.sourceId)
+      if (ownerScope) openNewWorkbenchTab(event.url, ownerScope)
       return
     }
-    setBrowserTabs((current) => current.map((tab) => tab.id === event.state.id
-      ? {...tab, state: event.state} : tab))
+    if (event.type === 'state') workbenchSessions.updateBrowser(event.state)
   }), [])
 
-  useEffect(() => {
-    setOpenedSubagents([])
-    setActiveSubagentId(null)
-    for (const tab of browserTabs) void window.codex.closeBrowserView(tab.id).catch(() => undefined)
-    setBrowserTabs([])
-    workspaceOwnerScopeRef.current = null
-    setWorkspaceOpen(false)
-    setWorkspaceChromeState(defaultWorkspaceChromeState())
-    setRightWorkbenchView(collapseRightWorkbenchView())
-    setRightWorkbenchTabs((current) => reconcileRightWorkbenchTabs(
-      current,
-      sideChatOpen ? ['side-chat'] : []
-    ))
-  }, [state.selectedThreadId])
 
   useEffect(() => {
     localStorage.setItem(THREAD_PREFERENCES_KEY, JSON.stringify(threadPreferences))
@@ -2548,6 +2536,8 @@ function App(): ReactNode {
         )
       }
       if (notification.method === 'thread/deleted' && notificationThreadId) {
+        const scope = terminalScopes.current.get(notificationThreadId) || notificationThreadId
+        for (const id of workbenchSessions.remove(scope)) void window.codex.closeBrowserView(id).catch(() => undefined)
         if (notificationThreadId === sideChatThreadIdRef.current) closeSideChat()
         pendingSteerRecoveries.current.delete(notificationThreadId)
         bumpThreadQueueRevision(notificationThreadId)
@@ -4930,7 +4920,7 @@ function App(): ReactNode {
 
   const copyConversationValue = async (value: string, message: string): Promise<void> => {
     try {
-      await navigator.clipboard.writeText(value)
+      await copyTextToClipboard(value)
       setThreadNotice({ message })
     } catch (error) {
       setThreadNotice({ message: displayError(error) })
@@ -5462,9 +5452,10 @@ function App(): ReactNode {
               <div className={`chat-terminal-column${terminalState.fullView.bottom && terminalState.visible.bottom ? ' terminal-full-view' : ''}`}>
               <div ref={rightWorkbenchContainerRef} className="chat-conversation-row">
               <main className="main-panel" data-workspace-layout={selectedThread ? workspaceLayouts[selectedThread.id] || 'split' : newThreadWorkspaceLayout}>
-                {selectedThread && appContextHostId(context) === 'local' && (
+                {selectedThread && loadedThreadId === selectedThread.id && appContextHostId(context) === 'local' && (
                   <WorkspacePane
-                    key={selectedThread.id}
+                    key={`${rightWorkbenchScope}:${context?.cwd || ''}`}
+                    initialExpanded={workspaceOpen}
                     layoutMode={workspaceLayouts[selectedThread.id] || 'split'}
                     onLayoutModeChange={handleWorkspaceLayoutModeChange}
                     onExpandedChange={handleWorkspaceExpandedChange}
@@ -5703,12 +5694,13 @@ function App(): ReactNode {
                       onPermissionChange={changePermissionMode}
                     />
                   </div>}
-                  {browserTabs.map((tab) => <div key={tab.id} className={`right-workbench-surface${visibleRightSurface === 'browser' && activeBrowserTabId === tab.id ? ' is-active' : ''}`} aria-hidden={visibleRightSurface !== 'browser' || activeBrowserTabId !== tab.id}>
+                  {allBrowserTabs.map((tab) => <div key={tab.id} className={`right-workbench-surface${tab.ownerScope === rightWorkbenchScope && visibleRightSurface === 'browser' && activeBrowserTabId === tab.id ? ' is-active' : ''}`} aria-hidden={tab.ownerScope !== rightWorkbenchScope || visibleRightSurface !== 'browser' || activeBrowserTabId !== tab.id}>
                     <WorkbenchBrowser
                       tabId={tab.id}
-                      active={nativeBrowserVisible && activeBrowserTabId === tab.id}
+                      active={tab.ownerScope === rightWorkbenchScope && nativeBrowserVisible && activeBrowserTabId === tab.id}
                       state={tab.state}
-                      onStateChange={(nextState) => setBrowserTabs((current) => current.map((entry) => entry.id === nextState.id ? {...entry, state: nextState} : entry))}
+                      onStateChange={workbenchSessions.updateBrowser}
+                      onCloseTab={() => closeBrowserTab(tab.id)}
                       onOpenNewTab={openNewWorkbenchTab}
                       onOpenChanges={() => {
                         if (!selectedThread) return
@@ -8653,16 +8645,13 @@ function ConversationTimestampSeparator({ sentAtMs }: { sentAtMs: number }): Rea
 function useTurnDuration(turn: Turn, active: boolean): number {
   const mountedAt = useRef(Date.now())
   const [now, setNow] = useState(() => Date.now())
-
+  const working = active && !hasVisibleFinalAnswer(turn)
   useEffect(() => {
-    if (!active) return
+    if (!working) return
     const timer = window.setInterval(() => setNow(Date.now()), 1_000)
     return () => window.clearInterval(timer)
-  }, [active])
-
-  if (!active) return turn.durationMs || 0
-  const startedAt = conversationTimestampMilliseconds(turn.startedAt) || mountedAt.current
-  return Math.max(turn.durationMs || 0, now - startedAt)
+  }, [working])
+  return turnWorkDuration(turn, active, now, mountedAt.current)
 }
 
 function ActivityItems({
@@ -8725,7 +8714,9 @@ function workedForStatusLabel(
   return workedForActivityStatusLabel(
     item as unknown as WorkedForActivityItem | null,
     durationMs,
-    status
+    status,
+    Date.now(),
+    'zh-CN'
   )
 }
 
@@ -8843,7 +8834,7 @@ function ExpandedTerminalActivity({
     status === 'interrupted' &&
     (partition.workedForItem === null || workedForStatus === 'unknown')
   const heading = locallyStopped
-    ? completedActivityStatusLabel(durationMs, status)
+    ? completedActivityStatusLabel(durationMs, status, 'zh-CN')
     : partition.workedForItem
       ? workedForStatusLabel(partition.workedForItem, durationMs, status)
       : '活动'
@@ -8978,6 +8969,7 @@ function CompletedActivity({
         <div
           className={`activity-collapse${expanded ? ' is-expanded' : ''}`}
           aria-hidden={!expanded}
+          inert={!expanded}
         >
           <div className="turn-activity-items">
             <ActivityItems items={partition.expandedUnits} />
@@ -9092,7 +9084,7 @@ export function TurnBlock({
           return activityPhase === 'live' ? (
             <div className="turn-activity is-open is-live" data-activity-group="turn" key={`activity-${index}`}>
               <ActivitySectionHeading>
-                <span>{liveActivityStatusLabel(durationMs)}</span>
+                <span>{liveActivityStatusLabel(durationMs, 'zh-CN')}</span>
               </ActivitySectionHeading>
               <ActivityItems items={segment.items} live />
             </div>
@@ -9491,7 +9483,7 @@ function TimelineItem({
     const text = reasoningSummaryMarkdown(item)
     const body = reasoningBody(text)
     if (!text.trim()) return null
-    if (compactActivity) return <div className="live-reasoning-line">{reasoningActivityHeading(item) || '正在思考'}</div>
+    if (compactActivity) return <div className="live-reasoning-line"><CadencedShimmer>{reasoningActivityHeading(item) || '正在思考'}</CadencedShimmer></div>
     return (
       <div className="conversation-reasoning">
         <button type="button" className="conversation-reasoning-heading" aria-expanded={reasoningExpanded}
@@ -10079,7 +10071,7 @@ function Composer({
             placeholder={
               starting
                 ? '正在开启聊天…'
-                : composerModePlaceholder(mode) || placeholder || (emptyThread ? '随心输入' : running ? '继续告诉 Codex 要做什么' : '和 Codex 一起工作')
+                : composerModePlaceholder(mode) || placeholder || (emptyThread ? '随心输入' : '和 Codex 一起工作')
             }
             disabled={starting || (running && !canSteer)}
             aria-busy={starting}

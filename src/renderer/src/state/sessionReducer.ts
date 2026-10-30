@@ -1,3 +1,4 @@
+import { observeTurnTiming } from '../turnTiming'
 import type { RpcNotification } from '../../../shared/api'
 import { commandDurationMs, normalizeCommandActions, normalizeCommandItem } from '../commandActions'
 import type {
@@ -297,6 +298,7 @@ function mergeTurn(
     startedAt: incoming.startedAt ?? existing.startedAt,
     completedAt: incoming.completedAt ?? existing.completedAt,
     durationMs: incoming.durationMs ?? existing.durationMs,
+    activityCompletedAtMs: existing.activityCompletedAtMs ?? incoming.activityCompletedAtMs,
     items: mergeItems(existing.items, incoming.items, itemMode, preserveCommandMetadata)
   }
 
@@ -1064,8 +1066,21 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
         }
       }
     }
-    case 'notification':
-      return notificationUpdate(state, action.notification)
+    case 'notification': {
+      const next = notificationUpdate(state, action.notification)
+      if (next === state) return state
+      const now = Date.now()
+      const sessions = { ...next.sessions }
+      for (const [id, session] of Object.entries(sessions)) {
+        if (session === state.sessions[id]) continue
+        const previous = new Map(state.sessions[id]?.turns.map((turn) => [turn.id, turn]))
+        sessions[id] = { ...session, turns: session.turns.map((turn) => {
+          const prior = previous.get(turn.id)
+          return prior === turn ? turn : observeTurnTiming(prior, turn, now)
+        }) }
+      }
+      return { ...next, sessions }
+    }
     case 'sessionError': {
       const session = state.sessions[action.threadId] || emptySession()
       return {

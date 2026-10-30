@@ -1,3 +1,4 @@
+import { copyTextToClipboard } from './clipboard'
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronRight, Copy, Download, MessageSquare, ExternalLink } from 'lucide-react'
@@ -76,7 +77,7 @@ export function WorkspaceFileContextMenu({ menu, onClose, onOpen, onSaveAs, onAd
     </>}
     {(targets === null || primary) && <div role="separator" />}
     {!menu.isDirectory && <button type="button" role="menuitem" onClick={() => run(onSaveAs)}><Download />另存为…</button>}
-    <button type="button" role="menuitem" onClick={() => run(() => navigator.clipboard.writeText(menu.path))}><Copy />复制路径</button>
+    <button type="button" role="menuitem" onClick={() => run(() => copyTextToClipboard(menu.path))}><Copy />复制路径</button>
     <button type="button" role="menuitem" onClick={() => { onClose(); window.requestAnimationFrame(onAdd) }}><MessageSquare />加入聊天</button>
   </div>, document.body)
 }

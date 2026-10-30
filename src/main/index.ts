@@ -955,6 +955,15 @@ function installIpcHandlers(): void {
     const window = assertTrustedIpcSender(event)
     currentBrowserViews(window).stop(id)
   })
+  ipcMain.handle('app:browser-view-find', (event, id: unknown, query: unknown, options: unknown) => {
+    return currentBrowserViews(assertTrustedIpcSender(event)).find(id, query, options)
+  })
+  ipcMain.handle('app:browser-view-stop-finding', (event, id: unknown) => {
+    currentBrowserViews(assertTrustedIpcSender(event)).stopFinding(id)
+  })
+  ipcMain.handle('app:browser-view-zoom', (event, id: unknown, factor: unknown) => {
+    currentBrowserViews(assertTrustedIpcSender(event)).setZoom(id, factor)
+  })
   ipcMain.handle('app:browser-view-bounds', (event, id: unknown, bounds: unknown) => {
     const window = assertTrustedIpcSender(event)
     currentBrowserViews(window).setBounds(id, bounds)
@@ -1162,6 +1171,11 @@ function installIpcHandlers(): void {
   ipcMain.handle('app:copy-inline-image', async (event, source: unknown) => {
     assertTrustedIpcSender(event)
     await writeClipboardImage(inlineClipboardImageBytes(source), nativeImage.createFromBuffer, writeNativeClipboardImage)
+  })
+  ipcMain.handle('app:copy-text', async (event, text: unknown) => {
+    assertTrustedIpcSender(event)
+    if (typeof text !== 'string') throw new Error('Invalid clipboard text')
+    await clipboard.writeText(text)
   })
   ipcMain.handle('app:open-external', async (event, url: unknown) => {
     assertTrustedIpcSender(event)

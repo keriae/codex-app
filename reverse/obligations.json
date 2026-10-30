@@ -11,9 +11,9 @@
   "runtimeReconstruction": {
     "command": "npm run reconstruct:mac",
     "method": "REA shipped JavaScript/Electron artifact reconstruction; original renderer/assets retained locally",
-    "output": "release/local-runtime/Codex Study Final.app",
-    "evidence": "docs/reverse-engineering.md",
-    "status": "native-model-smoke-passed",
+    "output": "release/local-runtime/Codex Study 2026-10-29.app",
+    "evidence": "docs/workbench-activity-parity-2026-10-29.md",
+    "status": "static-and-backend-handshake-passed",
     "sourceImplementationStatusesBelow": true,
     "limits": [
       "Retained original code is measured separately from editable implementation completeness",
@@ -25,18 +25,35 @@
       "Standalone helper signatures are preserved; the locally signed main runtime has no OpenAI Team identity, so native app-tools/Computer Use authorization still rejects it."
     ],
     "validation": {
-      "sourceVersion": "26.1016.62342",
-      "sourceBuild": "21477",
-      "identicalRendererFiles": 20364,
+      "sourceVersion": "26.1023.50603",
+      "sourceBuild": "22391",
+      "identicalRendererFiles": 21459,
       "originalSourceDiskUnchanged": true,
       "originalFusesPreserved": true,
       "codesignDeepStrictVerified": true,
-      "historicalProfilePathCasesPassed": 21,
-      "uiInteractionStatus": "Independent replica homepage/sidebar/settings/menu/window zoom passed; a separate native model fixture returned codex-replica-ok. Native app-tools and Computer Use remain rejected by the original signing-identity checks.",
-      "provenance": "reverse/source-provenance.json",
-      "currentProfilePathCasesPassed": 37
+      "backendHandshakePassed": true,
+      "uiInteractionStatus": "Current resource package not graphically revalidated; earlier-build native acceptance is retained in previousBuilds.",
+      "provenance": "reverse/workbench-activity-evidence-2026-10-29.json"
     },
-    "currentBuild": "release/local-runtime/Codex Study Final.app"
+    "currentBuild": "release/local-runtime/Codex Study 2026-10-29.app",
+    "previousBuilds": [
+      {
+        "output": "release/local-runtime/Codex Study Final.app",
+        "status": "native-model-smoke-passed",
+        "validation": {
+          "sourceVersion": "26.1016.62342",
+          "sourceBuild": "21477",
+          "identicalRendererFiles": 20364,
+          "originalSourceDiskUnchanged": true,
+          "originalFusesPreserved": true,
+          "codesignDeepStrictVerified": true,
+          "historicalProfilePathCasesPassed": 21,
+          "uiInteractionStatus": "Independent replica homepage/sidebar/settings/menu/window zoom passed; a separate native model fixture returned codex-replica-ok. Native app-tools and Computer Use remain rejected by the original signing-identity checks.",
+          "provenance": "reverse/source-provenance.json",
+          "currentProfilePathCasesPassed": 37
+        }
+      }
+    ]
   },
   "obligations": [
     {
@@ -114,9 +131,15 @@
       "status": "in-progress",
       "evidence": [
         "docs/feature-inventory.md",
-        "reverse/source-provenance.json"
+        "reverse/source-provenance.json",
+        "docs/workbench-activity-parity-2026-10-29.md",
+        "reverse/workbench-activity-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-29.md",
+        "reverse/ui-detail-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-30.md",
+        "reverse/ui-detail-evidence-2026-10-30.json"
       ],
-      "validatedPartialProgress": "Direct shipped-label catalogs, MCP text/image/audio/resource/structured output and raw-output dialogs, Web query/domain rows, compaction/error activities and native tooltips added. Backend child transcripts and multi-avatar activity groups are connected; Final-package history hydration and representative activity rows passed; exhaustive media/group pixel acceptance remains."
+      "validatedPartialProgress": "Direct shipped-label catalogs, MCP text/image/audio/resource/structured output and raw-output dialogs, Web query/domain rows, compaction/error activities and native tooltips added. Backend child transcripts and multi-avatar activity groups are connected; Final-package history hydration and representative activity rows passed; exhaustive media/group pixel acceptance remains. First visible final-answer delta freezes the work duration; empty final/commentary and late history are distinguished. Reducer streaming/merge checks pass; activity divider, Chinese duration labels and reduced-motion folding follow recording frames. Recovered original activity SVGs; independent command disclosure/file-link controls, embedded $ prompt, launcher display, clipboard feedback, stopped/empty/exit-code states and output scroll presentation implemented. New native acceptance pending. Current-dev native command disclosure, bottom-visible 40-line output, success footer, exact output clipboard paste and independent file navigation passed. Long-command/group/animation matrix remains incomplete."
     },
     {
       "id": "composer",
@@ -125,9 +148,11 @@
       "status": "in-progress",
       "evidence": [
         "docs/feature-inventory.md",
-        "reverse/source-provenance.json"
+        "reverse/source-provenance.json",
+        "docs/ui-detail-parity-2026-10-29.md",
+        "reverse/ui-detail-evidence-2026-10-29.json"
       ],
-      "validatedPartialProgress": "Installed hero/startup directory and scoped local comment attachments connected. Submitted object identities/migration aliases preserve waiting edits and recreated objects. Composer ResizeObserver controls footer reserve and actual-bottom scroll alignment. Full IME/pixel parity pending."
+      "validatedPartialProgress": "Installed hero/startup directory and scoped local comment attachments connected. Submitted object identities/migration aliases preserve waiting edits and recreated objects. Composer ResizeObserver controls footer reserve and actual-bottom scroll alignment. Full IME/pixel parity pending. Standard existing Codex chat retains Work with Codex placeholder during streaming, matching shipped follow-up policy."
     },
     {
       "id": "approvals",
@@ -175,9 +200,15 @@
         "reverse/source-provenance.json",
         "docs/workspace-editor-parity.md",
         "docs/workspace-filesystem-parity.md",
-        "reverse/editor-controls-evidence-2026-10-24.json"
+        "reverse/editor-controls-evidence-2026-10-24.json",
+        "docs/workbench-activity-parity-2026-10-29.md",
+        "reverse/workbench-activity-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-29.md",
+        "reverse/ui-detail-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-30.md",
+        "reverse/ui-detail-evidence-2026-10-30.json"
       ],
-      "validatedPartialProgress": "Persistent titlebar file tabs, CodeMirror source/editable Markdown modes, actual undo history, find/signed line preview, selection-to-composer, autosave, conflict and restart recovery are connected. Bounded native filesystem watches and tree open/save/copy/chat actions are implemented. Native save-dialog bytes, source/preview controls, Cmd+F, line cancellation, draft-only selection insertion, folded-file notifications and Settings reentry refresh passed. Remaining rich Markdown/Pierre decorations, direct inline selection-edit review and additional opener/manual-review modes are documented."
+      "validatedPartialProgress": "Persistent titlebar file tabs, CodeMirror source/editable Markdown modes, actual undo history, find/signed line preview, selection-to-composer, autosave, conflict and restart recovery are connected. Bounded native filesystem watches and tree open/save/copy/chat actions are implemented. Native save-dialog bytes, source/preview controls, Cmd+F, line cancellation, draft-only selection insertion, folded-file notifications and Settings reentry refresh passed. Remaining rich Markdown/Pierre decorations, direct inline selection-edit review and additional opener/manual-review modes are documented. Workbench tabs/full-view/browser/subagent state and navigator/tool presentation now restore per chat. Changes tabs track actual opening/closing; background popup ownership and retained-terminal focus are guarded. Native Cmd+F/G page find partially passed; final different-project/terminal-focus UI acceptance awaits unlock. File breadcrumb control surface restored; current installed filter gap/font corrected. Native pixel acceptance pending. Real ancestor/filename directory menus, hidden entries, preview replacement, 320px ancestor collapse and 625px compact-control threshold are implemented and natively checked. Toolbar uses an unclipped shared host; wide transcript overlap, nested-menu dismissal and reparented icon sizing fixed. Full/split and 110% popup zoom passed on current dev renderer. Main-tree decorations/focus, root/error/light and project/terminal restoration matrices remain incomplete."
     },
     {
       "id": "macos.integration",
@@ -186,9 +217,13 @@
       "status": "in-progress",
       "evidence": [
         "docs/feature-inventory.md",
-        "reverse/source-provenance.json"
+        "reverse/source-provenance.json",
+        "docs/workbench-activity-parity-2026-10-29.md",
+        "reverse/workbench-activity-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-30.md",
+        "reverse/ui-detail-evidence-2026-10-30.json"
       ],
-      "validatedPartialProgress": "Native editable UI checks covered directory/model/backend readiness, real history/diff, range labels, terminal behavior and keyboard new draft. Managed multi-window creation, cleanup and window-scoped thread routing are implemented; cross-window local-state/focus behavior has not received complete native acceptance. Original source/recording remain the comparison references. Complete native/AX/IME/notification parity pending."
+      "validatedPartialProgress": "Native editable UI checks covered directory/model/backend readiness, real history/diff, range labels, terminal behavior and keyboard new draft. Managed multi-window creation, cleanup and window-scoped thread routing are implemented; cross-window local-state/focus behavior has not received complete native acceptance. Original source/recording remain the comparison references. Complete native/AX/IME/notification parity pending. Browser native page find, zoom and macOS browser shortcuts are connected. Own-client Cmd+F (1/3) and Cmd+G (2/3) passed before final fixes; remaining native shortcuts and current-package UI checks await manual Mac unlock. Plain text uses validated native clipboard IPC without changing Chromium permission policy. Native command/output copy feedback and actual draft paste passed; other copy buttons use the same helper but were not all individually exercised."
     },
     {
       "id": "visual.regression",
@@ -197,31 +232,87 @@
       "status": "in-progress",
       "evidence": [
         "docs/feature-inventory.md",
-        "docs/visual-baseline.md"
+        "docs/visual-baseline.md",
+        "docs/workbench-activity-parity-2026-10-29.md",
+        "reverse/workbench-activity-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-29.md",
+        "reverse/ui-detail-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-30.md",
+        "reverse/ui-detail-evidence-2026-10-30.json"
       ],
-      "validatedPartialProgress": "Source typechecks, tests and production build pass. Partial native UI checks include actual long-history collapse/expansion, inline command output and final reply above the composer. Full pixel and original interaction equivalence remain pending."
+      "validatedPartialProgress": "Source UI refinement package passed 1,413 tests in 185 files, Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and 70/70 packaged output checks. Twelve recovered SVG glyph geometries match the extracted original paths and canvases by static AST comparison. Prior long-history/browser/native model checks remain historical; new UI pixel and interaction acceptance is pending Mac unlock. Complete parity remains in progress. Current 2026-10-30 source/package: 1,422 tests in 187 files, Node/Web typechecks, packaging, codesign/fuses and 70/70 ASAR output checks passed. Sanitized native fixture screenshots and a detailed difference table are retained; current package full native/pixel matrix is still incomplete."
     }
   ],
   "currentValidation": {
-    "date": "2026-10-26",
-    "sourceTarget": "26.1016.62342 / 21477",
-    "nativeWindowAcceptance": "Manually unlocked macOS. Representative independent replica UI and real model-turn checks passed; complete pixel/function parity remains in progress.",
+    "date": "2026-10-30",
+    "sourceTarget": "26.1023.50603 / 22391",
+    "recordingTarget": "26.1016.61520 / 21421",
     "documents": [
-      "docs/workspace-editor-parity.md",
-      "docs/activity-parity.md",
-      "docs/settings-parity.md",
-      "docs/transport-recovery.md",
-      "docs/reconstruction-validation-current.md",
-      "docs/thread-writer-conflicts.md",
-      "docs/workspace-filesystem-parity.md",
-      "docs/external-agent-import.md",
-      "docs/source-validation-current.md"
+      "docs/ui-detail-parity-2026-10-30.md",
+      "docs/ui-detail-parity-2026-10-29.md"
     ],
-    "sourceTestsPassed": 1388,
-    "sourcePackageOutputIdentical": "100/100",
-    "editorNativeAcceptance": "Earlier native Cmd+S/Cmd+W, exact save bytes, autosave/conflict and unified titlebar bounds passed. Additional native source/preview, Cmd+F, line cancel, selection-to-draft and real Save dialog checks passed. Final rebuilt package passed file notifications while folded and latest-disk refresh after Settings unmount/reentry, retaining file tabs and source mode; no model turn was submitted.",
-    "sourceTestFiles": 182,
-    "sourcePackageChecks": "Node/Web typechecks, production packaging, deep strict codesign, all configured Electron fuses and packaged-output hashes passed.",
-    "externalImportAcceptance": "Installed CLI, isolated temporary HOME/CODEX_HOME/project/profile, three durable imported sessions plus project/MCP/plugin/skill/generated-file validation; no real user import and no model turn."
-  }
+    "evidence": "reverse/ui-detail-evidence-2026-10-30.json",
+    "sourceTestsPassed": 1422,
+    "sourceTestFiles": 187,
+    "sourcePackageOutputIdentical": "70/70",
+    "sourcePackageChecks": "Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and current packaged output byte comparisons passed.",
+    "nativeWindowAcceptance": "Bounded current-dev native command/copy, breadcrumb, responsive file-controls, nested menu, full/split and 110% zoom checks passed; complete pixel/function/package-native matrix remains in progress.",
+    "realModelAcceptance": "Native composer readonly turn completed; two exit-0 commands including 40-line output, clickable files, real clipboard paste. Both disposable threads cleaned and verified absent."
+  },
+  "validationHistory": [
+    {
+      "date": "2026-10-29",
+      "sourceTarget": "26.1023.50603 / 22391",
+      "recordingTarget": "26.1016.61520 / 21421",
+      "documents": [
+        "docs/ui-detail-parity-2026-10-29.md",
+        "docs/workbench-activity-parity-2026-10-29.md"
+      ],
+      "evidence": "reverse/ui-detail-evidence-2026-10-29.json",
+      "sourceTestsPassed": 1413,
+      "sourceTestFiles": 185,
+      "sourcePackageOutputIdentical": "70/70",
+      "sourcePackageChecks": "Node/Web typechecks, macOS arm64 packaging, deep strict codesign, all configured Electron fuses and packaged output hashes passed.",
+      "nativeWindowAcceptance": "Prior own-client Cmd+F/G checks are historical. New UI hover, disclosure, copy, output scroll and file-control acceptance pending manual Mac unlock.",
+      "realModelAcceptance": "Previous workbench/activity snapshot: ready/direct real model turn completed with two zero-exit commands and 15 final-answer deltas. Not rerun for this UI-only patch."
+    },
+    {
+      "date": "2026-10-29",
+      "sourceTarget": "26.1023.50603 / 22391",
+      "recordingTarget": "26.1016.61520 / 21421",
+      "documents": [
+        "docs/workbench-activity-parity-2026-10-29.md"
+      ],
+      "evidence": "reverse/workbench-activity-evidence-2026-10-29.json",
+      "sourceTestsPassed": 1401,
+      "sourceTestFiles": 184,
+      "sourcePackageOutputIdentical": "70/70",
+      "sourcePackageChecks": "Node/Web typechecks, macOS arm64 packaging, deep strict codesign, all configured Electron fuses and packaged output hashes passed.",
+      "nativeWindowAcceptance": "Partial own-client Cmd+F/G passed before final source fixes; final native UI acceptance pending manual Mac unlock.",
+      "realModelAcceptance": "Ready/direct backend; real model turn completed with two zero-exit commands and 15 final-answer deltas. No graphical acceptance claim.",
+      "snapshot": "workbench-activity-2026-10-29"
+    },
+    {
+      "date": "2026-10-26",
+      "sourceTarget": "26.1016.62342 / 21477",
+      "nativeWindowAcceptance": "Manually unlocked macOS. Representative independent replica UI and real model-turn checks passed; complete pixel/function parity remains in progress.",
+      "documents": [
+        "docs/workspace-editor-parity.md",
+        "docs/activity-parity.md",
+        "docs/settings-parity.md",
+        "docs/transport-recovery.md",
+        "docs/reconstruction-validation-current.md",
+        "docs/thread-writer-conflicts.md",
+        "docs/workspace-filesystem-parity.md",
+        "docs/external-agent-import.md",
+        "docs/source-validation-current.md"
+      ],
+      "sourceTestsPassed": 1388,
+      "sourcePackageOutputIdentical": "100/100",
+      "editorNativeAcceptance": "Earlier native Cmd+S/Cmd+W, exact save bytes, autosave/conflict and unified titlebar bounds passed. Additional native source/preview, Cmd+F, line cancel, selection-to-draft and real Save dialog checks passed. Final rebuilt package passed file notifications while folded and latest-disk refresh after Settings unmount/reentry, retaining file tabs and source mode; no model turn was submitted.",
+      "sourceTestFiles": 182,
+      "sourcePackageChecks": "Node/Web typechecks, production packaging, deep strict codesign, all configured Electron fuses and packaged-output hashes passed.",
+      "externalImportAcceptance": "Installed CLI, isolated temporary HOME/CODEX_HOME/project/profile, three durable imported sessions plus project/MCP/plugin/skill/generated-file validation; no real user import and no model turn."
+    }
+  ]
 }
