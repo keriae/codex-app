@@ -1,0 +1,48 @@
+name: Feature or parity request
+description: Propose a missing macOS interaction or a focused improvement.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the experience you want to improve. You do not need to know how to implement it.
+        Use sanitized screenshots or examples. Keep application bundles, extracted vendor source, credentials, and private account or conversation data out of public issues.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Explain the workflow and where the current client falls short.
+      placeholder: "When reviewing several changed files, I want to…"
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Requested behavior
+      description: Describe a concrete interaction or result. For parity requests, explain what the reference macOS app does.
+      placeholder: "After I select a file and press…, the client should…"
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: Reference behavior or visual evidence
+      description: Optional. Include the reference app version/build, recording timestamp, and sanitized screenshots. Mention theme, window size, and zoom for visual differences.
+  - type: input
+    id: environment
+    attributes:
+      label: macOS and client version
+      description: Include macOS version and the release version or Git commit you tried, if available.
+      placeholder: "macOS 15.7, commit abc1234"
+  - type: textarea
+    id: contribution
+    attributes:
+      label: Ideas or interest in contributing
+      description: Optional. Share an approach, a smaller first step, or whether you would like help making your first contribution.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public issue privacy
+      options:
+        - label: I checked that this issue and its attachments contain no credentials, private conversations, account data, or extracted vendor source.
+          required: true

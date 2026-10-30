@@ -1,195 +1,145 @@
-<h1 align="center"><code>codex-app</code> for macOS</h1>
+<h1 align="center">codex-app for macOS</h1>
 
 <p align="center">
-  <strong>An editable reconstruction of the macOS <code>codex-app</code> desktop client.</strong><br />
-  Measured from shipped behavior and connected to an existing Codex app-server.
+  <strong>The Codex desktop experience, made editable.</strong><br />
+  Streaming chats, workspace editing, diffs, terminals, and agent activity.<br />
+  Built with Electron, React, and TypeScript. Connected to the existing Codex app-server.
 </p>
 
 <p align="center">
-  <a href="#quick-start"><strong>Run it locally</strong></a> ·
-  <a href="#what-works-today"><strong>Capabilities</strong></a> ·
-  <a href="#reconstruction-target"><strong>Reconstruction notes</strong></a> ·
-  <a href="CONTRIBUTING.md"><strong>Contribute</strong></a>
+  <a href="https://github.com/keriae/codex-app/actions/workflows/ci.yml"><img src="https://github.com/keriae/codex-app/actions/workflows/ci.yml/badge.svg" alt="CI status" /></a>
+  <img src="https://img.shields.io/badge/macOS-13%2B-111111?logo=apple&logoColor=white" alt="macOS 13 or newer" />
+  <a href=".nvmrc"><img src="https://img.shields.io/badge/Node.js-24.11%2B-339933?logo=nodedotjs&logoColor=white" alt="Node.js 24.11 or newer" /></a>
 </p>
 
-## Demo
+<p align="center">
+  English · <a href="README.zh-CN.md">简体中文</a><br />
+  <a href="#quick-start"><strong>Quick start</strong></a> ·
+  <a href="#capabilities">Capabilities</a> ·
+  <a href="docs/README.md">Documentation</a> ·
+  <a href="CONTRIBUTING.md">Contribute</a>
+</p>
 
 <p align="center">
   <a href="docs/media/codex-replica-promo.mp4">
-    <img alt="The reconstructed codex-app completing an editable prompt-to-result workflow" src="docs/media/codex-replica-promo.gif" width="900" />
+    <img src="docs/media/codex-app-preview.png" alt="The editable macOS client showing a conversation, project sidebar, workspace summary, and composer" width="960" />
   </a>
 </p>
 
-The demo follows a prompt through **INPUT → INSPECT → EDIT → VERIFY → MATCHED** inside the running `codex-app` reconstruction. [Watch the MP4](docs/media/codex-replica-promo.mp4).
+<p align="center">
+  <a href="docs/media/codex-replica-promo.mp4"><strong>▶ Watch the 15-second demo</strong></a><br />
+  Captured from the running client with a fictional workspace and deterministic demo data.
+</p>
+
+## Why try it?
+
+- **See the work as it happens.** Follow streaming replies, command output, approvals, and subagent conversations.
+- **Keep the workspace beside the chat.** Edit source and Markdown, review diffs, and use dockable terminal and browser tabs.
+- **Make the desktop experience your own.** Change the React UI, inspect the IPC and protocol, or experiment with an existing Codex app-server.
+
+This is an independent macOS client reconstruction for learning and experimentation. Functional and visual parity are still in progress; the [feature inventory](docs/feature-inventory.md) records what is implemented and what remains.
 
 ## Quick start
 
-Requirements: **macOS 13+**, **Node.js 24.11+** (see `.nvmrc`), and a configured Codex account or API provider.
+Requires **macOS 13+**, **Node.js 24.11+** ([`.nvmrc`](.nvmrc)), and either a configured [Codex CLI](https://github.com/openai/codex) or a running Codex app-server listener. `npm ci` installs this client’s dependencies; install and configure Codex separately.
 
 ```bash
+git clone https://github.com/keriae/codex-app.git
+cd codex-app
 npm ci
 npm run dev
 ```
 
-Open a specific workspace:
+Open your project:
 
 ```bash
-npm run dev -- --cwd=/absolute/path/to/project
+npm run dev -- --cwd="/absolute/path/to/project"
 ```
 
-The client can discover the installed application's companion CLI, a `codex` on `PATH`, npm's native Codex package, or Homebrew. Set `CODEX_BINARY` to choose an explicit executable. `CODEX_WORKSPACE` is also supported; `--cwd` takes priority.
+By default, the client discovers a local Codex CLI and launches its own stdio app-server. Set `CODEX_BINARY` to choose a specific executable.
 
-Development and packaged builds use separate app-data directories.
+<details>
+<summary><strong>Connect to an already running app-server</strong></summary>
 
-The packaged macOS app uses the original Codex application icon; its source and checksum are recorded in [resources](resources/README.md).
+Replace the example with your server’s actual WebSocket address:
 
-## What works today
+```bash
+CODEX_APP_SERVER_URL=ws://127.0.0.1:4500 npm run dev
+```
 
-| Experience | Included capability |
+For a Unix listener that supports WebSocket upgrade, set `CODEX_APP_SERVER_SOCKET=/absolute/path/server.sock` instead. Configure one endpoint variable. An explicit endpoint failure is reported without starting a separate server. See [protocol and connection notes](docs/app-server-protocol.md).
+
+</details>
+
+<details>
+<summary><strong>Build a local macOS app</strong></summary>
+
+```bash
+npm run package:mac
+open release/mac-arm64/Codex.app
+```
+
+The documented package target is Apple Silicon. `npm run dist:mac` creates local DMG and ZIP artifacts. Development and packaged clients use separate desktop settings directories. Build and package checks are documented in [source validation](docs/source-validation-current.md).
+
+</details>
+
+<details>
+<summary><strong>Wrong workspace or server after launch?</strong></summary>
+
+Check your login Shell configuration for exported `CODEX_WORKSPACE`, `CODEX_BINARY`, `CODEX_APP_SERVER_URL`, or `CODEX_APP_SERVER_SOCKET` values. Shell environment hydration can override inline development settings. Remove conflicting exports before retrying. An existing external server uses its own configuration and credentials.
+
+</details>
+
+## Capabilities
+
+| Area | What you can explore |
 | --- | --- |
-| **Conversations** | Streaming turns, steering, interrupt, approvals, structured input, MCP output, goals, and rich Markdown |
-| **Workspace** | CodeMirror tabs, file tree, source and Markdown editing, autosave, conflict recovery, file watches, and native file actions |
-| **Review** | Unified diffs, local inline comments, selection-to-composer, change summaries, and file citations |
-| **Terminal and browser** | Persistent local PTY sessions, remote shells, dockable tabs, and browser workbench state |
-| **Projects and worktrees** | Project search, pins, archive and restore, thread forks, Git branches, private worktrees, and working-tree replay |
-| **Agents and integrations** | Subagent transcripts, collaboration activity, plugins, skills, MCP inventories, and Claude Code/Cursor/Cowork import |
-| **Desktop shell** | Native menus, multi-window routing, notifications, clipboard images, zoom, file dialogs, and macOS packaging |
+| Conversations | Streaming, steering, interruption, approvals, goals, rich Markdown, and tool output |
+| Workspace | File tree, CodeMirror editing, Markdown preview, autosave, file watches, and conflict recovery |
+| Review | Unified diffs, local inline comments, file citations, and selection-to-composer |
+| Workbench | Dockable terminal and browser tabs, retained local PTYs, page find, and zoom |
+| Projects | Project search, pins, chat archive/restore, thread forks, and private Git worktree creation |
+| Agents and integrations | Subagent transcripts, collaboration activity, plugins, skills, and MCP inventories |
+| macOS | Native menus, shortcuts, clipboard images, file dialogs, notifications, and multiple windows |
 
-See the [feature inventory](docs/feature-inventory.md) for the complete status and remaining parity work.
+Remote/cloud workflows, MCP Apps, voice/realtime, and complete platform integration remain incomplete. See the [coverage and validation boundary](docs/feature-inventory.md#validation-boundary) before relying on a particular workflow.
 
-## Reconstruction target
-
-This project reconstructs the macOS `codex-app` desktop client—not the Codex model or the app-server. It reuses an existing Codex app-server and provides an editable Electron, React, and TypeScript implementation of the desktop experience.
-
-Visual fidelity is treated as a functional requirement. Titlebar geometry, navigation, sidebar density, composer placement, typography, panels, transitions, and interactive states are rebuilt from measured behavior rather than a single screenshot. The supporting evidence is documented in the [visual baseline](docs/visual-baseline.md), [workspace editor notes](docs/workspace-editor-parity.md), and [validation record](docs/reconstruction-validation-current.md).
-
-## Two ways to explore
-
-| | Editable client | Local runtime reconstruction |
-| --- | --- | --- |
-| Best for | Building features, changing UI, protocol experiments | Studying the installed renderer/runtime locally |
-| Stack | Electron + React + TypeScript + Vite | Retained installed renderer/runtime with isolated routing |
-| App-server | Existing Codex app-server | Existing Codex app-server |
-| Output | `release/mac-arm64/Codex.app` | `release/local-runtime/Codex Study 2026-10-29.app` |
-| Distribution | Source in this repository | Generated locally and Git-ignored |
-
-```mermaid
-flowchart LR
-    A[Editable Electron / React client] --> C[Existing Codex app-server]
-    B[Local renderer / runtime study build] --> C
-    C --> D[Models, tools, threads, plugins]
-```
-
-The server is reused, not reimplemented. The editable client is for building; the local renderer/runtime reconstruction is for studying shipped behavior.
-
-## How the `codex-app` reconstruction was built
-
-The reconstruction combines interaction study, captured geometry, source inspection, protocol traces, and native runtime checks. Claims are scoped deliberately: complete pixel and functional parity are still in progress, and the exact boundary is recorded in the [feature inventory](docs/feature-inventory.md) and [obligation ledger](reverse/obligations.json).
-
-The [2026-10-29 workbench/activity update](docs/workbench-activity-parity-2026-10-29.md) records per-chat tab/browser restoration, page find/zoom, streamed work-duration fixes, **1,401 passing tests**, final package checks and the remaining native acceptance blocked by macOS lock. Its [sanitized evidence](reverse/workbench-activity-evidence-2026-10-29.json) separates source, real-backend and original-resource reconstruction results.
-
-The [2026-10-29 UI detail comparison](docs/ui-detail-parity-2026-10-29.md) documents activity icons, disclosure/link behavior, embedded output, file toolbar and composer refinements. Its 1,413-test snapshot is retained as historical evidence.
-
-The [latest detailed UI comparison](docs/ui-detail-parity-2026-10-30.md) adds real breadcrumb directory menus, responsive file controls, unclipped toolbars, native text copying and wide-workbench layout fixes. **1,422 tests in 187 files**, typechecks, macOS packaging and **70/70** ASAR comparisons pass. Bounded native checks cover command/output copying, directory navigation, 320/620/630px workbench states, nested menus, full/split views and 110% zoom. Sanitized fixture screenshots and remaining differences are included; whole-application pixel and functional parity remain in progress.
+## How it works
 
 ```text
-src/main         Electron lifecycle, native services, IPC, transport
-src/preload      Context-isolated, allowlisted renderer bridge
-src/renderer     React UI, session reducer, streaming, workspace views
-src/shared       Shared IPC contracts
-scripts/reverse  Reconstruction, capture, and verification tooling
-promo            Demo media source and privacy-safe app footage
+React / TypeScript UI → isolated Electron IPC → existing Codex app-server
 ```
 
-The renderer has no Node.js access. Main-process IPC validates the sender and allowlists RPC methods. Packaged source builds use the restricted `app://-/index.html` origin.
+The client implements the desktop shell and workspace experience. The [Codex app-server](https://github.com/openai/codex/tree/main/codex-rs/app-server) provides models, tools, and threads. The renderer has no Node.js access; main-process IPC checks senders and allowlists RPC methods.
+
+The reconstruction follows [REA](https://github.com/morluto/rea)-inspired direct source and asset inspection, recorded interactions, geometry measurement, protocol traces, and native runtime checks. Explore the [method and evidence](docs/README.md#reconstruction-and-evidence), or start with `src/renderer` for UI work and `src/main` for desktop services.
 
 <details>
-<summary><strong>Build, package, and verify</strong></summary>
+<summary><strong>Study the installed renderer/runtime locally</strong></summary>
+
+An additional study build retains the installed renderer/runtime with isolated profile and server routing:
 
 ```bash
-npm run typecheck
-npm test
-npm run build
-npm run package:mac
+npm run reconstruct:mac -- --output "$PWD/release/local-runtime/Codex Study.app"
+open "release/local-runtime/Codex Study.app"
 ```
 
-Create local DMG and ZIP artifacts with `npm run dist:mac`. The local arm64 source bundle is written to `release/mac-arm64/Codex.app`.
-
-To verify the exact package, see [source/package validation](docs/source-validation-current.md), then run the packaged runtime and recorded-layout checks:
-
-```bash
-release/mac-arm64/Codex.app/Contents/MacOS/Codex --remote-debugging-port=9225
-npm run runtime:check -- 9225
-npm run visual:check -- 9225
-```
+This requires the reference application to be installed. Generated study bundles stay local and Git-ignored. Read the [reconstruction workflow](docs/reverse-engineering.md) for version requirements, options, and limitations.
 
 </details>
 
-<details>
-<summary><strong>Reconstruct the installed client locally</strong></summary>
+## Help improve it
 
-```bash
-npm run reconstruct:mac
-open "release/local-runtime/Codex Study Final.app"
-```
+A useful contribution can be small: reproduce a UI mismatch, improve one interaction, document a connection issue, or add a focused protocol test.
 
-The builder preserves the installed renderer, fonts, preload, Owl runtime, native components, and desktop services while applying isolated profile/server routing, rebuilt ASAR integrity metadata, ad-hoc signing, and a disabled updater. It does not copy credentials or a browser profile.
+- [Report a bug or UI mismatch](https://github.com/keriae/codex-app/issues/new?template=bug_report.yml).
+- [Suggest a feature or missing interaction](https://github.com/keriae/codex-app/issues/new?template=feature_request.yml).
+- Read the [contributor guide](CONTRIBUTING.md) for setup, verification, and public-source requirements.
 
-Choose another output path for a new build:
+Current priorities are workspace/review fidelity, reconnect and multi-window behavior, and visual coverage across themes, zoom levels, and window sizes. Detailed status lives in the [documentation index](docs/README.md).
 
-```bash
-npm run reconstruct:mac -- --output "$PWD/release/local-runtime/Codex Study 2.app"
-```
+If this project helps you learn or build, a **star** helps other macOS developers discover it.
 
-See the [reconstruction workflow](docs/reverse-engineering.md) for options and platform limits.
+## Project status
 
-</details>
-
-<details>
-<summary><strong>Connect an existing app-server</strong></summary>
-
-```bash
-CODEX_APP_SERVER_URL=ws://127.0.0.1:PORT npm run dev
-# or
-CODEX_APP_SERVER_SOCKET=/absolute/path/server.sock npm run dev
-```
-
-Socket sessions reconnect with the observed bounded backoff. Explicit endpoints never fall back to a new private process, and unacknowledged mutations are not replayed. See [transport recovery](docs/transport-recovery.md) and the [protocol notes](docs/app-server-protocol.md).
-
-</details>
-
-## Demo media
-
-The committed demo uses a fictional workspace and isolated state; it does not include private projects, conversations, or credentials. Build and capture instructions are maintained in [promo/README.md](promo/README.md).
-
-## Status and boundaries
-
-- This is an independent reconstruction of the macOS `codex-app` client. It is not affiliated with, endorsed by, or distributed by OpenAI.
-- It reuses an existing Codex app-server; it does not reimplement the server or distribute the official application.
-- Complete functional and pixel parity remain in progress. Hosted authorization, platform attestation, DeviceCheck, APNs, shared Keychain entitlements, voice/realtime, and some remote/cloud surfaces remain outside the editable implementation.
-- Original application code, private captures, credentials, browser profiles, generated app bundles, and local reconstruction outputs are not committed.
-- The repository is currently source-available for study and does not yet include a standalone open-source license.
-
-## Roadmap
-
-- Broader remote/cloud host and MCP Apps coverage.
-- Deeper multi-window, notification, accessibility, and reconnect parity.
-- Richer workspace review, diff, and browser behavior.
-- Wider visual regression coverage across representative themes and window sizes.
-- An explicit project license after maintainer review.
-
-## 中文简介
-
-这是一个可以真实运行、编辑和二次开发的 macOS `codex-app` 客户端复刻。项目以界面测量、交互研究、协议记录和运行时验证为依据，还原桌面 Shell、对话、文件、Diff、终端、工作树和 Agent 等核心体验；Codex 模型与 app-server 不属于复刻范围。
-
-```bash
-npm ci
-npm run dev
-```
-
-完整功能覆盖与未完成项请查看 [feature inventory](docs/feature-inventory.md)。
-
-## Credits
-
-- Reconstruction methodology inspired by [REA](https://github.com/morluto/rea).
-- Codex, ChatGPT, OpenAI, and related marks belong to their respective owners.
+Independent project; not affiliated with or endorsed by OpenAI. This repository is **source-available for study** and currently has no standalone open-source license. Original runtime study bundles and private captures are generated locally. Asset provenance and package icon details are recorded in [resources](resources/README.md); demo provenance is in [media notes](docs/media/README.md). Codex, ChatGPT, OpenAI, and related marks belong to their respective owners.

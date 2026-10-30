@@ -2,11 +2,19 @@
 
 Thanks for helping improve this macOS `codex-app` client reconstruction. This repository is an independent interoperability and learning project; it is not affiliated with or endorsed by OpenAI.
 
+## Start small
+
+You can contribute without knowing the entire codebase. Reproduce one UI mismatch, improve an interaction, clarify a setup step, or add a focused protocol test. The [feature inventory](docs/feature-inventory.md) lists gaps; the [documentation index](docs/README.md) points to the relevant implementation notes.
+
+Use the [bug/UI mismatch form](https://github.com/keriae/codex-app/issues/new?template=bug_report.yml) or [feature request form](https://github.com/keriae/codex-app/issues/new?template=feature_request.yml) to share a concrete example. For UI differences, include the reference version, theme, zoom, window size, and action that triggers the mismatch.
+
 ## Development setup
 
-Use macOS 13 or newer and Node.js 24.11 or newer.
+Use macOS 13 or newer, Node.js 24.11 or newer, and a configured Codex CLI or app-server listener. See the [quick start](README.md#quick-start) for connection options.
 
 ```bash
+git clone https://github.com/keriae/codex-app.git
+cd codex-app
 npm ci
 npm run dev
 ```

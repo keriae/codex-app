@@ -1,0 +1,80 @@
+name: Bug or UI mismatch
+description: Report a broken interaction, backend issue, or difference from the macOS reference app.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the reconstruction. A small, repeatable example is useful even if you are new to the project.
+        For screenshots or logs, use a synthetic workspace and remove private conversations, account details, credentials, and personal paths. Do not attach application bundles or extracted vendor source.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Conversation and activity
+        - Right workbench, files, or review
+        - Composer and approvals
+        - Sidebar and projects
+        - Terminal or browser
+        - App-server connection
+        - macOS window or desktop behavior
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened, and what did you expect?
+      description: Describe the visible problem and the expected behavior. For UI parity, identify the specific difference from the reference app.
+      placeholder: "The command output panel closes when I switch tabs. I expected it to stay expanded when I return."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include the starting state and the action that triggers the problem. A minimal sample file or prompt can help.
+      placeholder: |
+        1. Open a synthetic workspace…
+        2. Select…
+        3. Click or press…
+        4. Observe…
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: macOS and client version
+      description: Include macOS version, Apple Silicon or Intel, and the release version or Git commit you ran.
+      placeholder: "macOS 15.7, Apple Silicon, commit abc1234"
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: How did you run the client?
+      options:
+        - Source client — npm run dev
+        - Packaged editable client
+        - Local runtime reconstruction — npm run reconstruct:mac
+    validations:
+      required: true
+  - type: input
+    id: reference-version
+    attributes:
+      label: Reference app version, if comparing UI
+      description: Include the installed Codex app version/build, or the recording timestamp you used.
+      placeholder: "Version/build; recording at 02:32"
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots, recording, or logs
+      description: Optional. Attach only sanitized evidence. For UI comparisons, include theme, window size, and zoom; matched before/after images are especially helpful. For connection issues, include server version and transport, but never credentials.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public issue privacy
+      options:
+        - label: I checked that this issue and its attachments contain no credentials, private conversations, account data, or extracted vendor source.
+          required: true
