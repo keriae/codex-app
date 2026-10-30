@@ -21,13 +21,14 @@
 </p>
 
 <p align="center">
-  <a href="docs/media/codex-replica-promo.mp4">
+  <a href="docs/media/codex-replica-promo.gif">
     <img src="docs/media/codex-app-preview.png" alt="The editable macOS client showing a conversation, project sidebar, workspace summary, and composer" width="960" />
   </a>
 </p>
 
 <p align="center">
-  <a href="docs/media/codex-replica-promo.mp4"><strong>▶ Watch the 15-second demo</strong></a><br />
+  <a href="docs/media/codex-replica-promo.gif"><strong>▶ Watch the 15-second demo</strong></a> ·
+  <a href="https://github.com/keriae/codex-app/raw/refs/heads/main/docs/media/codex-replica-promo.mp4">Download MP4</a><br />
   Captured from the running client with a fictional workspace and deterministic demo data.
 </p>
 

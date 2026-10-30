@@ -21,13 +21,14 @@
 </p>
 
 <p align="center">
-  <a href="docs/media/codex-replica-promo.mp4">
+  <a href="docs/media/codex-replica-promo.gif">
     <img src="docs/media/codex-app-preview.png" alt="可编辑的 macOS 客户端：对话、项目侧栏、工作区摘要和输入框" width="960" />
   </a>
 </p>
 
 <p align="center">
-  <a href="docs/media/codex-replica-promo.mp4"><strong>▶ 观看 15 秒演示</strong></a><br />
+  <a href="docs/media/codex-replica-promo.gif"><strong>▶ 观看 15 秒演示</strong></a> ·
+  <a href="https://github.com/keriae/codex-app/raw/refs/heads/main/docs/media/codex-replica-promo.mp4">下载 MP4</a><br />
   画面录制自实际运行的客户端，使用虚构工作区和确定性演示数据。
 </p>
 
