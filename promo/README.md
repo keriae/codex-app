@@ -1,8 +1,10 @@
-# Promo video
+# Client walkthrough
 
-The repository's launch video is a 15-second, 1920×1080, 30 fps Remotion composition that opens directly on a capture of the running macOS `codex-app` client reconstruction. Its workflow rail presents INPUT, INSPECT, EDIT, VERIFY, MATCHED before the final title card. The conversation and workspace are deterministic fixtures; this is a UI walkthrough, not a live model benchmark or a pixel-parity acceptance result. No private threads, projects, or credentials are included in the footage.
+The GitHub demo is a **35-second, 1920 × 1200, 30 fps** Remotion composition. It opens on the real reconstructed client, then shows conversation activity, file review, full/split views, diff options, Markdown editing and preview, and retained workbench tabs. Its source is a passive native window capture of a fictional Orbit Notes project, operated through the actual UI.
 
-## Render the finished assets
+Responses come from the deterministic demo server. Sections are cut and accelerated, with their playback rate shown in the video. This demonstrates UI behavior, not live model speed or complete application parity.
+
+## Render the committed clips
 
 ```bash
 cd promo
@@ -10,26 +12,43 @@ npm ci
 npm run render
 ```
 
-Outputs are written to `docs/media/`:
+The output in `docs/media/` includes the H.264 video, a 960 × 600 animated GIF, a closing card, and a client still. The GIF is approximately 1.2 MB; the MP4 is under 1 MB. `npm run studio` opens the editable composition.
 
-- `codex-replica-promo.mp4` - full H.264 video
-- `codex-replica-promo.gif` - optional animated preview; larger than the MP4
-- `codex-replica-poster.png` - original title-card cover
-- `codex-replica-parity.png` - deterministic client demo frame
+From the repository root, run `python3 promo/github-media.py` with Pillow to regenerate the README still and sharing cover. See [media notes](../docs/media/README.md) for dimensions, cropping and provenance.
 
-Use `npm run studio` to preview or edit the composition.
+## Record new footage
 
-## Refresh the GitHub page images
-
-From the repository root, run `python3 promo/github-media.py` with Python 3 and Pillow on macOS. It crops the application window from the committed demo frame to create `codex-app-preview.png` and a 1280×640 `github-social-preview.png`. See [media notes](../docs/media/README.md) for provenance and dimensions.
-
-## Refresh the live App capture
-
-The recording helper drives the real Electron client through CDP and refuses to continue if the visible UI contains a username, home-directory path, private IP address, or email address. Keep the demo workspace under a username-free path such as `/tmp/orbit-notes-demo` so file and diff views remain safe to publish.
+Keep capture data separate from personal projects and chats:
 
 1. Copy `demo-workspace/` to `/tmp/orbit-notes-demo`.
-2. Start `scripts/reverse/promo-demo-server.mjs` with that workspace and an isolated `CODEX_HOME`.
-3. Launch the reconstructed client against the fixture with an isolated `CODEX_REPLICA_USER_DATA_PATH` and CDP enabled.
-4. Run `scripts/reverse/record-promo-demo.mjs` to create `public/codex-replica-live.mp4`.
+2. Start the fixture with its own Codex home:
 
-The recording script exercises the actual app flow: type a prompt into the real composer, send it, display the running command and file-change states, and return to the completed response. Re-render the Remotion composition after replacing the capture.
+   ```bash
+   node scripts/reverse/promo-demo-server.mjs \
+     --workspace /tmp/orbit-notes-demo \
+     --codex-home /tmp/codex-promo-home --port 9387
+   ```
+
+3. Launch the built replica with its own profile:
+
+   ```bash
+   CODEX_HOME=/tmp/codex-promo-home \
+   CODEX_REPLICA_USER_DATA_PATH=/tmp/codex-promo-profile \
+   CODEX_APP_SERVER_URL=ws://127.0.0.1:9387 \
+   release/mac-arm64/Codex.app/Contents/MacOS/Codex \
+     --cwd=/tmp/orbit-notes-demo --remote-debugging-port=9237
+   ```
+
+4. Select the fictional chat. Find the replica's native window ID, then use the passive helper:
+
+   ```bash
+   node scripts/reverse/record-promo-demo.mjs \
+     --workspace /tmp/orbit-notes-demo --window-id <window-id> \
+     --port 9237 --seconds 60
+   ```
+
+The helper observes the selected workspace and visible text before and after capture. It records only the validated replica window and writes below ignored `reverse/raw/`. It performs no clicks, typing, scrolling, focusing, reloading or resizing. Operate the app manually or through native Computer Use while recording. Do not use the original installed app or real account history as public demo data.
+
+Raw MOV containers can contain a local author field. Remove all container metadata with `-map_metadata -1` during H.264 transcoding, omit audio, and review both metadata and the whole video before moving clips into `public/`. A preflight text check cannot replace inspection of the finished footage.
+
+The current source clips are `codex-replica-live.mp4` (conversation), `codex-replica-workbench.mp4` (review), and `codex-replica-edit.mp4` (editor and tabs). Their native window and shadow bounds are documented in the composition. Trim offsets, playback rates and scene labels remain editable there. If a new capture uses different window dimensions or shadow margins, update the crop constants before rendering.

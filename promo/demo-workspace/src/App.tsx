@@ -8,7 +8,8 @@ const features = [
 
 export function App() {
   return (
-    <main className="launch-card">
+    <main className="launch-card" aria-label="Orbit Notes launch">
+      <span className="status">Ready to launch</span>
       <p className="eyebrow">ORBIT NOTES</p>
       <h1>Ideas move faster<br />when the tools disappear.</h1>
       <p className="summary">

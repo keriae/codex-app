@@ -28,33 +28,33 @@ def main():
     # Exact app-window bounds from LiveReplicaScene in CodexReplicaPromo.tsx.
     # Exclude the surrounding LIVE/MATCHED promotional rail.
     source = Image.open(MEDIA / "codex-replica-parity.png").convert("RGB")
-    window = source.crop((96, 54, 1824, 1026))
-    preview = window.resize((1600, 900), Image.Resampling.LANCZOS)
+    window = source.crop((96, 66, 1824, 1161))
+    preview = window.resize((1600, 1014), Image.Resampling.LANCZOS)
     preview.save(MEDIA / "codex-app-preview.png", optimize=True)
 
-    cover = Image.new("RGB", (1280, 640), "#101414")
+    cover = Image.new("RGB", (1280, 640), "#0c0d0f")
     draw = ImageDraw.Draw(cover)
     text = "#f1f5f3"
-    muted = "#a7b9b2"
-    accent = "#81d7ad"
+    muted = "#9da5b0"
+    accent = "#96b6ff"
 
-    draw.rounded_rectangle((52, 48, 260, 86), radius=19, fill="#1e2e27")
+    draw.rounded_rectangle((52, 48, 260, 86), radius=19, fill="#1c2330")
     draw.text((70, 56), "codex-app / macOS", font=font(20, True), fill=accent)
-    draw.text((52, 127), "Codex,", font=font(62, True), fill=text)
-    draw.text((52, 202), "made editable.", font=font(54, True), fill=text)
-    draw.text((54, 299), "Explore the desktop client.", font=font(23), fill=muted)
-    draw.text((54, 335), "Build your own experience.", font=font(23), fill=muted)
+    draw.text((52, 127), "Your Codex", font=font(52, True), fill=text)
+    draw.text((52, 202), "workspace.", font=font(52, True), fill=text)
+    draw.text((54, 299), "Run locally. Read the source.", font=font(23), fill=muted)
+    draw.text((54, 335), "Make the desktop your own.", font=font(23), fill=muted)
 
-    draw.rounded_rectangle((52, 402, 376, 442), radius=9, fill="#202925")
+    draw.rounded_rectangle((52, 402, 376, 442), radius=9, fill="#1e2229")
     draw.text((69, 412), "Electron  /  React  /  TypeScript", font=font(19), fill=text)
 
-    shot = preview.resize((710, 399), Image.Resampling.LANCZOS)
-    draw.rounded_rectangle((498, 97, 1220, 510), radius=19, fill="#30433a")
-    rounded_image(cover, shot, (504, 103), 14)
-    draw.text((510, 518), "Running client · deterministic demo data", font=font(16), fill=muted)
+    shot = preview.resize((710, 450), Image.Resampling.LANCZOS)
+    draw.rounded_rectangle((498, 76, 1220, 538), radius=19, fill="#303744")
+    rounded_image(cover, shot, (504, 82), 14)
+    draw.text((510, 544), "Running client · deterministic demo data", font=font(16), fill=muted)
 
-    draw.line((52, 562, 1220, 562), fill="#304039", width=1)
-    draw.text((52, 583), "Streaming chats  ·  Workspace & diffs  ·  Terminals & agents", font=font(21), fill=text)
+    draw.line((52, 562, 1220, 562), fill="#303744", width=1)
+    draw.text((52, 583), "Streaming chats  ·  Source editing  ·  Split diffs", font=font(21), fill=text)
     draw.text((914, 587), "github.com/keriae/codex-app", font=font(17), fill=accent)
     cover.save(MEDIA / "github-social-preview.png", optimize=True)
 

@@ -1,0 +1,82 @@
+name: UI mismatch
+description: Compare one macOS UI behavior using a public, repeatable example.
+title: "[UI]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report one visible or interactive difference using a synthetic or publicly shareable workspace.
+        Review the issue text and every attachment before uploading. Remove personal information, usernames, email addresses, home-directory paths, identifying hosts, private conversations, account data, and credentials. Do not attach application bundles, local profiles, or extracted vendor source.
+  - type: input
+    id: client-version
+    attributes:
+      label: Client version
+      description: Include the release version or commit and whether you used the editable development or packaged client.
+      placeholder: "Packaged editable client, commit abc1234"
+    validations:
+      required: true
+  - type: input
+    id: reference-version
+    attributes:
+      label: Reference version
+      description: Include the reference app version/build or the recording version and timestamp.
+      placeholder: "Version/build; recording at 02:32"
+    validations:
+      required: true
+  - type: input
+    id: display-settings
+    attributes:
+      label: macOS, window size and zoom
+      description: Include macOS version, window width × height, and app zoom. Omit device names, serial numbers, account names, and personal paths.
+      placeholder: "macOS 15.7; 1200 × 800; 100% zoom"
+    validations:
+      required: true
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Visible theme
+      options:
+        - Light
+        - Dark
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Public reproduction
+      description: Give the starting state and steps with synthetic files or prompts that anyone can share publicly. Mention sidebar or workbench state when relevant.
+      placeholder: |
+        1. Open a synthetic workspace with…
+        2. Select…
+        3. Click or press…
+        4. Observe…
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: Describe what the reconstructed client displays or does.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Describe the reference behavior and the specific difference.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Optional visual evidence
+      description: Attach only reviewed screenshots or recordings from a synthetic or public example. Check the whole frame, filenames, logs, and incidental sidebar, browser, terminal, or account information for personal data.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public submission privacy
+      options:
+        - label: I checked the issue text and every attachment for personal information, including names, usernames, email addresses, home-directory paths, identifying hosts, private conversations, account data, and credentials; none are included.
+          required: true
+        - label: My reproduction is synthetic or publicly shareable, and I did not upload application bundles, local profiles, or extracted vendor source.
+          required: true

@@ -1,12 +1,12 @@
-name: Bug or UI mismatch
-description: Report a broken interaction, backend issue, or difference from the macOS reference app.
+name: Bug report
+description: Report a broken interaction, backend issue, or macOS desktop problem.
 title: "[Bug]: "
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for helping improve the reconstruction. A small, repeatable example is useful even if you are new to the project.
-        For screenshots or logs, use a synthetic workspace and remove private conversations, account details, credentials, and personal paths. Do not attach application bundles or extracted vendor source.
+        Use a synthetic or publicly shareable workspace. Review the issue text and every attachment; remove all personal information, usernames, email addresses, home-directory paths, identifying hosts, private conversations, account details, and credentials. Do not attach application bundles, local profiles, or extracted vendor source.
   - type: dropdown
     id: area
     attributes:
@@ -76,5 +76,7 @@ body:
     attributes:
       label: Public issue privacy
       options:
-        - label: I checked that this issue and its attachments contain no credentials, private conversations, account data, or extracted vendor source.
+        - label: I checked the issue text and every attachment for personal information, including names, usernames, email addresses, home-directory paths, identifying hosts, private conversations, account data, and credentials; none are included.
+          required: true
+        - label: My reproduction is synthetic or publicly shareable, and I did not upload application bundles, local profiles, or extracted vendor source.
           required: true

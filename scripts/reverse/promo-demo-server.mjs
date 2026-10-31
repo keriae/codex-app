@@ -84,22 +84,24 @@ const turns = [{
         path: 'src/App.tsx',
         kind: { type: 'update', move_path: null },
         diff: [
-          '@@ -8,7 +8,8 @@ export function App() {',
+          '@@ -10,3 +10,4 @@ export function App() {',
           '   return (',
           '-    <main className="launch-card">',
           '+    <main className="launch-card" aria-label="Orbit Notes launch">',
-          '+      <span className="status">Replica matched</span>',
+          '+      <span className="status">Ready to launch</span>',
           '       <p className="eyebrow">ORBIT NOTES</p>'
         ].join('\n')
       }, {
         path: 'src/styles.css',
         kind: { type: 'update', move_path: null },
         diff: [
-          '@@ -10,7 +10,7 @@ body {',
+          '@@ -11,6 +11,6 @@ body {',
           ' .launch-card {',
           '-  max-width: 680px;',
           '+  max-width: 720px;',
+          '   margin: 12vh auto;',
           '   padding: 64px;',
+          '   border: 1px solid rgb(255 255 255 / 10%);',
           '   border-radius: 32px;'
         ].join('\n')
       }]
@@ -108,7 +110,7 @@ const turns = [{
       type: 'agentMessage',
       id: 'demo-agent-1',
       phase: 'final_answer',
-      text: 'Done. I tightened the layout against the reference and kept the result fully editable. The hierarchy, spacing, corner radius, and button rhythm now move as one system.'
+      text: 'Updated the launch card: added an accessible label, a launch status, and a wider layout. Review the two changed files in the workspace.'
     }
   ]
 }]
@@ -141,22 +143,24 @@ const liveChanges = [{
   path: 'src/App.tsx',
   kind: { type: 'update', move_path: null },
   diff: [
-    '@@ -8,7 +8,8 @@ export function App() {',
+    '@@ -10,3 +10,4 @@ export function App() {',
     '   return (',
     '-    <main className="launch-card">',
     '+    <main className="launch-card" aria-label="Orbit Notes launch">',
-    '+      <span className="status">Replica matched</span>',
+    '+      <span className="status">Ready to launch</span>',
     '       <p className="eyebrow">ORBIT NOTES</p>'
   ].join('\n')
 }, {
   path: 'src/styles.css',
   kind: { type: 'update', move_path: null },
   diff: [
-    '@@ -10,7 +10,7 @@ body {',
+    '@@ -11,6 +11,6 @@ body {',
     ' .launch-card {',
     '-  max-width: 680px;',
     '+  max-width: 720px;',
-    '   padding: 64px;',
+    '   margin: 12vh auto;',
+          '   padding: 64px;',
+          '   border: 1px solid rgb(255 255 255 / 10%);',
     '   border-radius: 32px;'
   ].join('\n')
 }]
@@ -271,7 +275,7 @@ function startDemoTurn(params) {
   const completedVerifyCommand = {
     ...verifyCommand,
     status: 'completed',
-    aggregatedOutput: 'Layout check passed. Visual tokens match the reference.\n',
+    aggregatedOutput: 'Demo check passed. Updated spacing and launch status.\n',
     exitCode: 0,
     durationMs: 1_150
   }
@@ -279,7 +283,7 @@ function startDemoTurn(params) {
     type: 'agentMessage',
     id: `demo-live-final-${sequence}`,
     phase: 'final_answer',
-    text: 'Done. The card now matches the reference rhythm while staying fully editable.'
+    text: 'Updated the launch card. Review the diff or keep editing in the workspace.'
   }
   const startedAt = Date.now() / 1_000
   const startedTurn = {
@@ -395,13 +399,13 @@ function startDemoTurn(params) {
     threadId: thread.id,
     turnId,
     itemId: finalMessage.id,
-    delta: 'Done. The card now matches the reference rhythm '
+    delta: 'Updated the launch card. '
   }))
   schedule(7_900, () => broadcast('item/agentMessage/delta', {
     threadId: thread.id,
     turnId,
     itemId: finalMessage.id,
-    delta: 'while staying fully editable.'
+    delta: 'Review the diff or keep editing in the workspace.'
   }))
   schedule(8_100, () => broadcast('item/completed', {
     threadId: thread.id,

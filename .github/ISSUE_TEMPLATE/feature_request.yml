@@ -6,7 +6,7 @@ body:
     attributes:
       value: |
         Describe the experience you want to improve. You do not need to know how to implement it.
-        Use sanitized screenshots or examples. Keep application bundles, extracted vendor source, credentials, and private account or conversation data out of public issues.
+        Use a synthetic or publicly shareable example. Review the issue text and every attachment; remove all personal information, usernames, email addresses, home-directory paths, identifying hosts, private conversations, account details, and credentials. Do not attach application bundles, local profiles, or extracted vendor source.
   - type: textarea
     id: problem
     attributes:
@@ -44,5 +44,7 @@ body:
     attributes:
       label: Public issue privacy
       options:
-        - label: I checked that this issue and its attachments contain no credentials, private conversations, account data, or extracted vendor source.
+        - label: I checked the issue text and every attachment for personal information, including names, usernames, email addresses, home-directory paths, identifying hosts, private conversations, account data, and credentials; none are included.
+          required: true
+        - label: My example is synthetic or publicly shareable, and I did not upload application bundles, local profiles, or extracted vendor source.
           required: true

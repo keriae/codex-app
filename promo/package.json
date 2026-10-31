@@ -8,9 +8,9 @@
     "studio": "remotion studio src/index.ts --port=3111",
     "render": "npm run render:mp4 && npm run render:gif && npm run render:poster && npm run render:parity",
     "render:mp4": "remotion render src/index.ts CodexReplicaPromo ../docs/media/codex-replica-promo.mp4 --codec=h264 --crf=20 --pixel-format=yuv420p --port=3111",
-    "render:gif": "remotion render src/index.ts CodexReplicaPromo ../docs/media/codex-replica-promo.gif --codec=gif --scale=0.6 --every-nth-frame=2 --port=3111",
-    "render:poster": "remotion still src/index.ts CodexReplicaPromo ../docs/media/codex-replica-poster.png --frame=438 --port=3111",
-    "render:parity": "remotion still src/index.ts CodexReplicaPromo ../docs/media/codex-replica-parity.png --frame=300 --port=3111"
+    "render:gif": "remotion render src/index.ts CodexReplicaPromo ../docs/media/codex-replica-promo.gif --codec=gif --scale=0.5 --every-nth-frame=4 --port=3111",
+    "render:poster": "remotion still src/index.ts CodexReplicaPromo ../docs/media/codex-replica-poster.png --frame=1020 --port=3111",
+    "render:parity": "remotion still src/index.ts CodexReplicaPromo ../docs/media/codex-replica-parity.png --frame=45 --port=3111"
   },
   "dependencies": {
     "@remotion/cli": "4.0.538",

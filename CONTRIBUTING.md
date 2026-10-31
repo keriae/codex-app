@@ -6,7 +6,7 @@ Thanks for helping improve this macOS `codex-app` client reconstruction. This re
 
 You can contribute without knowing the entire codebase. Reproduce one UI mismatch, improve an interaction, clarify a setup step, or add a focused protocol test. The [feature inventory](docs/feature-inventory.md) lists gaps; the [documentation index](docs/README.md) points to the relevant implementation notes.
 
-Use the [bug/UI mismatch form](https://github.com/keriae/codex-app/issues/new?template=bug_report.yml) or [feature request form](https://github.com/keriae/codex-app/issues/new?template=feature_request.yml) to share a concrete example. For UI differences, include the reference version, theme, zoom, window size, and action that triggers the mismatch.
+Use the [bug report](https://github.com/keriae/codex-app/issues/new?template=bug_report.yml), [UI mismatch](https://github.com/keriae/codex-app/issues/new?template=ui_mismatch.yml), or [feature request](https://github.com/keriae/codex-app/issues/new?template=feature_request.yml) form to share a concrete example. For UI differences, include client and reference versions, window size, theme, zoom, and repeatable steps using a synthetic or publicly shareable workspace.
 
 ## Development setup
 
@@ -36,7 +36,9 @@ npm run build
 
 ## Public-source boundary
 
-Do not commit credentials, account data, private conversations, local profiles, proprietary application bundles, extracted vendor source, or unlicensed vendor artwork. Keep raw captures and generated reconstruction output under the ignored paths documented in `.gitignore`; commit only reviewed summaries, original implementation code, and redistributable assets.
+All public submissions must exclude personal information: commits, issues, pull requests, screenshots, recordings, logs, and other attachments. Use synthetic examples and inspect the full content before uploading, including filenames and incidental sidebar, browser, terminal, or account information. Remove names, usernames, email addresses, home-directory paths, identifying hosts or addresses, private projects and conversations, account data, and credentials.
+
+Do not upload local profiles, proprietary application bundles, extracted vendor source, or unlicensed vendor artwork. Keep raw captures and generated reconstruction output under the ignored paths documented in `.gitignore`; commit only reviewed summaries, original implementation code, and redistributable assets.
 
 Dependency lockfiles must use the public npm registry. Replace personal paths, hosts, email addresses, and other environment-specific identifiers with synthetic examples before committing.
 

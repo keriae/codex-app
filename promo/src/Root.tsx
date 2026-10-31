@@ -7,10 +7,10 @@ export const PromoRoot: React.FC = () => {
     <Composition
       id="CodexReplicaPromo"
       component={CodexReplicaPromo}
-      durationInFrames={450}
+      durationInFrames={1050}
       fps={30}
       width={1920}
-      height={1080}
+      height={1200}
     />
   );
 };
