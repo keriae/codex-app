@@ -47,6 +47,28 @@ function findItem(state: SessionState, turnId: string, itemId: string): ThreadIt
 }
 
 describe('sessionReducer', () => {
+  it('retains command timing across replay, hydration and completion without starting historical commands today', () => {
+    let state = hydrated()
+    const started = { type: 'commandExecution', id: 'timed-command', command: 'npm test', status: 'inProgress', startedAtMs: 10_000 } as const
+    state = notify(state, 'item/started', { threadId: thread.id, turnId: 'timed-turn', item: started })
+    state = notify(state, 'item/started', { threadId: thread.id, turnId: 'timed-turn', item: { ...started, startedAtMs: 11_000 } })
+    expect(findItem(state, 'timed-turn', started.id)).toMatchObject({ startedAtMs: 10_000 })
+    state = sessionReducer(state, { type: 'threadHydrated', thread: { ...thread, turns: [{ id: 'timed-turn', status: 'inProgress', items: [{ ...started, startedAtMs: null }] }] } })
+    expect(findItem(state, 'timed-turn', started.id)).toMatchObject({ startedAtMs: 10_000 })
+    state = notify(state, 'item/completed', { threadId: thread.id, turnId: 'timed-turn', item: { type: 'commandExecution', id: started.id, command: 'npm test', status: 'completed', durationMs: 2400 } })
+    expect(findItem(state, 'timed-turn', started.id)).toMatchObject({ startedAtMs: 10_000, status: 'completed', durationMs: 2400 })
+    const earliest = Date.now()
+    state = notify(state, 'item/started', { threadId: thread.id, turnId: 'timed-turn', item: { ...started, id: 'observed-command', startedAtMs: null } })
+    const observed = findItem(state, 'timed-turn', 'observed-command') as CommandItem
+    expect(observed.observedStartedAtMs).toBeGreaterThanOrEqual(earliest)
+    expect(observed.observedStartedAtMs).toBeLessThanOrEqual(Date.now())
+    state = notify(state, 'item/started', { threadId: thread.id, turnId: 'timed-turn', item: { ...started, id: 'observed-command', startedAtMs: 5_000 } })
+    expect(findItem(state, 'timed-turn', 'observed-command')).toMatchObject({ startedAtMs: 5_000, observedStartedAtMs: observed.observedStartedAtMs })
+    state = notify(state, 'item/completed', { threadId: thread.id, turnId: 'historical-turn', item: { type: 'commandExecution', id: 'historical-command', command: 'npm test', status: 'completed', durationMs: 2400 } })
+    expect(findItem(state, 'historical-turn', 'historical-command')).not.toHaveProperty('startedAtMs')
+    expect(findItem(state, 'historical-turn', 'historical-command')).not.toHaveProperty('observedStartedAtMs')
+  })
+
   it('keeps an ephemeral side thread out of the catalog without changing selection', () => {
     let state = hydrated()
     state = notify(state, 'thread/started', { thread: transientThread })

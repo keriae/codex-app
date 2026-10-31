@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "installedSource": {
+    "bundle": "/Applications/ChatGPT.app",
+    "version": "26.1027.30824",
+    "build": "22943",
+    "asarSha256": "36bf3d2b35e95e11852074b9ca9459b89efbecd6b8311345d060cf66de8f0ba6"
+  },
+  "recordingReference": {
+    "version": "26.1016.61520",
+    "build": "21421",
+    "width": 3878,
+    "height": 2282,
+    "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+    "usedForThisSubtask": false,
+    "reason": "This subtask restored the current installed chooser by static source tracing; no new frame or native inspection."
+  },
+  "method": {
+    "reference": "https://github.com/morluto/rea/blob/main/docs/javascript-application-workflows.md",
+    "description": "Direct static ASAR/JavaScript/CSS/SVG tracing and adaptation of original Ys/Xs and shared pointer/popover primitives. No clean-room workflow and no execution of extracted original modules.",
+    "offsetUnits": "Zero-based UTF-8 bytes"
+  },
+  "sources": {
+    "chrome": {
+      "path": "reverse/raw/element-parity-2026-10-31/workbench/source/thread-app-shell-chrome-b533951219bb.js",
+      "sha256": "dbd859abfdd7a0885e297ed2a4e63f02124b8398eab270edf4de3e0b63107d96"
+    },
+    "shared": {
+      "path": "reverse/raw/ui-parity-2026-10-31/source/app-shared-7815d5a1a42a.js",
+      "sha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4"
+    },
+    "initial": {
+      "path": "reverse/raw/ui-parity-2026-10-31/source/app-initial-60f141238751.js",
+      "sha256": "72b67fc719cccb37a1da02fd06f71d840ec2805b813c1fac3a4fc5cca59cc16c"
+    },
+    "macOSCSS": {
+      "path": "reverse/raw/element-parity-2026-10-31/workbench/source/5257da4ba4ae.css",
+      "sha256": "6c0b62be9ea2b0268a114414a05365744206eab52b3c14b66ec6eceb063d23e0"
+    },
+    "zhCN": {
+      "path": "reverse/raw/element-parity-2026-10-31/conversation/source/zh-CN-88ebb426d686.js",
+      "sha256": "672ea7570754a484585121ddbbbbbba078e95f51ecf68db6e4f901a011577745"
+    }
+  },
+  "callChain": {
+    "chooser": {
+      "source": "chrome",
+      "symbol": "Ys",
+      "utf8Offset": 31431,
+      "retainedList": "Fn.auxiliary excludes Chat"
+    },
+    "row": {
+      "source": "chrome",
+      "symbol": "Xs",
+      "utf8Offset": 36155,
+      "disabled": "!workspaceReady && tab.requiresWorkspaceReady !== false",
+      "content": "tab.titleContent ?? tab.title",
+      "primaryMode": "split",
+      "secondaryMode": "full"
+    },
+    "secondaryPointerDown": {
+      "source": "chrome",
+      "symbol": "Zs",
+      "utf8Offset": 38429,
+      "action": "stopPropagation"
+    },
+    "secondaryMouseDown": {
+      "source": "chrome",
+      "symbol": "Qs",
+      "utf8Offset": 38471,
+      "action": "preventDefault + stopPropagation"
+    },
+    "pointerGuard": {
+      "source": "shared",
+      "export": "fH",
+      "symbol": "Crn",
+      "utf8Offset": 3343526,
+      "documentListener": "pointermove, capture=true",
+      "destinationOrSource": "composedPath includes either element -> cancel grace",
+      "triangleBuilder": {
+        "symbol": "wrn",
+        "utf8Offset": 3344135
+      },
+      "pointTest": {
+        "symbol": "Trn",
+        "utf8Offset": 3344468
+      },
+      "signedDeterminant": {
+        "symbol": "Ern",
+        "utf8Offset": 3344603
+      },
+      "emptyRect": {
+        "symbol": "J0",
+        "utf8Offset": 3344669,
+        "predicate": "width <= 0 || height <= 0"
+      },
+      "edgeExtension": {
+        "symbol": "Y0",
+        "utf8Offset": 3344754,
+        "px": 8
+      },
+      "sidesUsedByChooser": [
+        "bottom",
+        "top"
+      ],
+      "triangleBoundaryIncluded": true,
+      "leaveTimerMs": 100
+    },
+    "popup": {
+      "source": "shared",
+      "symbol": "gRn",
+      "utf8Offset": 4639754,
+      "size": "workspace",
+      "variant": "menu",
+      "align": "end",
+      "defaultSide": "bottom",
+      "sideOffsetPx": 5,
+      "collisionPaddingPx": 6,
+      "widthMap": {
+        "symbol": "yRn",
+        "utf8Offset": 4644021,
+        "class": "w-65",
+        "cssPx": 260
+      },
+      "opaqueMenu": {
+        "symbol": "j3",
+        "utf8Offset": 4219611
+      },
+      "sideOffsetAdapter": {
+        "symbol": "rbn",
+        "utf8Offset": 4220697,
+        "noMenuOverlayAncestorOffset": 0
+      },
+      "originalZIndex": 50,
+      "replicaZIndex": 350
+    },
+    "rowContent": {
+      "source": "shared",
+      "symbol": "Abn",
+      "export": "GP",
+      "utf8Offset": 4224370,
+      "defaultIconCssPx": 16,
+      "spacingMenuItemContentDefaultCssPx": 6
+    },
+    "browserFactory": {
+      "source": "initial",
+      "utf8Offset": 7711271,
+      "nearbyKind": "yB.BROWSER",
+      "requiresWorkspaceReady": false,
+      "replicaKindsWithVerifiedException": [
+        "browser"
+      ]
+    },
+    "layoutFocus": {
+      "source": "initial",
+      "symbol": "Ixa",
+      "export": "cyt",
+      "utf8Offset": 6465589,
+      "action": "requestAnimationFrame -> query main data-app-shell-workspace-layout-toggle button -> focus({preventScroll:true}); fallback primary composer",
+      "fallback": {
+        "symbol": "Rhi",
+        "utf8Offset": 5269531,
+        "uses": "registered primary composer"
+      },
+      "replicaFallback": "DOM .main-panel .composer textarea; primary registry not reconstructed"
+    }
+  },
+  "keyboard": {
+    "closedTrigger": {
+      "ArrowDown": "open; first enabled button autofocus",
+      "ArrowUp": "no chooser action",
+      "EnterOrSpace": "native click -> reveal layout"
+    },
+    "openTrigger": {
+      "EnterSpaceArrowDown": "focus first enabled button",
+      "ArrowUp": "focus last enabled button"
+    },
+    "popup": "Native Tab order. Ys has only focus/key capture mouse-mode cancellation, no row ArrowUp/Down roving.",
+    "hoverOpen": "prevent open autofocus; preserve current focus",
+    "escape": "close; keyboard popup focus restores trigger, mouse-only closes without changing current focus",
+    "select": "close without trigger autofocus; use existing replica right-workbench selection",
+    "layoutClick": "capture document.activeElement === trigger before reveal; request main layout focus only if captured true"
+  },
+  "macOSDimensions": {
+    "spacingPx": 4,
+    "popupWidthPx": 260,
+    "popupPaddingPx": 8,
+    "popupRadiusPx": 16,
+    "rowHeightPx": 32,
+    "rowRadiusPx": 10,
+    "headingPadding": {
+      "verticalPx": 6,
+      "horizontalPx": 8
+    },
+    "textXsPx": 11,
+    "lineHeight": 1.5,
+    "primaryPadding": {
+      "startPx": 8,
+      "endPx": 36
+    },
+    "contentGapPx": 6,
+    "iconDisplayPx": 16,
+    "secondarySizePx": 24,
+    "secondaryRadiusPx": 8,
+    "secondaryEndPx": 4,
+    "opaqueSurface": {
+      "light": "#fff",
+      "dark": "#181818"
+    },
+    "shadow": "0 0 0 .5px var(--border), 0 8px 16px -4px #0000001f",
+    "count": {
+      "fontSizePx": 8,
+      "fontWeight": 600,
+      "tabularNums": true,
+      "over9": "9+",
+      "over9FontSizePx": 6
+    }
+  },
+  "glyphs": [
+    {
+      "name": "aspect-ratio-1-1-light-16",
+      "source": "shared",
+      "symbol": "lZn",
+      "assignmentUtf8Offset": 4965648,
+      "bodyUtf8Offset": 4966242,
+      "bodySha256": "696e0031433327a3fc3406548651e7536ccfe8b6f4c8e9cb7dc7297e84d0ac2a",
+      "displayPx": 16
+    },
+    {
+      "name": "chevron-up-right-chevron-down-left-sm-light-16",
+      "source": "shared",
+      "symbol": "RRn",
+      "assignmentUtf8Offset": 4649483,
+      "bodyUtf8Offset": 4650052,
+      "bodySha256": "71ccddb98abca13c8e462b2433fa9869861041a7445d4e32d93bff7224f156dc",
+      "displayPx": 16
+    }
+  ],
+  "zhCN": [
+    {
+      "key": "threadWorkspace.layout.showTabs",
+      "utf8Offset": 2812278,
+      "value": "显示标签页"
+    },
+    {
+      "key": "threadWorkspace.layout.openTabCount",
+      "utf8Offset": 2812159,
+      "value": "{count, plural, one {# 个打开的标签页} other {# 个打开的标签页}}",
+      "replicaChannel": "aria-description"
+    },
+    {
+      "key": "threadWorkspace.openTabs.heading",
+      "utf8Offset": 2813749,
+      "value": "已打开的标签页"
+    },
+    {
+      "key": "threadWorkspace.openTabs.fullView",
+      "utf8Offset": 2813681,
+      "value": "以全屏视图打开 {title}"
+    }
+  ],
+  "integration": {
+    "files": [
+      "src/renderer/src/RetainedTabsChooser.tsx",
+      "src/renderer/src/RetainedTabsChooser.css",
+      "src/renderer/src/retainedTabsChooserModel.ts",
+      "src/renderer/src/retainedTabsChooser.test.ts",
+      "src/renderer/src/App.tsx"
+    ],
+    "appChange": "Narrow WindowTitlebar import/props/callback/mount. Current retained title tabs provide identity/title/icon; click retains revealRightWorkbenchView, row selection activates id and split/full state.",
+    "unchangedGlyphRegistryCount": 43,
+    "countStyling": "Existing recovered titlebar glyph/count rules retained"
+  },
+  "boundaries": [
+    "Workspace readiness is currently adapted from backend.state === ready; original Ar workspace status atom is not yet fully mapped.",
+    "Replica current tab label/icon remain from rightWorkbenchTitleTabs; complete original factory titleContent/icon mapping is not restored by this change.",
+    "Original selection can route to another physical pane when the tab is already main and restore content focus. Replica this change selects its existing right-workbench split/full model; equivalence is not claimed.",
+    "Layout focus uses the original main-toggle query pattern and current DOM composer fallback, not the original primary composer registry.",
+    "Replica z350 adapts current titlebar overlay ordering; original gRn uses z50.",
+    "Manual collision/ResizeObserver/portal-zoom positioning needs native verification against original Radix geometry.",
+    "This static subtask did not operate original or replica UI, execute original modules, build, package, or start server/model turns."
+  ],
+  "verification": {
+    "checkedAt": "2026-10-31T08:24:37.966542+00:00",
+    "webTypecheck": {
+      "status": "passed",
+      "command": "npm run typecheck:web"
+    },
+    "targetedTests": {
+      "status": "passed",
+      "files": 6,
+      "tests": 39,
+      "newChooserTests": 7,
+      "paths": [
+        "src/renderer/src/retainedTabsChooser.test.ts",
+        "src/renderer/src/rightWorkbenchTitlebar.test.ts",
+        "src/renderer/src/rightWorkbenchTabs.test.ts",
+        "src/renderer/src/rightWorkbenchViewModel.test.ts",
+        "src/renderer/src/rightWorkbenchTabKeyboard.test.ts",
+        "src/renderer/src/rightWorkbenchWorkspaceControls.test.ts"
+      ]
+    },
+    "diffCheck": "passed",
+    "nativeRuntime": "Not run by this subtask. Root will validate a new package separately.",
+    "sourceFiles": [
+      {
+        "path": "src/renderer/src/RetainedTabsChooser.tsx",
+        "sha256": "ee119342ebe4dad40f517cabc5a365ac05e2b7165e080b873bd186cd784c300f"
+      },
+      {
+        "path": "src/renderer/src/RetainedTabsChooser.css",
+        "sha256": "f07e978eb5594745cdbe58964fca71023eb615772ac125999a1eb2cf09e5110b"
+      },
+      {
+        "path": "src/renderer/src/retainedTabsChooserModel.ts",
+        "sha256": "bd0fb1e9822955710fbb86f504f9958dbd12170efdb7fcdb9c64394bfcb5b4ec"
+      },
+      {
+        "path": "src/renderer/src/retainedTabsChooser.test.ts",
+        "sha256": "9a5cd6dab80248b0c3055fb69aba996e188d7b39d54e790c150134100851bad0"
+      },
+      {
+        "path": "src/renderer/src/App.tsx",
+        "sha256": "d8e11a26b074cec74676c82c14dfa308a576961446ba49b185c0c52b9554121e"
+      },
+      {
+        "path": "docs/retained-tabs-chooser-parity-2026-10-31.md",
+        "sha256": "cc3367140959b6f124b5fef341d887d864eeab620870d210edc35d21398eb210"
+      },
+      {
+        "path": "docs/workbench-element-parity-2026-10-31.md",
+        "sha256": "ee3f7c5d5ffdad89beadaa727e28b22656392e473a01e4d2339bc255425f31df"
+      }
+    ]
+  },
+  "priorCheckpoint": {
+    "status": "Historical checkpoint predates chooser source and cannot validate this change.",
+    "path": "reverse/raw/element-parity-2026-10-31/acceptance/report.json",
+    "testFiles": 204,
+    "tests": 1567,
+    "packagedFiles": 71,
+    "asarSha256": "e1eee48361d9a4b95ce14b8ad7f95e57d381549cbe03e25337fce31b0cc93cc3"
+  },
+  "frozenAt": "2026-10-31T16:24:37.966542+08:00"
+}

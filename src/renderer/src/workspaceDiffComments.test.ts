@@ -41,7 +41,7 @@ function fixture(initial: DiffCommentAttachment[] = [], readonly = false, patchT
   })
   const render = () => {
     const bindings = { onCommentsChange: readonly ? undefined : onCommentsChange, setCommentDraft, commentDraft: draft,
-      comments, diff, path: 'file.ts', cwd: '/project', saveDiffCommentDraft, selectDiffCommentLine }
+      comments, diff, sourceLines: diff.lines, path: 'file.ts', cwd: '/project', saveDiffCommentDraft, selectDiffCommentLine }
     return new Function(...Object.keys(bindings), `${compiled}\nreturn {selectLine,saveComment,deleteComment}`)(...Object.values(bindings)) as {
       selectLine(line: DiffCommentLine, extend: boolean): void; saveComment(): void; deleteComment(id: string): void
     }

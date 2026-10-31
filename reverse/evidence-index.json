@@ -6,9 +6,12 @@
     "current": {
       "application": "/Applications/ChatGPT.app",
       "bundleIdentifier": "com.openai.codex",
-      "version": "26.1016.62342",
-      "build": "21477",
-      "asarSha256": "5b5cf52887cfd4de19cb5862155a8ef6cf58830c0a2fc592b72060cfcc3be869"
+      "version": "26.1027.30824",
+      "build": "22943",
+      "asarSha256": "36bf3d2b35e95e11852074b9ca9459b89efbecd6b8311345d060cf66de8f0ba6",
+      "inspectedAt": "2026-10-31",
+      "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+      "coverage": "Selected JS/CSS/SVG and recorded UI comparison; complete app parity remains in progress."
     },
     "historicalGeometry": {
       "version": "26.1016.61520",
@@ -16,6 +19,24 @@
       "asarSha256": "c9945f821fcbaf48424933a82860beac4dd4ad8b8a5444a75568fa6e38a1ad4b",
       "baseline": "reverse/baseline/26.1016.61520.json",
       "warning": "Do not attribute historical hashes, offsets or geometry to build 21477."
+    },
+    "latestInspected": {
+      "application": "/Applications/ChatGPT.app",
+      "bundleIdentifier": "com.openai.codex",
+      "version": "26.1027.30824",
+      "build": "22943",
+      "asarSha256": "36bf3d2b35e95e11852074b9ca9459b89efbecd6b8311345d060cf66de8f0ba6",
+      "inspectedAt": "2026-10-31",
+      "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+      "coverage": "Selected JS/CSS/SVG and recorded UI comparison; complete app parity remains in progress."
+    },
+    "initialInspected": {
+      "application": "/Applications/ChatGPT.app",
+      "bundleIdentifier": "com.openai.codex",
+      "version": "26.1016.62342",
+      "build": "21477",
+      "asarSha256": "5b5cf52887cfd4de19cb5862155a8ef6cf58830c0a2fc592b72060cfcc3be869",
+      "capturedAt": "2026-10-24"
     }
   },
   "evidence": {
@@ -71,6 +92,18 @@
         "operation": "inspect_electron_fuses",
         "targetBuild": "21421",
         "summary": "reverse/baseline/26.1016.61520.json"
+      },
+      {
+        "name": "ui-detail-2026-10-31-selected-source",
+        "evidenceId": "ev_3f7ee277754e52956b3b58de0b00ec29e1b482da7b0a5fd4d2227c66074c155f",
+        "operation": "analyze_javascript_application",
+        "targetVersion": "26.1027.30824",
+        "targetBuild": "22943",
+        "rawEvidence": "reverse/raw/ui-parity-2026-10-31/rea-selected-evidence.json",
+        "summary": "docs/ui-detail-parity-2026-10-31.md",
+        "trackedEvidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "selectedSourceCount": 5,
+        "coverage": "Selected shipped modules; no complete semantic/execution graph or whole-application equivalence validation."
       }
     ],
     "recording": {
@@ -78,8 +111,15 @@
       "sha256": "fecd9fd2023d03db8d5cde3e9b4030acc783e7fc04958729bc523d713f3012a1",
       "durationSeconds": 470.333,
       "index": "reverse/video-evidence-2026-10-23.json",
-      "applicationVersion": "unknown",
-      "authority": "Behavioral reference only; exact build attribution is unavailable"
+      "applicationVersion": "26.1016.61520",
+      "authority": "Historical recording for21421. UI and behavior reference; not pixel proof for installed22943.",
+      "initialAttribution": {
+        "applicationVersion": "unknown",
+        "authority": "Behavioral reference only; exact build attribution is unavailable",
+        "capturedAt": "2026-10-24"
+      },
+      "applicationBuild": "21421",
+      "latestElementReview": "reverse/ui-element-evidence-2026-10-31.json"
     },
     "referenceImages": [
       {
@@ -95,24 +135,28 @@
         "tracked": false
       }
     ],
-    "moduleManifest": "reverse/source-provenance.json"
+    "moduleManifest": "reverse/source-provenance.json",
+    "latestModuleManifest": "reverse/raw/ui-parity-2026-10-31/source-manifest.json"
   },
   "features": [
     {
       "id": "shell.window",
       "upstreamEvidence": [
         "reverse/baseline/26.1016.61520.json",
-        "docs/visual-baseline.md"
+        "docs/visual-baseline.md",
+        "reverse/ui-detail-evidence-2026-10-31.json"
       ],
       "implementationFiles": [
         "src/main/macosWindowOptions.ts",
         "src/main/windowState.ts",
         "src/main/windowZoom.ts",
-        "src/renderer/src/styles.css"
+        "src/renderer/src/styles.css",
+        "src/renderer/src/App.tsx"
       ],
       "validation": [
         "docs/source-validation-current.md",
-        "docs/reconstruction-validation-current.md"
+        "docs/reconstruction-validation-current.md",
+        "docs/ui-detail-parity-2026-10-31.md"
       ],
       "unknowns": [
         "No build-21477 visual baseline matrix",
@@ -123,18 +167,25 @@
       "id": "nav.sidebar",
       "upstreamEvidence": [
         "reverse/video-evidence-2026-10-23.json#00:00",
-        "reverse/raw/reference/conversation-layout-user-2026-10-24.png"
+        "reverse/raw/reference/conversation-layout-user-2026-10-24.png",
+        "reverse/ui-detail-evidence-2026-10-31.json"
       ],
       "implementationFiles": [
         "src/renderer/src/App.tsx",
-        "src/renderer/src/styles.css"
+        "src/renderer/src/styles.css",
+        "src/renderer/src/useSidebarSelectionReveal.ts",
+        "src/renderer/src/sidebarModel.ts",
+        "src/renderer/src/sidebarSelectionReveal.ts",
+        "src/renderer/src/sidebarSelectionReveal.test.ts"
       ],
       "validation": [
-        "docs/visual-baseline.md"
+        "docs/visual-baseline.md",
+        "docs/ui-detail-parity-2026-10-31.md"
       ],
       "unknowns": [
         "Complete context-menu, tooltip, badge, transition and responsive pixel parity"
-      ]
+      ],
+      "finalSupplementSourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json"
     },
     {
       "id": "turn.lifecycle",
@@ -164,7 +215,8 @@
       "upstreamEvidence": [
         "reverse/source-provenance.json",
         "reverse/video-evidence-2026-10-23.json#04:58-07:12",
-        "reverse/raw/reference/conversation-process-user-2026-10-24.png"
+        "reverse/raw/reference/conversation-process-user-2026-10-24.png",
+        "reverse/ui-detail-evidence-2026-10-31.json"
       ],
       "implementationFiles": [
         "src/renderer/src/ConversationActivity.tsx",
@@ -172,31 +224,41 @@
         "src/renderer/src/ToolActivity.tsx",
         "src/renderer/src/toolActivityModel.ts",
         "src/renderer/src/CollaborationActivity.tsx",
-        "src/renderer/src/SubagentActivity.tsx"
+        "src/renderer/src/SubagentActivity.tsx",
+        "src/renderer/src/useActivityDisclosure.ts",
+        "src/renderer/src/useCommandActivityTiming.ts",
+        "src/renderer/src/commandActivity.ts",
+        "src/renderer/src/conversationActivity.css",
+        "src/renderer/src/commandActivityDisclosure.test.ts"
       ],
       "validation": [
         "docs/activity-parity.md",
-        "docs/source-validation-current.md"
+        "docs/source-validation-current.md",
+        "docs/ui-detail-parity-2026-10-31.md"
       ],
       "unknowns": [
         "Exhaustive MCP media, embedded app and connector variants",
         "Complete streamed/collapsed/grouped activity pixel and transition acceptance"
-      ]
+      ],
+      "finalSupplementSourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json"
     },
     {
       "id": "thinking.subagents",
       "upstreamEvidence": [
         "reverse/source-provenance.json",
-        "reverse/video-evidence-2026-10-23.json#00:00"
+        "reverse/video-evidence-2026-10-23.json#00:00",
+        "reverse/ui-detail-evidence-2026-10-31.json"
       ],
       "implementationFiles": [
         "src/renderer/src/SubagentThreadPanel.tsx",
         "src/renderer/src/subagentThreadModel.ts",
         "src/renderer/src/SubagentsSidePanel.tsx",
-        "src/renderer/src/CollaborationActivity.tsx"
+        "src/renderer/src/CollaborationActivity.tsx",
+        "src/renderer/src/ConversationActivity.tsx"
       ],
       "validation": [
-        "docs/activity-parity.md"
+        "docs/activity-parity.md",
+        "docs/ui-detail-parity-2026-10-31.md"
       ],
       "unknowns": [
         "Complete nested-agent lifecycle and multi-agent state transitions",
@@ -209,7 +271,8 @@
         "ev_ef27d69ee68c2ffd8d204c5786b6933502a9abcf3a5c5668f724e2c4450a4e79",
         "ev_05280836fc14faa480c57da5409f69fbdc2f5cf37c5bb78a68849d387a6b711f",
         "ev_66d941f2ef65ba6a47d8923f1fddb52e441fa253f117afb069a454822272811b",
-        "reverse/video-evidence-2026-10-23.json#00:08-02:52"
+        "reverse/video-evidence-2026-10-23.json#00:08-02:52",
+        "reverse/ui-detail-evidence-2026-10-31.json"
       ],
       "implementationFiles": [
         "src/renderer/src/App.tsx",
@@ -218,18 +281,26 @@
         "src/renderer/src/WorkspaceDiffViewer.tsx",
         "src/renderer/src/workspaceDocuments.ts",
         "src/main/workspaceFiles.ts",
-        "src/main/workspaceWatchers.ts"
+        "src/main/workspaceWatchers.ts",
+        "src/renderer/src/WorkspaceFileIcon.tsx",
+        "src/renderer/src/workspaceTabContextMenuModel.ts",
+        "src/renderer/src/workspaceNavigatorModel.ts",
+        "src/renderer/src/WorkspaceTreeIndentGuides.tsx",
+        "src/renderer/src/WorkspaceTreeIndentGuides.css",
+        "src/renderer/src/WorkspaceBreadcrumbs.tsx"
       ],
       "validation": [
         "docs/workspace-editor-parity.md",
         "docs/workspace-filesystem-parity.md",
-        "docs/source-validation-current.md"
+        "docs/source-validation-current.md",
+        "docs/ui-detail-parity-2026-10-31.md"
       ],
       "unknowns": [
         "Complete Pierre grammar/decorations, rich HTML and KaTeX behavior",
         "Direct inline selection-edit review service",
         "Build-21477 split/full/sidebar/workbench visual matrix"
-      ]
+      ],
+      "finalSupplementSourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json"
     },
     {
       "id": "settings",
@@ -265,17 +336,583 @@
     "The original application cannot be controlled through Computer Use; original dynamic evidence is bounded to the supplied recording and passive/static inspection."
   ],
   "latestUiDetailValidation": {
-    "date": "2026-10-30",
-    "installedTarget": "26.1023.50603 / 22391",
-    "summary": "docs/ui-detail-parity-2026-10-30.md",
-    "evidence": "reverse/ui-detail-evidence-2026-10-30.json",
-    "precedingUiDetailEvidence": "reverse/ui-detail-evidence-2026-10-29.json",
-    "testsPassed": 1422,
-    "testFiles": 187,
+    "date": "2026-10-31",
+    "status": "validated-source-package-and-bounded-native-supplement",
+    "installedTarget": "26.1027.30824 / 22943",
+    "recordingTarget": "26.1016.61520 / 21421",
+    "summary": "docs/ui-detail-parity-2026-10-31.md",
+    "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+    "precedingUiDetailEvidence": "reverse/ui-detail-evidence-2026-10-30.json",
+    "precedingSameDayCheckpoint": "reverse/ui-detail-evidence-2026-10-31.json#precedingCheckpoint",
+    "finalSourceTests": "passed",
+    "testFiles": 192,
+    "testsPassed": 1478,
+    "finalPackageValidation": "passed",
     "packagedOutputIdentical": "70/70",
-    "nativeUiAcceptance": "Bounded current-dev native command/copy, breadcrumb, responsive file-controls, nested menu, full/split and 110% zoom checks passed; complete pixel/function/package-native matrix remains in progress."
+    "asarSha256": "682bd675d475c0eeee6cafaf73d9b97ac22a602a6498f4d446cdc8c2dad6f3d9",
+    "nativeUiAcceptance": {
+      "status": "bounded-production-package-final-supplement-passed",
+      "rootConfirmed": true,
+      "runtime": {
+        "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/runtime.json",
+        "url": "app://-/index.html",
+        "backendState": "ready",
+        "backendMode": "daemon",
+        "rendererRequire": "undefined",
+        "rendererProcess": "undefined",
+        "viewport": [
+          1420,
+          900
+        ],
+        "theme": "dark",
+        "zoomFactor": 1
+      },
+      "commandHierarchy": {
+        "status": "bounded-native-check-passed",
+        "compactFirstClickShowsDetailedRow": true,
+        "detailedSecondClickShowsRawCommandAndOutput": true,
+        "detailedLiveElapsedSecondsObserved": [
+          27,
+          40,
+          41
+        ],
+        "compactElapsedLabelAbsent": true,
+        "captures": [
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.png",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.png"
+        ],
+        "axReports": [
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.ax.txt",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer-next.ax.txt",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.ax.txt",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/completed-output.ax.txt"
+        ],
+        "backgroundTerminalGateIntegrated": false,
+        "completeTimingMatrix": false
+      },
+      "officialModelTurn": {
+        "status": "completed",
+        "cliVersion": "0.164.0",
+        "model": "gpt-6.1-sol",
+        "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+        "outputLines": 80,
+        "exitCode": 0,
+        "commandDurationMs": 44977,
+        "finalMarker": "ui-final-hierarchy-ok",
+        "fixtureFileLinkPresent": true,
+        "fixtureSourceLinkExpandedAncestors": [
+          "lib",
+          "deep"
+        ],
+        "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+      },
+      "indentGuides": {
+        "mainTree": "bounded-native-check-passed",
+        "breadcrumbTree": "bounded-native-check-passed",
+        "idleOpacity": 0,
+        "hoverOpacity": 0.75,
+        "columnLeftPx": [
+          10.25,
+          19
+        ],
+        "lineWidthPx": 1,
+        "collapseAndRightReopenPassed": true,
+        "changedTree": "bounded-native-check-passed",
+        "metrics": [
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-idle.json",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-hover.json",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-breadcrumb.json",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-changed.json"
+        ],
+        "captures": [
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-idle.png",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-hover.png",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/breadcrumb-guides.png",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/changed-tree-guides.png"
+        ]
+      },
+      "sidebarSelectionReveal": {
+        "targetedTestsPassed": 7,
+        "nativeUserScrollHold": "bounded-native-check-passed",
+        "scrollTopBefore": 0,
+        "scrollTopAfter": 200,
+        "scrollTopRetained": 200,
+        "selectedRowTopBeforePx": 172,
+        "selectedRowTopAfterPx": -28,
+        "metrics": [
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-before.json",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-scrolled.json",
+          "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-after.json"
+        ],
+        "nativeResizeAttempt": "did-not-change-window-size-not-accepted",
+        "nativeFullLongSidebar": "not-performed",
+        "completeReorderingPinReselectionMatrix": false
+      },
+      "remainingNative": [
+        "Complete light/dark, viewport, zoom and animation matrix",
+        "MCP media and full nested keyboard/long-history matrix",
+        "Complete sidebar resize/reorder/pin/reselection matrix"
+      ],
+      "completeApplicationParity": false,
+      "completePixelParity": false,
+      "fixtureAndListenerCleanup": {
+        "checkedAt": "2026-10-31T06:32:48.199321+00:00",
+        "fixtureThreadsDeleted": 1,
+        "notificationListenerRemoved": true,
+        "fixtureWorkingTreeRestored": true,
+        "noOriginalConversationMutations": true,
+        "originalConversationSelection": "One existing chat was briefly selected by a native coordinate test, then returned with Back; no turn, edit, archive or delete was submitted there.",
+        "nativeFinalAppExited": true,
+        "nativeAppPid": null,
+        "nativeAppExecSession": 19368,
+        "nativeAppExecExitCode": 0,
+        "taskListenerExited": true,
+        "taskWrapperExited": true,
+        "listenerExecExitCode": 0,
+        "port4599Closed": true,
+        "originalServerProcessesSignalled": false,
+        "originalServerStillRunningAtCheckpoint": true,
+        "passed": true,
+        "fixtureReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup.json",
+        "deletionProbeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-probe.json",
+        "nativeAppReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/package-cleanup.json",
+        "listenerReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json"
+      },
+      "changedFileTurn": {
+        "status": "completed",
+        "cliVersion": "0.164.0",
+        "model": "gpt-6.1-sol",
+        "fileChangeStatus": "completed",
+        "changeCount": 1,
+        "fixtureOnly": true,
+        "beforeValue": 1,
+        "afterValue": 2,
+        "visibleDiffStats": {
+          "added": 1,
+          "removed": 1,
+          "kind": "M"
+        },
+        "diffViewOpened": true,
+        "finalMarker": "ui-final-change-ok",
+        "turnDurationMs": 32309,
+        "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+      },
+      "originalConversationInteraction": {
+        "anotherExistingConversationSelectedDuringCoordinateAttempt": true,
+        "returnedToFixtureViaNativeBack": true,
+        "noOriginalConversationMutations": true,
+        "mutationScope": "No turn sent, file edited, conversation archived or deleted for the other existing conversation."
+      }
+    },
+    "realModelAcceptance": {
+      "cliVersion": "0.164.0",
+      "model": "gpt-6.1-sol",
+      "turns": [
+        {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+          "outputLines": 80,
+          "exitCode": 0,
+          "commandDurationMs": 44977,
+          "finalMarker": "ui-final-hierarchy-ok",
+          "fixtureFileLinkPresent": true,
+          "fixtureSourceLinkExpandedAncestors": [
+            "lib",
+            "deep"
+          ],
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "fileChangeStatus": "completed",
+          "changeCount": 1,
+          "fixtureOnly": true,
+          "beforeValue": 1,
+          "afterValue": 2,
+          "visibleDiffStats": {
+            "added": 1,
+            "removed": 1,
+            "kind": "M"
+          },
+          "diffViewOpened": true,
+          "finalMarker": "ui-final-change-ok",
+          "turnDurationMs": 32309,
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        }
+      ],
+      "rawEvidence": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+    },
+    "completeApplicationParity": false,
+    "completePixelParity": false,
+    "fixtureCleanup": "passed",
+    "listenerCleanup": "passed",
+    "cleanupReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-summary.json",
+    "finalSupplement": {
+      "status": "validated-source-package-and-bounded-native-supplement",
+      "rawDirectory": "reverse/raw/ui-detail-2026-10-31/acceptance-final",
+      "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+      "sourceTestFiles": 192,
+      "sourceTestsPassed": 1478,
+      "sourceTestsFailed": 0,
+      "testsReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/tests.json",
+      "nodeTypecheck": true,
+      "webTypecheck": true,
+      "typecheckReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/typecheck.json",
+      "packageValidation": {
+        "status": "passed",
+        "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/report.json",
+        "codesignDeepStrict": true,
+        "fusesReadBack": true,
+        "packagedOutput": {
+          "files": 70,
+          "identical": 70
+        },
+        "asarSha256": "682bd675d475c0eeee6cafaf73d9b97ac22a602a6498f4d446cdc8c2dad6f3d9",
+        "auditedImplementationSourceHashesMatchPackageReport": true,
+        "productionCommandExitCode": 0
+      },
+      "nativeAcceptance": {
+        "status": "bounded-production-package-final-supplement-passed",
+        "rootConfirmed": true,
+        "runtime": {
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/runtime.json",
+          "url": "app://-/index.html",
+          "backendState": "ready",
+          "backendMode": "daemon",
+          "rendererRequire": "undefined",
+          "rendererProcess": "undefined",
+          "viewport": [
+            1420,
+            900
+          ],
+          "theme": "dark",
+          "zoomFactor": 1
+        },
+        "commandHierarchy": {
+          "status": "bounded-native-check-passed",
+          "compactFirstClickShowsDetailedRow": true,
+          "detailedSecondClickShowsRawCommandAndOutput": true,
+          "detailedLiveElapsedSecondsObserved": [
+            27,
+            40,
+            41
+          ],
+          "compactElapsedLabelAbsent": true,
+          "captures": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.png"
+          ],
+          "axReports": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.ax.txt",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer-next.ax.txt",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.ax.txt",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/completed-output.ax.txt"
+          ],
+          "backgroundTerminalGateIntegrated": false,
+          "completeTimingMatrix": false
+        },
+        "officialModelTurn": {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+          "outputLines": 80,
+          "exitCode": 0,
+          "commandDurationMs": 44977,
+          "finalMarker": "ui-final-hierarchy-ok",
+          "fixtureFileLinkPresent": true,
+          "fixtureSourceLinkExpandedAncestors": [
+            "lib",
+            "deep"
+          ],
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        "indentGuides": {
+          "mainTree": "bounded-native-check-passed",
+          "breadcrumbTree": "bounded-native-check-passed",
+          "idleOpacity": 0,
+          "hoverOpacity": 0.75,
+          "columnLeftPx": [
+            10.25,
+            19
+          ],
+          "lineWidthPx": 1,
+          "collapseAndRightReopenPassed": true,
+          "changedTree": "bounded-native-check-passed",
+          "metrics": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-idle.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-hover.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-breadcrumb.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-changed.json"
+          ],
+          "captures": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-idle.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-hover.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/breadcrumb-guides.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/changed-tree-guides.png"
+          ]
+        },
+        "sidebarSelectionReveal": {
+          "targetedTestsPassed": 7,
+          "nativeUserScrollHold": "bounded-native-check-passed",
+          "scrollTopBefore": 0,
+          "scrollTopAfter": 200,
+          "scrollTopRetained": 200,
+          "selectedRowTopBeforePx": 172,
+          "selectedRowTopAfterPx": -28,
+          "metrics": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-before.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-scrolled.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-after.json"
+          ],
+          "nativeResizeAttempt": "did-not-change-window-size-not-accepted",
+          "nativeFullLongSidebar": "not-performed",
+          "completeReorderingPinReselectionMatrix": false
+        },
+        "remainingNative": [
+          "Complete light/dark, viewport, zoom and animation matrix",
+          "MCP media and full nested keyboard/long-history matrix",
+          "Complete sidebar resize/reorder/pin/reselection matrix"
+        ],
+        "completeApplicationParity": false,
+        "completePixelParity": false,
+        "fixtureAndListenerCleanup": {
+          "checkedAt": "2026-10-31T06:32:48.199321+00:00",
+          "fixtureThreadsDeleted": 1,
+          "notificationListenerRemoved": true,
+          "fixtureWorkingTreeRestored": true,
+          "noOriginalConversationMutations": true,
+          "originalConversationSelection": "One existing chat was briefly selected by a native coordinate test, then returned with Back; no turn, edit, archive or delete was submitted there.",
+          "nativeFinalAppExited": true,
+          "nativeAppPid": null,
+          "nativeAppExecSession": 19368,
+          "nativeAppExecExitCode": 0,
+          "taskListenerExited": true,
+          "taskWrapperExited": true,
+          "listenerExecExitCode": 0,
+          "port4599Closed": true,
+          "originalServerProcessesSignalled": false,
+          "originalServerStillRunningAtCheckpoint": true,
+          "passed": true,
+          "fixtureReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup.json",
+          "deletionProbeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-probe.json",
+          "nativeAppReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/package-cleanup.json",
+          "listenerReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json"
+        },
+        "changedFileTurn": {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "fileChangeStatus": "completed",
+          "changeCount": 1,
+          "fixtureOnly": true,
+          "beforeValue": 1,
+          "afterValue": 2,
+          "visibleDiffStats": {
+            "added": 1,
+            "removed": 1,
+            "kind": "M"
+          },
+          "diffViewOpened": true,
+          "finalMarker": "ui-final-change-ok",
+          "turnDurationMs": 32309,
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        "originalConversationInteraction": {
+          "anotherExistingConversationSelectedDuringCoordinateAttempt": true,
+          "returnedToFixtureViaNativeBack": true,
+          "noOriginalConversationMutations": true,
+          "mutationScope": "No turn sent, file edited, conversation archived or deleted for the other existing conversation."
+        }
+      },
+      "changes": [
+        {
+          "id": "workspace-indent-guides",
+          "behavior": "Visible expanded-row ancestor columns, 1px line, 10.25px first column then 8.75px spacing, default opacity0 / tree hover 0.75 / 150ms ease, pointer-events none.",
+          "boundaries": [
+            "DOM expanded rows only; no new virtual tree or sticky overlay",
+            "Dynamic data-ancestor-path opacity1 highlighting remains incomplete",
+            "Native hover/theme/window matrix pending"
+          ]
+        },
+        {
+          "id": "compact-command-hierarchy",
+          "behavior": "Compact action description without elapsed time opens detailed timed rows in a 224px activity body; the detailed row separately opens raw command/output. Independent disclosure IDs and inert outer-close body.",
+          "boundaries": [
+            "Old acceptance/package-live-command.png predates hierarchy repair",
+            "Markup states use disclosure test doubles; native click and timing require new acceptance",
+            "Full STEPS_PROSE/Work detail-level state remains unimplemented",
+            "Replica timing hook gates enabled and inProgress only; background-terminal state and timing gate are not yet integrated or verified",
+            "Default first-row command/output markup does not prove native multi-row selection or compact-to-completed selection persistence"
+          ]
+        },
+        {
+          "id": "sidebar-selection-reveal",
+          "behavior": "Observe selected row ancestors after hydration and automatic reveal until user wheel/pointer/key/scroll. Center out-of-view row with rect.height/offsetHeight scale, clientTop and scrollPaddingBottom.",
+          "boundaries": [
+            "Full pin migration/reselectionCount modes remain incomplete",
+            "Native long-sidebar acceptance pending"
+          ]
+        }
+      ],
+      "quitVerification": "reverse/raw/ui-detail-2026-10-31/acceptance-final/quit-cleanup.json",
+      "officialServer": {
+        "cliVersion": "0.164.0",
+        "pid": null,
+        "wrapperPid": null,
+        "execSession": 61015,
+        "endpoint": "ws://127.0.0.1:4599/",
+        "initializePassed": true,
+        "modelListPassed": true,
+        "modelCount": 8,
+        "handshakeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-handshake.json",
+        "listenerCurrentlyRunning": false,
+        "nativeModelTurn": {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+          "outputLines": 80,
+          "exitCode": 0,
+          "commandDurationMs": 44977,
+          "finalMarker": "ui-final-hierarchy-ok",
+          "fixtureFileLinkPresent": true,
+          "fixtureSourceLinkExpandedAncestors": [
+            "lib",
+            "deep"
+          ],
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        "changedFileNativeModelTurn": {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "fileChangeStatus": "completed",
+          "changeCount": 1,
+          "fixtureOnly": true,
+          "beforeValue": 1,
+          "afterValue": 2,
+          "visibleDiffStats": {
+            "added": 1,
+            "removed": 1,
+            "kind": "M"
+          },
+          "diffViewOpened": true,
+          "finalMarker": "ui-final-change-ok",
+          "turnDurationMs": 32309,
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        "listenerCleanupReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json",
+        "originalServerProcessesSignalled": false
+      },
+      "completeApplicationParity": false,
+      "completePixelParity": false,
+      "peerSourceAudit": "Conversation/workbench independent read-only checks confirmed all recorded current-source offsets and hashes; scoped tests retain their actual scope.",
+      "nativeEvidenceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+      "cleanup": {
+        "checkedAt": "2026-10-31T06:32:48.199321+00:00",
+        "fixtureThreadsDeleted": 1,
+        "notificationListenerRemoved": true,
+        "fixtureWorkingTreeRestored": true,
+        "noOriginalConversationMutations": true,
+        "originalConversationSelection": "One existing chat was briefly selected by a native coordinate test, then returned with Back; no turn, edit, archive or delete was submitted there.",
+        "nativeFinalAppExited": true,
+        "nativeAppPid": null,
+        "nativeAppExecSession": 19368,
+        "nativeAppExecExitCode": 0,
+        "taskListenerExited": true,
+        "taskWrapperExited": true,
+        "listenerExecExitCode": 0,
+        "port4599Closed": true,
+        "originalServerProcessesSignalled": false,
+        "originalServerStillRunningAtCheckpoint": true,
+        "passed": true,
+        "fixtureReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup.json",
+        "deletionProbeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-probe.json",
+        "nativeAppReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/package-cleanup.json",
+        "listenerReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json"
+      },
+      "noOriginalConversationMutations": true,
+      "finalizedAt": "2026-10-31T06:32:48.199321+00:00"
+    },
+    "finalSnapshotCheckReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/final-snapshot-check.json",
+    "sourceHashFilesRechecked": 462,
+    "supersededBy": "reverse/ui-element-evidence-2026-10-31.json"
   },
   "uiDetailValidationHistory": [
+    {
+      "date": "2026-10-31",
+      "status": "preceding-same-day-checkpoint",
+      "installedTarget": "26.1027.30824 / 22943",
+      "recordingTarget": "26.1016.61520 / 21421",
+      "summary": "docs/ui-detail-parity-2026-10-31.md",
+      "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+      "precedingUiDetailEvidence": "reverse/ui-detail-evidence-2026-10-30.json",
+      "finalSourceTests": "passed",
+      "finalPackageValidation": "passed",
+      "realModelAcceptance": {
+        "cliVersion": "0.164.0",
+        "model": "gpt-6.1-sol",
+        "turns": [
+          {
+            "surface": "dev",
+            "status": "completed",
+            "outputLines": 40,
+            "exitCode": 0,
+            "commandDurationMs": 7922,
+            "finalMarker": "ui-detail-stream-ok"
+          },
+          {
+            "surface": "production-package",
+            "status": "completed",
+            "outputLines": 80,
+            "exitCode": 0,
+            "commandDurationMs": 19951,
+            "finalMarker": "ui-package-timer-ok"
+          },
+          {
+            "surface": "production-package",
+            "status": "completed",
+            "outputLines": 0,
+            "exitCode": 0,
+            "commandDurationMs": 34908,
+            "finalMarker": "ui-live-timer-ok"
+          }
+        ],
+        "rawEvidence": "reverse/raw/ui-detail-2026-10-31/acceptance/package-turn.json"
+      },
+      "nativeUiAcceptance": "Final package menu/Escape/ShiftF10/middle click and 100/110% positions; exact 110% composer; nested negative-scrollTop output with stationary transcript; watcher-refresh and directory-collapse focus passed. Detailed noncompact foreground per-second timer, MCP media and full history/theme/window matrices remain unverified.",
+      "completeApplicationParity": false,
+      "testsPassed": 1462,
+      "testFiles": 190,
+      "packagedOutputIdentical": "70/70",
+      "codesignDeepStrict": true,
+      "fusesReadBack": true,
+      "nodeTypecheck": true,
+      "webTypecheck": true,
+      "packagedLongCommandAcceptance": "passed",
+      "fixtureCleanup": "passed",
+      "listenerCleanup": "passed",
+      "snapshotType": "checkpoint",
+      "nativeDetailedPerSecondTimerObserved": false,
+      "futureSourceChanges": "Require new matching snapshot validation.",
+      "checkpointId": "2026-10-31-190-files-1462-tests"
+    },
+    {
+      "date": "2026-10-30",
+      "installedTarget": "26.1023.50603 / 22391",
+      "summary": "docs/ui-detail-parity-2026-10-30.md",
+      "evidence": "reverse/ui-detail-evidence-2026-10-30.json",
+      "precedingUiDetailEvidence": "reverse/ui-detail-evidence-2026-10-29.json",
+      "testsPassed": 1422,
+      "testFiles": 187,
+      "packagedOutputIdentical": "70/70",
+      "nativeUiAcceptance": "Bounded current-dev native command/copy, breadcrumb, responsive file-controls, nested menu, full/split and 110% zoom checks passed; complete pixel/function/package-native matrix remains in progress."
+    },
     {
       "date": "2026-10-29",
       "installedTarget": "26.1023.50603 / 22391",
@@ -290,5 +927,43 @@
       "packagedOutputIdentical": "70/70",
       "nativeUiAcceptance": "Pending manual Mac unlock; this UI patch has no new native pixel/interaction acceptance."
     }
-  ]
+  ],
+  "lastUpdatedAt": "2026-10-31T08:55:11.407270+00:00",
+  "targetAttribution": "Initial21477 target and earlier catalog hashes remain under targets.initialInspected with capturedAt2026-10-24. Current/latestInspected identify22943; recording geometry remains21421. Entries retain their independent source/checkpoint attribution.",
+  "latestUiElementValidation": {
+    "date": "2026-10-31",
+    "status": "validated-source-package-and-bounded-native-element-supplement",
+    "summary": "docs/ui-element-parity-2026-10-31.md",
+    "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+    "sourceVersion": "26.1027.30824",
+    "sourceBuild": "22943",
+    "tests": {
+      "files": 210,
+      "passed": 1663,
+      "failed": 0
+    },
+    "packagedOutput": {
+      "files": 71,
+      "identical": 71
+    },
+    "sourceHashFiles": 503,
+    "asarSha256": "e4336537131a12768489606ca4b44de857deda15c5ba115f1a66005768d44a77",
+    "sourcePackageChecks": true,
+    "boundedNativeChecks": 10,
+    "runtimeEvidence": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+    "cleanup": {
+      "status": "complete-with-recoverable-fixture-chat-archive",
+      "fixtureChatArchived": true,
+      "fixtureChatPermanentlyDeleted": false,
+      "fixtureDirectoryRemoved": true,
+      "isolatedProfileRemoved": true,
+      "nativePackageStopped": true,
+      "isolatedListenerStopped": true,
+      "otherChatsMutated": false,
+      "originalAsarMatchesInspectedSource": true,
+      "report": "reverse/raw/element-parity-2026-10-31/acceptance-followup/cleanup-summary.json"
+    },
+    "completeApplicationParity": false,
+    "completePixelParity": false
+  }
 }

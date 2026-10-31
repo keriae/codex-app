@@ -1,22 +1,15 @@
 import {
-  AppWindow,
   BookOpen,
-  BriefcaseBusiness,
   FileOutput,
   FileSpreadsheet,
   FileText,
   Globe,
-  GitBranch,
   LayoutTemplate,
-  Lightbulb,
   Laptop,
   Monitor,
-  Paperclip,
-  PenTool,
   Presentation,
   Sigma,
   Sparkles,
-  Target
 } from 'lucide-react'
 import {
   type CSSProperties,
@@ -32,6 +25,7 @@ import { createPortal } from 'react-dom'
 import { useWindowZoom } from './windowZoom'
 import type { AppContext } from '../../shared/api'
 import { LocalEnvironmentIcon } from './LocalEnvironmentIcons'
+import { ShellElementGlyph } from './ShellElementGlyph'
 import {
   computeComposerPopoverPosition,
   type ComposerPopoverPosition
@@ -214,12 +208,12 @@ export function composerAddMenuEntries(
 }
 
 const composerAddMenuIcons: Record<string, ReactNode> = {
-  attachments: <Paperclip />,
-  'attach-codex': <AppWindow />,
-  'work-project': <BriefcaseBusiness />,
-  goal: <Target />,
-  plan: <Lightbulb />,
-  drawing: <PenTool />,
+  attachments: <ShellElementGlyph name="paperclip-light-16" />,
+  'attach-codex': <ShellElementGlyph name="appshot-window-light-16" />,
+  'work-project': <ShellElementGlyph name="folder-light-16" />,
+  goal: <ShellElementGlyph name="target-light-16" />,
+  plan: <ShellElementGlyph name="lightbulb-light-16" />,
+  drawing: <ShellElementGlyph name="multicolor-scribble-light-16" />,
   documents: <FileText />,
   pdf: <FileOutput />,
   spreadsheets: <FileSpreadsheet />,
@@ -335,7 +329,7 @@ export function ComposerContextStrip({
       )}
       {branch && (
         <span className="composer-context-segment composer-context-branch" title={branch}>
-          <GitBranch />
+          <LocalEnvironmentIcon name="branch" />
           <span>{branch}</span>
         </span>
       )}

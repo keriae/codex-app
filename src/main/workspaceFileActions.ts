@@ -12,6 +12,11 @@ const APPLICATIONS = {
   windsurf: { label: 'Windsurf', paths: ['/Applications/Windsurf.app'] }
 } as const
 
+const SYSTEM_APPLICATIONS = {
+  terminal: '/System/Applications/Utilities/Terminal.app',
+  finder: '/System/Library/CoreServices/Finder.app'
+} as const
+
 export async function workspaceTargetApplication(target: WorkspaceOpenTargetId): Promise<string | null> {
   if (target === 'finder' || target === 'terminal') return null
   if (!Object.hasOwn(APPLICATIONS, target)) throw new Error('Unsupported workspace app')
@@ -21,11 +26,25 @@ export async function workspaceTargetApplication(target: WorkspaceOpenTargetId):
   throw new Error('The selected app is no longer installed')
 }
 
-export async function listWorkspaceOpenTargets(): Promise<WorkspaceOpenTarget[]> {
+export async function listWorkspaceOpenTargets(loadIcon?: (applicationPath: string) => Promise<string | undefined>): Promise<WorkspaceOpenTarget[]> {
   const available = await Promise.all((Object.keys(APPLICATIONS) as Array<keyof typeof APPLICATIONS>).map(async (id) => {
-    try { await workspaceTargetApplication(id); return { id, label: APPLICATIONS[id].label } } catch { return null }
+    try {
+      const applicationPath = await workspaceTargetApplication(id)
+      return { id, label: APPLICATIONS[id].label, applicationPath: applicationPath! }
+    } catch { return null }
   }))
-  return [{ id: 'terminal', label: 'Terminal' }, { id: 'finder', label: 'Finder' }, ...available.filter((item): item is NonNullable<typeof item> => item !== null)]
+  const targets = [
+    { id: 'terminal' as const, label: 'Terminal', applicationPath: SYSTEM_APPLICATIONS.terminal },
+    { id: 'finder' as const, label: 'Finder', applicationPath: SYSTEM_APPLICATIONS.finder },
+    ...available.filter((item): item is NonNullable<typeof item> => item !== null)
+  ]
+  return Promise.all(targets.map(async ({ applicationPath, ...target }): Promise<WorkspaceOpenTarget> => {
+    // Icon failure must not hide a valid app or block the other native targets.
+    try {
+      const iconDataUrl = await loadIcon?.(applicationPath)
+      return iconDataUrl ? { ...target, iconDataUrl } : target
+    } catch { return target }
+  }))
 }
 
 export function isWorkspaceSaveCopyRequest(value: unknown): value is WorkspaceSaveCopyRequest {

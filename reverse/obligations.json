@@ -64,9 +64,44 @@
       "evidence": [
         "docs/feature-inventory.md",
         "docs/visual-baseline.md",
-        "docs/reverse-engineering.md"
+        "docs/reverse-engineering.md",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Native close strategy, CSS zoom, traffic-light placement and stale-document handling validated. Conversation actions now create cascaded managed windows with window-scoped, acknowledged thread routes that replay across renderer readiness/reload; cross-window local-state/focus edge cases, fullscreen and visual interaction remain pending."
+      "validatedPartialProgress": "Native close strategy, CSS zoom, traffic-light placement and stale-document handling validated. Conversation actions now create cascaded managed windows with window-scoped, acknowledged thread routes that replay across renderer readiness/reload; cross-window local-state/focus edge cases, fullscreen and visual interaction remain pending.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress.",
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      },
+      "incrementalEvidenceHistory": [
+        {
+          "date": "2026-10-31",
+          "status": "validated-source-package-and-bounded-native-supplement",
+          "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+          "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+          "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+          "testsPassed": 1478,
+          "testFiles": 192,
+          "packageOutputIdentical": "70/70",
+          "completeApplicationParity": false
+        }
+      ],
+      "precedingFinalSupplementProgress": "Final source passed 192 files/1,478 tests and matching 70/70 package checks. Bounded native command hierarchy/timer, three-tree guides, fixture diff, source-link ancestor reveal and user-scroll hold passed. Fixture/listener/native-app cleanup passed. Full application/pixel parity remains in progress."
     },
     {
       "id": "nav.rail",
@@ -86,9 +121,44 @@
       "status": "in-progress",
       "evidence": [
         "docs/feature-inventory.md",
-        "docs/visual-baseline.md"
+        "docs/visual-baseline.md",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Projects recent chats, title search, pagination and source SVG/menu paths connected; complete thread menus and live visual parity pending."
+      "validatedPartialProgress": "Projects recent chats, title search, pagination and source SVG/menu paths connected; complete thread menus and live visual parity pending.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress.",
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      },
+      "incrementalEvidenceHistory": [
+        {
+          "date": "2026-10-31",
+          "status": "validated-source-package-and-bounded-native-supplement",
+          "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+          "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+          "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+          "testsPassed": 1478,
+          "testFiles": 192,
+          "packageOutputIdentical": "70/70",
+          "completeApplicationParity": false
+        }
+      ],
+      "precedingFinalSupplementProgress": "Final source passed 192 files/1,478 tests and matching 70/70 package checks. Bounded native command hierarchy/timer, three-tree guides, fixture diff, source-link ancestor reveal and user-scroll hold passed. Fixture/listener/native-app cleanup passed. Full application/pixel parity remains in progress."
     },
     {
       "id": "thread.lifecycle",
@@ -120,9 +190,29 @@
       "status": "in-progress",
       "evidence": [
         "docs/feature-inventory.md",
-        "docs/app-server-protocol.md"
+        "docs/app-server-protocol.md",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Explicit existing WebSocket/Unix listeners and source-backed automatic socket reconnection added; dispatched unknown mutations are never replayed. Delivery-state markers survive Electron IPC. Real installed-CLI listener startup/second-client smoke and 52 transport tests pass. Broader lifecycle acceptance remains."
+      "validatedPartialProgress": "Explicit existing WebSocket/Unix listeners and source-backed automatic socket reconnection added; dispatched unknown mutations are never replayed. Delivery-state markers survive Electron IPC. Real installed-CLI listener startup/second-client smoke and 52 transport tests pass. Broader lifecycle acceptance remains.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-supplement",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+        "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+        "testsPassed": 1478,
+        "testFiles": 192,
+        "packageOutputIdentical": "70/70",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final source passed 192 files/1,478 tests and matching 70/70 package checks. Bounded native command hierarchy/timer, three-tree guides, fixture diff, source-link ancestor reveal and user-scroll hold passed. Fixture/listener/native-app cleanup passed. Full application/pixel parity remains in progress.",
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      }
     },
     {
       "id": "thread.items",
@@ -137,9 +227,44 @@
         "docs/ui-detail-parity-2026-10-29.md",
         "reverse/ui-detail-evidence-2026-10-29.json",
         "docs/ui-detail-parity-2026-10-30.md",
-        "reverse/ui-detail-evidence-2026-10-30.json"
+        "reverse/ui-detail-evidence-2026-10-30.json",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Direct shipped-label catalogs, MCP text/image/audio/resource/structured output and raw-output dialogs, Web query/domain rows, compaction/error activities and native tooltips added. Backend child transcripts and multi-avatar activity groups are connected; Final-package history hydration and representative activity rows passed; exhaustive media/group pixel acceptance remains. First visible final-answer delta freezes the work duration; empty final/commentary and late history are distinguished. Reducer streaming/merge checks pass; activity divider, Chinese duration labels and reduced-motion folding follow recording frames. Recovered original activity SVGs; independent command disclosure/file-link controls, embedded $ prompt, launcher display, clipboard feedback, stopped/empty/exit-code states and output scroll presentation implemented. New native acceptance pending. Current-dev native command disclosure, bottom-visible 40-line output, success footer, exact output clipboard paste and independent file navigation passed. Long-command/group/animation matrix remains incomplete."
+      "validatedPartialProgress": "Direct shipped-label catalogs, MCP text/image/audio/resource/structured output and raw-output dialogs, Web query/domain rows, compaction/error activities and native tooltips added. Backend child transcripts and multi-avatar activity groups are connected; Final-package history hydration and representative activity rows passed; exhaustive media/group pixel acceptance remains. First visible final-answer delta freezes the work duration; empty final/commentary and late history are distinguished. Reducer streaming/merge checks pass; activity divider, Chinese duration labels and reduced-motion folding follow recording frames. Recovered original activity SVGs; independent command disclosure/file-link controls, embedded $ prompt, launcher display, clipboard feedback, stopped/empty/exit-code states and output scroll presentation implemented. New native acceptance pending. Current-dev native command disclosure, bottom-visible 40-line output, success footer, exact output clipboard paste and independent file navigation passed. Long-command/group/animation matrix remains incomplete.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress.",
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      },
+      "incrementalEvidenceHistory": [
+        {
+          "date": "2026-10-31",
+          "status": "validated-source-package-and-bounded-native-supplement",
+          "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+          "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+          "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+          "testsPassed": 1478,
+          "testFiles": 192,
+          "packageOutputIdentical": "70/70",
+          "completeApplicationParity": false
+        }
+      ],
+      "precedingFinalSupplementProgress": "Final source passed 192 files/1,478 tests and matching 70/70 package checks. Bounded native command hierarchy/timer, three-tree guides, fixture diff, source-link ancestor reveal and user-scroll hold passed. Fixture/listener/native-app cleanup passed. Full application/pixel parity remains in progress."
     },
     {
       "id": "composer",
@@ -150,9 +275,43 @@
         "docs/feature-inventory.md",
         "reverse/source-provenance.json",
         "docs/ui-detail-parity-2026-10-29.md",
-        "reverse/ui-detail-evidence-2026-10-29.json"
+        "reverse/ui-detail-evidence-2026-10-29.json",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Installed hero/startup directory and scoped local comment attachments connected. Submitted object identities/migration aliases preserve waiting edits and recreated objects. Composer ResizeObserver controls footer reserve and actual-bottom scroll alignment. Full IME/pixel parity pending. Standard existing Codex chat retains Work with Codex placeholder during streaming, matching shipped follow-up policy."
+      "validatedPartialProgress": "Installed hero/startup directory and scoped local comment attachments connected. Submitted object identities/migration aliases preserve waiting edits and recreated objects. Composer ResizeObserver controls footer reserve and actual-bottom scroll alignment. Full IME/pixel parity pending. Standard existing Codex chat retains Work with Codex placeholder during streaming, matching shipped follow-up policy.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      },
+      "incrementalEvidenceHistory": [
+        {
+          "date": "2026-10-31",
+          "status": "validated-source-package-and-bounded-native-supplement",
+          "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+          "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+          "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+          "testsPassed": 1478,
+          "testFiles": 192,
+          "packageOutputIdentical": "70/70",
+          "completeApplicationParity": false
+        }
+      ],
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress."
     },
     {
       "id": "approvals",
@@ -186,9 +345,22 @@
       "evidence": [
         "docs/feature-inventory.md",
         "reverse/source-provenance.json",
-        "docs/reverse-engineering.md"
+        "docs/reverse-engineering.md",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Private managed detached create/list, cached ref selection and prepared-checkout reuse retained. Working-tree starts now replay binary tracked/staged/unstaged changes and copy non-ignored untracked paths without mutating the source. New-worktree chat forking validates an idle source, creates the checkout before the persistent mutation, and retains model, reasoning effort and resolved configuration. Finder home startup restores an existing saved catalog root or first catalog entry while explicit cwd/no-project choices and newer navigation remain authoritative. Setup, ignored/submodule edge policies and owner/attach/archive/restore/handoff remain pending."
+      "validatedPartialProgress": "Private managed detached create/list, cached ref selection and prepared-checkout reuse retained. Working-tree starts now replay binary tracked/staged/unstaged changes and copy non-ignored untracked paths without mutating the source. New-worktree chat forking validates an idle source, creates the checkout before the persistent mutation, and retains model, reasoning effort and resolved configuration. Finder home startup restores an existing saved catalog root or first catalog entry while explicit cwd/no-project choices and newer navigation remain authoritative. Setup, ignored/submodule edge policies and owner/attach/archive/restore/handoff remain pending.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress."
     },
     {
       "id": "terminal.diff",
@@ -206,9 +378,44 @@
         "docs/ui-detail-parity-2026-10-29.md",
         "reverse/ui-detail-evidence-2026-10-29.json",
         "docs/ui-detail-parity-2026-10-30.md",
-        "reverse/ui-detail-evidence-2026-10-30.json"
+        "reverse/ui-detail-evidence-2026-10-30.json",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Persistent titlebar file tabs, CodeMirror source/editable Markdown modes, actual undo history, find/signed line preview, selection-to-composer, autosave, conflict and restart recovery are connected. Bounded native filesystem watches and tree open/save/copy/chat actions are implemented. Native save-dialog bytes, source/preview controls, Cmd+F, line cancellation, draft-only selection insertion, folded-file notifications and Settings reentry refresh passed. Remaining rich Markdown/Pierre decorations, direct inline selection-edit review and additional opener/manual-review modes are documented. Workbench tabs/full-view/browser/subagent state and navigator/tool presentation now restore per chat. Changes tabs track actual opening/closing; background popup ownership and retained-terminal focus are guarded. Native Cmd+F/G page find partially passed; final different-project/terminal-focus UI acceptance awaits unlock. File breadcrumb control surface restored; current installed filter gap/font corrected. Native pixel acceptance pending. Real ancestor/filename directory menus, hidden entries, preview replacement, 320px ancestor collapse and 625px compact-control threshold are implemented and natively checked. Toolbar uses an unclipped shared host; wide transcript overlap, nested-menu dismissal and reparented icon sizing fixed. Full/split and 110% popup zoom passed on current dev renderer. Main-tree decorations/focus, root/error/light and project/terminal restoration matrices remain incomplete."
+      "validatedPartialProgress": "Persistent titlebar file tabs, CodeMirror source/editable Markdown modes, actual undo history, find/signed line preview, selection-to-composer, autosave, conflict and restart recovery are connected. Bounded native filesystem watches and tree open/save/copy/chat actions are implemented. Native save-dialog bytes, source/preview controls, Cmd+F, line cancellation, draft-only selection insertion, folded-file notifications and Settings reentry refresh passed. Remaining rich Markdown/Pierre decorations, direct inline selection-edit review and additional opener/manual-review modes are documented. Workbench tabs/full-view/browser/subagent state and navigator/tool presentation now restore per chat. Changes tabs track actual opening/closing; background popup ownership and retained-terminal focus are guarded. Native Cmd+F/G page find partially passed; final different-project/terminal-focus UI acceptance awaits unlock. File breadcrumb control surface restored; current installed filter gap/font corrected. Native pixel acceptance pending. Real ancestor/filename directory menus, hidden entries, preview replacement, 320px ancestor collapse and 625px compact-control threshold are implemented and natively checked. Toolbar uses an unclipped shared host; wide transcript overlap, nested-menu dismissal and reparented icon sizing fixed. Full/split and 110% popup zoom passed on current dev renderer. Main-tree decorations/focus, root/error/light and project/terminal restoration matrices remain incomplete.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress.",
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      },
+      "incrementalEvidenceHistory": [
+        {
+          "date": "2026-10-31",
+          "status": "validated-source-package-and-bounded-native-supplement",
+          "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+          "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+          "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+          "testsPassed": 1478,
+          "testFiles": 192,
+          "packageOutputIdentical": "70/70",
+          "completeApplicationParity": false
+        }
+      ],
+      "precedingFinalSupplementProgress": "Final source passed 192 files/1,478 tests and matching 70/70 package checks. Bounded native command hierarchy/timer, three-tree guides, fixture diff, source-link ancestor reveal and user-scroll hold passed. Fixture/listener/native-app cleanup passed. Full application/pixel parity remains in progress."
     },
     {
       "id": "macos.integration",
@@ -221,9 +428,22 @@
         "docs/workbench-activity-parity-2026-10-29.md",
         "reverse/workbench-activity-evidence-2026-10-29.json",
         "docs/ui-detail-parity-2026-10-30.md",
-        "reverse/ui-detail-evidence-2026-10-30.json"
+        "reverse/ui-detail-evidence-2026-10-30.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Native editable UI checks covered directory/model/backend readiness, real history/diff, range labels, terminal behavior and keyboard new draft. Managed multi-window creation, cleanup and window-scoped thread routing are implemented; cross-window local-state/focus behavior has not received complete native acceptance. Original source/recording remain the comparison references. Complete native/AX/IME/notification parity pending. Browser native page find, zoom and macOS browser shortcuts are connected. Own-client Cmd+F (1/3) and Cmd+G (2/3) passed before final fixes; remaining native shortcuts and current-package UI checks await manual Mac unlock. Plain text uses validated native clipboard IPC without changing Chromium permission policy. Native command/output copy feedback and actual draft paste passed; other copy buttons use the same helper but were not all individually exercised."
+      "validatedPartialProgress": "Native editable UI checks covered directory/model/backend readiness, real history/diff, range labels, terminal behavior and keyboard new draft. Managed multi-window creation, cleanup and window-scoped thread routing are implemented; cross-window local-state/focus behavior has not received complete native acceptance. Original source/recording remain the comparison references. Complete native/AX/IME/notification parity pending. Browser native page find, zoom and macOS browser shortcuts are connected. Own-client Cmd+F (1/3) and Cmd+G (2/3) passed before final fixes; remaining native shortcuts and current-package UI checks await manual Mac unlock. Plain text uses validated native clipboard IPC without changing Chromium permission policy. Native command/output copy feedback and actual draft paste passed; other copy buttons use the same helper but were not all individually exercised.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress."
     },
     {
       "id": "visual.regression",
@@ -238,28 +458,683 @@
         "docs/ui-detail-parity-2026-10-29.md",
         "reverse/ui-detail-evidence-2026-10-29.json",
         "docs/ui-detail-parity-2026-10-30.md",
-        "reverse/ui-detail-evidence-2026-10-30.json"
+        "reverse/ui-detail-evidence-2026-10-30.json",
+        "docs/ui-detail-parity-2026-10-31.md",
+        "reverse/ui-detail-evidence-2026-10-31.json",
+        "reverse/ui-element-evidence-2026-10-31.json"
       ],
-      "validatedPartialProgress": "Source UI refinement package passed 1,413 tests in 185 files, Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and 70/70 packaged output checks. Twelve recovered SVG glyph geometries match the extracted original paths and canvases by static AST comparison. Prior long-history/browser/native model checks remain historical; new UI pixel and interaction acceptance is pending Mac unlock. Complete parity remains in progress. Current 2026-10-30 source/package: 1,422 tests in 187 files, Node/Web typechecks, packaging, codesign/fuses and 70/70 ASAR output checks passed. Sanitized native fixture screenshots and a detailed difference table are retained; current package full native/pixel matrix is still incomplete."
+      "validatedPartialProgress": "Source UI refinement package passed 1,413 tests in 185 files, Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and 70/70 packaged output checks. Twelve recovered SVG glyph geometries match the extracted original paths and canvases by static AST comparison. Prior long-history/browser/native model checks remain historical; new UI pixel and interaction acceptance is pending Mac unlock. Complete parity remains in progress. Current 2026-10-30 source/package: 1,422 tests in 187 files, Node/Web typechecks, packaging, codesign/fuses and 70/70 ASAR output checks passed. Sanitized native fixture screenshots and a detailed difference table are retained; current package full native/pixel matrix is still incomplete.",
+      "latestIncrementalEvidence": {
+        "date": "2026-10-31",
+        "status": "validated-source-package-and-bounded-native-element-supplement",
+        "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+        "testsPassed": 1663,
+        "testFiles": 210,
+        "packageOutputIdentical": "71/71",
+        "sourceHashFiles": 503,
+        "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+        "completeApplicationParity": false
+      },
+      "finalSupplementProgress": "Final element snapshot passed210 files/1663 tests,503 source hashes and71/71 packaged output with bounded native menu/full/word/Git filter/picker/chooser checks. Fixture archived recoverably, temporary profile/directory and isolated processes cleaned. Complete application/pixel parity remains in progress.",
+      "priorIncrementalCheckpoint": {
+        "date": "2026-10-31",
+        "status": "validated-bounded-source-package-native-checkpoint",
+        "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+        "boundary": "Local detail checks and fixture cleanup passed. Native detailed per-second timer, complete MCP-media/history/theme/window coverage and whole-app equivalence remain incomplete. Later source changes require a new matching snapshot. Obligation stays in progress."
+      },
+      "incrementalEvidenceHistory": [
+        {
+          "date": "2026-10-31",
+          "status": "validated-source-package-and-bounded-native-supplement",
+          "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+          "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+          "nativeAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+          "testsPassed": 1478,
+          "testFiles": 192,
+          "packageOutputIdentical": "70/70",
+          "completeApplicationParity": false
+        }
+      ],
+      "precedingFinalSupplementProgress": "Final source passed 192 files/1,478 tests and matching 70/70 package checks. Bounded native command hierarchy/timer, three-tree guides, fixture diff, source-link ancestor reveal and user-scroll hold passed. Fixture/listener/native-app cleanup passed. Full application/pixel parity remains in progress."
     }
   ],
   "currentValidation": {
-    "date": "2026-10-30",
-    "sourceTarget": "26.1023.50603 / 22391",
-    "recordingTarget": "26.1016.61520 / 21421",
+    "date": "2026-10-31",
+    "status": "validated-source-package-and-bounded-native-element-supplement",
+    "sourceTarget": {
+      "application": "/Applications/ChatGPT.app",
+      "version": "26.1027.30824",
+      "build": "22943",
+      "asarSha256": "36bf3d2b35e95e11852074b9ca9459b89efbecd6b8311345d060cf66de8f0ba6"
+    },
+    "recordingTarget": {
+      "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+      "version": "26.1016.61520",
+      "build": "21421",
+      "framesAddedSeconds": [
+        76,
+        78,
+        156,
+        160,
+        280,
+        310,
+        318,
+        345
+      ],
+      "authority": "Historical UI and interaction reference; not pixel evidence for installed build22943",
+      "additionalActivityReview": "reverse/raw/element-parity-2026-10-31/recording/additional-activity-review.json"
+    },
     "documents": [
-      "docs/ui-detail-parity-2026-10-30.md",
-      "docs/ui-detail-parity-2026-10-29.md"
+      "docs/ui-element-parity-2026-10-31.md",
+      "docs/workbench-element-parity-2026-10-31.md",
+      "docs/conversation-element-parity-2026-10-31.md",
+      "docs/shell-element-audit-2026-10-31.md",
+      "docs/retained-tabs-chooser-parity-2026-10-31.md"
     ],
-    "evidence": "reverse/ui-detail-evidence-2026-10-30.json",
-    "sourceTestsPassed": 1422,
-    "sourceTestFiles": 187,
-    "sourcePackageOutputIdentical": "70/70",
-    "sourcePackageChecks": "Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and current packaged output byte comparisons passed.",
-    "nativeWindowAcceptance": "Bounded current-dev native command/copy, breadcrumb, responsive file-controls, nested menu, full/split and 110% zoom checks passed; complete pixel/function/package-native matrix remains in progress.",
-    "realModelAcceptance": "Native composer readonly turn completed; two exit-0 commands including 40-line output, clickable files, real clipboard paste. Both disposable threads cleaned and verified absent."
+    "evidence": "reverse/ui-element-evidence-2026-10-31.json",
+    "sourceTestsPassed": 1663,
+    "sourceTestFiles": 210,
+    "sourcePackageOutputIdentical": "71/71",
+    "sourcePackageChecks": true,
+    "sourceHashFilesRechecked": 503,
+    "asarSha256": "e4336537131a12768489606ca4b44de857deda15c5ba115f1a66005768d44a77",
+    "finalSnapshotCheckReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/final-snapshot-check.json",
+    "nativeWindowAcceptance": "Bounded tail menus, full/word/whitespace/import/refresh, changed-file picker and retained chooser passed on final package; full pixel/state equivalence remains unproved.",
+    "realModelAcceptance": {
+      "implementation": "Official installed Codex CLI0.164.0; server not reconstructed",
+      "testListener": "ws://127.0.0.1:4599",
+      "nativeFixtureTurns": 3,
+      "latestCompletedTurn": "<fixture-id-5>",
+      "latestTurnPatch": "three independent +1/-1 import/whitespace/word hunks",
+      "turnReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/turn.json",
+      "lastTurnPreparationAttribution": "Three-turn fixture. Third turn prepared through the preceding204/1567 package; completed official patch reused for final210/1663 package native consumer checks.",
+      "listenerStopped": true,
+      "originalServerProcessesStoppedByThisTask": false,
+      "currentOfficialServerPresent": true,
+      "initialOriginalPidStillPresent": false,
+      "lifecycleNote": "Initial [redacted process ID] is no longer present; current official server PIDs are recorded without restarting or stopping them. Only this task’s isolated [redacted process ID] was terminated."
+    },
+    "fixtureCleanup": {
+      "status": "complete-with-recoverable-fixture-chat-archive",
+      "fixtureChatArchived": true,
+      "fixtureChatPermanentlyDeleted": false,
+      "fixtureDirectoryRemoved": true,
+      "isolatedProfileRemoved": true,
+      "nativePackageStopped": true,
+      "isolatedListenerStopped": true,
+      "otherChatsMutated": false,
+      "originalAsarMatchesInspectedSource": true,
+      "report": "reverse/raw/element-parity-2026-10-31/acceptance-followup/cleanup-summary.json"
+    },
+    "listenerCleanup": true,
+    "completeApplicationParity": false,
+    "completePixelParity": false,
+    "remaining": [
+      "Complete application and every-state pixel equivalence",
+      "Original fuzzy Jump search scoring, full keyboard/popover/zoom/collision",
+      "Original immutable Git blobs and full branch/commit/staged/unstaged review services, git blame",
+      "Full rich Markdown/file-link/SVG/bitmap/PDF native matrix",
+      "Retained chooser full ready/route/factory and main focus registry behavior",
+      "Rich/HTML clipboard and provider/overlay/tooltip matrices",
+      "Import parser and annotation/search native coverage; external file-watch/snapshot generations",
+      "Special-environment, linked-thread, full error/reconnection/background timing behavior",
+      "Voice/cloud/MCP Apps/connectors/approval and long history/theme/zoom/window/animation matrices"
+    ]
   },
   "validationHistory": [
+    {
+      "date": "2026-10-31",
+      "status": "validated-source-package-and-bounded-native-supplement",
+      "sourceTarget": "26.1027.30824 / 22943",
+      "recordingTarget": "26.1016.61520 / 21421",
+      "documents": [
+        "docs/workspace-detail-parity-2026-10-31.md",
+        "docs/conversation-detail-parity-2026-10-31.md",
+        "docs/ui-detail-parity-2026-10-31.md"
+      ],
+      "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+      "sourceTests": "passed",
+      "sourceTestsPassed": 1478,
+      "sourceTestFiles": 192,
+      "sourcePackageOutputIdentical": "70/70",
+      "sourcePackageChecks": "Node/Web typechecks, macOS arm64 package exit0, deep strict codesign, configured fuses and audited source/output hash correspondence passed.",
+      "nativeWindowAcceptance": {
+        "status": "bounded-production-package-final-supplement-passed",
+        "rootConfirmed": true,
+        "runtime": {
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/runtime.json",
+          "url": "app://-/index.html",
+          "backendState": "ready",
+          "backendMode": "daemon",
+          "rendererRequire": "undefined",
+          "rendererProcess": "undefined",
+          "viewport": [
+            1420,
+            900
+          ],
+          "theme": "dark",
+          "zoomFactor": 1
+        },
+        "commandHierarchy": {
+          "status": "bounded-native-check-passed",
+          "compactFirstClickShowsDetailedRow": true,
+          "detailedSecondClickShowsRawCommandAndOutput": true,
+          "detailedLiveElapsedSecondsObserved": [
+            27,
+            40,
+            41
+          ],
+          "compactElapsedLabelAbsent": true,
+          "captures": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.png"
+          ],
+          "axReports": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.ax.txt",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer-next.ax.txt",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.ax.txt",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/completed-output.ax.txt"
+          ],
+          "backgroundTerminalGateIntegrated": false,
+          "completeTimingMatrix": false
+        },
+        "officialModelTurn": {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+          "outputLines": 80,
+          "exitCode": 0,
+          "commandDurationMs": 44977,
+          "finalMarker": "ui-final-hierarchy-ok",
+          "fixtureFileLinkPresent": true,
+          "fixtureSourceLinkExpandedAncestors": [
+            "lib",
+            "deep"
+          ],
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        "indentGuides": {
+          "mainTree": "bounded-native-check-passed",
+          "breadcrumbTree": "bounded-native-check-passed",
+          "idleOpacity": 0,
+          "hoverOpacity": 0.75,
+          "columnLeftPx": [
+            10.25,
+            19
+          ],
+          "lineWidthPx": 1,
+          "collapseAndRightReopenPassed": true,
+          "changedTree": "bounded-native-check-passed",
+          "metrics": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-idle.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-hover.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-breadcrumb.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-changed.json"
+          ],
+          "captures": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-idle.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-hover.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/breadcrumb-guides.png",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/changed-tree-guides.png"
+          ]
+        },
+        "sidebarSelectionReveal": {
+          "targetedTestsPassed": 7,
+          "nativeUserScrollHold": "bounded-native-check-passed",
+          "scrollTopBefore": 0,
+          "scrollTopAfter": 200,
+          "scrollTopRetained": 200,
+          "selectedRowTopBeforePx": 172,
+          "selectedRowTopAfterPx": -28,
+          "metrics": [
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-before.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-scrolled.json",
+            "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-after.json"
+          ],
+          "nativeResizeAttempt": "did-not-change-window-size-not-accepted",
+          "nativeFullLongSidebar": "not-performed",
+          "completeReorderingPinReselectionMatrix": false
+        },
+        "remainingNative": [
+          "Complete light/dark, viewport, zoom and animation matrix",
+          "MCP media and full nested keyboard/long-history matrix",
+          "Complete sidebar resize/reorder/pin/reselection matrix"
+        ],
+        "completeApplicationParity": false,
+        "completePixelParity": false,
+        "fixtureAndListenerCleanup": {
+          "checkedAt": "2026-10-31T06:32:48.199321+00:00",
+          "fixtureThreadsDeleted": 1,
+          "notificationListenerRemoved": true,
+          "fixtureWorkingTreeRestored": true,
+          "noOriginalConversationMutations": true,
+          "originalConversationSelection": "One existing chat was briefly selected by a native coordinate test, then returned with Back; no turn, edit, archive or delete was submitted there.",
+          "nativeFinalAppExited": true,
+          "nativeAppPid": null,
+          "nativeAppExecSession": 19368,
+          "nativeAppExecExitCode": 0,
+          "taskListenerExited": true,
+          "taskWrapperExited": true,
+          "listenerExecExitCode": 0,
+          "port4599Closed": true,
+          "originalServerProcessesSignalled": false,
+          "originalServerStillRunningAtCheckpoint": true,
+          "passed": true,
+          "fixtureReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup.json",
+          "deletionProbeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-probe.json",
+          "nativeAppReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/package-cleanup.json",
+          "listenerReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json"
+        },
+        "changedFileTurn": {
+          "status": "completed",
+          "cliVersion": "0.164.0",
+          "model": "gpt-6.1-sol",
+          "fileChangeStatus": "completed",
+          "changeCount": 1,
+          "fixtureOnly": true,
+          "beforeValue": 1,
+          "afterValue": 2,
+          "visibleDiffStats": {
+            "added": 1,
+            "removed": 1,
+            "kind": "M"
+          },
+          "diffViewOpened": true,
+          "finalMarker": "ui-final-change-ok",
+          "turnDurationMs": 32309,
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+        },
+        "originalConversationInteraction": {
+          "anotherExistingConversationSelectedDuringCoordinateAttempt": true,
+          "returnedToFixtureViaNativeBack": true,
+          "noOriginalConversationMutations": true,
+          "mutationScope": "No turn sent, file edited, conversation archived or deleted for the other existing conversation."
+        }
+      },
+      "realModelAcceptance": {
+        "cliVersion": "0.164.0",
+        "model": "gpt-6.1-sol",
+        "turns": [
+          {
+            "status": "completed",
+            "cliVersion": "0.164.0",
+            "model": "gpt-6.1-sol",
+            "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+            "outputLines": 80,
+            "exitCode": 0,
+            "commandDurationMs": 44977,
+            "finalMarker": "ui-final-hierarchy-ok",
+            "fixtureFileLinkPresent": true,
+            "fixtureSourceLinkExpandedAncestors": [
+              "lib",
+              "deep"
+            ],
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+          },
+          {
+            "status": "completed",
+            "cliVersion": "0.164.0",
+            "model": "gpt-6.1-sol",
+            "fileChangeStatus": "completed",
+            "changeCount": 1,
+            "fixtureOnly": true,
+            "beforeValue": 1,
+            "afterValue": 2,
+            "visibleDiffStats": {
+              "added": 1,
+              "removed": 1,
+              "kind": "M"
+            },
+            "diffViewOpened": true,
+            "finalMarker": "ui-final-change-ok",
+            "turnDurationMs": 32309,
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+          }
+        ],
+        "rawEvidence": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+      },
+      "completeApplicationParity": false,
+      "completePixelParity": false,
+      "fixtureCleanup": "passed",
+      "listenerCleanup": "passed",
+      "snapshotType": "validated-current-source-package-and-bounded-native-supplement",
+      "cleanupReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-summary.json",
+      "finalSupplement": {
+        "status": "validated-source-package-and-bounded-native-supplement",
+        "rawDirectory": "reverse/raw/ui-detail-2026-10-31/acceptance-final",
+        "sourceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/source-audit.json",
+        "sourceTestFiles": 192,
+        "sourceTestsPassed": 1478,
+        "sourceTestsFailed": 0,
+        "testsReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/tests.json",
+        "nodeTypecheck": true,
+        "webTypecheck": true,
+        "typecheckReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/typecheck.json",
+        "packageValidation": {
+          "status": "passed",
+          "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/report.json",
+          "codesignDeepStrict": true,
+          "fusesReadBack": true,
+          "packagedOutput": {
+            "files": 70,
+            "identical": 70
+          },
+          "asarSha256": "682bd675d475c0eeee6cafaf73d9b97ac22a602a6498f4d446cdc8c2dad6f3d9",
+          "auditedImplementationSourceHashesMatchPackageReport": true,
+          "productionCommandExitCode": 0
+        },
+        "nativeAcceptance": {
+          "status": "bounded-production-package-final-supplement-passed",
+          "rootConfirmed": true,
+          "runtime": {
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/runtime.json",
+            "url": "app://-/index.html",
+            "backendState": "ready",
+            "backendMode": "daemon",
+            "rendererRequire": "undefined",
+            "rendererProcess": "undefined",
+            "viewport": [
+              1420,
+              900
+            ],
+            "theme": "dark",
+            "zoomFactor": 1
+          },
+          "commandHierarchy": {
+            "status": "bounded-native-check-passed",
+            "compactFirstClickShowsDetailedRow": true,
+            "detailedSecondClickShowsRawCommandAndOutput": true,
+            "detailedLiveElapsedSecondsObserved": [
+              27,
+              40,
+              41
+            ],
+            "compactElapsedLabelAbsent": true,
+            "captures": [
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.png",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.png"
+            ],
+            "axReports": [
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer.ax.txt",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-timer-next.ax.txt",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/live-detail-output.ax.txt",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/completed-output.ax.txt"
+            ],
+            "backgroundTerminalGateIntegrated": false,
+            "completeTimingMatrix": false
+          },
+          "officialModelTurn": {
+            "status": "completed",
+            "cliVersion": "0.164.0",
+            "model": "gpt-6.1-sol",
+            "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+            "outputLines": 80,
+            "exitCode": 0,
+            "commandDurationMs": 44977,
+            "finalMarker": "ui-final-hierarchy-ok",
+            "fixtureFileLinkPresent": true,
+            "fixtureSourceLinkExpandedAncestors": [
+              "lib",
+              "deep"
+            ],
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+          },
+          "indentGuides": {
+            "mainTree": "bounded-native-check-passed",
+            "breadcrumbTree": "bounded-native-check-passed",
+            "idleOpacity": 0,
+            "hoverOpacity": 0.75,
+            "columnLeftPx": [
+              10.25,
+              19
+            ],
+            "lineWidthPx": 1,
+            "collapseAndRightReopenPassed": true,
+            "changedTree": "bounded-native-check-passed",
+            "metrics": [
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-idle.json",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-hover.json",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-breadcrumb.json",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/guides-changed.json"
+            ],
+            "captures": [
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-idle.png",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/tree-guides-hover.png",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/breadcrumb-guides.png",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/changed-tree-guides.png"
+            ]
+          },
+          "sidebarSelectionReveal": {
+            "targetedTestsPassed": 7,
+            "nativeUserScrollHold": "bounded-native-check-passed",
+            "scrollTopBefore": 0,
+            "scrollTopAfter": 200,
+            "scrollTopRetained": 200,
+            "selectedRowTopBeforePx": 172,
+            "selectedRowTopAfterPx": -28,
+            "metrics": [
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-before.json",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-scrolled.json",
+              "reverse/raw/ui-detail-2026-10-31/acceptance-final/sidebar-after.json"
+            ],
+            "nativeResizeAttempt": "did-not-change-window-size-not-accepted",
+            "nativeFullLongSidebar": "not-performed",
+            "completeReorderingPinReselectionMatrix": false
+          },
+          "remainingNative": [
+            "Complete light/dark, viewport, zoom and animation matrix",
+            "MCP media and full nested keyboard/long-history matrix",
+            "Complete sidebar resize/reorder/pin/reselection matrix"
+          ],
+          "completeApplicationParity": false,
+          "completePixelParity": false,
+          "fixtureAndListenerCleanup": {
+            "checkedAt": "2026-10-31T06:32:48.199321+00:00",
+            "fixtureThreadsDeleted": 1,
+            "notificationListenerRemoved": true,
+            "fixtureWorkingTreeRestored": true,
+            "noOriginalConversationMutations": true,
+            "originalConversationSelection": "One existing chat was briefly selected by a native coordinate test, then returned with Back; no turn, edit, archive or delete was submitted there.",
+            "nativeFinalAppExited": true,
+            "nativeAppPid": null,
+            "nativeAppExecSession": 19368,
+            "nativeAppExecExitCode": 0,
+            "taskListenerExited": true,
+            "taskWrapperExited": true,
+            "listenerExecExitCode": 0,
+            "port4599Closed": true,
+            "originalServerProcessesSignalled": false,
+            "originalServerStillRunningAtCheckpoint": true,
+            "passed": true,
+            "fixtureReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup.json",
+            "deletionProbeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-probe.json",
+            "nativeAppReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/package-cleanup.json",
+            "listenerReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json"
+          },
+          "changedFileTurn": {
+            "status": "completed",
+            "cliVersion": "0.164.0",
+            "model": "gpt-6.1-sol",
+            "fileChangeStatus": "completed",
+            "changeCount": 1,
+            "fixtureOnly": true,
+            "beforeValue": 1,
+            "afterValue": 2,
+            "visibleDiffStats": {
+              "added": 1,
+              "removed": 1,
+              "kind": "M"
+            },
+            "diffViewOpened": true,
+            "finalMarker": "ui-final-change-ok",
+            "turnDurationMs": 32309,
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+          },
+          "originalConversationInteraction": {
+            "anotherExistingConversationSelectedDuringCoordinateAttempt": true,
+            "returnedToFixtureViaNativeBack": true,
+            "noOriginalConversationMutations": true,
+            "mutationScope": "No turn sent, file edited, conversation archived or deleted for the other existing conversation."
+          }
+        },
+        "changes": [
+          {
+            "id": "workspace-indent-guides",
+            "behavior": "Visible expanded-row ancestor columns, 1px line, 10.25px first column then 8.75px spacing, default opacity0 / tree hover 0.75 / 150ms ease, pointer-events none.",
+            "boundaries": [
+              "DOM expanded rows only; no new virtual tree or sticky overlay",
+              "Dynamic data-ancestor-path opacity1 highlighting remains incomplete",
+              "Native hover/theme/window matrix pending"
+            ]
+          },
+          {
+            "id": "compact-command-hierarchy",
+            "behavior": "Compact action description without elapsed time opens detailed timed rows in a 224px activity body; the detailed row separately opens raw command/output. Independent disclosure IDs and inert outer-close body.",
+            "boundaries": [
+              "Old acceptance/package-live-command.png predates hierarchy repair",
+              "Markup states use disclosure test doubles; native click and timing require new acceptance",
+              "Full STEPS_PROSE/Work detail-level state remains unimplemented",
+              "Replica timing hook gates enabled and inProgress only; background-terminal state and timing gate are not yet integrated or verified",
+              "Default first-row command/output markup does not prove native multi-row selection or compact-to-completed selection persistence"
+            ]
+          },
+          {
+            "id": "sidebar-selection-reveal",
+            "behavior": "Observe selected row ancestors after hydration and automatic reveal until user wheel/pointer/key/scroll. Center out-of-view row with rect.height/offsetHeight scale, clientTop and scrollPaddingBottom.",
+            "boundaries": [
+              "Full pin migration/reselectionCount modes remain incomplete",
+              "Native long-sidebar acceptance pending"
+            ]
+          }
+        ],
+        "quitVerification": "reverse/raw/ui-detail-2026-10-31/acceptance-final/quit-cleanup.json",
+        "officialServer": {
+          "cliVersion": "0.164.0",
+          "pid": null,
+          "wrapperPid": null,
+          "execSession": 61015,
+          "endpoint": "ws://127.0.0.1:4599/",
+          "initializePassed": true,
+          "modelListPassed": true,
+          "modelCount": 8,
+          "handshakeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-handshake.json",
+          "listenerCurrentlyRunning": false,
+          "nativeModelTurn": {
+            "status": "completed",
+            "cliVersion": "0.164.0",
+            "model": "gpt-6.1-sol",
+            "command": "/bin/zsh -lc 'sleep 45; seq 1 80'",
+            "outputLines": 80,
+            "exitCode": 0,
+            "commandDurationMs": 44977,
+            "finalMarker": "ui-final-hierarchy-ok",
+            "fixtureFileLinkPresent": true,
+            "fixtureSourceLinkExpandedAncestors": [
+              "lib",
+              "deep"
+            ],
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+          },
+          "changedFileNativeModelTurn": {
+            "status": "completed",
+            "cliVersion": "0.164.0",
+            "model": "gpt-6.1-sol",
+            "fileChangeStatus": "completed",
+            "changeCount": 1,
+            "fixtureOnly": true,
+            "beforeValue": 1,
+            "afterValue": 2,
+            "visibleDiffStats": {
+              "added": 1,
+              "removed": 1,
+              "kind": "M"
+            },
+            "diffViewOpened": true,
+            "finalMarker": "ui-final-change-ok",
+            "turnDurationMs": 32309,
+            "report": "reverse/raw/ui-detail-2026-10-31/acceptance-final/turn.json"
+          },
+          "listenerCleanupReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json",
+          "originalServerProcessesSignalled": false
+        },
+        "completeApplicationParity": false,
+        "completePixelParity": false,
+        "peerSourceAudit": "Conversation/workbench independent read-only checks confirmed all recorded current-source offsets and hashes; scoped tests retain their actual scope.",
+        "nativeEvidenceAudit": "reverse/raw/ui-detail-2026-10-31/acceptance-final/native-evidence-audit.json",
+        "cleanup": {
+          "checkedAt": "2026-10-31T06:32:48.199321+00:00",
+          "fixtureThreadsDeleted": 1,
+          "notificationListenerRemoved": true,
+          "fixtureWorkingTreeRestored": true,
+          "noOriginalConversationMutations": true,
+          "originalConversationSelection": "One existing chat was briefly selected by a native coordinate test, then returned with Back; no turn, edit, archive or delete was submitted there.",
+          "nativeFinalAppExited": true,
+          "nativeAppPid": null,
+          "nativeAppExecSession": 19368,
+          "nativeAppExecExitCode": 0,
+          "taskListenerExited": true,
+          "taskWrapperExited": true,
+          "listenerExecExitCode": 0,
+          "port4599Closed": true,
+          "originalServerProcessesSignalled": false,
+          "originalServerStillRunningAtCheckpoint": true,
+          "passed": true,
+          "fixtureReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup.json",
+          "deletionProbeReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/cleanup-probe.json",
+          "nativeAppReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/package-cleanup.json",
+          "listenerReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/listener-cleanup.json"
+        },
+        "noOriginalConversationMutations": true,
+        "finalizedAt": "2026-10-31T06:32:48.199321+00:00"
+      },
+      "finalSnapshotCheckReport": "reverse/raw/ui-detail-2026-10-31/acceptance-final/final-snapshot-check.json",
+      "sourceHashFilesRechecked": 462
+    },
+    {
+      "date": "2026-10-31",
+      "status": "preceding-same-day-checkpoint",
+      "sourceTarget": "26.1027.30824 / 22943",
+      "recordingTarget": "26.1016.61520 / 21421",
+      "documents": [
+        "docs/ui-detail-parity-2026-10-31.md",
+        "docs/workspace-detail-parity-2026-10-31.md",
+        "docs/conversation-detail-parity-2026-10-31.md"
+      ],
+      "evidence": "reverse/ui-detail-evidence-2026-10-31.json",
+      "sourceTests": "passed",
+      "sourcePackageChecks": "Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and matching frozen out/ASAR output comparison passed.",
+      "nativeWindowAcceptance": "Bounded production menu/Escape/ShiftF10/middle-click, 100/110% position, 110% composer, nested reverse-output scroll and watcher/collapse tree focus passed; full native matrix and detailed per-second timer remain incomplete.",
+      "realModelAcceptance": "Official CLI 0.164.0, gpt-6.1-sol: dev 40 lines/7922ms, production 80 lines/19951ms and sleep35/34908ms; all completed/exit0. Native detailed per-second timing remains model-covered only.",
+      "completeApplicationParity": false,
+      "sourceTestsPassed": 1462,
+      "sourceTestFiles": 190,
+      "sourcePackageOutputIdentical": "70/70",
+      "packagedLongCommandAcceptance": "passed",
+      "fixtureCleanup": "passed",
+      "listenerCleanup": "passed",
+      "snapshotType": "checkpoint",
+      "cleanupReport": "reverse/raw/ui-detail-2026-10-31/acceptance/cleanup.json",
+      "listenerCleanupReport": "reverse/raw/ui-detail-2026-10-31/audit/listener-cleanup.json",
+      "futureSourceChanges": "Require new matching source/package verification.",
+      "checkpointId": "2026-10-31-190-files-1462-tests"
+    },
+    {
+      "date": "2026-10-30",
+      "sourceTarget": "26.1023.50603 / 22391",
+      "recordingTarget": "26.1016.61520 / 21421",
+      "documents": [
+        "docs/ui-detail-parity-2026-10-30.md",
+        "docs/ui-detail-parity-2026-10-29.md"
+      ],
+      "evidence": "reverse/ui-detail-evidence-2026-10-30.json",
+      "sourceTestsPassed": 1422,
+      "sourceTestFiles": 187,
+      "sourcePackageOutputIdentical": "70/70",
+      "sourcePackageChecks": "Node/Web typechecks, macOS arm64 packaging, deep strict codesign, configured fuses and current packaged output byte comparisons passed.",
+      "nativeWindowAcceptance": "Bounded current-dev native command/copy, breadcrumb, responsive file-controls, nested menu, full/split and 110% zoom checks passed; complete pixel/function/package-native matrix remains in progress.",
+      "realModelAcceptance": "Native composer readonly turn completed; two exit-0 commands including 40-line output, clickable files, real clipboard paste. Both disposable threads cleaned and verified absent."
+    },
     {
       "date": "2026-10-29",
       "sourceTarget": "26.1023.50603 / 22391",

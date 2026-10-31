@@ -60,7 +60,7 @@ describe('MarkdownContent', () => {
       })
     )
 
-    expect(openFence).toContain('aria-label="开启代码自动换行"')
+    expect(openFence).toContain('aria-label="启用自动换行"')
     expect(openFence).not.toContain('aria-label="复制代码"')
     expect(closedFence).toContain('aria-label="复制代码"')
   })

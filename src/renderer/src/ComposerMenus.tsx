@@ -1,4 +1,4 @@
-import { Check, ChevronDown, ChevronRight, Lock, RotateCcw, ShieldCheck } from 'lucide-react'
+import { ChevronRight, RotateCcw } from 'lucide-react'
 import {
   type CSSProperties,
   type KeyboardEvent,
@@ -19,6 +19,7 @@ import type {
   ReasoningEffort
 } from './protocol'
 import { useDesktopSettings } from './desktopSettings'
+import { ShellElementGlyph } from './ShellElementGlyph'
 import { normalizeWindowZoom, toLogicalRect, toLogicalViewport, useWindowZoom } from './windowZoom'
 
 interface RectLike {
@@ -284,7 +285,7 @@ function ComposerOptionMenu({
       >
         {icon}
         <span className="composer-menu-trigger-label">{triggerLabel}</span>
-        <ChevronDown className="composer-menu-chevron" />
+        <ShellElementGlyph name="chevron-down" className="composer-menu-chevron" />
       </button>
       {open &&
         createPortal(
@@ -342,7 +343,7 @@ function ComposerOptionMenu({
                     {option.description && <small>{option.description}</small>}
                   </span>
                   <span className="composer-menu-check" aria-hidden="true">
-                    {selected && <Check />}
+                    {selected && <ShellElementGlyph name="check" />}
                   </span>
                 </button>
               )
@@ -548,10 +549,10 @@ function PermissionShieldAlertIcon(): ReactNode {
 
 function permissionProfileIcon(kind: PermissionProfilePresentation['icon']): ReactNode {
   if (kind === 'hand') return <PermissionHandIcon />
-  if (kind === 'lock') return <Lock />
+  if (kind === 'lock') return <ShellElementGlyph name="lock" />
   if (kind === 'shield-alert') return <PermissionShieldAlertIcon />
   if (kind === 'shield-code') return <PermissionShieldCodeIcon />
-  return <ShieldCheck />
+  return <ShellElementGlyph name="shield-check" />
 }
 
 export function shortComposerModelLabel(label: string): string {
@@ -1013,7 +1014,7 @@ export function ComposerModelMenus({
                         onPointerMove={() => setActiveIndex(index)}
                       >
                         <span>{shortComposerModelLabel(candidate.displayName)}</span>
-                        {selected && <Check aria-hidden="true" />}
+                        {selected && <ShellElementGlyph name="check" />}
                       </button>
                     )
                   })}

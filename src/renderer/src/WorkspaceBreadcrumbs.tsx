@@ -1,4 +1,4 @@
-import { Braces, ChevronDown, ChevronRight, File, FileCode2, FileImage, Folder, FolderOpen, LoaderCircle } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import type { WorkspaceDirectoryEntry } from '../../shared/api'
@@ -6,15 +6,12 @@ import { workspaceBreadcrumbCollapseCount, workspaceBreadcrumbSegments, workspac
 import { workspaceErrorMessage } from './workspaceFileModel'
 import { toLogicalRect, toLogicalViewport, useWindowZoom } from './windowZoom'
 import './WorkspaceBreadcrumbs.css'
+import { WorkspaceFileIcon } from './WorkspaceFileIcon'
+import { workspaceNavigatorRowPadding } from './workspaceNavigatorModel'
+import { WorkspaceTreeIndentGuides } from './WorkspaceTreeIndentGuides'
+import { WorkbenchElementGlyph } from './WorkbenchElementGlyph'
 
 type DirectoryState = { status: 'loading' | 'ready' | 'error'; entries: WorkspaceDirectoryEntry[]; truncated?: boolean; error?: string }
-
-function BreadcrumbIcon({ entry, expanded }: { entry: WorkspaceDirectoryEntry; expanded: boolean }): ReactNode {
-  if (entry.isDirectory) return expanded ? <FolderOpen /> : <Folder />
-  if (/\.(json|jsonl)$/i.test(entry.path)) return <Braces className="is-json" />
-  if (/\.(png|jpe?g|gif|webp|svg|ico)$/i.test(entry.path)) return <FileImage />
-  return /\.(tsx?|jsx?|mjs|cjs|py|go|rs|css|html|sh)$/i.test(entry.path) ? <FileCode2 /> : <File />
-}
 
 function BreadcrumbDirectoryTree({ root, segment, onSelectFile }: { root: string; segment: WorkspaceBreadcrumbSegment; onSelectFile(path: string): void }): ReactNode {
   const directory = segment.directoryPath!
@@ -79,7 +76,7 @@ function BreadcrumbDirectoryTree({ root, segment, onSelectFile }: { root: string
         return <div role="none" key={entry.path}>
           <button type="button" role="treeitem" className={`workspace-breadcrumb-tree-row${selected === entry.path ? ' is-selected' : ''}`} aria-label={entry.fileName}
             aria-level={depth + 1} aria-posinset={index + 1} aria-setsize={state.entries.length} aria-selected={selected === entry.path} aria-expanded={entry.isDirectory ? isExpanded : undefined}
-            tabIndex={focusPath === entry.path ? 0 : -1} style={{ paddingLeft: depth * 14 + 3 }}
+            tabIndex={focusPath === entry.path ? 0 : -1} style={{ paddingLeft: workspaceNavigatorRowPadding(depth, entry.isDirectory) }}
             ref={(node) => { node ? nodes.current.set(entry.path, node) : nodes.current.delete(entry.path) }}
             onFocus={() => setFocused(entry.path)} onClick={() => entry.isDirectory ? toggle(entry.path, !isExpanded) : onSelectFile(entry.path)}
             onKeyDown={(event) => {
@@ -90,8 +87,11 @@ function BreadcrumbDirectoryTree({ root, segment, onSelectFile }: { root: string
               else if (action.type === 'select') onSelectFile(action.path)
               else toggle(action.path, action.type === 'expand')
             }}>
-            <span className="workspace-breadcrumb-tree-disclosure">{entry.isDirectory && (isExpanded ? <ChevronDown /> : <ChevronRight />)}</span>
-            <BreadcrumbIcon entry={entry} expanded={isExpanded} /><span>{entry.fileName}</span>
+            <WorkspaceTreeIndentGuides depth={depth} />
+            {entry.isDirectory
+              ? <span className="workspace-breadcrumb-tree-disclosure"><WorkbenchElementGlyph name="chevron-down-md-light-12" rotate={isExpanded ? undefined : -90} /></span>
+              : <WorkspaceFileIcon path={entry.path} />}
+            <span>{entry.fileName}</span>
           </button>
           {isExpanded && <div role="group">{renderDirectory(entry.path, depth + 1)}</div>}
         </div>
@@ -164,7 +164,7 @@ export function WorkspaceBreadcrumbs({ root, path, onSelectFile }: { root: strin
     {interactive && root && onSelectFile && segment.directoryPath ? <button type="button" ref={(node) => { node ? triggers.current.set(index, node) : triggers.current.delete(index) }}
       className="workspace-breadcrumb-trigger" aria-label={`浏览 ${segment.label}`} aria-haspopup="dialog" aria-expanded={open === index} aria-controls={open === index ? popupId : undefined}
       onClick={() => setOpen((current) => current === index ? null : index)}>{segment.label}</button> : <span>{segment.label}</span>}
-    {index < segments.length - 1 && <ChevronRight aria-hidden="true" />}
+    {index < segments.length - 1 && <WorkbenchElementGlyph name="breadcrumb-chevron-original-20" size={12} />}
   </li>)
   return <>
     <nav ref={nav} className="workspace-breadcrumbs workspace-file-breadcrumbs" aria-label="文件路径" title={path || root || 'Workspace'} style={{ width: naturalWidth }}

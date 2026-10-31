@@ -357,7 +357,7 @@ export interface WorkspaceWatchRequest {
 }
 export interface WorkspaceFilesChanged extends WorkspaceWatchRequest { id: string }
 export type WorkspaceOpenTargetId = 'finder' | 'terminal' | 'vscode' | 'cursor' | 'zed' | 'windsurf'
-export interface WorkspaceOpenTarget { id: WorkspaceOpenTargetId; label: string }
+export interface WorkspaceOpenTarget { id: WorkspaceOpenTargetId; label: string; iconDataUrl?: string }
 export interface WorkspaceSaveCopyRequest extends WorkspacePathRequest { text?: string }
 
 export interface WorkspaceDirectoryEntry {
@@ -561,6 +561,10 @@ export interface ExternalAgentImportApi {
   onProgress(listener: (progress: ExternalAgentImportProgress) => void): () => void
 }
 
+export interface WorkspaceTextDiffOptions {
+  ignoreWhitespace: boolean
+}
+
 export interface CodexDesktopApi {
   externalAgentImport: ExternalAgentImportApi
   invoke<T = unknown>(method: string, params?: JsonMap, hostId?: HostId): Promise<T>
@@ -626,6 +630,7 @@ export interface CodexDesktopApi {
   openThreadInNewWindow(threadId: string, hostId?: HostId): Promise<void>
   readWorkspaceDirectory(cwd: string, path: string): Promise<WorkspaceDirectoryResult>
   readWorkspaceFile(cwd: string, path: string): Promise<WorkspaceFileResult>
+  diffWorkspaceText(before: string, after: string, options: WorkspaceTextDiffOptions): Promise<string>
   saveWorkspaceFile(cwd: string, path: string, text: string, expectedText: string): Promise<WorkspaceFileSaveResult>
   watchWorkspacePaths(root: string, directories: string[], files: string[]): Promise<string>
   unwatchWorkspacePaths(id: string): Promise<void>

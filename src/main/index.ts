@@ -72,6 +72,7 @@ import {
 import { restoreWindowBounds, WindowStateStore } from './windowState'
 import { readGitMetadata } from './gitMetadata'
 import { readGitBranches } from './gitBranches'
+import { diffWorkspaceText } from './workspaceTextDiff'
 import {
   APP_ENTRY_URL,
   APP_PROTOCOL_SCHEME,
@@ -92,6 +93,7 @@ import {
 } from './workspaceFiles'
 import { WorkspaceWatchers, isWorkspaceWatchRequest } from './workspaceWatchers'
 import { listWorkspaceOpenTargets, workspaceTargetApplication, isWorkspaceSaveCopyRequest, saveWorkspaceFileCopy } from './workspaceFileActions'
+import { loadMacWorkspaceApplicationIcon } from './workspaceTargetIcons'
 import type { WorkspaceOpenTargetId } from '../shared/api'
 import { readThreadImage, ThreadImagePathGrants } from './threadImageAccess'
 import { inlineClipboardImageBytes, writeClipboardImage } from './imageClipboard'
@@ -1092,6 +1094,17 @@ function installIpcHandlers(): void {
     }
     return readWorkspaceFile(appServer, request)
   })
+  ipcMain.handle('app:workspace-text-diff', async (event, before: unknown, after: unknown, options: unknown) => {
+    const window = assertTrustedIpcSender(event)
+    assertLocalHost(window, 'Workspace text diff')
+    const generation = rendererDocuments.generation(window)
+    const result = await diffWorkspaceText(before, after, options)
+    if (assertTrustedIpcSender(event) !== window || window.isDestroyed() || !managedWindows.has(window) ||
+        rendererDocuments.generation(window) !== generation) {
+      throw new Error('Workspace document changed while computing diff')
+    }
+    return result
+  })
   ipcMain.handle('app:workspace-save-file', (event, request: unknown) => {
     const window = assertTrustedIpcSender(event)
     assertLocalHost(window, 'Workspace file editing')
@@ -1126,7 +1139,7 @@ function installIpcHandlers(): void {
   ipcMain.handle('app:workspace-open-targets', (event) => {
     const window = assertTrustedIpcSender(event)
     assertLocalHost(window, 'Opening workspace files')
-    return listWorkspaceOpenTargets()
+    return listWorkspaceOpenTargets(loadMacWorkspaceApplicationIcon)
   })
   ipcMain.handle('app:workspace-open-path', async (event, request: unknown, target: unknown) => {
     const window = assertTrustedIpcSender(event)

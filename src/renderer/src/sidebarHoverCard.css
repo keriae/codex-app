@@ -230,6 +230,12 @@
   stroke-width: 1.6;
 }
 
+.sidebar-thread-hover-card-host-icon svg.sidebar-thread-hover-local-icon {
+  width: 14px;
+  height: 14px;
+  stroke: none;
+}
+
 .sidebar-thread-hover-card-header time {
   flex: 0 0 auto;
   color: var(--text-faint);

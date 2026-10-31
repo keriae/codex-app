@@ -23,14 +23,9 @@
 }
 
 .composer-menu-chevron {
-  width: 11px;
-  height: 11px;
-  flex: 0 0 11px;
-  transition: transform 120ms ease;
-}
-
-.composer-menu-trigger.is-open .composer-menu-chevron {
-  transform: rotate(180deg);
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
 }
 
 .permission-menu-trigger {

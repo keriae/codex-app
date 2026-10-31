@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest'
 
 const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8')
 const workspace = readFileSync(new URL('./WorkspacePane.tsx', import.meta.url), 'utf8')
-const styles = readFileSync(new URL('./styles.css', import.meta.url), 'utf8')
 const workspaceStyles = readFileSync(new URL('./WorkspacePane.css', import.meta.url), 'utf8')
 const diffStyles = readFileSync(new URL('./WorkspaceDiffViewer.css', import.meta.url), 'utf8')
 
@@ -41,20 +40,17 @@ describe('workspace toolbar open-target integration', () => {
     expect(workspaceStyles).toMatch(/\.workspace-file-actions\.is-diff\s*>\s*\.workspace-change-switcher\s*\{[^}]*width:\s*73px;/s)
     expect(workspaceStyles).toMatch(/\.workspace-diff-native-controls\s*\{[^}]*width:\s*224px;[^}]*height:\s*32px;/s)
     expect(workspaceStyles).toMatch(/\.workspace-diff-native-controls\s*>\s*button\s*\{[^}]*width:\s*28px;[^}]*height:\s*28px;/s)
-    expect(workspace).toContain("aria-label={toolsVisible ? '隐藏文件' : '显示文件'}")
+    expect(workspace).toContain('aria-label="切换文件树"')
     expect(diffStyles).toContain('.workspace-diff-leading-controls')
     expect(diffStyles).toContain('.workspace-diff-file-controls')
     expect(diffStyles).toContain('.workspace-diff-viewer.is-collapsed .workspace-diff-line')
   })
 })
 
-describe('right workbench JSON tab icon', () => {
-  it('uses the orange braces icon for JSON and JSONL files', () => {
-    expect(app).toContain("if (kind === 'file' && /\\.(?:json|jsonl)$/i.test(title))")
-    expect(app).toContain('<Braces className="right-workbench-json-icon" />')
+describe('right workbench file tab icons', () => {
+  it('shares the recovered file glyphs with the workspace tree', () => {
+    expect(app).toContain("if (kind === 'file') return <WorkspaceFileIcon path={title} />")
+    expect(workspace).toContain('<WorkspaceFileIcon path=')
     expect(app).toContain('<RightWorkbenchTabIcon kind={tab.kind} title={tab.title} />')
-    expect(styles).toMatch(
-      /\.right-workbench-title-tab \.right-workbench-json-icon\s*\{[^}]*color: #d9823b;/s
-    )
   })
 })

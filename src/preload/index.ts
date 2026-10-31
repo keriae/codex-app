@@ -174,6 +174,8 @@ const api: CodexDesktopApi = {
     ipcRenderer.invoke('app:browser-top-site-restore', url) as Promise<BrowserTopSite[]>,
   getGitMetadata: (cwd: string, options?: GitMetadataOptions) =>
     ipcRenderer.invoke('app:git-metadata', cwd, options) as Promise<GitMetadata>,
+  diffWorkspaceText: (before, after, options) =>
+    ipcRenderer.invoke('app:workspace-text-diff', before, after, options) as Promise<string>,
   listGitBranches: (cwd: string) =>
     ipcRenderer.invoke('app:list-git-branches', cwd) as Promise<GitBranches>,
   createManagedWorktree: (options: ManagedWorktreeCreateOptions) =>

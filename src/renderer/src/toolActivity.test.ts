@@ -4,13 +4,18 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { ToolActivity, ToolResultContent } from './ToolActivity'
 import { isConversationActivityItem } from './conversationActivityModel'
-import { formatWebSearchQuery, normalizedToolName, rawToolCallOutput, safeToolResourceUrl, toolActivityLabel, toolActivityStatus, toolDisplayResult, toolErrorText, toolResultBlocks, webSearchDetail } from './toolActivityModel'
+import { formatWebSearchQuery, normalizedToolName, rawToolCallOutput, safeToolResourceUrl, toolActivityLabel, toolActivityStatus, toolDisplayResult, toolErrorText, toolResultAnnotations, toolResultBlocks, webSearchDetail } from './toolActivityModel'
 import type { ToolItem } from './protocol'
 
 const tool = (fields: Partial<ToolItem> = {}): ToolItem => ({ type: 'mcpToolCall', id: 'call', server: 'example', tool: 'read_info', status: 'completed', ...fields })
 const toolStyles = readFileSync(new URL('./toolActivity.css', import.meta.url), 'utf8')
 
 describe('shipped tool invocation labels', () => {
+  it.each(['enteredReviewMode', 'exitedReviewMode', 'sleep'])('does not add a direct tool row for hidden %s events', (type) => {
+    const html = renderToStaticMarkup(createElement(ToolActivity, { item: { ...tool(), type } as ToolItem }))
+    expect(html).toBe('')
+  })
+
   it('uses active/invoked metadata and avoids a success invocation label for failures', () => {
     const fields = { toolDefinition: { title: 'Read account', _meta: { 'openai/toolInvocation/invoking': 'Reading account', 'openai/toolInvocation/invoked': 'Account read' } } }
     expect(toolActivityLabel(tool({ ...fields, status: 'inProgress' }))).toBe('Reading account')
@@ -69,6 +74,34 @@ describe('native web search detail conversion', () => {
 })
 
 describe('MCP result content and raw output', () => {
+  it('retains MCP annotations and does not drop annotated JSON into the structured-only display', () => {
+    const annotations = { audience: ['user', 'assistant'], priority: 0, lastModified: '2026-10-31T09:00:00Z' }
+    expect(toolResultAnnotations(annotations)).toBe('audience=user, assistant; priority=0; lastModified=2026-10-31T09:00:00Z')
+    expect(toolResultAnnotations({ audience: [], priority: Number.NaN, private: 'ignored' })).toBeNull()
+    const result = toolDisplayResult(tool({ result: { content: [{ type: 'text', text: '{"count": 3}', annotations }] } }))
+    expect(result.structuredJson).toBeNull()
+    expect(result.blocks).toEqual([{ type: 'text', text: '{"count": 3}', annotations: 'audience=user, assistant; priority=0; lastModified=2026-10-31T09:00:00Z' }])
+    const html = renderToStaticMarkup(createElement(ToolResultContent, { block: result.blocks[0] }))
+    expect(html).toContain('<header>plaintext</header>')
+    expect(html).toContain('tool-result-text-scroll')
+    expect(html).toContain('注释：audience=user, assistant; priority=0')
+  })
+
+  it('keeps non-media resource blobs inspectable and media annotations in the visible output', () => {
+    const blocks = toolResultBlocks(tool({ result: { content: [
+      { type: 'resource', resource: { uri: 'memory://report', mimeType: 'application/octet-stream', blob: 'YWJj', annotations: { priority: 0.5 } } },
+      { type: 'image', mimeType: 'image/png', data: 'QUJDRA==', annotations: { audience: ['user'] } },
+      { type: 'audio', mimeType: 'audio/wav', data: 'AAAA', annotations: { audience: ['assistant'] } }
+    ] } }))
+    expect(blocks[0]).toMatchObject({ text: 'YWJj', annotations: 'priority=0.5' })
+    const image = renderToStaticMarkup(createElement(ToolResultContent, { block: blocks[1] }))
+    expect(image).toContain('thread-image-thumbnail')
+    expect(image).toContain('注释：audience=user')
+    const audio = renderToStaticMarkup(createElement(ToolResultContent, { block: blocks[2] }))
+    expect(audio).toContain('preload="metadata"')
+    expect(audio).toContain('注释：audience=assistant')
+  })
+
   it('does not duplicate equivalent JSON text and structured output', () => {
     expect(toolDisplayResult(tool({ result: { content: [{ type: 'text', text: '{"count": 3}' }], structuredContent: { count: 3 } } }))).toEqual({ blocks: [], structuredJson: '{\n  "count": 3\n}' })
     const separate = toolDisplayResult(tool({ result: { content: [{ type: 'text', text: 'Found three entries' }], structuredContent: { count: 3 } } }))
@@ -86,6 +119,49 @@ describe('MCP result content and raw output', () => {
     expect(blocks.map((block) => block.type)).toEqual(['image', 'audio', 'resourceLink', 'resource', 'unknown'])
     expect(blocks[0]).toMatchObject({ source: 'data:image/png;base64,AAAA' })
     expect(blocks[1]).toMatchObject({ source: 'data:audio/wav;base64,BBBB' })
+  })
+  it('renders resource links as the source read summary with nullish title/name/URI precedence', () => {
+    const blocks = toolResultBlocks(tool({ result: { content: [
+      { type: 'resource_link', uri: 'https://example.com/report', name: 'Fallback', title: 'Report', description: 'Hidden metadata', annotations: { priority: 0 } },
+      { type: 'resource_link', uri: 'https://example.com/empty', name: 'Fallback', title: '' },
+      { type: 'resource_link', uri: 'memory://report' }
+    ] } }))
+    expect(blocks[0]).toMatchObject({ name: 'Report' })
+    expect(blocks[1]).toMatchObject({ name: '' })
+    expect(blocks[2]).toMatchObject({ name: 'memory://report' })
+    const html = renderToStaticMarkup(createElement(ToolResultContent, { block: blocks[0] }))
+    expect(html).toContain('已读取 Report')
+    expect(html).toContain('注释：priority=0')
+    expect(html).not.toContain('Hidden metadata')
+    expect(html).not.toContain('href=')
+    expect(html).not.toContain('<svg')
+  })
+  it('shows embedded resource metadata and literal blobs without an extra disclosure or media conversion', () => {
+    const blocks = toolResultBlocks(tool({ result: { content: [
+      { type: 'embedded_resource', resource: { uri: 'memory://image', mimeType: 'image/png', blob: 'QUJDRA==', annotations: { audience: ['user'], priority: 0.5 } } }
+    ] } }))
+    expect(blocks[0]).toEqual({ type: 'resource', uri: 'memory://image', mimeType: 'image/png', text: 'QUJDRA==', annotations: 'audience=user; priority=0.5' })
+    const html = renderToStaticMarkup(createElement(ToolResultContent, { block: blocks[0] }))
+    expect(html).toContain('>URI</span>')
+    expect(html).toContain('>MIME 类型</span>')
+    expect(html).toContain('>注释</span>')
+    expect(html).toContain('>内容</span>')
+    expect(html).toContain('QUJDRA==')
+    expect(html).not.toContain('<details')
+    expect(html).not.toContain('<svg')
+    expect(html).not.toContain('data:image')
+    expect(html).not.toContain('thread-image')
+  })
+  it('keeps empty embedded text ahead of blob fallback and omits an empty content section', () => {
+    const blocks = toolResultBlocks(tool({ result: { content: [
+      { type: 'resource', resource: { uri: ' memory://report ', mimeType: '', text: '', blob: 'fallback' } }
+    ] } }))
+    expect(blocks[0]).toEqual({ type: 'resource', uri: ' memory://report ', mimeType: '', text: '', annotations: null })
+    const html = renderToStaticMarkup(createElement(ToolResultContent, { block: blocks[0] }))
+    expect(html).toContain('>MIME 类型</span>')
+    expect(html).not.toContain('>内容</span>')
+    expect(html).not.toContain('fallback')
+    expect(html).not.toContain('<pre')
   })
   it('does not mount image result content until its activity disclosure opens', () => {
     const source = 'data:image/png;base64,QUJDRA=='

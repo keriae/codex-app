@@ -68,12 +68,12 @@ describe('sidebar view preferences', () => {
       {
         id: 'remote:host-a:remote-a', projectId: 'remote-a', name: 'Remote A',
         roots: ['/srv/a'], path: '/srv/a', threads: [remoteA], kind: 'remote',
-        hostId: 'host-a', hostLabel: '10.0.0.1', hostState: 'connected', hostColor: '#12bde8'
+        hostId: 'host-a', hostLabel: '192.0.2.10', hostState: 'connected', hostColor: '#12bde8'
       },
       {
         id: 'remote:host-a:remote-b', projectId: 'remote-b', name: 'Remote B',
         roots: ['/srv/b'], path: '/srv/b', threads: [remoteB], kind: 'remote',
-        hostId: 'host-a', hostLabel: '10.0.0.1', hostState: 'connected', hostColor: '#12bde8'
+        hostId: 'host-a', hostLabel: '192.0.2.10', hostState: 'connected', hostColor: '#12bde8'
       }
     ]
 
@@ -85,7 +85,7 @@ describe('sidebar view preferences', () => {
         memberProjectIds: ['local-project'], threads: [localThread]
       }),
       expect.objectContaining({
-        id: 'connection:host-a', name: '10.0.0.1', groupingKind: 'connection',
+        id: 'connection:host-a', name: '192.0.2.10', groupingKind: 'connection',
         memberProjectIds: [
           'remote:host-a:remote-a', 'remote-a',
           'remote:host-a:remote-b', 'remote-b'

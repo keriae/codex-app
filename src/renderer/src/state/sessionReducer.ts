@@ -212,6 +212,14 @@ function mergeItem(
     merged.summary = mergeStreamArray(previous.summary, next.summary, authoritative)
     merged.content = mergeStreamArray(previous.content, next.content, authoritative)
   } else if (incoming.type === 'commandExecution') {
+    // A replay/snapshot must not reset the timer observed on item/started.
+    const previousStartedAtMs = commandDurationMs(previous.startedAtMs)
+    const incomingStartedAtMs = commandDurationMs(next.startedAtMs)
+    if (previousStartedAtMs !== null || incomingStartedAtMs !== null) {
+      merged.startedAtMs = previousStartedAtMs ?? incomingStartedAtMs
+    }
+    const previousObservedStartedAtMs = commandDurationMs(previous.observedStartedAtMs)
+    if (previousObservedStartedAtMs !== null) merged.observedStartedAtMs = previousObservedStartedAtMs
     merged.aggregatedOutput = mergeStreamText(
       previous.aggregatedOutput,
       next.aggregatedOutput,
@@ -597,9 +605,14 @@ function notificationUpdate(state: SessionState, notification: RpcNotification):
     typeof params.turnId === 'string' &&
     record(params.item)
   ) {
-    const incoming = params.item as unknown as ThreadItem
+    const received = params.item as unknown as ThreadItem
     const turn = ensureTurn(session, params.turnId)
-    const existing = turn.items.find((item) => item.id === incoming.id)
+    const existing = turn.items.find((item) => item.id === received.id)
+    const incoming = received.type === 'commandExecution' && notification.method === 'item/started' &&
+      received.status === 'inProgress' && commandDurationMs(received.startedAtMs) === null &&
+      !(existing?.type === 'commandExecution' && (existing.status !== 'inProgress' || commandDurationMs(existing.startedAtMs) !== null || commandDurationMs(existing.observedStartedAtMs) !== null))
+      ? { ...received, observedStartedAtMs: Date.now() }
+      : received
     const item = existing
       ? mergeItem(existing, incoming, notification.method === 'item/completed' ? 'completed' : 'started')
       : incoming

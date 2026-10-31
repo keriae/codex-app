@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { ShellElementGlyph } from './ShellElementGlyph'
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { nextProjectMenuIndex } from './projectPanelState'
@@ -120,7 +120,7 @@ export function ProjectMenu({
           >
             {item.icon && <span className="projects-menu-icon">{item.icon}</span>}
             <span>{item.label}</span>
-            {item.checked && <Check className="projects-menu-check" aria-hidden="true" />}
+            {item.checked && <ShellElementGlyph name="check" className="projects-menu-check" />}
           </button>
         </div>
       ))}

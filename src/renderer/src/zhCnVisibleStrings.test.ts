@@ -7,6 +7,7 @@ import { ServerRequestDialog } from './ServerRequestDialog'
 
 const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8')
 const diff = readFileSync(new URL('./WorkspaceDiffViewer.tsx', import.meta.url), 'utf8')
+const diffControls = readFileSync(new URL('./WorkspaceDiffControls.tsx', import.meta.url), 'utf8')
 
 describe('zh-CN visible interface copy', () => {
   it('keeps conversation status and recovery actions localized', () => {
@@ -30,15 +31,16 @@ describe('zh-CN visible interface copy', () => {
     ]) expect(app).not.toContain(copy)
   })
 
-  it('localizes the review search, empty state and comment controls', () => {
+  it('localizes the review options, full-file recovery, empty state and comment controls', () => {
     for (const copy of [
-      '输入内容以搜索文件',
-      '没有结果',
+      '正在加载完整文件…',
+      '完整文件与当前差异不匹配，保留部分差异',
       '没有可显示的文本差异',
       '添加评论；按住 Shift 可选择多行',
-      '无法复制路径',
+      '无法重新计算空白差异，保留当前差异',
       '二进制文件已更改'
     ]) expect(diff).toContain(copy)
+    for (const copy of ['加载完整文件', '渲染预览', '词级差异', '隐藏空白字符', '隐藏导入内容', '复制 git apply 命令']) expect(diffControls).toContain(copy)
 
     for (const copy of [
       'Type to search files',

@@ -1,10 +1,18 @@
 import type { WorkspaceDirectoryEntry } from '../../shared/api'
+import { workspaceRelativePath } from './workspaceFileModel'
+import { normalizeAbsoluteWorkspacePath, resolveWorkspacePath } from './workspacePathModel'
 
 export const WORKSPACE_NAVIGATOR_DEFAULT_WIDTH = 250
 export const WORKSPACE_NAVIGATOR_MIN_WIDTH = 200
 export const WORKSPACE_NAVIGATOR_MAX_RATIO = 0.6
 export const WORKSPACE_NAVIGATOR_WIDTH_STORAGE_KEY = 'codex:workspace-directory-tree-width:v1'
 export const WORKSPACE_NAVIGATOR_SECTIONS_STORAGE_KEY = 'codex:workspace-directory-tree-sections:v1'
+
+/** Pierre's 16px icon / 5px gap spacing, with the shipped half-indent overrides. */
+export function workspaceNavigatorRowPadding(depth: number, isDirectory: boolean): number {
+  const levels = Math.max(0, depth)
+  return 3 + levels * 8.75 + (levels > 0 && !isDirectory ? 3.75 : 0)
+}
 
 export interface WorkspaceNavigatorSections {
   changedFilesExpanded: boolean
@@ -180,7 +188,7 @@ export function collectWorkspaceNavigatorSearchPaths(
     if (visited.has(directory)) return false
     visited.add(directory)
     const state = directories[directory]
-    if (!state || (state.status !== undefined && state.status !== 'ready')) return false
+    if (!state || (state.status !== undefined && state.status !== 'ready' && state.status !== 'loading')) return false
 
     let branchMatches = false
     for (const entry of state.entries) {
@@ -231,13 +239,45 @@ export type WorkspaceNavigatorChangedNode<T extends WorkspaceNavigatorChangeLike
   | WorkspaceNavigatorChangedDirectoryNode<T>
   | WorkspaceNavigatorChangedFileNode<T>
 
+/** The keyboard order follows visible rows, rather than the flattened change list. */
+export function collectVisibleWorkspaceChangedItems(
+  nodes: readonly WorkspaceNavigatorChangedNode[],
+  collapsedPaths: ReadonlySet<string>,
+  searching = false
+): Array<{ path: string; parentPath: string | null; isDirectory: boolean; expanded: boolean; level: number }> {
+  const items: Array<{ path: string; parentPath: string | null; isDirectory: boolean; expanded: boolean; level: number }> = []
+  const append = (entries: readonly WorkspaceNavigatorChangedNode[], parentPath: string | null, level: number): void => {
+    for (const entry of entries) {
+      const expanded = entry.kind === 'directory' && (searching || !collapsedPaths.has(entry.path))
+      items.push({ path: entry.path, parentPath, isDirectory: entry.kind === 'directory', expanded, level })
+      if (entry.kind === 'directory' && expanded) append(entry.children, entry.path, level + 1)
+    }
+  }
+  append(nodes, null, 1)
+  return items
+}
+
+/** Reveal a source link only inside this workspace; opening it does not move keyboard focus. */
+export function workspaceNavigatorRevealDirectories(root: string, path: string): string[] {
+  const base = normalizeAbsoluteWorkspacePath(root.replace(/\/+$/, '') || '/')
+  if (!base || !path.startsWith('/')) return []
+  // Keep the navigator's stricter reveal policy for dot/traversal segments.
+  if (path.slice(1).split('/').some((part) => !part || part === '.' || part === '..')) return []
+  const resolved = resolveWorkspacePath(base, path)
+  if (!resolved || resolved === base) return []
+  const relative = base === '/' ? resolved.slice(1) : resolved.slice(base.length + 1)
+  const parts = relative.split('/')
+  if (parts.some((part) => !part || part === '.' || part === '..')) return []
+  const directories = [base]
+  for (const part of parts.slice(0, -1)) directories.push(`${directories.at(-1) === '/' ? '' : directories.at(-1)}/${part}`)
+  return directories
+}
+
 function relativeWorkspacePath(root: string, path: string): string {
   const normalizedRoot = root.replaceAll('\\', '/').replace(/\/+$/, '')
   const normalizedPath = path.replaceAll('\\', '/').replace(/^\.\//, '')
   if (!normalizedRoot || normalizedRoot === '/') return normalizedPath.replace(/^\/+/, '')
-  return normalizedPath.startsWith(`${normalizedRoot}/`)
-    ? normalizedPath.slice(normalizedRoot.length + 1)
-    : normalizedPath.replace(/^\/+/, '')
+  return workspaceRelativePath(normalizedRoot, normalizedPath).replace(/^\/+/, '')
 }
 
 function compareChangedNodes(

@@ -377,6 +377,15 @@
   flex: 0 0 16px;
 }
 
+.projects-menu-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
 .projects-menu-icon svg,
 .projects-menu-check {
   width: 16px;

@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-31T08:53:34.622911+00:00",
+  "date": "2026-10-31",
+  "status": "validated-source-package-and-bounded-native-element-supplement",
+  "draft": false,
+  "completeApplicationParity": false,
+  "completePixelParity": false,
+  "method": {
+    "project": "https://github.com/morluto/rea",
+    "workflow": "https://github.com/morluto/rea/blob/main/docs/javascript-application-workflows.md",
+    "cleanRoom": false,
+    "originalRendererExecuted": false,
+    "originalApplicationUiControlled": false,
+    "computerInteraction": "Native CUA input on editable replica; read-only CDP for replica DOM and backend read APIs"
+  },
+  "installedSource": {
+    "application": "/Applications/ChatGPT.app",
+    "version": "26.1027.30824",
+    "build": "22943",
+    "asarSha256": "36bf3d2b35e95e11852074b9ca9459b89efbecd6b8311345d060cf66de8f0ba6"
+  },
+  "recording": {
+    "path": "reverse/raw/video/codex-app-use-screenshot.mp4",
+    "version": "26.1016.61520",
+    "build": "21421",
+    "framesAddedSeconds": [
+      76,
+      78,
+      156,
+      160,
+      280,
+      310,
+      318,
+      345
+    ],
+    "authority": "Historical UI and interaction reference; not pixel evidence for installed build22943",
+    "additionalActivityReview": "reverse/raw/element-parity-2026-10-31/recording/additional-activity-review.json"
+  },
+  "precedingEvidence": "reverse/ui-detail-evidence-2026-10-31.json",
+  "elementAudits": {
+    "shell": "docs/shell-element-audit-2026-10-31.md",
+    "conversation": "docs/conversation-element-parity-2026-10-31.md",
+    "workbench": "docs/workbench-element-parity-2026-10-31.md",
+    "workbenchGlyphs": "reverse/workbench-element-evidence-2026-10-31.json",
+    "changesControls": "reverse/workbench-changes-controls-evidence-2026-10-31.json",
+    "retainedChooser": "docs/retained-tabs-chooser-parity-2026-10-31.md",
+    "retainedChooserEvidence": "reverse/retained-tabs-chooser-evidence-2026-10-31.json"
+  },
+  "assetAuditCounts": {
+    "shellCanonicalBodyAndCanvasMatches": 26,
+    "conversationEffectiveGlyphs": 24,
+    "conversationGeometryFingerprints": 13,
+    "workbenchMonochromeGlyphs": 43,
+    "workbenchColoredDiffGlyphs": 3,
+    "changesControlGlyphs": 6,
+    "boundary": "Independent registries; counts are not total app element coverage and must not be summed",
+    "changesTailGlyphs": 6
+  },
+  "checkpoints": {
+    "acceptance-initial": {
+      "path": "reverse/raw/element-parity-2026-10-31/acceptance-initial/report.json",
+      "tests": {
+        "files": 199,
+        "passed": 1520,
+        "failed": 0,
+        "success": true
+      },
+      "packagedOutput": {
+        "files": 71,
+        "identical": 71
+      },
+      "asarSha256": "e5568821380805192b16f6a19173d69632f1ac7835fca74ad285a13ed9ba254b",
+      "sourceHashFiles": 483
+    },
+    "acceptance-elements": {
+      "path": "reverse/raw/element-parity-2026-10-31/acceptance-elements/report.json",
+      "tests": {
+        "files": 201,
+        "passed": 1543,
+        "failed": 0,
+        "success": true
+      },
+      "packagedOutput": {
+        "files": 71,
+        "identical": 71
+      },
+      "asarSha256": "c918af4511d5b4f9a7ea9d3b6d259b2c3a8f30fee258e78b7d3c8b7b6e0745a2",
+      "sourceHashFiles": 485
+    },
+    "acceptance-path": {
+      "path": "reverse/raw/element-parity-2026-10-31/acceptance-path/report.json",
+      "tests": {
+        "files": 203,
+        "passed": 1550,
+        "failed": 0,
+        "success": true
+      },
+      "packagedOutput": {
+        "files": 71,
+        "identical": 71
+      },
+      "asarSha256": "3ec09d5f55c8b6781f313e8c750d268b72f1f613fb11e062ab10bdf13dea445f",
+      "sourceHashFiles": 488
+    },
+    "acceptance": {
+      "path": "reverse/raw/element-parity-2026-10-31/acceptance/report.json",
+      "tests": {
+        "files": 204,
+        "passed": 1567,
+        "failed": 0,
+        "success": true
+      },
+      "packagedOutput": {
+        "files": 71,
+        "identical": 71
+      },
+      "asarSha256": "e1eee48361d9a4b95ce14b8ad7f95e57d381549cbe03e25337fce31b0cc93cc3",
+      "sourceHashFiles": 490
+    }
+  },
+  "validatedElementCheckpoint": {
+    "path": "reverse/raw/element-parity-2026-10-31/acceptance",
+    "tests": {
+      "files": 204,
+      "passed": 1567,
+      "failed": 0,
+      "success": true
+    },
+    "packagedOutput": {
+      "files": 71,
+      "identical": 71
+    },
+    "asarSha256": "e1eee48361d9a4b95ce14b8ad7f95e57d381549cbe03e25337fce31b0cc93cc3",
+    "sourceHashFiles": 490,
+    "nodeTypecheck": true,
+    "webTypecheck": true,
+    "codesignDeepStrict": true,
+    "fusesReadBack": true,
+    "nativeEvidence": "reverse/raw/element-parity-2026-10-31/acceptance/runtime-ui.json",
+    "nativeResults": [
+      "User/reply focus tooltip dimensions, no native title and distinct pointer/layer rules",
+      "First all-changes row opens actual diff after48px toolbar spacing fix",
+      "Independent20px authored tree glyph displays18px; hide/restore retains selection",
+      "Changes four-control menu below625px, exact checkmark canvas, keyboard/escape/focus, wrap/cycle/collapse actions",
+      "Auto at825.5px content split, at369.5px unified; wide inline controls restored"
+    ],
+    "boundary": "Follow-up original Ue tail and retained chooser edits require a fresh source/package/native snapshot"
+  },
+  "cleanup": {
+    "status": "complete-with-recoverable-fixture-chat-archive",
+    "fixtureChatArchived": true,
+    "fixtureChatPermanentlyDeleted": false,
+    "fixtureDirectoryRemoved": true,
+    "isolatedProfileRemoved": true,
+    "nativePackageStopped": true,
+    "isolatedListenerStopped": true,
+    "otherChatsMutated": false,
+    "originalAsarMatchesInspectedSource": true,
+    "report": "reverse/raw/element-parity-2026-10-31/acceptance-followup/cleanup-summary.json"
+  },
+  "remaining": [
+    "Complete application and every-state pixel equivalence",
+    "Original fuzzy Jump search scoring, full keyboard/popover/zoom/collision",
+    "Original immutable Git blobs and full branch/commit/staged/unstaged review services, git blame",
+    "Full rich Markdown/file-link/SVG/bitmap/PDF native matrix",
+    "Retained chooser full ready/route/factory and main focus registry behavior",
+    "Rich/HTML clipboard and provider/overlay/tooltip matrices",
+    "Import parser and annotation/search native coverage; external file-watch/snapshot generations",
+    "Special-environment, linked-thread, full error/reconnection/background timing behavior",
+    "Voice/cloud/MCP Apps/connectors/approval and long history/theme/zoom/window/animation matrices"
+  ],
+  "validation": {
+    "testFiles": 210,
+    "testsPassed": 1663,
+    "testsFailed": 0,
+    "success": true,
+    "nodeTypecheck": true,
+    "webTypecheck": true,
+    "productionPackage": true,
+    "codesignDeepStrict": true,
+    "fusesReadBack": true,
+    "packagedOutput": {
+      "files": 71,
+      "identical": 71
+    },
+    "bundle": "release/mac-arm64/Codex.app",
+    "asarSha256": "e4336537131a12768489606ca4b44de857deda15c5ba115f1a66005768d44a77",
+    "sourceHashFiles": 503,
+    "sourceHashesUnchanged": true,
+    "finalSnapshotCheck": "reverse/raw/element-parity-2026-10-31/acceptance-followup/final-snapshot-check.json",
+    "testsReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/tests.json",
+    "packageReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/report.json",
+    "runtimeReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json",
+    "snapshotAttribution": "Final503 source files,210/1663 tests and71/71 output, plus fresh final-package native full/word/Git whitespace/import/refresh/menu/picker/chooser checks. Earlier checkpoints remain independently attributed."
+  },
+  "nativeAcceptance": {
+    "firstChangeEntry": {
+      "passed": true,
+      "scope": "Native all-changes first row opens actual45-line source/diff",
+      "evidence": []
+    },
+    "fullFile": {
+      "passed": true,
+      "scope": null,
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/full-before.json",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/full-disabled.json"
+      ]
+    },
+    "wordDiffs": {
+      "passed": true,
+      "scope": null,
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/full-before.json",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/word-disabled.json",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/final-diff.json"
+      ]
+    },
+    "gitWhitespace": {
+      "passed": true,
+      "scope": null,
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/whitespace-hidden.json"
+      ]
+    },
+    "imports": {
+      "passed": true,
+      "scope": "Entire import-only hunk, verified full snapshot, TS parser, no annotations",
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/imports-hidden.json"
+      ]
+    },
+    "refresh": {
+      "passed": true,
+      "scope": "Full-display false; fresh snapshot and Git regeneration preserve whitespace/import filtering",
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/refreshed-filtered.json"
+      ]
+    },
+    "changesMenu": {
+      "passed": true,
+      "scope": null,
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/changes-menu.json",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/changes-menu.png",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/narrow-combined.json"
+      ]
+    },
+    "autoLayout": {
+      "passed": true,
+      "scope": null,
+      "evidence": []
+    },
+    "jumpPicker": {
+      "passed": true,
+      "scope": "360px original-glyph picker, actual fixture item, substring query and Enter select/close/focus; complete original fuzzy scoring is not implemented",
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/jump-picker.json"
+      ]
+    },
+    "retainedChooser": {
+      "passed": true,
+      "scope": "Mouse-triggered open; trigger Down, first-row focus, Tab secondary, Escape restore, keyboard full selection and pointer split selection. Main layout selection focus observed BODY; original registry/factory/ready/route behavior not fully proved.",
+      "evidence": [
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/retained-hover.json",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/retained-hover.png",
+        "reverse/raw/element-parity-2026-10-31/acceptance-followup/retained-full.json"
+      ]
+    }
+  },
+  "officialServer": {
+    "implementation": "Official installed Codex CLI0.164.0; server not reconstructed",
+    "testListener": "ws://127.0.0.1:4599",
+    "nativeFixtureTurns": 3,
+    "latestCompletedTurn": "<fixture-id-5>",
+    "latestTurnPatch": "three independent +1/-1 import/whitespace/word hunks",
+    "turnReport": "reverse/raw/element-parity-2026-10-31/acceptance-followup/turn.json",
+    "lastTurnPreparationAttribution": "Three-turn fixture. Third turn prepared through the preceding204/1567 package; completed official patch reused for final210/1663 package native consumer checks.",
+    "listenerStopped": true,
+    "originalServerProcessesStoppedByThisTask": false,
+    "currentOfficialServerPresent": true,
+    "initialOriginalPidStillPresent": false,
+    "lifecycleNote": "Initial [redacted process ID] is no longer present; current official server PIDs are recorded without restarting or stopping them. Only this task’s isolated [redacted process ID] was terminated."
+  },
+  "rawEvidenceDigests": {
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/report.json": "ae35a90d999ea7395853b6206de48c51ddd8c524601665b3341639e6ced6f18f",
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/runtime-ui.json": "856daa04f15475b25cf6af845cf2acb077570cf8dff1d5da000882c812deb0bf",
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/cleanup-summary.json": "e9ce915ce1755709a0f2cbbf5b83f5d55040371ececa846e938534d26e87592a",
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/final-snapshot-check.json": "8b650152f126d438bff91b501db70e28f313f7ea0b49727b68291c4d5d65807e",
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/changes-menu.png": "73e189fb2b317f3b20071b12f78efed0c8c4164b9fc3eb26663b6c89fe3364be",
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/retained-hover.png": "cb0e3d8d20a2f781fdda141f7816e3255a24ce4608c2afb1414c66e753ca273a",
+    "reverse/raw/element-parity-2026-10-31/acceptance-followup/final-native.png": "86d31da6e0d4b1b77a1bfa03d7a50786fdaefd4e9467a35bc95ff9276fda713b"
+  }
+}

@@ -1,9 +1,10 @@
 .markdown-code-block {
   overflow: hidden;
   margin: 14px 0;
-  border: 1px solid rgb(252 252 252 / 7%);
-  border-radius: 17px;
-  background: #222;
+  border: 1px solid rgb(255 255 255 / 4%);
+  border-radius: 20px;
+  background: #181818;
+  background-image: linear-gradient(rgb(255 255 255 / 8%), rgb(255 255 255 / 8%));
 }
 
 .markdown-code-block figcaption {
@@ -13,11 +14,11 @@
   justify-content: space-between;
   padding: 0 6px 0 20px;
   background: transparent;
-  color: #f1f1f1;
+  color: #dfdfdf;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   font-size: 13px;
-  font-weight: 570;
-  line-height: 1;
+  font-weight: 500;
+  line-height: 1.5;
   text-transform: none;
 }
 
@@ -28,36 +29,40 @@
 }
 
 .markdown-code-language {
-  gap: 10px;
+  gap: 8px;
 }
 
 .markdown-code-actions {
-  gap: 4px;
+  gap: 1px;
 }
 
 .markdown-code-block figcaption button {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   display: grid;
   place-items: center;
   padding: 0;
-  border-radius: 9px;
+  border-radius: 50%;
   background: transparent;
-  color: #f1f1f1;
+  color: #dfdfdf;
+  cursor: pointer;
 }
 
-.markdown-code-block figcaption button:hover,
-.markdown-code-block figcaption button:focus-visible,
-.markdown-code-block figcaption button.is-active {
-  background: rgb(252 252 252 / 6%);
-  color: #fff;
+.markdown-code-block figcaption button:hover {
+  background: rgb(255 255 255 / 8%);
+}
+
+.markdown-code-block figcaption button:focus-visible {
+  outline: 2px solid rgb(100 164 224 / 76%);
+  outline-offset: 0;
 }
 
 .markdown-code-block figcaption svg {
   width: 16px;
   height: 16px;
-  stroke-width: 1.8;
 }
+
+.markdown-code-language > svg { width: 20px; height: 20px; }
 
 .markdown-code-block > pre,
 .markdown-body .markdown-code-block > pre {
@@ -143,23 +148,21 @@
 }
 
 :root[data-theme='light'] .markdown-code-block {
-  border-color: rgb(0 0 0 / 8%);
-  background: #f9f9f9;
+  border-color: rgb(26 28 31 / 5%);
+  background: #fff;
+  background-image: linear-gradient(rgb(26 28 31 / 5%), rgb(26 28 31 / 5%));
 }
 
 :root[data-theme='light'] .markdown-code-block figcaption {
-  color: #242424;
+  color: #1a1c1f;
 }
 
 :root[data-theme='light'] .markdown-code-block figcaption button {
-  color: #3c3c39;
+  color: #1a1c1f;
 }
 
-:root[data-theme='light'] .markdown-code-block figcaption button:hover,
-:root[data-theme='light'] .markdown-code-block figcaption button:focus-visible,
-:root[data-theme='light'] .markdown-code-block figcaption button.is-active {
-  background: rgb(13 13 13 / 6%);
-  color: #0d0d0d;
+:root[data-theme='light'] .markdown-code-block figcaption button:hover {
+  background: rgb(26 28 31 / 5%);
 }
 
 :root[data-theme='light'] .markdown-code-block code.hljs {

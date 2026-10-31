@@ -1,4 +1,5 @@
 import { workspacePathName } from './workspaceFileModel'
+import { normalizeAbsoluteWorkspacePath, resolveWorkspacePath } from './workspacePathModel'
 
 export interface WorkspaceBreadcrumbSegment {
   label: string
@@ -11,9 +12,10 @@ export interface WorkspaceBreadcrumbSegment {
 // The installed fileSource breadcrumb uses the containing directory as the
 // menu root, with the clicked ancestor selected and expanded (pEa / Qt / $t).
 export function workspaceBreadcrumbSegments(root: string | null | undefined, path: string | null): WorkspaceBreadcrumbSegment[] {
-  const normalizedRoot = root?.replace(/\/+$/, '') || (root ? '/' : null)
+  const normalizedRoot = root ? normalizeAbsoluteWorkspacePath(root) : null
   if (!path) return normalizedRoot ? [{ label: workspacePathName(normalizedRoot), path: normalizedRoot, directoryPath: normalizedRoot, activePath: null, expandActivePath: false }] : []
-  const absolutePath = path.startsWith('/') ? path : normalizedRoot ? `${normalizedRoot === '/' ? '' : normalizedRoot}/${path}` : path
+  const absolutePath = normalizedRoot ? resolveWorkspacePath(normalizedRoot, path)
+    || (path.startsWith('/') ? path : `${normalizedRoot === '/' ? '' : normalizedRoot}/${path}`) : path
   const prefix = normalizedRoot === '/' ? '/' : `${normalizedRoot}/`
   if (!normalizedRoot || (absolutePath !== normalizedRoot && !absolutePath.startsWith(prefix))) {
     return absolutePath.split('/').filter(Boolean).map((label, index, parts) => ({

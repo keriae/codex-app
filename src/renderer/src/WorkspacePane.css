@@ -21,9 +21,10 @@
 .workspace-document-tab > .workspace-document-close { display:grid; place-items:center; width:22px; height:22px; padding:0; border-radius:4px; }
 .workspace-document-close:hover { background:var(--surface-hover); }
 .workspace-unsaved-dot { width:7px; height:7px; border-radius:50%; background:var(--text-secondary); }
-.workspace-tab-context-menu { position:fixed; z-index:1000; width:200px; padding:5px; border:1px solid var(--border); border-radius:9px; background:var(--main); box-shadow:0 8px 30px #0005; }
+.workspace-tab-context-menu { position:fixed; z-index:1000; zoom:var(--codex-window-zoom,1); width:200px; padding:5px; border:1px solid var(--border); border-radius:9px; background:var(--main); box-shadow:0 8px 30px #0005; -webkit-app-region:no-drag; }
 .workspace-tab-context-menu > button { display:block; width:100%; border:0; border-radius:5px; padding:7px 9px; text-align:left; font-size:12px; color:var(--text); background:transparent; }
-.workspace-tab-context-menu > button:hover { background:var(--surface-hover); }
+.workspace-tab-context-menu > button:hover,
+.workspace-tab-context-menu > button:focus-visible { background:var(--surface-hover); outline:none; }
 
 .workspace-titlebar-chrome { display:flex; align-items:center; height:var(--titlebar-height); gap:5px; min-width:0; padding:0 7px 0 0; border-left:.5px solid var(--border); }
 .workspace-titlebar-chrome button { -webkit-app-region:no-drag; }
@@ -132,6 +133,7 @@
 .workspace-pane-unified .workspace-pane-body { position:relative; }
 .workspace-pane-unified .workspace-code-toolbar { position:absolute; top:0; left:0; right:0; z-index:2; background:var(--main); border-bottom:0; }
 .workspace-pane-unified .workspace-code-content,
+.workspace-pane-unified .workspace-tool-view-content,
 .workspace-pane-unified .workspace-diff-scroll { margin-top:48px; }
 .workspace-pane-unified .workspace-editor-stack { padding-top:48px; }
 .workspace-pane-unified .workspace-navigator { padding-top:48px; }
@@ -149,10 +151,12 @@
 .workspace-file-actions.is-diff > .workspace-change-switcher > svg:last-child { width:14px; height:14px; color:var(--text-muted); }
 .workspace-diff-native-controls { width:224px; height:32px; display:flex; flex:0 0 224px; align-items:center; gap:2px; padding:2px; border-radius:999px; background:color-mix(in srgb,var(--text) 4%,transparent); }
 .workspace-diff-native-controls > .workspace-diff-controls { height:28px; }
-.workspace-diff-native-controls > .workspace-diff-file-controls > button { margin-left:4px; }
+.workspace-diff-native-controls > .workspace-diff-file-controls > button { margin-left:0; }
+.workspace-diff-native-controls:has(.workspace-diff-file-controls[hidden]) { width:auto; flex-basis:auto; }
 .workspace-diff-native-controls > button { width:28px; min-width:28px; height:28px; padding:0; border-radius:999px; }
 .workspace-diff-native-controls > button.is-active { background:color-mix(in srgb,#3984d7 14%,transparent); color:#5d9bdd; }
 .workspace-diff-native-controls > button > svg { width:16px; height:16px; }
+.workspace-pane .workspace-file-tree-toggle > svg { width:18px; height:18px; }
 .workspace-change-source-menu { position:absolute; z-index:60; top:36px; left:0; width:200px; padding:5px; border:1px solid var(--border-strong); border-radius:11px; background:var(--main-raised); box-shadow:0 12px 32px var(--shadow-color); }
 .workspace-change-source-menu > button { width:100%; min-height:31px; display:flex; align-items:center; gap:8px; padding:0 9px; border:0; border-radius:7px; background:transparent; color:var(--text); font-size:13px; text-align:left; }
 .workspace-change-source-menu > button:hover,
@@ -927,33 +931,20 @@
 .workspace-open-target-icon {
   width: 16px;
   height: 16px;
-  display: inline-grid;
+  display: inline-flex;
   flex: 0 0 16px;
-  place-items: center;
-  overflow: hidden;
-  border-radius: 4px;
-  color: #fff;
-  font: 700 9px/1 -apple-system, BlinkMacSystemFont, sans-serif;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
 }
 
+.workspace-open-target-icon > img,
 .workspace-open-target-icon > svg {
-  width: 12px !important;
-  height: 12px !important;
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  object-fit: contain;
 }
-
-.workspace-open-target-icon.is-terminal {
-  background: #161616;
-  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 18%);
-}
-
-.workspace-open-target-icon.is-finder {
-  background: linear-gradient(90deg, #82c7f2 0 50%, #3a91d7 50%);
-}
-
-.workspace-open-target-icon.is-vscode { background:#2489ca; font-size:13px; }
-.workspace-open-target-icon.is-cursor { background:#111; }
-.workspace-open-target-icon.is-zed { background:#ee7651; }
-.workspace-open-target-icon.is-windsurf { background:#35b7a7; }
 
 .workspace-open-target-menu {
   position: absolute;
@@ -1421,7 +1412,7 @@
 
 .workspace-changed-files {
   min-width: 0;
-  padding: 0 6px 2px;
+  padding: 0 0 2px;
 }
 
 .workspace-change-nav-row {
@@ -1429,8 +1420,8 @@
   height: 28px;
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 7px;
+  gap: 5px;
+  padding: 0 3px;
   border: 0;
   border-radius: 6px;
   background: transparent;
@@ -1446,7 +1437,7 @@
 }
 
 .workspace-change-nav-row.is-selected {
-  background: color-mix(in srgb, var(--text) 7%, transparent);
+  background: var(--surface-active);
 }
 
 .workspace-change-nav-row > svg {
@@ -1624,7 +1615,7 @@
 
 .workspace-file-tree {
   min-width: 0;
-  padding: 0 6px 8px;
+  padding: 0 0 8px;
 }
 
 .workspace-file-tree.is-rootless {
@@ -1635,17 +1626,19 @@
   height: 28px;
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 8px;
-  color: #c2c4c2;
-  font-size: 11px;
+  gap: 5px;
+  padding: 0 3px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
 }
 
 .workspace-tree-root svg {
-  width: 14px;
-  height: 14px;
-  color: #7c9fbd;
-  fill: rgb(124 159 189 / 11%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  fill: none;
 }
 
 .workspace-tree-root strong {
@@ -1660,9 +1653,9 @@
   height: 28px;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
   padding-top: 0;
-  padding-right: 7px;
+  padding-right: 3px;
   padding-bottom: 0;
   border-radius: 6px;
   background: transparent;
@@ -1676,14 +1669,14 @@
 }
 
 .workspace-tree-row.is-selected {
-  background: color-mix(in srgb, var(--text) 7%, transparent);
+  background: var(--surface-active);
   color: var(--text);
 }
 
 .workspace-tree-row > svg {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
   color: var(--text-muted);
   stroke-width: 1.6;
 }
@@ -1703,17 +1696,31 @@
 }
 
 .workspace-tree-disclosure {
-  width: 12px;
+  width: 16px;
   height: 16px;
   display: grid;
-  flex: 0 0 12px;
+  flex: 0 0 16px;
   place-items: center;
-  color: #6d6f6d;
+  color: var(--text-muted);
 }
 
 .workspace-tree-disclosure svg {
   width: 12px;
   height: 12px;
+}
+
+.workspace-pane .workspace-file-tree [role='treeitem']:focus-visible,
+.workspace-pane .workspace-changed-files [role='treeitem']:focus-visible {
+  outline: 1px solid color-mix(in oklab, #339cff 70%, transparent);
+  outline-offset: -1px;
+}
+
+.workspace-file-tree .workspace-tree-row > .workspace-file-kind-badge,
+.workspace-changed-files .workspace-change-nav-row > .workspace-file-kind-badge,
+.workspace-changed-files .workspace-change-nav-row > svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
 }
 
 .workspace-tree-state {
@@ -2247,12 +2254,12 @@
 }
 
 :root[data-theme='light'] .workspace-tree-row.is-selected {
-  background: rgb(52 111 159 / 14%);
+  background: var(--surface-active);
   color: var(--text);
 }
 
 :root[data-theme='light'] .workspace-change-nav-row.is-selected {
-  background: rgb(52 111 159 / 14%);
+  background: var(--surface-active);
   color: var(--text);
 }
 
@@ -2382,5 +2389,5 @@
 .workspace-file-context-menu button:focus-visible { background: var(--surface-active); outline: none; }
 .workspace-file-context-menu button:disabled { opacity: .5; }
 .workspace-file-context-menu button svg { width: 14px; height: 14px; flex-shrink: 0; }
-.workspace-file-context-menu button > svg:last-child:not(:first-child) { margin-left: auto; }
+.workspace-file-context-menu button > svg:last-child { margin-left: auto; width: 12px; height: 12px; }
 .workspace-file-context-menu [role=separator] { height: 1px; margin: 4px 0; background: var(--border); }

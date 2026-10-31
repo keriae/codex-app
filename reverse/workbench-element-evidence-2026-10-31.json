@@ -1,0 +1,690 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "installedSource": {
+    "version": "26.1027.30824",
+    "build": "22943"
+  },
+  "method": "Direct read-only inspection of installed ASAR JavaScript/CSS/static artwork; original modules were never executed.",
+  "source": {
+    "path": "webview/assets/app-shared-7815d5a1a42a.js",
+    "sha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4"
+  },
+  "glyphs": [
+    {
+      "name": "ellipsis-horizontal-light-16",
+      "symbol": "tz",
+      "assignmentUtf8Offset": 1204848,
+      "bodyUtf8Offset": 1205422,
+      "bodySha256": "c45d5b286bc069ce94411ecd8f3d5c6db75f08b2505539793d2ee48079c4abda",
+      "bodyBytes": 719
+    },
+    {
+      "name": "square-on-square-light-16",
+      "symbol": "dz",
+      "assignmentUtf8Offset": 1213579,
+      "bodyUtf8Offset": 1214152,
+      "bodySha256": "65a422ee54e4fa310af52b67796f5ee61d313c36e94d84a74082fdcf3e0ceb8b",
+      "bodyBytes": 901
+    },
+    {
+      "name": "xmark-lg-light-16",
+      "symbol": "pz",
+      "assignmentUtf8Offset": 1215106,
+      "bodyUtf8Offset": 1215687,
+      "bodySha256": "bfa64a28ee22812c231ad67455f3e81756cb8c6a227654f14b63f6d55ba5d01c",
+      "bodyBytes": 557
+    },
+    {
+      "name": "plus-sm-light-16",
+      "symbol": "YBe",
+      "assignmentUtf8Offset": 1216300,
+      "bodyUtf8Offset": 1216881,
+      "bodySha256": "8f281e60a24f4e9ab15c1282484b72a95dfae9b3698a66816fc30897c17d1233",
+      "bodyBytes": 470
+    },
+    {
+      "name": "arrow-up-right-md-light-16",
+      "symbol": "_Ht",
+      "assignmentUtf8Offset": 2444847,
+      "bodyUtf8Offset": 2445438,
+      "bodySha256": "75d3d69c2128462a8274761660ce5955db4845cb6190d8401ec9d4271f7c708e",
+      "bodyBytes": 477
+    },
+    {
+      "name": "chevron-down-md-light-12",
+      "symbol": "DWt",
+      "assignmentUtf8Offset": 2552668,
+      "bodyUtf8Offset": 2553256,
+      "bodySha256": "5c545fb0b49df46a9a5c69efa0f7a13fc0bd8d4ec8108b25f6786418a2df2e22",
+      "bodyBytes": 353
+    },
+    {
+      "name": "chevron-down-md-light-16",
+      "symbol": "kWt",
+      "assignmentUtf8Offset": 2553665,
+      "bodyUtf8Offset": 2554251,
+      "bodySha256": "140df8bc6093e49834e061cba3fa45caed7d31b51f53315562409c143453ce37",
+      "bodyBytes": 350
+    },
+    {
+      "name": "chevron-right-md-light-16",
+      "symbol": "m1",
+      "assignmentUtf8Offset": 2560577,
+      "bodyUtf8Offset": 2561145,
+      "bodySha256": "0003e09a6b2310f7b5a84b334cf9640299f7fc5ddc93681e4e7bec2070488e7f",
+      "bodyBytes": 352
+    },
+    {
+      "name": "document-light-16",
+      "symbol": "C1",
+      "assignmentUtf8Offset": 2609652,
+      "bodyUtf8Offset": 2610216,
+      "bodySha256": "cc1deb7c67b18f18f1db018753460b9e4a7ebc899a3534f9dfc5e0e8cb6fafe4",
+      "bodyBytes": 773
+    },
+    {
+      "name": "folder-light-16",
+      "symbol": "XKt",
+      "assignmentUtf8Offset": 2683460,
+      "bodyUtf8Offset": 2684046,
+      "bodySha256": "276f9eb1078424310ce03a3edb03e6e93709acc966e1c5f8037c9c11898d744b",
+      "bodyBytes": 831
+    },
+    {
+      "name": "folder-on-folder-light-16",
+      "symbol": "nqt",
+      "assignmentUtf8Offset": 2687888,
+      "bodyUtf8Offset": 2688458,
+      "bodySha256": "4aef448bf8b95f1b3bdcaa62addc5631279d195d899219d0528b0a769ad75021",
+      "bodyBytes": 1369
+    },
+    {
+      "name": "folder-open-light-16",
+      "symbol": "iqt",
+      "assignmentUtf8Offset": 2689883,
+      "bodyUtf8Offset": 2690466,
+      "bodySha256": "fed2dd66ef971a7c60069b844660d599daae24f73110bf15a99e208d0ba32585",
+      "bodyBytes": 1364
+    },
+    {
+      "name": "globe-light-16",
+      "symbol": "D1",
+      "assignmentUtf8Offset": 2713766,
+      "bodyUtf8Offset": 2714302,
+      "bodySha256": "4e3ca189693aa600e32c18d633badca56984fff67c13d53c3426012a8400bc84",
+      "bodyBytes": 1525
+    },
+    {
+      "name": "list-bullet-light-16",
+      "symbol": "BJt",
+      "assignmentUtf8Offset": 2796453,
+      "bodyUtf8Offset": 2797041,
+      "bodySha256": "ae05f86b1b8cfa488be0e99785f415d3c37c1dc2d6b7f3cddcd91ebd8a5d4c38",
+      "bodyBytes": 1483
+    },
+    {
+      "name": "list-bullet-light-20",
+      "symbol": "HJt",
+      "assignmentUtf8Offset": 2798580,
+      "bodyUtf8Offset": 2799154,
+      "bodySha256": "235545957c35e05de69ed0a51b347a6deadafdbc22589d00afe83525e3c34c15",
+      "bodyBytes": 1428
+    },
+    {
+      "name": "magnifying-glass-lg-light-16",
+      "symbol": "cYt",
+      "assignmentUtf8Offset": 2821225,
+      "bodyUtf8Offset": 2821822,
+      "bodySha256": "140e7d30faa2c27c7e2c72d32f3c65fb6101ca04722a1e067ed058f949ee6a74",
+      "bodyBytes": 654
+    },
+    {
+      "name": "sidebar-hidden-light-16",
+      "symbol": "w$t",
+      "assignmentUtf8Offset": 3096365,
+      "bodyUtf8Offset": 3096937,
+      "bodySha256": "af767b3bc30c82cd8f89e04032343e312051e80481d44d67e6b230d49827774d",
+      "bodyBytes": 764
+    },
+    {
+      "name": "sidebar-light-16",
+      "symbol": "O$t",
+      "assignmentUtf8Offset": 3099147,
+      "bodyUtf8Offset": 3099712,
+      "bodySha256": "03761d943e320c61de07a0f81f0a49e9f5e1d1e0ceaca1e533ba66249630db9d",
+      "bodyBytes": 559
+    },
+    {
+      "name": "terminal-light-16",
+      "symbol": "v0t",
+      "assignmentUtf8Offset": 3208202,
+      "bodyUtf8Offset": 3208769,
+      "bodySha256": "815d072f5f683233f9b397a9ef612c7b84987ee01a3243020f3fa655462af71f",
+      "bodyBytes": 1887
+    },
+    {
+      "name": "xmark-md-light-16",
+      "symbol": "r0",
+      "assignmentUtf8Offset": 3297856,
+      "bodyUtf8Offset": 3298434,
+      "bodySha256": "f3a01ed25cda1a2e65b143bf44bebceaaa262303f61d51e8f7dcd37b622ac3f9",
+      "bodyBytes": 554
+    },
+    {
+      "name": "chevron-right-lg-light-16",
+      "symbol": "nFn",
+      "assignmentUtf8Offset": 4576996,
+      "bodyUtf8Offset": 4577568,
+      "bodySha256": "3d39597b7c71ed524d0415a6560a47adac52843118d85d8294a425fb2f942051",
+      "bodyBytes": 352
+    },
+    {
+      "name": "magnifying-glass-md-light-16",
+      "symbol": "I7",
+      "assignmentUtf8Offset": 4698367,
+      "bodyUtf8Offset": 4698961,
+      "bodySha256": "7740a8f057b3003df172e4ac6bc912fd6e16690032e836b68bf26be65fdca64c",
+      "bodyBytes": 649
+    },
+    {
+      "name": "document-badge-magnifyingglass-light-16",
+      "symbol": "EUn",
+      "assignmentUtf8Offset": 4749952,
+      "bodyUtf8Offset": 4750558,
+      "bodySha256": "34a2fb85420657c643a00b081177afcc6b8aa83d4d653ec61f7c31643e37e48f",
+      "bodyBytes": 1552
+    },
+    {
+      "name": "arrow-down-line-horizontal-light-16",
+      "symbol": "h$n",
+      "assignmentUtf8Offset": 5043390,
+      "bodyUtf8Offset": 5043995,
+      "bodySha256": "97be53c7791352b8171587b3d8d4e0ede840b50567a63486d863ff23a4cd6b53",
+      "bodyBytes": 715
+    },
+    {
+      "name": "plus-square-light-16",
+      "symbol": "C$n",
+      "assignmentUtf8Offset": 5052554,
+      "bodyUtf8Offset": 5053144,
+      "bodySha256": "3c7381bbb9c4246ef115c18de0441a2216c1703e78d3df024a8cbfdcceb7fa9d",
+      "bodyBytes": 1041
+    },
+    {
+      "name": "dock-light-16",
+      "symbol": "D8n",
+      "assignmentUtf8Offset": 5423148,
+      "bodyUtf8Offset": 5423688,
+      "bodySha256": "e1d44714ebccb5a8012e7f5cd179d061b789578f468c280b41d46ad0ee7bd871",
+      "bodyBytes": 803
+    },
+    {
+      "name": "web-browser-light-16",
+      "symbol": "Ver",
+      "assignmentUtf8Offset": 5651620,
+      "bodyUtf8Offset": 5652190,
+      "bodySha256": "c92c9bf83f63c4f74f3ae64a895dd04a4475ab26584150b3cc386d0474099958",
+      "bodyBytes": 1789
+    },
+    {
+      "name": "plus-lg-light-16",
+      "symbol": "cQt",
+      "assignmentUtf8Offset": 3026177,
+      "bodyUtf8Offset": 3026762,
+      "bodySha256": "86628129c74b13afccca622a56adebaa5f905c8c06b258c4526d7bc20fc62982",
+      "bodyBytes": 485
+    },
+    {
+      "name": "chevron-up-right-chevron-down-left-sm-light-16",
+      "symbol": "RRn",
+      "assignmentUtf8Offset": 4649483,
+      "bodyUtf8Offset": 4650052,
+      "bodySha256": "71ccddb98abca13c8e462b2433fa9869861041a7445d4e32d93bff7224f156dc",
+      "bodyBytes": 636
+    },
+    {
+      "name": "aspect-ratio-1-1-light-16",
+      "symbol": "lZn",
+      "assignmentUtf8Offset": 4965648,
+      "bodyUtf8Offset": 4966242,
+      "bodySha256": "696e0031433327a3fc3406548651e7536ccfe8b6f4c8e9cb7dc7297e84d0ac2a",
+      "bodyBytes": 509
+    },
+    {
+      "name": "square-minus-light-16",
+      "symbol": "dZn",
+      "assignmentUtf8Offset": 4966807,
+      "bodyUtf8Offset": 4967378,
+      "bodySha256": "fb6f266f24ed0352b2f4bc23643db2f0442c4d2d5ff4b0873e27c81975c70c22",
+      "bodyBytes": 798
+    },
+    {
+      "name": "square-plus-light-16",
+      "symbol": "pZn",
+      "assignmentUtf8Offset": 4968232,
+      "bodyUtf8Offset": 4968822,
+      "bodySha256": "d8323b0edf69b049b9f885ac7ab4dca2ba4505e035ef1612cc59fdf9b06c6f22",
+      "bodyBytes": 1041
+    },
+    {
+      "name": "table-column-light-16",
+      "symbol": "C8n",
+      "assignmentUtf8Offset": 5420614,
+      "bodyUtf8Offset": 5421184,
+      "bodySha256": "2a4ee1542db3a292dc9a0b15e6c2a24661b64e393f24b2c99df6affd2d409be1",
+      "bodyBytes": 602
+    },
+    {
+      "name": "chevron-up-right-chevron-down-left-lg-light-16",
+      "symbol": "T8n",
+      "assignmentUtf8Offset": 5421842,
+      "bodyUtf8Offset": 5422455,
+      "bodySha256": "0af8e0b566cc6af76f2d6a14ef9d7a72c764642020cd223b2c2118295091f6c2",
+      "bodyBytes": 637
+    },
+    {
+      "name": "tab-close-original-21",
+      "symbol": "rSn",
+      "assignmentUtf8Offset": 4295343,
+      "bodyUtf8Offset": 4295492,
+      "bodySha256": "3ec483b33926dda4a4e5d7e83aefa747d16794220b09e509bee1d17ac70a14dc",
+      "bodyBytes": 612,
+      "method": "Static JSX path to equivalent inert SVG path"
+    },
+    {
+      "name": "desktop-light-16",
+      "symbol": "OGt",
+      "assignmentUtf8Offset": 2601242,
+      "bodyUtf8Offset": 2601807,
+      "bodySha256": "87599d1dc173c202b0c48c57376a930fb2cae5f659c48fcd021bcf2ca7397769",
+      "bodyBytes": 926
+    },
+    {
+      "name": "plus-chat-bubble-right-light-16",
+      "symbol": "oQt",
+      "assignmentUtf8Offset": 3024306,
+      "bodyUtf8Offset": 3024886,
+      "bodySha256": "eddc69c24c7886335491987a6d2224ee01c15926af1d8dda9a0397365fc49ab0",
+      "bodyBytes": 1235
+    },
+    {
+      "name": "plus-minus-square-light-16",
+      "symbol": "SQt",
+      "assignmentUtf8Offset": 3033542,
+      "bodyUtf8Offset": 3034137,
+      "bodySha256": "8b8fccca06e5cb4ac1f09bd770a044dbe38824f85f3bbd79d7693bdbb867aea9",
+      "bodyBytes": 1286
+    },
+    {
+      "name": "breadcrumb-chevron-original-20",
+      "symbol": "T3",
+      "assignmentUtf8Offset": 4215773,
+      "bodyUtf8Offset": 4215921,
+      "bodySha256": "1cfe7a8fbbc02e0a99797e96d1a3a884b556fe0eca443fb03741aafa7117b978",
+      "bodyBytes": 370,
+      "method": "Static JSX path to equivalent inert SVG path; compact breadcrumb source"
+    },
+    {
+      "name": "chevron-down-left-chevron-up-right-sm-light-16",
+      "symbol": "PRn",
+      "assignmentUtf8Offset": 4646954,
+      "bodyUtf8Offset": 4647523,
+      "bodySha256": "e6aca338db06136ba61efe4c37035ed6fcafc399b8f4cadcdd6886ead3db9ffa",
+      "bodyBytes": 626
+    },
+    {
+      "name": "chevron-down-left-chevron-up-right-sm-light-20",
+      "symbol": "IRn",
+      "assignmentUtf8Offset": 4648205,
+      "bodyUtf8Offset": 4648788,
+      "bodySha256": "8fe441469309f736004086d079e42caa3e96b6789c763cfba6bcc4bc28cb52b4",
+      "bodyBytes": 639
+    },
+    {
+      "name": "chevron-up-right-chevron-down-left-sm-light-20",
+      "symbol": "BRn",
+      "assignmentUtf8Offset": 4650744,
+      "bodyUtf8Offset": 4651318,
+      "bodySha256": "a18641931d959a348cdd3bb91e937654f060721cbae98574f28df0df937507a1",
+      "bodyBytes": 632
+    },
+    {
+      "name": "file-tree-toggle-original-20",
+      "symbol": "Nr",
+      "sourcePath": "webview/assets/review-file-source-item-e733e98d3980.js",
+      "sourceSha256": "ecc45f8000921a2caa3b3d01676922d6b6347211de30f8dc610ae155ae68b21f",
+      "assignmentUtf8Offset": 3218,
+      "bodySha256": "f99bf70a033affbb5716712c02ec821b2581a257bf3415615e9a104006a2065a",
+      "bodyBytes": 2946,
+      "canvas": [
+        20,
+        20
+      ],
+      "displayPixels": 18,
+      "callSiteSymbol": "Bi",
+      "callSiteUtf8Offset": 36575,
+      "tooltipDelayMs": 250,
+      "ariaLabel": "切换文件树",
+      "gate": "!hideFileNavigation && showFileTree",
+      "scope": "Existing file-tree visibility buttons; complete special gating remains incomplete"
+    }
+  ],
+  "openTargetFallbacks": [
+    {
+      "path": "webview/apps/terminal.png",
+      "bytes": 2623,
+      "sha256": "db9c478001868e3209b09311b8fba1eaf0d9eef8477c31c978d099807492e563"
+    },
+    {
+      "path": "webview/apps/finder.png",
+      "bytes": 3893,
+      "sha256": "7ada677eceb62a5f967ff90e5a6abf65d7145a39e77744eb51b37d34fdac2385"
+    },
+    {
+      "path": "webview/apps/cursor.png",
+      "bytes": 2478,
+      "sha256": "97ce63bd2db27f881b8e55451c7a82549c2527735ef6f2504eb49264b2a0557f"
+    },
+    {
+      "path": "webview/apps/vscode.png",
+      "bytes": 2804,
+      "sha256": "5ff492ba38828c649ad3f2e8ce78e02d9cbdd1200009dd046992cfbde6897a24"
+    },
+    {
+      "path": "webview/apps/zed.png",
+      "bytes": 4789,
+      "sha256": "44fd59fa3516369614ece0ccbe6cc18bc99611712fc4bbaa12a21857b794ee38"
+    },
+    {
+      "path": "webview/apps/windsurf.png",
+      "bytes": 2645,
+      "sha256": "7cd3e6198ce088b81fc405aeda0378fb9620242b7ce18880af399ea9ec7ecec0"
+    }
+  ],
+  "nativeOpenTargets": {
+    "method": "CFBundleIconFile read from discovered macOS application bundles, native sips/ImageIO decode to 32px PNG, displayed at 16 CSS px; unavailable icons use original static fallback.",
+    "validation": "Terminal, Finder and Cursor decode to distinct PNG hashes. No native window opened; no server or model turn requested.",
+    "observations": [
+      {
+        "id": "terminal",
+        "status": "decoded",
+        "bytes": 1627,
+        "width": 32,
+        "height": 32,
+        "sha256": "69cc443dc1798f0e6c81ff9110f5d44932d7f5060098bb5a4a400ce49f5d3b8d"
+      },
+      {
+        "id": "finder",
+        "status": "decoded",
+        "bytes": 2208,
+        "width": 32,
+        "height": 32,
+        "sha256": "13ff44982295db95866796906ce83bf7f19f3833c599824a1b3e89c28b0d63e5"
+      },
+      {
+        "id": "cursor",
+        "status": "decoded",
+        "bytes": 1877,
+        "width": 32,
+        "height": 32,
+        "sha256": "b13e962f352fa8509a117de4d372598576a0815996a5898bd33a291bb31058f3"
+      },
+      {
+        "id": "vscode",
+        "status": "unavailable"
+      },
+      {
+        "id": "zed",
+        "status": "unavailable"
+      },
+      {
+        "id": "windsurf",
+        "status": "unavailable"
+      }
+    ]
+  },
+  "retainedTabCount": {
+    "source": {
+      "path": "webview/assets/new-tab-button-8691f945a252.js",
+      "sha256": "f1adfd7eaefc5ddbf7cf862e0f62dfa6866a93eeb6b5b83ede304fa451be3dbc",
+      "component": "I",
+      "utf8Offset": 1373
+    },
+    "css": {
+      "path": "webview/assets/19351a040766.css",
+      "sha256": "c32a4a90670cc16ec7f8326c8d5b13770e48e36db1d2933fb7d4c0c2d55536be"
+    },
+    "geometry": {
+      "glyph": "aspect-ratio-1-1-light-16",
+      "iconSize": 16,
+      "spanPosition": "absolute",
+      "inset": 0,
+      "display": "grid",
+      "placeItems": "center",
+      "fontSize": 8,
+      "multipleDigitsFontSize": 6,
+      "fontWeight": 600,
+      "lineHeight": 1,
+      "fontVariantNumeric": "tabular-nums",
+      "overflowText": "9+"
+    }
+  },
+  "limitations": [
+    "Selected element recovery does not prove full-app pixel or functional equivalence.",
+    "Native app icon decoder uses macOS ImageIO rather than reusing the original application native helper.",
+    "Only installed Terminal, Finder and Cursor have native decoding observations in this snapshot."
+  ],
+  "diffStyle": {
+    "sourceVersion": "26.1027.30824",
+    "sourceBuild": "22943",
+    "sources": [
+      {
+        "path": "webview/assets/app-shared-7815d5a1a42a.js",
+        "sha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+        "bytes": 6213809,
+        "anchors": []
+      },
+      {
+        "path": "webview/assets/app-initial-60f141238751.js",
+        "sha256": "72b67fc719cccb37a1da02fd06f71d840ec2805b813c1fac3a4fc5cca59cc16c",
+        "bytes": 10858430,
+        "anchors": [
+          {
+            "term": "function Eqa",
+            "utf8Offset": 7000949
+          },
+          {
+            "term": "Rqa=X_(Aqa,`auto`)",
+            "utf8Offset": 7001512
+          }
+        ]
+      },
+      {
+        "path": "webview/assets/review-header-toolbar-80664c3cbd49.js",
+        "sha256": "5d50ae77f24d1b3d014a91b61c8d290540114a981c3bca2445edce58ee76b4eb",
+        "bytes": 21909,
+        "anchors": [
+          {
+            "term": "function Be",
+            "utf8Offset": 16577
+          },
+          {
+            "term": "function Ve",
+            "utf8Offset": 17449
+          },
+          {
+            "term": "Ke={",
+            "utf8Offset": 21704
+          },
+          {
+            "term": "codex.review.loadFullFiles.enable",
+            "utf8Offset": 19339
+          },
+          {
+            "term": "codex.review.wordDiffs.label",
+            "utf8Offset": 19956
+          }
+        ]
+      },
+      {
+        "path": "webview/assets/code-diff-897faede7272.js",
+        "sha256": "2118a7784d782ad610547e3bbbd6f11d35e1ec833f696a6028e0c4dcf42b4e83",
+        "bytes": 64170,
+        "anchors": [
+          {
+            "term": "Tt(t>=800)",
+            "utf8Offset": 31963
+          }
+        ]
+      },
+      {
+        "path": "webview/assets/auto-diff-4a9039c2e594.js",
+        "sha256": "dcc4e1f5bd48a5d4286dff1b040ac3c93f6252274fc9e3710eec6e12b93f28a8",
+        "bytes": 1387,
+        "anchors": []
+      },
+      {
+        "path": "webview/assets/review-file-source-item-e733e98d3980.js",
+        "sha256": "ecc45f8000921a2caa3b3d01676922d6b6347211de30f8dc610ae155ae68b21f",
+        "bytes": 72681,
+        "anchors": [
+          {
+            "term": "var Mr,Nr",
+            "utf8Offset": 3164
+          },
+          {
+            "term": "review.fileSource.options",
+            "utf8Offset": 43249
+          },
+          {
+            "term": "review.fileSource.gitBlame.enable",
+            "utf8Offset": 44381
+          },
+          {
+            "term": "review.fileSource.browser.toggleFileTree",
+            "utf8Offset": 37556
+          }
+        ]
+      },
+      {
+        "path": "webview/assets/thread-app-shell-chrome-b533951219bb.js",
+        "sha256": "dbd859abfdd7a0885e297ed2a4e63f02124b8398eab270edf4de3e0b63107d96",
+        "bytes": 69566,
+        "anchors": [
+          {
+            "term": "function Ys",
+            "utf8Offset": 31431
+          }
+        ]
+      }
+    ],
+    "glyphs": [
+      {
+        "style": "unified",
+        "name": "rectangle-view-unified-light-16",
+        "source": "webview/assets/app-shared-7815d5a1a42a.js",
+        "bodyUtf8Offset": 5599561,
+        "bodySha256": "9a2140c1647cba190356a32bdf53d630db466b8cbb41f1c9e8f2db2d0f4445a5",
+        "assetNameUtf8Offset": 5598691
+      },
+      {
+        "style": "split",
+        "name": "rectangle-view-split-light-16",
+        "source": "webview/assets/app-shared-7815d5a1a42a.js",
+        "bodyUtf8Offset": 5597546,
+        "bodySha256": "354c135fca5c35587e04d5228f7dc104298550c4b2080e6cc0400ce1f6314bdc",
+        "assetNameUtf8Offset": 5596680
+      },
+      {
+        "style": "auto",
+        "name": "auto-diff-original-16",
+        "source": "webview/assets/auto-diff-4a9039c2e594.js",
+        "bodySha256": "5f750c6857a8469ecddc4751597bbeda9d199a01de9c468d8aa76273bc2ae8bb",
+        "method": "Original inert JSX path declarations serialized to SVG path attributes."
+      }
+    ],
+    "selectedModeCycle": [
+      "unified",
+      "split",
+      "auto",
+      "unified"
+    ],
+    "defaultSelectedMode": "auto",
+    "autoLayout": {
+      "minimumLogicalFileWidth": 800,
+      "splitCondition": "File width is at least 800 CSS pixels and parsed additions and deletions are both greater than zero.",
+      "otherwise": "unified",
+      "beforeGeometry": "unified"
+    },
+    "selectionAndLayoutAreIndependent": true,
+    "labels": {
+      "unified": "切换到拆分差异视图",
+      "split": "将差异视图切换为自动布局",
+      "auto": "自动差异视图：改用统一差异视图"
+    },
+    "validation": {
+      "scope": "Model and server-rendered markup; no browser ResizeObserver or native-pointer acceptance performed in this subtask.",
+      "testFiles": 5,
+      "passedTests": 37,
+      "typecheck": "Node/Web passed",
+      "command": "npx vitest run src/renderer/src/workspaceDiffStyle.test.ts src/renderer/src/workspaceDiffModel.test.ts src/renderer/src/workspaceDiffComments.test.ts src/renderer/src/rightWorkbenchWorkspaceControls.test.ts src/renderer/src/zhCnVisibleStrings.test.ts"
+    },
+    "remaining": [
+      "Full Changes options menu, full-file/rich/word/whitespace/import controls and git-apply copy are absent.",
+      "Native pointer cycling, width/zoom reflow and comment placement in Auto require runtime acceptance."
+    ]
+  },
+  "macOSWorkspacePathAliases": {
+    "trigger": "Native package acceptance used a /var/folders workspace root while the resumed server file change used /private/var/folders for the same file.",
+    "readOnlySystemLinks": {
+      "/var": "private/var",
+      "/tmp": "private/tmp",
+      "/etc": "private/etc"
+    },
+    "comparison": "Normalize both POSIX absolute paths, fold only these top-level system aliases, check equality or a slash-delimited root prefix, then rebase onto the active root spelling.",
+    "mainBoundary": "Unchanged lexical workspace path validation and independent realpath containment.",
+    "implementation": "src/renderer/src/workspacePathModel.ts",
+    "validation": {
+      "testFiles": 9,
+      "passedTests": 65,
+      "typecheck": "Node/Web passed",
+      "scope": "Resumed patch through snapshot/link/match/viewer static markup and a native-boundary-valid preview request; system alias, traversal, sibling-prefix and non-system path regression cases.",
+      "nativePackageClickAcceptance": "Pending root task verification; earlier selection followed by empty content is not marked resolved by this static validation."
+    }
+  },
+  "remainingReadOnlyAudit": [
+    {
+      "replica": "src/renderer/src/WorkspaceDiffViewer.tsx",
+      "source": "webview/assets/review-header-toolbar-80664c3cbd49.js",
+      "sourceUtf8Offset": 19339,
+      "gap": "Changes options contains a subset of the recovered original menu."
+    },
+    {
+      "replica": "src/renderer/src/workspaceEditorRuntime.tsx",
+      "source": "webview/assets/review-file-source-item-e733e98d3980.js",
+      "sourceUtf8Offset": 43249,
+      "gap": "Original file options include word wrap, rich preview, git blame and multiple copy-path/content actions; replica visible toolbar remains find/go-to-line and Markdown mode."
+    },
+    {
+      "replica": "src/renderer/src/WorkspacePane.tsx",
+      "source": "webview/assets/review-file-source-item-e733e98d3980.js",
+      "sourceUtf8Offset": 3164,
+      "gap": "File tree toggle uses recovered folder-on-folder-light-16 while original module defines a separate inline Nr 20px SVG. Equivalent shape has not been established."
+    },
+    {
+      "replica": "src/renderer/src/App.tsx",
+      "source": "webview/assets/thread-app-shell-chrome-b533951219bb.js",
+      "sourceUtf8Offset": 31431,
+      "gap": "Original retained tab trigger opens a hover/key chooser; replica count trigger directly reveals the panel."
+    }
+  ],
+  "fileTreeToggleSupplement": {
+    "glyph": "file-tree-toggle-original-20",
+    "replaces": "folder-on-folder-light-16 at the existing file-tree visibility callers",
+    "sourceTooltip": "review.fileSource.browser.toggleFileTree",
+    "displayPixels": 18,
+    "tooltipDelayMs": 250,
+    "completeFileBrowserParity": false
+  }
+}

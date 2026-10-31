@@ -155,9 +155,17 @@ export function buildSidebarCollections(
 
 export function projectThreadsForDisplay(
   threads: readonly Thread[],
-  expanded: boolean
+  expanded: boolean,
+  selectedThreadId?: string | null
 ): Thread[] {
-  return expanded ? [...threads] : threads.slice(0, SIDEBAR_PROJECT_PREVIEW_LIMIT)
+  if (expanded) return [...threads]
+  const preview = threads.slice(0, SIDEBAR_PROJECT_PREVIEW_LIMIT)
+  // The shipped sidebar retains its usual preview and appends the selected
+  // chat when it falls outside that preview, without expanding the project.
+  const selected = selectedThreadId
+    ? threads.slice(SIDEBAR_PROJECT_PREVIEW_LIMIT).find((thread) => thread.id === selectedThreadId)
+    : undefined
+  return selected ? [...preview, selected] : preview
 }
 
 export function threadHasActiveSidebarTurn(thread: Thread): boolean {

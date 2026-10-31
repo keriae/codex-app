@@ -91,6 +91,9 @@ export interface CommandItem {
   aggregatedOutput?: string | null
   exitCode?: number | null
   durationMs?: number | null
+  startedAtMs?: number | null
+  /** Renderer observation when the protocol omits the command start time. */
+  observedStartedAtMs?: number | null
 }
 
 export interface FileUpdateChange {

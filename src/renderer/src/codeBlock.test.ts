@@ -28,8 +28,9 @@ describe('CodeBlock', () => {
 
     expect(html).toContain('class="markdown-code-block"')
     expect(html).toContain('TypeScript')
-    expect(html).toContain('lucide-code-xml')
-    expect(html).toContain('aria-label="开启代码自动换行"')
+    expect(html).toContain('viewBox="0 0 20 20"')
+    expect(html).not.toContain('lucide-')
+    expect(html).toContain('aria-label="启用自动换行"')
     expect(html).toContain('aria-pressed="false"')
     expect(html).toContain('aria-label="复制代码"')
     expect(html).not.toContain('>Copy<')
@@ -54,14 +55,14 @@ describe('CodeBlock', () => {
       })
     )
 
-    expect(html).toContain('aria-label="开启代码自动换行"')
+    expect(html).toContain('aria-label="启用自动换行"')
     expect(html).not.toContain('aria-label="复制代码"')
     expect(html).not.toContain('lucide-copy')
   })
 
   it('keeps the recorded unified surface and wrapping states', () => {
     expect(styles).toMatch(
-      /\.markdown-code-block\s*\{[^}]*border-radius: 17px;[^}]*background: #222;/s
+      /\.markdown-code-block\s*\{[^}]*border-radius: 20px;[^}]*background: #181818;/s
     )
     expect(styles).toMatch(
       /\.markdown-code-block figcaption\s*\{[^}]*min-height: 48px;[^}]*padding: 0 6px 0 20px;[^}]*background: transparent;/s

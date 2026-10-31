@@ -21,15 +21,16 @@
 .workspace-breadcrumb-tree-row.is-selected { background:color-mix(in srgb,var(--text) 7%,transparent); color:var(--text); }
 .workspace-breadcrumb-tree-row:focus-visible { outline:1px solid rgb(51 156 255 / 70%); outline-offset:-1px; }
 :root[data-theme='light'] .workspace-breadcrumb-tree-row:focus-visible,:root[data-theme='light'] .workspace-breadcrumb-trigger:focus-visible { outline-color:#339cff; }
-.workspace-breadcrumb-tree-row > svg { width:14px; height:14px; flex:0 0 14px; color:var(--text-muted); stroke-width:1.6; }
+.workspace-breadcrumb-tree-row > svg { width:16px; height:16px; flex:0 0 16px; color:var(--text-muted); stroke-width:1.6; }
 .workspace-breadcrumb-tree-row > svg.is-json { color:#d9823b; }
 .workspace-breadcrumb-tree-row > span:last-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.workspace-breadcrumb-tree-disclosure { display:grid; place-items:center; width:12px; flex:0 0 12px; }
+.workspace-breadcrumb-tree-disclosure { display:grid; place-items:center; width:16px; flex:0 0 16px; }
 .workspace-breadcrumb-tree-disclosure > svg { width:12px; height:12px; }
 .workspace-breadcrumb-tree-state { display:flex; align-items:center; gap:6px; padding:8px; color:var(--text-muted); font-size:13px; }
 .workspace-breadcrumb-tree-state > svg { width:14px; height:14px; }
 .workspace-breadcrumb-tree-state > button { padding:2px 6px; border-radius:4px; background:var(--surface-hover); color:var(--text); }
 .workspace-toolbar-controls { display:flex; align-items:center; flex:0 0 auto; }
+.workspace-toolbar-controls-inline { display:inline-flex; align-items:center; gap:2px; }
 .workspace-toolbar-controls-trigger { display:grid; place-items:center; width:32px; height:32px; padding:0; border-radius:999px; background:var(--surface-output); color:var(--text-secondary); box-shadow:0 0 0 .5px var(--border); }
 .workspace-toolbar-controls-trigger > svg { width:16px; height:16px; }
 .workspace-toolbar-controls-trigger:hover { background:var(--surface-control-hover); color:var(--text); }

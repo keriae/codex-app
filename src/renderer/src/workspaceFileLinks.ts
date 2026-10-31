@@ -1,3 +1,5 @@
+import { resolveWorkspacePath } from './workspacePathModel'
+
 export const OPEN_WORKSPACE_FILE_EVENT = 'codex:open-workspace-file'
 export const OPEN_WORKSPACE_SOURCE_IMAGE_EVENT = 'codex:open-workspace-source-image'
 
@@ -231,33 +233,8 @@ export function workspaceCitationMatches(text: string): WorkspaceCitationMatch[]
   return matches
 }
 
-function normalizeAbsolutePath(path: string): string | null {
-  if (!path.startsWith('/') || /[\0\r\n]/.test(path)) return null
-  const segments: string[] = []
-  for (const segment of path.split('/')) {
-    if (!segment || segment === '.') continue
-    if (segment === '..') {
-      segments.pop()
-      continue
-    }
-    segments.push(segment)
-  }
-  return `/${segments.join('/')}`
-}
-
 export function resolveWorkspaceFileLink(root: string, linkedPath: string): string | null {
-  const normalizedRoot = normalizeAbsolutePath(root.replace(/\/+$/, '') || '/')
-  if (!normalizedRoot || !linkedPath || /[\0\r\n]/.test(linkedPath)) return null
-
-  const candidate = normalizeAbsolutePath(
-    linkedPath.startsWith('/')
-      ? linkedPath
-      : `${normalizedRoot === '/' ? '' : normalizedRoot}/${linkedPath}`
-  )
-  if (!candidate) return null
-
-  const rootPrefix = normalizedRoot === '/' ? '/' : `${normalizedRoot}/`
-  return candidate === normalizedRoot || candidate.startsWith(rootPrefix) ? candidate : null
+  return resolveWorkspacePath(root, linkedPath)
 }
 
 export function workspaceFileTypeLabel(path: string): string {

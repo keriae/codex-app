@@ -19,35 +19,16 @@ import { SubagentActivityGroup } from './SubagentActivity'
 import { ActivityGlyph } from './ActivityGlyph'
 import { commandOutputDisplayCommand, commandOutputText } from './commandOutput'
 import { copyTextToClipboard } from './clipboard'
-
-function useActivityDisclosure(): { expanded: boolean; mounted: boolean; setOpen(open: boolean): void } {
-  const [expanded, setExpanded] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const frame = useRef<number | null>(null)
-  const timer = useRef<number | null>(null)
-  useEffect(() => () => {
-    if (frame.current !== null) cancelAnimationFrame(frame.current)
-    if (timer.current !== null) window.clearTimeout(timer.current)
-  }, [])
-  return { expanded, mounted, setOpen(open) {
-    if (frame.current !== null) cancelAnimationFrame(frame.current)
-    if (timer.current !== null) window.clearTimeout(timer.current)
-    if (open) {
-      setMounted(true)
-      frame.current = requestAnimationFrame(() => setExpanded(true))
-    } else {
-      setExpanded(false)
-      timer.current = window.setTimeout(() => setMounted(false), 300)
-    }
-  } }
-}
+import { useActivityDisclosure } from './useActivityDisclosure'
+import { useCommandActivityTiming } from './useCommandActivityTiming'
+import { ActivityTooltip } from './ActivityTooltip'
 
 export function CommandActivityIcon({ kind }: { kind: CommandActivityKind | CompletedActivitySummary['kind'] }): ReactNode {
   const glyph = kind === 'exploration' ? 'read' : kind === 'commands' ? 'command' : kind
   return <span className="conversation-activity-icon" aria-hidden="true"><ActivityGlyph kind={glyph} /></span>
 }
 
-function CommandCopyButton({ text, label }: { text: string; label: string }): ReactNode {
+export function CommandCopyButton({ text, label }: { text: string; label: string }): ReactNode {
   const [copied, setCopied] = useState(false)
   const [busy, setBusy] = useState(false)
   const pending = useRef(false)
@@ -78,9 +59,9 @@ function CommandCopyButton({ text, label }: { text: string; label: string }): Re
     }
   }
   const description = copied ? '已复制' : label
-  return <button type="button" className="conversation-command-copy" aria-label={description} title={description}
-    aria-busy={busy || undefined} onClick={copied ? undefined : (event) => { event.stopPropagation(); void copy() }}
-  ><ActivityGlyph kind={copied ? 'copied' : 'copy'} /></button>
+  return <ActivityTooltip variant="copy" content={description}><button type="button" className="conversation-command-copy" aria-label={copied ? '已复制' : '复制'}
+    aria-busy={busy || undefined} aria-disabled={busy || undefined} onClick={copied ? undefined : (event) => { event.stopPropagation(); void copy() }}
+  ><ActivityGlyph kind={copied ? 'copied' : 'copy'} /></button></ActivityTooltip>
 }
 
 export function CommandOutput({ item, command: rawCommand, id }: { item: CommandItem; command: string; id?: string }): ReactNode {
@@ -107,10 +88,11 @@ export function CommandOutput({ item, command: rawCommand, id }: { item: Command
 }
 
 export function CommandActivity({ item, compact = false }: { item: CommandItem; compact?: boolean }): ReactNode {
-  const { expanded, mounted, setOpen } = useActivityDisclosure()
+  const { expanded, mounted, visible, setOpen } = useActivityDisclosure()
   const [selectedRow, setSelectedRow] = useState(0)
   const contentId = useId()
-  const detailedRows = commandActivityRows(item)
+  const timedItem = useCommandActivityTiming(item, !compact)
+  const detailedRows = commandActivityRows(timedItem, { expandedRow: expanded ? selectedRow : null })
   const rows = compact || !detailedRows.length ? [commandActivityCopy(item)] : detailedRows
   const command = (compact ? detailedRows.at(-1)?.command : detailedRows[selectedRow]?.command) || item.command
   return (
@@ -143,9 +125,18 @@ export function CommandActivity({ item, compact = false }: { item: CommandItem; 
           </div>
         })}
       </div>
-      {mounted && <div className={`conversation-command-collapse${expanded ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>
-        <div><CommandOutput key={selectedRow} item={item} command={command} id={contentId} /></div>
-      </div>}
+      {mounted && (compact
+        // Lj opens qj's detailed item first; GT owns a separate output toggle.
+        // The active summary itself deliberately has no elapsed-time label.
+        ? <div className={`conversation-activity-group-collapse${visible ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>
+          <div className="conversation-activity-group-body" id={contentId}>
+            <div className="conversation-activity-group-item"><CommandActivity item={item} /></div>
+          </div>
+        </div>
+        : <div className={`conversation-command-collapse${visible ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>
+          <div><CommandOutput key={selectedRow} item={item} command={command} id={contentId} /></div>
+        </div>
+      )}
     </div>
   )
 }
@@ -158,7 +149,7 @@ function ActivityGroup({
   kind: CompletedActivitySummary['kind']
   renderItem(item: ThreadItem, grouped: boolean): ReactNode
 }): ReactNode {
-  const { expanded, mounted, setOpen } = useActivityDisclosure()
+  const { expanded, mounted, visible, setOpen } = useActivityDisclosure()
   const contentId = useId()
   return (
     <div className="conversation-activity-group" data-command-activity-summary={kind}>
@@ -174,7 +165,7 @@ function ActivityGroup({
         <ActivityGlyph kind="chevron" className={`activity-group-chevron${expanded ? ' is-expanded' : ''}`} aria-hidden="true" />
       </button>
       {mounted && (
-        <div className={`conversation-activity-group-collapse${expanded ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>
+        <div className={`conversation-activity-group-collapse${visible ? ' is-expanded' : ''}`} aria-hidden={!expanded} inert={!expanded}>
           <div className="conversation-activity-group-body" id={contentId}>
             {items.map((item) => <div key={item.id} className="conversation-activity-group-item">{renderItem(item, true)}</div>)}
           </div>

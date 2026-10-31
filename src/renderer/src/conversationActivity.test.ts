@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { TurnBlock } from './App'
 import { CommandActivity, ConversationActivityItems } from './ConversationActivity'
-import { conversationActivityProjection, conversationTurnActivityPhase } from './conversationActivityModel'
+import { conversationActivityGrouping, conversationActivityProjection, conversationTurnActivityPhase, hasConversationActivity } from './conversationActivityModel'
 import type { ThreadItem, Turn } from './protocol'
 
 const renderItem = (item: ThreadItem) => createElement('span', { 'data-item': item.id }, item.id)
@@ -18,6 +18,18 @@ const spawn = (id: string, receiverThreadIds: string[], prompt: string | null = 
 const activityStyles = readFileSync(new URL('./conversationActivity.css', import.meta.url), 'utf8')
 
 describe('conversation activity disclosure ordering', () => {
+  it('filters review lifecycle and protocol sleep events before projection and grouping', () => {
+    const hidden = ['enteredReviewMode', 'exitedReviewMode', 'sleep'].map((type) => ({ type, id: type }) as ThreadItem)
+    for (const item of hidden) expect(conversationActivityGrouping(item)).toBe('hidden')
+    expect(hasConversationActivity(hidden, false)).toBe(false)
+    expect(conversationActivityProjection([command('before', 'completed'), ...hidden, command('after', 'completed')]).items.map((item) => item.id)).toEqual(['before', 'after'])
+    const html = renderToStaticMarkup(createElement(ConversationActivityItems, {
+      items: hidden, renderItem
+    }))
+    expect(html).not.toContain('conversation-activity-unit')
+    for (const item of hidden) expect(html).not.toContain(`data-item="${item.id}"`)
+  })
+
   it('keeps commentary between separate detailed singleton commands', () => {
     const html = renderToStaticMarkup(createElement(ConversationActivityItems, {
       items: [command('before', 'completed'), { type: 'agentMessage', id: 'commentary', text: 'Continue', phase: 'commentary' }, command('after', 'completed')], renderItem
@@ -155,8 +167,8 @@ describe('conversation activity disclosure ordering', () => {
   })
 
   it('derives compact command tones from the active theme text token', () => {
-    const rowRule = activityStyles.match(/\.conversation-command-item\.is-compact \.conversation-command-row\s*\{([^}]*)\}/)?.[1] || ''
-    const detailRule = activityStyles.match(/\.conversation-command-item\.is-compact \.conversation-command-row:not\(\[data-command-activity-kind='command'\]\) \.activity-item-copy\s*\{([^}]*)\}/)?.[1] || ''
+    const rowRule = activityStyles.match(/\.conversation-command-item\.is-compact > \.conversation-command-rows > \.conversation-command-row\s*\{([^}]*)\}/)?.[1] || ''
+    const detailRule = activityStyles.match(/\.conversation-command-item\.is-compact > \.conversation-command-rows > \.conversation-command-row:not\(\[data-command-activity-kind='command'\]\) \.activity-item-copy\s*\{([^}]*)\}/)?.[1] || ''
     expect(rowRule).toContain('var(--text) 40%')
     expect(detailRule).toContain('var(--text) 30%')
     expect(`${rowRule}${detailRule}`).not.toContain('rgb(252 252 252')

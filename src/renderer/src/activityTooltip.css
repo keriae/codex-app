@@ -1,3 +1,35 @@
 .activity-tooltip-anchor { display: inline-flex; min-width: 0; max-width: 100%; vertical-align: baseline; }
 .activity-tooltip { position: fixed; z-index: 10000; width: max-content; max-width: min(400px, calc(100vw - 24px)); transform: translate(-50%, calc(-100% - 6px)); pointer-events: none; padding: 6px 9px; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--surface-raised, var(--surface)); box-shadow: 0 3px 12px rgb(0 0 0 / 20%); color: var(--text); font: 400 12px/17px -apple-system, system-ui, sans-serif; white-space: normal; overflow-wrap: anywhere; }
 .activity-tooltip.is-multiline { max-width: min(560px, calc(100vw - 24px)); white-space: pre-wrap; }
+
+/* Installed Electron defaults; opted into only by the two copy tooltip paths. */
+.activity-tooltip.is-copy {
+  box-sizing: border-box;
+  z-index: auto;
+  pointer-events: auto;
+  max-width: min(320px, calc(100vw - 16px));
+  transform: none;
+  padding: 5px 12px;
+  border: 1px solid rgb(223 223 223 / 5%);
+  border-radius: 16px;
+  background: #181818;
+  box-shadow: 0 8px 18px #0f172a33;
+  color: #dfdfdf;
+  font-size: 13px;
+  font-weight: 430;
+  letter-spacing: -0.15px;
+  line-height: 18px;
+  overflow-wrap: break-word;
+  text-align: center;
+  white-space: normal;
+}
+.activity-tooltip.is-copy[data-tooltip-variant='userCopy'] { z-index: 50; pointer-events: none; }
+.activity-tooltip.is-copy[data-tooltip-variant='userCopy'] > span { text-wrap: balance; }
+:root[data-theme='light'] .activity-tooltip.is-copy {
+  border-color: rgb(255 255 255 / 5%);
+  background: #1a1c1f;
+  color: #ffffff;
+}
+@supports (corner-shape: superellipse(1.5)) {
+  .activity-tooltip.is-copy { border-radius: 20px; corner-shape: superellipse(1.5); }
+}

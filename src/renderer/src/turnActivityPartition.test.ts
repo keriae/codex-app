@@ -41,6 +41,18 @@ function renderTurn(
 }
 
 describe('shipped turn activity partition', () => {
+  it('keeps review lifecycle and protocol sleep events out of every turn partition', () => {
+    const hidden = ['enteredReviewMode', 'exitedReviewMode', 'sleep'].map((type) => runtimeItem({ type, id: type }))
+    const partition = partitionTurnActivity(hidden)
+    expect(partition.collapsibleUnits).toEqual([])
+    expect(partition.expandedUnits).toEqual([])
+    expect(partition.persistentUnits).toEqual([])
+    expect(partition.preToggleUnits).toEqual([])
+    const html = renderTurn({ id: 'protocol-only', status: 'completed', items: hidden })
+    expect(html).not.toContain('class="activity-disclosure"')
+    expect(html).not.toContain('已使用')
+  })
+
   it('separates pre-toggle, persistent, collapsible and worked-for units', () => {
     const partition = partitionTurnActivity([
       runtimeItem({ type: 'realtime-transcript', id: 'transcript' }),
@@ -322,7 +334,9 @@ describe('turn activity partition rendering', () => {
     }, false, { latestUserItemId: 'latest-user' })
 
     expect(html).toContain('class="message-actions is-persistent"')
-    expect(html).toContain('aria-label="Copy message"')
+    expect(html).toContain('aria-label="复制消息"')
+    expect(html).toContain('aria-label="复制消息"')
+    expect(html).toContain('data-tooltip="复制消息"')
   })
 
   it('does not duplicate an inline sent time when the turn has a timestamp header', () => {

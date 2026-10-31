@@ -1,5 +1,6 @@
 import { copyTextToClipboard } from './clipboard'
-import { Check, CodeXml, Copy, WrapText } from 'lucide-react'
+import { ActivityGlyph } from './ActivityGlyph'
+import { ActivityTooltip } from './ActivityTooltip'
 import hljs from 'highlight.js/lib/core'
 import bash from 'highlight.js/lib/languages/bash'
 import cpp from 'highlight.js/lib/languages/cpp'
@@ -21,7 +22,7 @@ import swift from 'highlight.js/lib/languages/swift'
 import typescript from 'highlight.js/lib/languages/typescript'
 import xml from 'highlight.js/lib/languages/xml'
 import yaml from 'highlight.js/lib/languages/yaml'
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useInsertionEffect, useMemo, useRef, useState } from 'react'
 import './CodeBlock.css'
 
 const LANGUAGES = {
@@ -106,54 +107,69 @@ export function CodeBlock({
     [code, resolvedLanguage]
   )
   const [copied, setCopied] = useState(false)
+  const [pending, setPending] = useState(false)
   const [wrapped, setWrapped] = useState(false)
   const resetTimer = useRef<number | null>(null)
+  const copying = useRef(false)
+  const mounted = useRef(false)
 
-  useEffect(
-    () => () => {
+  useInsertionEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
       if (resetTimer.current !== null) window.clearTimeout(resetTimer.current)
-    },
-    []
-  )
+    }
+  }, [])
 
   const copy = async (): Promise<void> => {
+    if (copying.current || copied) return
+    copying.current = true
+    setPending(true)
+    let succeeded = false
     try {
       await copyTextToClipboard(code)
-      setCopied(true)
-      if (resetTimer.current !== null) window.clearTimeout(resetTimer.current)
-      resetTimer.current = window.setTimeout(() => setCopied(false), 1_500)
+      succeeded = true
     } catch {
-      setCopied(false)
+      // Failed writes keep the normal glyph and allow another attempt.
     }
+    if (!mounted.current) return
+    copying.current = false
+    setPending(false)
+    if (!succeeded) return
+    setCopied(true)
+    if (resetTimer.current !== null) window.clearTimeout(resetTimer.current)
+    resetTimer.current = window.setTimeout(() => {
+      resetTimer.current = null
+      setCopied(false)
+    }, 2_000)
   }
 
   return (
     <figure className={`markdown-code-block${wrapped ? ' is-wrapped' : ''}`}>
       <figcaption>
         <span className="markdown-code-language">
-          <CodeXml aria-hidden="true" />
+          <ActivityGlyph kind="codeLanguage" aria-hidden="true" />
           <span>{displayLanguage(resolvedLanguage)}</span>
         </span>
         <span className="markdown-code-actions">
-          <button
+          <ActivityTooltip content={wrapped ? '禁用自动换行' : '启用自动换行'} openDelay={200}><button
             type="button"
-            className={wrapped ? 'is-active' : undefined}
-            aria-label={wrapped ? '关闭代码自动换行' : '开启代码自动换行'}
+            aria-label={wrapped ? '禁用自动换行' : '启用自动换行'}
             aria-pressed={wrapped}
-            title={wrapped ? '关闭自动换行' : '自动换行'}
             onClick={() => setWrapped((value) => !value)}
           >
-            <WrapText />
-          </button>
+            <ActivityGlyph kind={wrapped ? 'codeWrap' : 'codeOverflow'} aria-hidden="true" />
+          </button></ActivityTooltip>
           {copyable && (
-            <button
+            <ActivityTooltip content={copied ? '已复制' : '复制代码'} openDelay={150}><button
               type="button"
-              aria-label={copied ? '代码已复制' : '复制代码'}
-              title={copied ? '已复制' : '复制代码'}
-              onClick={() => void copy()}
+              aria-label={copied ? '已复制' : '复制代码'}
+              aria-busy={pending || undefined}
+              aria-disabled={pending || undefined}
+              onClick={copied ? undefined : (event) => { event.stopPropagation(); void copy() }}
             >
-              {copied ? <Check /> : <Copy />}
-            </button>
+              <ActivityGlyph kind={copied ? 'checkSmall' : 'copySmall'} aria-hidden="true" />
+            </button></ActivityTooltip>
           )}
         </span>
       </figcaption>

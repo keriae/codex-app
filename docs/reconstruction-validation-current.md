@@ -61,7 +61,7 @@ The final independent desktop root is `$HOME/.codex-re-profile/reconstruction-fi
 
 The final wrapper passed `initialize`, `getAuthStatus`, `model/list` and `thread/list`, returning one model and one thread with zero pending approvals. It confirmed the initialized server home matches the existing server home. `authMethod` is null for this machine's backend configuration. The probe stops only its own temporary server process and does not submit turns.
 
-The final app itself was launched by native Computer Use using its own absolute bundle path. Main PID **50834** recorded a successful local **stdio** handshake at **15:25:22**, **durationMs=257**. The independent log contains subsequent fixture activity. The original installed UI was not operated.
+The final app itself was launched by native Computer Use using its own absolute bundle path. Main PID **redacted** recorded a successful local **stdio** handshake at **15:25:22**, **durationMs=257**. The independent log contains subsequent fixture activity. The original installed UI was not operated.
 
 ## Native window and interaction acceptance
 
@@ -81,8 +81,8 @@ After the user unlocked macOS, native acceptance first exercised the independent
 
 The first native model fixture used a distinct projectless persisted test chat because the normal UI does not expose an ephemeral-thread option. It submitted only a fixed instruction to return `codex-replica-ok`, with no tool use or file access. The actual server transcript records:
 
-- Thread `01a16cc3-f729-7372-b665-63f77ef1709c`.
-- Turn `01a16cc4-56d2-7161-8232-148571dd69e9`.
+- Thread `<fixture-id-1>`.
+- Turn `<fixture-id-2>`.
 - `gpt-6.1-sol`, effort `ultra`, source `Codex Desktop`, CLI `0.163.0-alpha.11.2`.
 - Start **15:16:09**, completion **15:16:16**, **7,619 ms**.
 - Actual assistant output **`codex-replica-ok`**, **zero tool calls**.
@@ -92,12 +92,12 @@ The UI displayed that answer, removed its processing state and restored the Send
 ```sh
 node scripts/reverse/verify-reconstruction-turn.mjs \
   "release/local-runtime/Codex Study Ready.app" \
-  01a16cc3-f729-7372-b665-63f77ef1709c
+  <fixture-id-1>
 ```
 
 ## Standard authorization boundary and unfinished acceptance
 
-The final app's separate read-only tools fixture asked only for `list_artifacts` on that fixture's own chat. It did not inspect other chats, global projects or project files. Thread `01a16ccd-ff38-7142-9047-802e394575b9`, turn `01a16cce-4a41-78c3-b1b2-46758a20167b`, completed at **15:27:21** in **20,696 ms**. The model made three metadata-only `ALL_TOOLS` discovery calls, then explicitly reported that `list_artifacts` was unavailable. There was **no native app-tools call** and no file or chat tool call.
+The final app's separate read-only tools fixture asked only for `list_artifacts` on that fixture's own chat. It did not inspect other chats, global projects or project files. Thread `<fixture-id-3>`, turn `<fixture-id-4>`, completed at **15:27:21** in **20,696 ms**. The model made three metadata-only `ALL_TOOLS` discovery calls, then explicitly reported that `list_artifacts` was unavailable. There was **no native app-tools call** and no file or chat tool call.
 
 The final native log records `dynamic_app_tools_peer_rejected reason=missing-code-signing-identity` and `Codex app tools pipe closed`. Preserving child signatures removed the earlier child `teamNotFound` condition, but Computer Use now rejects the ad-hoc main caller with **“Sender process is not authenticated”**. The original packaged `authorizeSocketPeer` path remains unchanged; no development authorization mode or disabled check is used. This establishes an actual signing-identity boundary, not successful tool acceptance.
 

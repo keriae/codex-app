@@ -1,0 +1,28 @@
+.workspace-tree-row,
+.workspace-change-nav-row,
+.workspace-breadcrumb-tree-row {
+  position: relative;
+}
+
+.workspace-tree-indent-guides {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.workspace-tree-indent-guides > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--workspace-tree-indent-guide-color, color-mix(in lab, #84848a 25%, transparent));
+}
+
+.workspace-file-tree:hover .workspace-tree-indent-guides,
+.workspace-changed-files:hover .workspace-tree-indent-guides,
+.workspace-breadcrumb-tree:hover .workspace-tree-indent-guides {
+  opacity: 0.75;
+}

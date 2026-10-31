@@ -2,10 +2,30 @@ import { describe, expect, it } from 'vitest'
 import {
   CONVERSATION_BOTTOM_THRESHOLD_PX,
   conversationDistanceFromBottom,
-  conversationIsAtBottom
+  conversationIsAtBottom,
+  scrollContainerCanScrollUp
 } from './conversationScroll'
 
 describe('conversation scroll position', () => {
+  it.each([
+    [0, false], [1, true], [100, true], [-10, false]
+  ])('consumes upward input in ordinary nested output at scrollTop %i: %s', (scrollTop, expected) => {
+    expect(scrollContainerCanScrollUp({ clientHeight: 100, scrollHeight: 300, scrollTop }, { overflowY: 'auto', flexDirection: 'column' })).toBe(expected)
+  })
+
+  it.each([
+    [0, true], [-1, true], [-199, true], [-200, false], [-210, false]
+  ])('consumes upward input in reversed command output at scrollTop %i: %s', (scrollTop, expected) => {
+    expect(scrollContainerCanScrollUp({ clientHeight: 100, scrollHeight: 300, scrollTop }, { overflowY: 'auto', flexDirection: 'column-reverse' })).toBe(expected)
+  })
+
+  it('does not retain follow for output with no scroll range or disabled scrolling', () => {
+    const metrics = { clientHeight: 100, scrollHeight: 300, scrollTop: 10 }
+    expect(scrollContainerCanScrollUp(metrics, { overflowY: 'hidden', flexDirection: 'column' })).toBe(false)
+    expect(scrollContainerCanScrollUp({ ...metrics, scrollHeight: 100 }, { overflowY: 'auto', flexDirection: 'column' })).toBe(false)
+    expect(scrollContainerCanScrollUp({ ...metrics, scrollTop: Number.NaN }, { overflowY: 'scroll', flexDirection: 'column-reverse' })).toBe(false)
+  })
+
   it('measures distance from the latest message', () => {
     expect(
       conversationDistanceFromBottom({

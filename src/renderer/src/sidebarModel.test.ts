@@ -160,6 +160,16 @@ describe('sidebar collections', () => {
     expect(projectThreadsForDisplay(threads, true)).toEqual(threads)
   })
 
+  it('keeps the selected older chat visible without replacing or expanding the recent preview', () => {
+    const threads = Array.from({ length: 10 }, (_, index) => thread(`chat-${index}`, '/workspace/repo', 100 - index))
+    expect(projectThreadsForDisplay(threads, false, 'chat-8')).toEqual([
+      ...threads.slice(0, 5), threads[8]
+    ])
+    expect(projectThreadsForDisplay(threads, false, 'chat-2')).toEqual(threads.slice(0, 5))
+    expect(projectThreadsForDisplay(threads, false, 'another-project')).toEqual(threads.slice(0, 5))
+    expect(projectThreadsForDisplay(threads, true, 'chat-8')).toEqual(threads)
+  })
+
   it('preserves incoming global recent order and per-project thread order', () => {
     const repoProject = project('repo-id', 'Repo', ['/workspace/repo'])
     const otherProject = project('other-id', 'Other', ['/workspace/other'])
@@ -182,8 +192,8 @@ describe('sidebar collections', () => {
       { id: 'repo-id', hostId: 'host-b', label: '[repo-b]', remotePath: '/srv/repo' }
     ]
     const remoteConnections: RemoteConnection[] = [
-      { hostId: 'host-a', displayName: 'GPU A', host: '10.0.0.1', state: 'connected' },
-      { hostId: 'host-b', displayName: 'GPU B', host: '10.0.0.2', state: 'connecting' }
+      { hostId: 'host-a', displayName: 'GPU A', host: '192.0.2.10', state: 'connected' },
+      { hostId: 'host-b', displayName: 'GPU B', host: '192.0.2.11', state: 'connecting' }
     ]
     const hostA = { ...thread('remote-a', '/srv/repo', 20, 'remote-a', 'repo-id'), hostId: 'host-a' }
     const hostB = { ...thread('remote-b', '/srv/repo', 10, 'remote-b', 'repo-id'), hostId: 'host-b' }
@@ -200,12 +210,12 @@ describe('sidebar collections', () => {
       {
         id: 'remote:host-a:repo-id', projectId: 'repo-id', name: '[repo-a]',
         roots: ['/srv/repo'], path: '/srv/repo', threads: [hostA], kind: 'remote',
-        hostId: 'host-a', hostLabel: '10.0.0.1', hostState: 'connected', hostColor: '#b390ff'
+        hostId: 'host-a', hostLabel: '192.0.2.10', hostState: 'connected', hostColor: '#b390ff'
       },
       {
         id: 'remote:host-b:repo-id', projectId: 'repo-id', name: '[repo-b]',
         roots: ['/srv/repo'], path: '/srv/repo', threads: [hostB], kind: 'remote',
-        hostId: 'host-b', hostLabel: '10.0.0.2', hostState: 'connecting', hostColor: '#f071a7'
+        hostId: 'host-b', hostLabel: '192.0.2.11', hostState: 'connecting', hostColor: '#f071a7'
       }
     ])
     expect(collections.pinned).toEqual([hostA])
@@ -218,8 +228,8 @@ describe('sidebar collections', () => {
       { id: 'repo-b', hostId: 'host-b', label: 'B', remotePath: '/srv/b' }
     ]
     const remoteConnections: RemoteConnection[] = [
-      { hostId: 'host-a', displayName: 'A', host: '10.0.0.1', state: 'connected' },
-      { hostId: 'host-b', displayName: 'B', host: '10.0.0.2', state: 'connected' }
+      { hostId: 'host-a', displayName: 'A', host: '192.0.2.10', state: 'connected' },
+      { hostId: 'host-b', displayName: 'B', host: '192.0.2.11', state: 'connected' }
     ]
 
     const colors = (connections: RemoteConnection[]) => Object.fromEntries(

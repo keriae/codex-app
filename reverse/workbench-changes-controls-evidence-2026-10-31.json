@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "installedSource": {
+    "version": "26.1027.30824",
+    "build": "22943"
+  },
+  "method": "Static ASAR/AST extraction of original renderer artwork and Re interaction props; no original module execution or native UI interaction.",
+  "source": {
+    "path": "reverse/raw/element-parity-2026-10-31/workbench/source/review-header-toolbar-80664c3cbd49.js",
+    "sha256": "5d50ae77f24d1b3d014a91b61c8d290540114a981c3bca2445edce58ee76b4eb"
+  },
+  "callChain": {
+    "reviewOptions": {
+      "symbol": "Re",
+      "utf8Offset": 5478,
+      "trigger": "PH/w0(AOt/tz) → QE/EVn toolbar uniform → Rjt/jA(openDelay=250)",
+      "responsive": "inline group hidden below container review-header 625 CSS px; Re observer T is width>0 && height>0; !T moves controls into menu",
+      "menuOrder": [
+        "Refresh (showRefreshGitQueries; disabled=refreshGitQueriesDisabled || !onRefreshGitQueries)",
+        "Word wrap (checked=wrap; closeOnSelect)",
+        "Cycle current diff mode (Ke: unified → split → auto → unified)",
+        "Collapse/expand all diffs",
+        "Separator",
+        "Ue tail: Load full files → Rich preview → Word diffs → Hide whitespace → Hide imports → Copy git apply command"
+      ]
+    },
+    "glyphDisplay": {
+      "symbol": "He",
+      "utf8Offset": 18196,
+      "className": "icon-xs",
+      "cssDisplay": 16
+    },
+    "wrap": {
+      "wrapper": "YE/M7",
+      "selected": "variant selected/default; aria-pressed=wrap"
+    },
+    "checkboxIndicator": {
+      "symbol": "MP/$3.CheckboxItem/dxn",
+      "utf8Offset": 4244715,
+      "indicator": "default checkmark → C3",
+      "display": "icon-xs16"
+    },
+    "optionsTail": {
+      "symbol": "Ue",
+      "utf8Offset": 18697,
+      "checkboxes": "first five checked from persisted global store; closeOnSelect=true; original show flags default true",
+      "copy": "showCopyGitApplyCommand controls presence; disabled=copyGitApplyCommandDisabled || !onClickCopyGitApplyCommand; callback then close",
+      "currentSource": "last-turn; source atom SXa returns null, so copy row is visible and disabled",
+      "defaults": {
+        "loadFullFiles": true,
+        "richPreview": false,
+        "wordDiffs": true,
+        "hideWhitespace": false,
+        "hideImports": false
+      }
+    },
+    "styleTooltip": {
+      "symbol": "Be",
+      "utf8Offset": 16577,
+      "wrapper": "jA; custom copy tooltip; next-action style label",
+      "replica": "ActivityTooltip variant=copy; 150ms default; native title removed"
+    },
+    "wideTooltipDelays": {
+      "HeRefreshCollapse": 18196,
+      "wrapCaller": 11554,
+      "BeStyle": 16577,
+      "jA": 1007301,
+      "defaultDelayMs": 150,
+      "moreDelayMs": 250,
+      "jumpDelayMs": 250,
+      "source": "u ?? (provider ? undefined : 150); provider default150; no four-wide caller override"
+    },
+    "jumpPicker": {
+      "callChain": [
+        {
+          "symbol": "Re → Pe",
+          "utf8Offset": 10565
+        },
+        {
+          "symbol": "Pe → Oe",
+          "utf8Offset": 5326
+        },
+        {
+          "symbol": "Oe",
+          "utf8Offset": 2366
+        }
+      ],
+      "glyph": "document-badge-magnifyingglass-light-16",
+      "glyphSymbol": "EUn",
+      "glyphUtf8Offset": 4749952,
+      "glyphCount": "existing 43-entry registry; not another independent payload",
+      "width": 360,
+      "maxListHeight": 250,
+      "dimensionsUtf8Offsets": [
+        4222564,
+        4222635
+      ],
+      "replica": "real snapshot.changes and selectChange; custom250ms tooltip; empty-query basename/parent sort; substring nonempty filter",
+      "remaining": "original i1/uKa fuzzy boundary, case, path-separator fallback and descending score not transcribed; zoom/collision and complete original Command/Popover keyboard/layout remain"
+    }
+  },
+  "glyphs": [
+    {
+      "name": "wrap",
+      "source": "reverse/raw/ui-parity-2026-10-31/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "n2t",
+      "assignmentUtf8Offset": 3249177,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "a39f0d5b945390367d3914664a9196db77e711b3d98f5aad7351ea8bf4a81cd4",
+      "bodyBytes": 1139
+    },
+    {
+      "name": "refresh",
+      "source": "reverse/raw/ui-parity-2026-10-31/source/app-initial-60f141238751.js",
+      "sourceSha256": "72b67fc719cccb37a1da02fd06f71d840ec2805b813c1fac3a4fc5cca59cc16c",
+      "symbol": "CNo",
+      "assignmentUtf8Offset": 7900889,
+      "canvas": {
+        "width": 20,
+        "height": 20,
+        "viewBox": "0 0 20 20"
+      },
+      "displaySize": 16,
+      "bodySha256": "ddf63f80c3b41a36ec32ca346204dabac24e085fc81ca51edbb8a15b938bd3ea",
+      "bodyBytes": 1299
+    },
+    {
+      "name": "collapse",
+      "source": "webview/assets/text-shorter-e92e0eeb7af8.js",
+      "sourceSha256": "a779225688af44983407c2cf1b5858f8aca0b12f751cad6c7adaf416c9682513",
+      "symbol": "i",
+      "assignmentUtf8Offset": 163,
+      "canvas": {
+        "width": 24,
+        "height": 24,
+        "viewBox": "0 0 24 24"
+      },
+      "displaySize": 16,
+      "bodySha256": "2537c1241f6ccf3828196af94e3169a3c04995174fc3bb5f48a7c07529a019e3",
+      "bodyBytes": 676
+    },
+    {
+      "name": "expand",
+      "source": "reverse/raw/element-parity-2026-10-31/workbench/source/review-header-toolbar-80664c3cbd49.js",
+      "sourceSha256": "5d50ae77f24d1b3d014a91b61c8d290540114a981c3bca2445edce58ee76b4eb",
+      "symbol": "Se",
+      "assignmentUtf8Offset": 942,
+      "canvas": {
+        "width": 24,
+        "height": 24,
+        "viewBox": "0 0 24 24"
+      },
+      "displaySize": 16,
+      "bodySha256": "8d9de6c93efde86005067e24158efa9d78537cb1d81ce8e241883443a521bc92",
+      "bodyBytes": 666
+    },
+    {
+      "name": "busy",
+      "source": "reverse/raw/ui-parity-2026-10-31/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "$$",
+      "assignmentUtf8Offset": 2348956,
+      "canvas": {
+        "width": 24,
+        "height": 24,
+        "viewBox": "0 0 24 24"
+      },
+      "displaySize": 16,
+      "bodySha256": "9b36696aabaac7ba9f7e5bb2b54e636350c30795c2148beb740c68af32b2ede5",
+      "bodyBytes": 476
+    },
+    {
+      "name": "checkmark",
+      "source": "reverse/raw/ui-parity-2026-10-31/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "C3",
+      "assignmentUtf8Offset": 4215111,
+      "canvas": {
+        "width": 17,
+        "height": 17,
+        "viewBox": "0 0 17 17"
+      },
+      "displaySize": 16,
+      "bodySha256": "8927177b3431c078223a90fd946fb3429be88281a2a1d0dc5f4dc36cb978e6b8",
+      "bodyBytes": 459
+    },
+    {
+      "name": "loadFullFiles",
+      "asset": "document-light-16",
+      "source": "reverse/raw/element-parity-2026-10-31/conversation/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "C1",
+      "assignmentUtf8Offset": 2609652,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "cc1deb7c67b18f18f1db018753460b9e4a7ebc899a3534f9dfc5e0e8cb6fafe4",
+      "bodyBytes": 773
+    },
+    {
+      "name": "richPreview",
+      "asset": "photo-light-16",
+      "source": "reverse/raw/element-parity-2026-10-31/conversation/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "U1",
+      "assignmentUtf8Offset": 2979791,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "f17359a622e7b47d116691af6cdf4fb05020f80ff3360bebf95b4303a0fa5d68",
+      "bodyBytes": 1228
+    },
+    {
+      "name": "wordDiffs",
+      "asset": "square-plus-minus-light-16",
+      "source": "reverse/raw/element-parity-2026-10-31/conversation/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "q9n",
+      "assignmentUtf8Offset": 5594736,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "65aed605a433d75c208c5a27ebc1a2c3c1d1a07cd5359cdcb6b7311cb81963eb",
+      "bodyBytes": 1286
+    },
+    {
+      "name": "hideWhitespace",
+      "asset": "eye-light-16",
+      "source": "reverse/raw/element-parity-2026-10-31/conversation/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "mKt",
+      "assignmentUtf8Offset": 2644348,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "32df59fa909a60a6e97cd2e520eb84bb88605cdf34468e14714fbf38f05d0564",
+      "bodyBytes": 1272
+    },
+    {
+      "name": "hideImports",
+      "asset": "cube-light-16",
+      "source": "reverse/raw/element-parity-2026-10-31/conversation/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "b1",
+      "assignmentUtf8Offset": 2593128,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "3018a59d3b6dd9073a58d26dc516cc996dbf41b33dd469c877d9e0008d94ff9f",
+      "bodyBytes": 810
+    },
+    {
+      "name": "copyGitApply",
+      "asset": "clipboard-light-16",
+      "source": "reverse/raw/element-parity-2026-10-31/conversation/source/app-shared-7815d5a1a42a.js",
+      "sourceSha256": "78f88eb7bb88cc8271103ee6e27e7c51c5d44a185b8b4923386f7d207659c0c4",
+      "symbol": "tGt",
+      "assignmentUtf8Offset": 2568920,
+      "canvas": {
+        "width": 16,
+        "height": 16,
+        "viewBox": "0 0 16 16"
+      },
+      "displaySize": 16,
+      "bodySha256": "7ac7eb1fc26ff114de961402a998585327a2ed4e25a734c01213eb65dfe557ca",
+      "bodyBytes": 3092
+    }
+  ],
+  "remaining": [
+    "Original Git branch/uncommitted/unstaged/staged/commit model and fresh whole-repository review-patch copy are not connected; current last-turn copy row is correctly disabled.",
+    "Current disk exact-hunk reverse validation does not establish immutable before/after snapshots for unrelated content outside the original patch; source blob IDs and revision loading remain absent.",
+    "Full-context display currently expands loaded untouched lines; native original individual context expansion/cache/snapshot generations still require deeper parity work.",
+    "Rich Markdown presentation uses existing ReactMarkdown/GFM and does not yet duplicate original committed-blob preview, all file links or exact rendering; PDF and unsupported bitmap formats remain absent.",
+    "Import parser coverage uses current installed JS/TS/JSX/TSX/Python only; original Java/Rust/Go parser paths remain unimplemented.",
+    "Runtime resize, checkbox actions, full loading, words, Git whitespace and import/comment gating require native replica validation of the new package.",
+    "Original Jump to file fuzzy matcher/score, complete picker keyboard, zoom/collision and popover layout remain incomplete; current picker uses substring filtering with original empty-query sort."
+  ],
+  "verification": {
+    "webTypecheck": "passed",
+    "targetedTests": {
+      "files": 9,
+      "tests": 122,
+      "status": "passed",
+      "paths": [
+        "src/renderer/src/workspaceDiffJumpToFile.test.ts",
+        "src/renderer/src/workspaceDiffOptions.test.ts",
+        "src/renderer/src/workspaceDiffPresentation.test.ts",
+        "src/renderer/src/workspaceWordDiff.test.ts",
+        "src/renderer/src/workspaceDiffStyle.test.ts",
+        "src/renderer/src/workspaceDiffModel.test.ts",
+        "src/renderer/src/workspaceDiffComments.test.ts",
+        "src/renderer/src/rightWorkbenchWorkspaceControls.test.ts",
+        "src/renderer/src/zhCnVisibleStrings.test.ts"
+      ]
+    },
+    "glyphBodyCanvasHashComparison": {
+      "count": 12,
+      "status": "passed"
+    },
+    "nativeRuntime": "not run by this subtask; root owns the new package acceptance; older checkpoint does not validate this source",
+    "sourceFiles": [
+      {
+        "path": "src/renderer/src/WorkspaceDiffControls.tsx",
+        "sha256": "7e93b8e1df5ddaa8f39ae4d6babce93c046859722b0b5a60df18ce8f590c551b"
+      },
+      {
+        "path": "src/renderer/src/WorkspaceDiffViewer.tsx",
+        "sha256": "6dbd9aec87ec493f31add855428cc3c0e453e5978dd32952dd580246c956a390"
+      },
+      {
+        "path": "src/renderer/src/WorkspaceDiffViewer.css",
+        "sha256": "97856d324c52ab3226d572f58a47b1ed951146254a75eb4f2e5d1ce5d3d612b9"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffModel.ts",
+        "sha256": "bf67f963269a13612121fbc51e77ff501dfcbdf588acb1836dd6f8d5f1963895"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffPresentation.ts",
+        "sha256": "504d7f26826e73a7576c3bc9032f54c5b0e8ce7aa0c242b60fe0e8e2dd35d444"
+      },
+      {
+        "path": "src/renderer/src/workspaceWordDiff.ts",
+        "sha256": "00cf944d248d1d8badbe360dca3548cb773223521f0479769983238716d1510e"
+      },
+      {
+        "path": "src/renderer/src/WorkspaceDiffJumpToFile.tsx",
+        "sha256": "9eb6a6399b35e233b63fa554d91dd9f1347500c1cbf1a0c535e8e654a93b4fbc"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffJumpToFile.test.ts",
+        "sha256": "fcab24a7e8e892b975b9cde8f2ec6478b968672a1c44d42b4802125112643dd4"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffOptions.test.ts",
+        "sha256": "fb482c85d88d2807d435fc2bbae94168fe98989175887531441e9a62a83508fc"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffPresentation.test.ts",
+        "sha256": "4fa641ac3bc54030fa32225926f5cdb6b19da4073e46ce17f1dbbe0f92f2f110"
+      },
+      {
+        "path": "src/renderer/src/workspaceWordDiff.test.ts",
+        "sha256": "b2e8e369e3ce67c74f05a7e21ecf14168e9504e7d6a65332f1d46c3517923828"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffStyle.test.ts",
+        "sha256": "db229297b25e529147e8b2aa5459f3e057db687785a588ac456ffa4071272607"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffModel.test.ts",
+        "sha256": "65a9e266523fb01e9325292c348366e9fc5df9f4b9180a51335c65c9b9b68c6e"
+      },
+      {
+        "path": "src/renderer/src/workspaceDiffComments.test.ts",
+        "sha256": "c15362090ccc582c15fee45ed8ea63489ff705f6d11038cbfe0f30f881291b63"
+      },
+      {
+        "path": "src/renderer/src/rightWorkbenchWorkspaceControls.test.ts",
+        "sha256": "27146532e80a9b0f7fa06dad344dda40956ff71d5b73636f48d67b9e97c3923b"
+      },
+      {
+        "path": "src/renderer/src/zhCnVisibleStrings.test.ts",
+        "sha256": "730520b8fc0cbf0ee458bf202402e894bd1728e39abf18d040343787d6d8a200"
+      }
+    ],
+    "gitDiffCheck": "passed"
+  },
+  "rootIntegration": {
+    "genericBypass": "WorkspaceToolbarControls collapseBelow=0 for diff, default625 for other files",
+    "registry": "Original 42 glyph records retained; Nr added as entry43; six independent Changes controls artwork are counted separately",
+    "fileTreeToggle": {
+      "name": "file-tree-toggle-original-20",
+      "bodySha256": "f99bf70a033affbb5716712c02ec821b2581a257bf3415615e9a104006a2065a",
+      "authoredCanvas": 20,
+      "displaySize": 18,
+      "label": "切换文件树",
+      "openDelay": 250,
+      "callSites": 2
+    },
+    "priorCheckpoint": "Earlier 203/1550 checkpoint moved to acceptance-path. Auto826 split and390 unified, changed-tree diff body seen; allChanges first row failed due48px overlay toolbar. Root added tool-view content margin-top48; requires new-package verification."
+  },
+  "consumers": {
+    "fullFile": {
+      "source": "code-diff-897faede7272.js",
+      "utf8Offset": 48575,
+      "replica": "readWorkspaceFile; reverse exact numbered hunks against disk content; reject mismatch or unsupported patch; render full context only after validation; current disk fallback cannot establish immutable historic content outside hunks; reject mixed CRLF/LF and bare CR; original two-side EOF markers compared independently; filter preferences request needed snapshots even with full display off; refresh/retry fileRevision clears file/Git/error caches before re-reading"
+    },
+    "wordDiffs": {
+      "source": "code-diff-897faede7272.js",
+      "utf8Offset": 47952,
+      "algorithmSources": [
+        {
+          "symbol": "gh",
+          "utf8Offset": 1350825
+        },
+        {
+          "symbol": "lnt/hnt",
+          "utf8Offset": 1356285
+        },
+        {
+          "symbol": "Ert",
+          "utf8Offset": 1390029
+        },
+        {
+          "symbol": "irt",
+          "utf8Offset": 1373275
+        }
+      ],
+      "replica": "directly transcribed strict Myers tokens and word-alt segments; paired replacement lines, <=1000 UTF-16 chars each, <=2000 total changed lines"
+    },
+    "whitespace": {
+      "source": ".vite/build/worker.js",
+      "sha256": "ccc12341749b5b6aedb46c7852edf1f254de263e6d2634ba5fffc972353f6c78",
+      "utf8Offsets": [
+        510135,
+        520260,
+        539564
+      ],
+      "replica": "diffWorkspaceText typed read-only bridge; Git --no-index --ignore-all-space --no-ext-diff --no-textconv --no-color on validated full before/after snapshots; 512KiB UTF-8 each; owned temp dir cleanup finally; partial snapshot unavailable preserves original patch"
+    },
+    "imports": {
+      "source": "file-diff-presentation-54dc5353c8bc.js",
+      "sha256": "43cc537bd4b4abc1e0f9308fe7513290fefbc48cd41454685b00ad14891bf91c",
+      "utf8Offsets": {
+        "Ie": 7613,
+        "Le": 8005,
+        "Re": 8624,
+        "ze": 8934,
+        "Be": 9293,
+        "maxTextLength": 10419
+      },
+      "replica": "whole import-only hunk filtering; validated complete old/new, existing JS/TS/JSX/TSX/Python parsers, each text <=1e6; top-level parsed imports, no parser error or same-line code; annotated hunks retained; added/deleted/unsupported languages/partial snapshots retained"
+    },
+    "richPreview": {
+      "source": "app-initial-60f141238751.js",
+      "utf8Offset": 4170008,
+      "replica": "Markdown extensions when enabled and not deleted; SVG when enabled; bridge-supported bitmap always; actual disk content preview; failed reads keep diff; PDF and unbridged image formats remain unavailable"
+    },
+    "wordSpanCss": {
+      "source": "app-initial-60f141238751.js",
+      "utf8Offsets": [
+        1256407,
+        1256788,
+        1279366
+      ],
+      "replica": "box-decoration-break clone, border-radius3, light/dark addition/deletion base alpha .15/.2"
+    }
+  }
+}

@@ -190,7 +190,7 @@ export function LocalEnvironmentDialog({ cwd, choice, onSave, onClose }: {
             <div className="local-environment-section-label">{section.label === 'Local branches' ? '本地分支' : '远程分支'}</div>
             {section.branches.map((branch) => <button type="button" key={branch} className="local-environment-picker-option" role="option"
               aria-selected={branch === selectedBranch} title={branch} onClick={() => chooseBranch(branch)}>
-              <LocalEnvironmentIcon name="branch" /><span>{branch}</span>{branch === selectedBranch && <LocalEnvironmentIcon name="check" />}
+              <LocalEnvironmentIcon name="branch-list" /><span>{branch}</span>{branch === selectedBranch && <LocalEnvironmentIcon name="branch-check" />}
             </button>)}
           </div>)}
           {snapshot.status === 'ready' && sections.length === 0 && <div className="local-environment-message">{query.trim() ? '没有匹配的分支' : '没有可用分支'}</div>}
@@ -203,7 +203,7 @@ export function LocalEnvironmentDialog({ cwd, choice, onSave, onClose }: {
           </div>
           <div className="local-environment-separator" />
           <button type="button" className="local-environment-picker-option" disabled title="暂不支持环境设置">
-            <ProjectIcon name="edit" /><span>设置项目</span>
+            <LocalEnvironmentIcon name="open-settings" /><span>设置项目</span>
           </button>
         </>}
       </div>}

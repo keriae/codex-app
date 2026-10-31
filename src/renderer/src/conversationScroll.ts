@@ -20,3 +20,14 @@ export function conversationIsAtBottom(
 ): boolean {
   return conversationDistanceFromBottom(metrics) <= threshold
 }
+
+/** CSS column-reverse scrollers use a negative scrollTop above their bottom. */
+export function scrollContainerCanScrollUp(
+  { clientHeight, scrollHeight, scrollTop }: ConversationScrollMetrics,
+  { overflowY, flexDirection }: { overflowY: string; flexDirection: string }
+): boolean {
+  if (!['auto', 'scroll', 'overlay'].includes(overflowY)) return false
+  const range = scrollHeight - clientHeight
+  if (!Number.isFinite(range) || !Number.isFinite(scrollTop) || range <= 0) return false
+  return flexDirection === 'column-reverse' ? scrollTop > -range : scrollTop > 0
+}

@@ -34,6 +34,7 @@ The runtime launch stays in the foreground; run the two check commands in anothe
 | [App-server protocol](app-server-protocol.md) | Initialization, transport, requests, notifications, and endpoint configuration |
 | [Transport recovery](transport-recovery.md) | Reconnection, request delivery, and mutation recovery boundaries |
 | [Conversation activity](activity-parity.md) | Streaming process rows, grouping, tool output, and timing |
+| [Conversation detail snapshot — Oct 31](conversation-detail-parity-2026-10-31.md) | Live command timing, reversible disclosure, and annotated MCP media/output |
 | [Thread operations](thread-operations.md) | Resume, fork, compact, archive, and thread lifecycle |
 | [Writer conflicts](thread-writer-conflicts.md) | Cross-client thread ownership and safe resume behavior |
 | [External agent import](external-agent-import.md) | Local Claude Code, Cursor, and Cowork session import |
@@ -44,6 +45,7 @@ The runtime launch stays in the foreground; run the two check commands in anothe
 | --- | --- |
 | [Workspace editor](workspace-editor-parity.md) | Tabs, CodeMirror, Markdown, draft recovery, and file editing |
 | [Workspace filesystem](workspace-filesystem-parity.md) | Watches, native file actions, and filesystem behavior |
+| [Workspace detail snapshot — Oct 31](workspace-detail-parity-2026-10-31.md) | Recovered file glyphs, tree navigation, focus preservation, and tab menus |
 | [Settings and integrations](settings-parity.md) | Preferences, plugins, skills, and MCP inventory |
 | [Visual baseline](visual-baseline.md) | Measured shell geometry, typography, and interactive states |
 | [Workbench and activity snapshot — Oct 29](workbench-activity-parity-2026-10-29.md) | Per-chat workbench state, browser behavior, and process timing |
@@ -59,6 +61,11 @@ The workflow combines direct inspection of installed source/assets, the supplied
 | [Runtime reconstruction validation](reconstruction-validation-current.md) | Checks for the retained installed renderer/runtime |
 | [UI detail snapshot — Oct 29](ui-detail-parity-2026-10-29.md) | Activity, disclosure, embedded output, toolbar, and composer refinements |
 | [UI detail snapshot — Oct 30](ui-detail-parity-2026-10-30.md) | Breadcrumb menus, compact controls, clipboard, and wide layouts |
+| [UI detail snapshot — Oct 31](ui-detail-parity-2026-10-31.md) | Preceding 192-file/1,478-test/70-output snapshot: native command hierarchy/timer, three-tree guides and fixture diff passed; cleanup passed, complete parity remains in progress |
+| [UI element snapshot — Oct 31](ui-element-parity-2026-10-31.md) | Latest210-file/1,663-test/71-output snapshot: exact-source glyphs, Changes full/word/Git filters, changed-file picker and retained chooser with bounded native checks; complete parity remains in progress |
+| [Shell element audit](shell-element-audit-2026-10-31.md) | Permission, project/thread menus, titlebar and composer assets with original call-site geometry |
+| [Conversation element audit](conversation-element-parity-2026-10-31.md) | Copy variants, code/raw output, MCP resource semantics and error glyphs |
+| [Workbench element audit](workbench-element-parity-2026-10-31.md) | File controls, native icons and three-state diff layout |
 | [Obligation ledger](../reverse/obligations.json) | Remaining reconstruction requirements |
 | [Source provenance](../reverse/source-provenance.json) | Reference source and version attribution |
 

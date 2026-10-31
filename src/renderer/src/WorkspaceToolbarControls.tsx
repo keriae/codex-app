@@ -1,10 +1,10 @@
-import { MoreHorizontal } from 'lucide-react'
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { toLogicalRect, toLogicalViewport, useWindowZoom } from './windowZoom'
+import { WorkbenchElementGlyph } from './WorkbenchElementGlyph'
 
 // review-file-source-breadcrumb.Zt moves file controls to a popover below 625px.
-export function WorkspaceToolbarControls({ children, onPresentationChange }: { children: ReactNode; onPresentationChange?(): void }): ReactNode {
+export function WorkspaceToolbarControls({ children, onPresentationChange, collapseBelow = 625 }: { children: ReactNode; onPresentationChange?(): void; collapseBelow?: number }): ReactNode {
   const zoom = useWindowZoom()
   const host = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLButtonElement>(null)
@@ -18,7 +18,7 @@ export function WorkspaceToolbarControls({ children, onPresentationChange }: { c
     const header = host.current?.closest('header')
     if (!header) return
     const resize = (): void => {
-      const next = header.clientWidth >= 625
+      const next = header.clientWidth >= collapseBelow
       hadFocus.current = Boolean(host.current?.contains(document.activeElement) || popup.current?.contains(document.activeElement))
       setWide(next)
       if (next) setOpen(false)
@@ -27,7 +27,7 @@ export function WorkspaceToolbarControls({ children, onPresentationChange }: { c
     const observer = new ResizeObserver(resize)
     observer.observe(header)
     return () => observer.disconnect()
-  }, [])
+  }, [collapseBelow])
   useLayoutEffect(() => { onPresentationChange?.() }, [wide, open, onPresentationChange])
   useLayoutEffect(() => {
     if (!hadFocus.current) return
@@ -65,7 +65,7 @@ export function WorkspaceToolbarControls({ children, onPresentationChange }: { c
     return () => { window.removeEventListener('pointerdown', close); window.removeEventListener('keydown', key); window.removeEventListener('blur', blur) }
   }, [open])
   return <div ref={host} className="workspace-toolbar-controls">
-    {wide ? children : <button type="button" ref={trigger} className="workspace-toolbar-controls-trigger" aria-label="文件控件" title="文件控件" aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? popupId : undefined} onClick={() => setOpen((value) => !value)}><MoreHorizontal /></button>}
+    {wide ? <div className="workspace-toolbar-controls-inline" role="group" aria-label="文件控件">{children}</div> : <button type="button" ref={trigger} className="workspace-toolbar-controls-trigger" aria-label="文件控件" title={open ? undefined : '文件控件'} aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? popupId : undefined} onClick={() => setOpen((value) => !value)}><WorkbenchElementGlyph name="ellipsis-horizontal-light-16" /></button>}
     {open && !wide && createPortal(<div ref={popup} id={popupId} role="dialog" aria-label="文件控件" className="workspace-pane-header-actions workspace-toolbar-controls-popup" style={position}>{children}</div>, document.body)}
   </div>
 }

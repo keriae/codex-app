@@ -110,6 +110,14 @@ export function commandElapsedLabel(durationMs: unknown): string | null {
   return `${unit(minutes, 'minute')} ${unit(remainder, 'second')}`
 }
 
+/** RT uses the live clock until completion, then the authoritative duration. */
+export function commandActivityElapsedMs(item: CommandItem, nowMs: number, fallbackStartedAtMs: number | null = null): number {
+  const startedAtMs = commandDurationMs(item.startedAtMs) ?? commandDurationMs(item.observedStartedAtMs) ?? commandDurationMs(fallbackStartedAtMs)
+  return Math.max(item.status === 'inProgress' && startedAtMs !== null && Number.isFinite(nowMs)
+    ? nowMs - startedAtMs
+    : commandDurationMs(item.durationMs) ?? 0, 0)
+}
+
 function activeCopy(item: CommandItem, action: CommandAction | null): CommandActivityCopy {
   const active = item.status === 'inProgress'
   if (action?.type === 'read') {
@@ -143,7 +151,7 @@ export function commandActivityCopy(item: CommandItem): CommandActivityCopy {
   return activeCopy(item, actions.at(-1) || null)
 }
 
-function rowCopy(item: CommandItem, action: CommandAction): CommandActivityCopy {
+function rowCopy(item: CommandItem, action: CommandAction, expanded = false): CommandActivityCopy {
   const active = item.status === 'inProgress'
   if (action.type === 'read') {
     return {
@@ -177,6 +185,9 @@ function rowCopy(item: CommandItem, action: CommandAction): CommandActivityCopy 
   }
   const elapsed = commandElapsedLabel(item.durationMs)
   if (active) return { kind: 'command', action: elapsed ? `命令已运行 ${elapsed}` : '正在运行命令', detail: null }
+  if (expanded) return { kind: 'command', action: elapsed
+    ? isInterrupted(item) ? `运行 ${elapsed} 后停止命令` : `命令已在 ${elapsed} 内运行完成`
+    : isInterrupted(item) ? '已停止命令' : '已运行命令', detail: null }
   if (elapsed) {
     if (isInterrupted(item)) return { kind: 'command', action: `运行 ${elapsed} 后停止${command ? '' : '命令'}`, detail: command }
     return { kind: 'command', action: command ? `已在 ${elapsed} 内运行` : `命令已在 ${elapsed} 内运行完成`, detail: command }
@@ -185,7 +196,7 @@ function rowCopy(item: CommandItem, action: CommandAction): CommandActivityCopy 
   return { kind: 'command', action: command ? verb : `${verb}命令`, detail: command }
 }
 
-export function commandActivityRows(item: CommandItem): CommandActivityRow[] {
+export function commandActivityRows(item: CommandItem, { expandedRow = null }: { expandedRow?: number | null } = {}): CommandActivityRow[] {
   const actions = meaningfulActions(item)
   if (actions.length === 0 && normalizeCommandActions(item.commandActions).length === 0) {
     const command = nonEmpty(item.command)
@@ -193,8 +204,8 @@ export function commandActivityRows(item: CommandItem): CommandActivityRow[] {
       actions.push({ type: 'unknown', command: item.command || '' })
     }
   }
-  return actions.map((action) => ({
-    ...rowCopy(item, action),
+  return actions.map((action, index) => ({
+    ...rowCopy(item, action, expandedRow === index),
     command: typeof action.command === 'string' ? action.command : null,
     durationMs: commandDurationMs(item.durationMs),
     path: action.type === 'unknown' ? null : nonEmpty(action.path)

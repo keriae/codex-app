@@ -6,12 +6,10 @@ import {
   ArrowDown,
   Atom,
   Bot,
-  Braces,
   Check,
   ChevronRight,
   CircleAlert,
   CirclePlus,
-  Copy,
   ExternalLink,
   FileCode2,
   FileText,
@@ -22,17 +20,10 @@ import {
   Image as ImageIcon,
   LoaderCircle,
   Link2,
-  ListFilter,
-  Maximize2,
   MessageSquare,
-  MoreHorizontal,
-  PanelRight,
-  PanelsTopLeft,
   Pencil,
   Pin,
   PinOff,
-  Plus,
-  Settings,
   Sparkles,
   SquarePen,
   Trash2,
@@ -112,7 +103,15 @@ import {
   updateDesktopSettings,
   useDesktopSettings
 } from './desktopSettings'
-import { conversationIsAtBottom } from './conversationScroll'
+import { conversationIsAtBottom, scrollContainerCanScrollUp } from './conversationScroll'
+import { useSidebarSelectionReveal } from './useSidebarSelectionReveal'
+import { WorkspaceFileIcon } from './WorkspaceFileIcon'
+import { WorkbenchElementGlyph } from './WorkbenchElementGlyph'
+import { RetainedTabsChooser } from './RetainedTabsChooser'
+import { ShellElementGlyph } from './ShellElementGlyph'
+import { MessageCopyButton } from './MessageCopyButton'
+import { ActivityGlyph } from './ActivityGlyph'
+import { ActivityTooltip } from './ActivityTooltip'
 import { FileChangeReview } from './FileChangeReview'
 import { MermaidDiagram } from './MermaidDiagram'
 import {
@@ -212,6 +211,7 @@ import {
   ACTIVATE_WORKSPACE_TAB_EVENT,
   CLOSE_WORKSPACE_FILE_EVENT,
   CLOSE_WORKSPACE_TAB_EVENT,
+  OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT,
   type WorkspaceChromeState
 } from './WorkspacePane'
 import { ADD_WORKSPACE_SELECTION_TO_COMPOSER_EVENT, validatedWorkspaceComposerReference, workspaceReferencePrompt } from './workspaceEditorSelection'
@@ -5240,7 +5240,20 @@ function App(): ReactNode {
         onMoveRightTab={(id, beforeId) => setRightWorkbenchTabs((current) => moveRightWorkbenchTab(current, id, beforeId))}
         onToggleRightWorkbenchFullView={toggleRightWorkbenchFullView}
         onCollapseRightWorkbench={collapseRightWorkbench}
-        onRevealRightWorkbench={() => setRightWorkbenchView((current) => revealRightWorkbenchView(current))}
+        onRevealRightWorkbench={(restoreMainFocus = false) => {
+          setRightWorkbenchView((current) => revealRightWorkbenchView(current))
+          if (restoreMainFocus) window.requestAnimationFrame(() => {
+            const layoutToggle = document.querySelector<HTMLElement>('[data-app-shell-workspace-layout-toggle="main"]')
+            const button = layoutToggle instanceof HTMLButtonElement ? layoutToggle : layoutToggle?.querySelector<HTMLButtonElement>('button')
+            if (button && !button.disabled) button.focus({ preventScroll: true })
+            else document.querySelector<HTMLTextAreaElement>('.main-panel .composer textarea')?.focus({ preventScroll: true })
+          })
+        }}
+        onSelectRetainedRightTab={(id, mode) => {
+          activateRightTab(id)
+          setRightWorkbenchView(mode === 'full' ? enterRightWorkbenchFullView() : { mode: 'split' })
+          setProjectSummaryPopoverOpen(false)
+        }}
         onShowChat={showRightWorkbenchChat}
         onOpenNewWorkbenchTab={openNewWorkbenchTab}
         canGoBack={!navigationBusy && canNavigateBack(navigation)}
@@ -5984,9 +5997,7 @@ function RightWorkbenchTabIcon({
   if (kind === 'side-chat') return <CirclePlus />
   if (kind === 'browser') return <Globe2 />
   if (kind === 'terminal') return <TerminalSquare />
-  if (kind === 'file' && /\.(?:json|jsonl)$/i.test(title)) {
-    return <Braces className="right-workbench-json-icon" />
-  }
+  if (kind === 'file') return <WorkspaceFileIcon path={title} />
   return <WorkspaceChromeIcon kind={kind} />
 }
 
@@ -6015,6 +6026,7 @@ function WindowTitlebar({
   onToggleRightWorkbenchFullView,
   onCollapseRightWorkbench,
   onRevealRightWorkbench,
+  onSelectRetainedRightTab,
   onShowChat,
   onOpenNewWorkbenchTab,
   onRestart,
@@ -6043,7 +6055,8 @@ function WindowTitlebar({
   onMoveRightTab(id: RightWorkbenchTabId, beforeId: RightWorkbenchTabId | null): void
   onToggleRightWorkbenchFullView(): void
   onCollapseRightWorkbench(): void
-  onRevealRightWorkbench(): void
+  onRevealRightWorkbench(restoreMainFocus?: boolean): void
+  onSelectRetainedRightTab(id: RightWorkbenchTabId, mode: 'split' | 'full'): void
   onShowChat(): void
   onOpenNewWorkbenchTab(): void
   onRestart(): void
@@ -6081,6 +6094,15 @@ function WindowTitlebar({
     id: string,
     closable: boolean
   ): void => {
+    if (id !== chatTabId && id.startsWith('workspace:file:') && (event.key === 'ContextMenu' || (event.key === 'F10' && event.shiftKey))) {
+      event.preventDefault()
+      event.stopPropagation()
+      const rect = event.currentTarget.getBoundingClientRect()
+      window.dispatchEvent(new CustomEvent(OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT, {
+        detail: { tabId: rightWorkbenchTabValue(id as RightWorkbenchTabId), x: rect.left, y: rect.bottom }
+      }))
+      return
+    }
     const direction = getComputedStyle(event.currentTarget).direction === 'rtl' ? 'rtl' : 'ltr'
     const action = resolveRightWorkbenchTabKeyboardAction({
       order: rightTabOrder,
@@ -6126,7 +6148,7 @@ function WindowTitlebar({
       {!settingsMode && <div className="titlebar-thread">
         {thread && (
           <div className="titlebar-thread-primary" title={thread.cwd || context?.cwd}>
-            <Folder />
+            <WorkbenchElementGlyph name="folder-light-16" />
             <span>{titleForThread(thread)}</span>
           </div>
         )}
@@ -6157,14 +6179,18 @@ function WindowTitlebar({
               aria-pressed={projectSummaryOpen}
               title="切换摘要面板固定状态"
               onClick={onToggleProjectSummary}
-            ><ListFilter /></button>
+            ><ShellElementGlyph name="list-circle-light-16" /></button>
           </>
         )}
         {!rightWorkbenchOpen && <span className="titlebar-actions-divider" aria-hidden="true" />}
         {!rightWorkbenchOpen && retainedRightTabCount > 0 && (
           <>
-            <button type="button" className="titlebar-icon" aria-label="进入完整视图" title="进入完整视图" onClick={() => { onRevealRightWorkbench(); onToggleRightWorkbenchFullView() }}><Maximize2 /></button>
-            <button type="button" className="titlebar-icon titlebar-retained-tabs" aria-label={`显示标签页，${retainedRightTabCount} 个已打开`} title="显示标签页" onClick={onRevealRightWorkbench}><PanelRight /><span>{retainedRightTabCount}</span></button>
+            <button type="button" className="titlebar-icon" aria-label="进入完整视图" title="进入完整视图" onClick={() => { onRevealRightWorkbench(); onToggleRightWorkbenchFullView() }}><WorkbenchElementGlyph name="chevron-up-right-chevron-down-left-sm-light-16" /></button>
+            <RetainedTabsChooser tabs={rightWorkbenchTabs.map((tab) => ({
+              id: tab.id, title: tab.label, titleContent: tab.label,
+              icon: <RightWorkbenchTabIcon kind={tab.kind} title={tab.title} />,
+              ...(tab.kind === 'browser' ? { requiresWorkspaceReady: false } : {})
+            }))} workspaceReady={backend.state === 'ready'} onReveal={onRevealRightWorkbench} onSelect={onSelectRetainedRightTab} />
           </>
         )}
         {!rightWorkbenchOpen && retainedRightTabCount === 0 && (
@@ -6186,6 +6212,18 @@ function WindowTitlebar({
           {rightWorkbenchTabs.map((tab) => {
             const active = tab.id === activeRightTabId
             return <div key={tab.id} className={`right-workbench-title-tab${active ? ' is-active' : ''}`} draggable
+              onAuxClick={(event) => {
+                if (event.button !== 1) return
+                event.preventDefault()
+                onCloseRightTab(tab.id)
+              }}
+              onContextMenu={(event) => {
+                if (!tab.id.startsWith('workspace:file:')) return
+                event.preventDefault()
+                window.dispatchEvent(new CustomEvent(OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT, {
+                  detail: { tabId: rightWorkbenchTabValue(tab.id), x: event.clientX, y: event.clientY }
+                }))
+              }}
               onDragStart={(event) => { event.dataTransfer.setData(RIGHT_WORKBENCH_TAB_DRAG_TYPE, tab.id); event.dataTransfer.effectAllowed = 'move' }}
               onDragOver={(event) => {
                 if (!event.dataTransfer.types.includes(RIGHT_WORKBENCH_TAB_DRAG_TYPE)) return
@@ -6197,11 +6235,11 @@ function WindowTitlebar({
                 if (rightWorkbenchTabs.some((entry) => entry.id === id)) onMoveRightTab(id, tab.id)
               }}>
               <button type="button" role="tab" aria-selected={active} tabIndex={rightWorkbenchRovingTabIndex(rightTabOrder, selectedRightTabId, tab.id)} aria-keyshortcuts="ArrowLeft ArrowRight Home End Delete" data-right-workbench-tab-id={tab.id} title={tab.title} onKeyDown={(event) => onRightTabKeyDown(event, tab.id, true)} onClick={() => onActivateRightTab(tab.id)}><RightWorkbenchTabIcon kind={tab.kind} title={tab.title} /><span>{tab.label}</span></button>
-              <button type="button" className="right-workbench-title-close" aria-label={`关闭 ${tab.label}`} onClick={() => onCloseRightTab(tab.id)}>{tab.dirty ? <span className="right-workbench-unsaved-dot" /> : <X />}</button>
+              <button type="button" className="right-workbench-title-close" aria-label={`关闭 ${tab.label}`} onClick={() => onCloseRightTab(tab.id)}>{tab.dirty ? <span className="right-workbench-unsaved-dot" /> : <WorkbenchElementGlyph name="tab-close-original-21" size={14} />}</button>
             </div>
           })}
           </div>
-          <button type="button" className="right-workbench-title-add" aria-label="新标签页" title="新标签页" onClick={() => onOpenNewWorkbenchTab()}><Plus /></button>
+          <button type="button" className="right-workbench-title-add" aria-label="新标签页" title="新标签页" onClick={() => onOpenNewWorkbenchTab()}><WorkbenchElementGlyph name="plus-lg-light-16" /></button>
           {rightWorkbenchFullView && thread && <button
             ref={projectSummaryAnchorRef}
             type="button"
@@ -6210,10 +6248,10 @@ function WindowTitlebar({
             aria-pressed={projectSummaryOpen}
             title="切换摘要面板固定状态"
             onClick={onToggleProjectSummary}
-          ><ListFilter /></button>}
+          ><ShellElementGlyph name="list-circle-light-12" style={{ width: 12, height: 12 }} /></button>}
           <div className="right-workbench-titlebar-controls">
-            <button type="button" aria-label={rightWorkbenchFullView ? '退出完整视图' : '进入完整视图'} aria-pressed={rightWorkbenchFullView} title={rightWorkbenchFullView ? '退出完整视图' : '进入完整视图'} onClick={onToggleRightWorkbenchFullView}>{rightWorkbenchFullView ? <PanelsTopLeft /> : <Maximize2 />}</button>
-            <button type="button" aria-label={rightWorkbenchFullView ? '进入分屏视图' : '隐藏标签页'} aria-pressed={rightWorkbenchFullView ? false : true} title={rightWorkbenchFullView ? '进入分屏视图' : '隐藏标签页'} onClick={rightWorkbenchFullView ? onToggleRightWorkbenchFullView : onCollapseRightWorkbench}><PanelRight /></button>
+            <button type="button" aria-label={rightWorkbenchFullView ? '退出完整视图' : '进入完整视图'} aria-pressed={rightWorkbenchFullView} title={rightWorkbenchFullView ? '退出完整视图' : '进入完整视图'} onClick={onToggleRightWorkbenchFullView}><WorkbenchElementGlyph name={rightWorkbenchFullView ? 'chevron-down-left-chevron-up-right-sm-light-16' : 'chevron-up-right-chevron-down-left-sm-light-16'} /></button>
+            <button type="button" aria-label={rightWorkbenchFullView ? '进入分屏视图' : '隐藏标签页'} aria-pressed={!rightWorkbenchFullView} title={rightWorkbenchFullView ? '进入分屏视图' : '隐藏标签页'} onClick={rightWorkbenchFullView ? onToggleRightWorkbenchFullView : onCollapseRightWorkbench}><WorkbenchElementGlyph name="table-column-light-16" /></button>
           </div>
         </div>}
       </div>}
@@ -7227,6 +7265,7 @@ function Sidebar({
   onCompact(thread: Thread): void
 }): ReactNode {
   const scrollRef = useRef<HTMLDivElement | null>(null)
+  useSidebarSelectionReveal(scrollRef, selectedThreadId)
   const recentLoadSentinelRef = useRef<HTMLDivElement | null>(null)
   const [recentRenderLimit, setRecentRenderLimit] = useState(SIDEBAR_RECENT_INITIAL_LIMIT)
   const collections = useMemo(
@@ -7428,6 +7467,7 @@ function Sidebar({
     return <SidebarProjectGroup
       key={`${sectionId}-${project.id}`}
       project={project}
+      selectedThreadId={selectedThreadId}
       active={
         project.kind === 'remote'
           ? selectedHostId === project.hostId && (
@@ -7789,6 +7829,7 @@ function SidebarPortalMenu({
 
 function SidebarProjectGroup({
   project,
+  selectedThreadId,
   active,
   collapsed,
   expanded,
@@ -7806,6 +7847,7 @@ function SidebarProjectGroup({
   renderThread
 }: {
   project: SidebarProjectCollection
+  selectedThreadId: string | null
   active: boolean
   collapsed: boolean
   expanded: boolean
@@ -7827,7 +7869,7 @@ function SidebarProjectGroup({
   const menuId = useId()
   const menuTriggerId = `${menuId}-trigger`
   const label = project.name
-  const visibleThreads = projectThreadsForDisplay(project.threads, expanded)
+  const visibleThreads = projectThreadsForDisplay(project.threads, expanded, selectedThreadId)
   const projectSummary = project.kind === 'remote' && project.hostLabel
     ? `${project.hostLabel} · ${project.threads.length} 次聊天`
     : `${project.threads.length} 次聊天`
@@ -7911,7 +7953,7 @@ function SidebarProjectGroup({
           </div>
           {onEditProject && <div className="sidebar-project-hover-card-section">
             <button type="button" className="sidebar-project-hover-card-row is-action" onClick={onEditProject}>
-              <span className="sidebar-hover-card-leading"><Settings /></span>
+              <span className="sidebar-hover-card-leading"><ShellElementGlyph name="gear-light-16" /></span>
               <span>编辑项目</span>
             </button>
           </div>}
@@ -8084,9 +8126,9 @@ function ThreadRow({
           <div className="sidebar-thread-hover-card-title-wrap">
             <button type="button" className="sidebar-thread-hover-card-title" onClick={onClick}>{title}</button>
             <span className="sidebar-thread-hover-card-host-icon" aria-hidden="true">
-              {hostLabel
+              {thread.hostId && thread.hostId !== 'local'
                 ? <SidebarRemoteGlobeIcon color={hostColor || '#12bde8'} />
-                : <TerminalSquare />}
+                : <ActivityTooltip content="此对话在本地运行。"><ShellElementGlyph name="local-laptop-legacy-21" className="sidebar-thread-hover-local-icon" /></ActivityTooltip>}
             </span>
           </div>
           <time>{sidebarRelativeTimeLabel(thread.recencyAt || thread.updatedAt)}</time>
@@ -8115,6 +8157,7 @@ function ThreadRow({
       <button
         className={`thread-row${active ? ' active' : ''}${leadingIcon ? ' has-leading-icon' : ''}`}
         data-app-action-sidebar-thread-row
+        data-app-action-sidebar-thread-id={thread.id}
         data-app-action-sidebar-thread-active={String(loading)}
         data-app-action-sidebar-thread-pinned={String(pinned)}
         data-app-action-sidebar-thread-selected={String(active)}
@@ -8269,11 +8312,14 @@ function Conversation({
 }): ReactNode {
   const scrollRef = useRef<HTMLDivElement>(null)
   const followLatestRef = useRef(true)
+  const scrollingToLatestRef = useRef(false)
   const [scrolledFromBottom, setScrolledFromBottom] = useState(false)
   const earlierMetricsRef = useRef<{
     firstTurnId: string | null
     scrollHeight: number
     scrollTop: number
+    anchorTurnId: string | null
+    anchorOffset: number
   } | null>(null)
   const turns = session?.turns || []
   const latestUser = latestUserTurnTarget(turns)
@@ -8288,7 +8334,11 @@ function Conversation({
     if (metrics) {
       const firstTurnId = turns[0]?.id || null
       if (firstTurnId !== metrics.firstTurnId) {
-        scroll.scrollTop = metrics.scrollTop + (scroll.scrollHeight - metrics.scrollHeight)
+        const anchor = Array.from(scroll.querySelectorAll<HTMLElement>('[data-conversation-turn-id]'))
+          .find((element) => element.dataset.conversationTurnId === metrics.anchorTurnId)
+        scroll.scrollTop = anchor
+          ? scroll.scrollTop + (anchor.getBoundingClientRect().top - scroll.getBoundingClientRect().top) / readWindowZoom() - metrics.anchorOffset
+          : metrics.scrollTop + (scroll.scrollHeight - metrics.scrollHeight)
         earlierMetricsRef.current = null
         followLatestRef.current = conversationIsAtBottom(scroll)
         setScrolledFromBottom(!followLatestRef.current)
@@ -8306,6 +8356,7 @@ function Conversation({
   useEffect(() => {
     earlierMetricsRef.current = null
     followLatestRef.current = true
+    scrollingToLatestRef.current = false
     setScrolledFromBottom(false)
     const frame = requestAnimationFrame(() => {
       const scroll = scrollRef.current
@@ -8317,7 +8368,14 @@ function Conversation({
   const updateScrollPosition = (): void => {
     const scroll = scrollRef.current
     if (!scroll) return
+    if (earlierMetricsRef.current && turns[0]?.id === earlierMetricsRef.current.firstTurnId) {
+      earlierMetricsRef.current = captureEarlierMetrics(scroll)
+    }
     const atBottom = conversationIsAtBottom(scroll)
+    // A smooth jump emits intermediate scroll events away from the bottom.
+    // Those events must not cancel the follow intent that initiated the jump.
+    if (scrollingToLatestRef.current && !atBottom) return
+    scrollingToLatestRef.current = false
     followLatestRef.current = atBottom
     setScrolledFromBottom(!atBottom)
   }
@@ -8327,6 +8385,19 @@ function Conversation({
     const content = scroll?.firstElementChild
     if (!scroll || !content || typeof ResizeObserver === 'undefined') return
     const observer = new ResizeObserver(() => {
+      // Retain the intent from before an image, diagram, disclosure or pane
+      // resize changed the geometry. Recalculating it here loses streaming
+      // follow as soon as content grows by more than the 24px tolerance.
+      if (earlierMetricsRef.current) return
+      if (followLatestRef.current) {
+        // A smooth jump targets the old bottom. Content growth must replace
+        // that stale target instead of waiting forever for it to reach the
+        // new bottom (images and diagrams can grow without a turn update).
+        scrollingToLatestRef.current = false
+        scroll.scrollTo({ top: Math.max(0, scroll.scrollHeight - scroll.clientHeight), behavior: 'instant' })
+        setScrolledFromBottom(false)
+        return
+      }
       const atBottom = conversationIsAtBottom(scroll)
       followLatestRef.current = atBottom
       setScrolledFromBottom(!atBottom)
@@ -8339,17 +8410,48 @@ function Conversation({
   const scrollToLatest = (): void => {
     followLatestRef.current = true
     const scroll = scrollRef.current
-    if (scroll) scroll.scrollTo({ top: Math.max(0, scroll.scrollHeight - scroll.clientHeight), behavior: 'smooth' })
+    scrollingToLatestRef.current = Boolean(scroll && !conversationIsAtBottom(scroll))
+    setScrolledFromBottom(false)
+    const motionOverride = document.documentElement.dataset.reducedMotion
+    const reducedMotion = motionOverride == null ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : motionOverride === 'true'
+    if (scroll) scroll.scrollTo({ top: Math.max(0, scroll.scrollHeight - scroll.clientHeight),
+      behavior: reducedMotion ? 'instant' : 'smooth' })
+  }
+
+  const stopFollowingLatest = (): void => {
+    scrollingToLatestRef.current = false
+    followLatestRef.current = false
+    // Cancel an in-flight smooth jump when the user navigates upward.
+    const scroll = scrollRef.current
+    if (scroll) scroll.scrollTo({ top: scroll.scrollTop, behavior: 'instant' })
+  }
+
+  const nestedOutputCanScrollUp = (target: EventTarget | null, scroll: HTMLDivElement): boolean => {
+    let element = target instanceof Element ? target : null
+    while (element && element !== scroll) {
+      if (scrollContainerCanScrollUp(element, getComputedStyle(element))) return true
+      element = element.parentElement
+    }
+    return false
+  }
+
+  const captureEarlierMetrics = (scroll: HTMLDivElement): NonNullable<typeof earlierMetricsRef.current> => {
+    const top = scroll.getBoundingClientRect().top
+    const anchor = Array.from(scroll.querySelectorAll<HTMLElement>('[data-conversation-turn-id]'))
+      .find((element) => element.getBoundingClientRect().bottom > top)
+    return {
+      firstTurnId: turns[0]?.id || null,
+      scrollHeight: scroll.scrollHeight,
+      scrollTop: scroll.scrollTop,
+      anchorTurnId: anchor?.dataset.conversationTurnId || null,
+      anchorOffset: anchor ? (anchor.getBoundingClientRect().top - top) / readWindowZoom() : 0
+    }
   }
 
   const loadEarlier = (): void => {
     const scroll = scrollRef.current
     if (scroll) {
-      earlierMetricsRef.current = {
-        firstTurnId: turns[0]?.id || null,
-        scrollHeight: scroll.scrollHeight,
-        scrollTop: scroll.scrollTop
-      }
+      earlierMetricsRef.current = captureEarlierMetrics(scroll)
     }
     onLoadEarlier()
   }
@@ -8408,6 +8510,21 @@ function Conversation({
         role="region"
         aria-label="对话"
         onScroll={updateScrollPosition}
+        onWheel={(event) => {
+          if (event.deltaY >= 0) return
+          // A command/MCP output scroller consumes its own wheel input. It
+          // must not cancel the transcript's follow intent while it scrolls.
+          if (nestedOutputCanScrollUp(event.target, event.currentTarget)) return
+          stopFollowingLatest()
+        }}
+        onKeyDown={(event) => {
+          if (event.target instanceof HTMLElement && event.target.closest('input, textarea, [contenteditable="true"]')) return
+          if (event.key === 'PageUp' || event.key === 'Home' || event.key === 'ArrowUp' || (event.key === ' ' && event.shiftKey)) {
+            if (event.defaultPrevented) return
+            if (event.target === document.activeElement && nestedOutputCanScrollUp(event.target, event.currentTarget)) return
+            stopFollowingLatest()
+          }
+        }}
       >
         <div className="conversation-content">
         {hasEarlier && (
@@ -9073,7 +9190,7 @@ export function TurnBlock({
   const turnForkAction = forkTurnAction(turn.id, turn.status, onFork)
 
   return (
-    <section className={`turn-block${active ? ' is-active' : ''}`}>
+    <section className={`turn-block${active ? ' is-active' : ''}`} data-conversation-turn-id={turn.id}>
       {timestampSeparatorAtMs !== null && (
         <ConversationTimestampSeparator sentAtMs={timestampSeparatorAtMs} />
       )}
@@ -9385,14 +9502,7 @@ function TimelineItem({
             {(text || revert) && (
               <div className="message-action-controls">
                 {text && (
-                  <button
-                    type="button"
-                    aria-label="Copy message"
-                    title="复制"
-                    onClick={() => void navigator.clipboard?.writeText(text)}
-                  >
-                    <Copy />
-                  </button>
+                  <MessageCopyButton text={text} tooltip="复制消息" variant="user" />
                 )}
                 {revert && (
                   <button
@@ -9428,15 +9538,7 @@ function TimelineItem({
         </article>
         {agentActions && (
           <div className="agent-message-actions" aria-label="回复操作">
-            <button
-              type="button"
-              className="agent-message-copy"
-              aria-label="复制"
-              title="复制"
-              onClick={() => void navigator.clipboard?.writeText(item.text || '')}
-            >
-              <Copy />
-            </button>
+            <MessageCopyButton text={item.text || ''} tooltip="复制回复" className="agent-message-copy" />
             {forkAction && (
               <button
                 type="button"
@@ -9449,7 +9551,7 @@ function TimelineItem({
                 onPointerDown={(event) => event.stopPropagation()}
                 onClick={() => setAgentMenuOpen((open) => !open)}
               >
-                <MoreHorizontal />
+                <ActivityGlyph kind="more" aria-hidden="true" />
               </button>
             )}
             {agentMenuOpen && forkAction && (
@@ -9467,7 +9569,7 @@ function TimelineItem({
                     forkAction?.()
                   }}
                 >
-                  <GitFork />
+                  <ActivityGlyph kind="fork" aria-hidden="true" />
                   <span>分支到新聊天</span>
                 </button>
               </div>
@@ -9833,6 +9935,7 @@ function Composer({
 }): ReactNode {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const dockRef = useRef<HTMLDivElement>(null)
+  const composerWindowZoom = useWindowZoom()
   const modeIndicator = composerModeIndicator(mode)
   const richDraft = useMemo(() => parseComposerRichDraft(draft), [draft])
   const hasDocumentsMention = richDraft.pluginMentions.some(({ id }) => id === 'documents')
@@ -9845,15 +9948,28 @@ function Composer({
     previousDocumentsMention.current = hasDocumentsMention
   }, [hasDocumentsMention])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const textarea = textareaRef.current
     if (!textarea) return
-    textarea.style.height = '0px'
-    textarea.style.height = `${Math.min(
-      window.innerHeight * 0.25,
-      Math.max(44, textarea.scrollHeight)
-    )}px`
-  }, [richDraft.text, richDraft.pluginMentions.length, richDraft.templates.length])
+    const fit = (): void => {
+      textarea.style.height = '0px'
+      textarea.style.height = `${Math.min(
+        window.innerHeight / composerWindowZoom * 0.25,
+        Math.max(44, textarea.scrollHeight)
+      )}px`
+    }
+    let observedWidth = -1
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width
+      if (width === undefined || width === observedWidth) return
+      observedWidth = width
+      fit()
+    })
+    observer?.observe(textarea)
+    window.addEventListener('resize', fit)
+    fit()
+    return () => { observer?.disconnect(); window.removeEventListener('resize', fit) }
+  }, [richDraft.text, richDraft.pluginMentions.length, richDraft.templates.length, composerWindowZoom])
 
   useLayoutEffect(() => {
     const dock = dockRef.current
@@ -9861,7 +9977,7 @@ function Composer({
     if (!dock || !panel) return
     const measure = (): void => {
       const bottom = Number.parseFloat(getComputedStyle(dock).bottom) || 0
-      const height = `${dock.getBoundingClientRect().height + bottom}px`
+      const height = `${toLogicalRect(dock.getBoundingClientRect(), composerWindowZoom).height + bottom}px`
       if (panel.style.getPropertyValue('--conversation-footer-height') === height) return
       const scroll = panel.querySelector<HTMLElement>(':scope > .conversation-scroll')
       const wasAtBottom = scroll ? conversationIsAtBottom(scroll, 24) : false
@@ -9877,7 +9993,7 @@ function Composer({
       window.removeEventListener('resize', measure)
       panel.style.removeProperty('--conversation-footer-height')
     }
-  }, [])
+  }, [composerWindowZoom])
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
     if (
@@ -9990,7 +10106,7 @@ function Composer({
                 if (comment.localDiffHunk) dispatchWorkspaceDiffLink({itemId: `comment-${comment.id}`,
                   change: {path: comment.position.path, kind: {type: 'update', move_path: null}, diff: comment.localDiffHunk}})
               }} disabled={!comment.localDiffHunk}>{name}:{formatDiffCommentLines(comment)}</button>
-              {onRemoveComment && <button type="button" aria-label={`Remove comment on ${name}`} onClick={() => onRemoveComment(comment.id)}><X /></button>}
+              {onRemoveComment && <button type="button" className="attachment-chip-remove" aria-label={`移除 ${name} 的评论`} onPointerDown={(event) => event.preventDefault()} onClick={(event) => { event.stopPropagation(); onRemoveComment(comment.id) }}><ShellElementGlyph name="xmark-md-light-12" /></button>}
             </div>
           })}
         </div>}
@@ -10006,11 +10122,13 @@ function Composer({
                 <span>{attachment.name}</span>
                 <button
                   type="button"
-                  onClick={() => onRemoveAttachment(attachment.path)}
-                  aria-label={`Remove ${attachment.name}`}
-                  title={`Remove ${attachment.name}`}
+                  className="attachment-chip-remove"
+                  onPointerDown={(event) => event.preventDefault()}
+                  onClick={(event) => { event.stopPropagation(); onRemoveAttachment(attachment.path) }}
+                  aria-label={`移除 ${attachment.name}`}
+                  title={`移除 ${attachment.name}`}
                 >
-                  <X />
+                  <ShellElementGlyph name="xmark-md-light-12" />
                 </button>
               </div>
             ))}

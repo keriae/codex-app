@@ -1,4 +1,5 @@
 import { copyTextToClipboard } from './clipboard'
+import { ActivityTooltip } from './ActivityTooltip'
 import {
   Bot,
   Braces,
@@ -9,10 +10,8 @@ import {
   CircleAlert,
   File,
   FileCode2,
-  FileImage,
   Folder,
   FolderOpen,
-  GitBranch,
   GitCompareArrows,
   Globe2,
   Link2,
@@ -32,6 +31,7 @@ import {
 import {
   type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
   useCallback,
   useEffect,
@@ -41,6 +41,7 @@ import {
   useState,
   useSyncExternalStore
 } from 'react'
+import { createPortal } from 'react-dom'
 import type {
   WorkspaceDirectoryEntry,
   WorkspaceDirectoryResult,
@@ -65,6 +66,7 @@ import {
   WORKSPACE_NAVIGATOR_MIN_WIDTH,
   buildWorkspaceNavigatorChangedTree,
   clampWorkspaceNavigatorWidth,
+  collectVisibleWorkspaceChangedItems,
   collectWorkspaceNavigatorSearchPaths,
   isWorkspaceNavigatorRecursiveSearchExcluded,
   persistWorkspaceNavigatorSections,
@@ -72,6 +74,8 @@ import {
   readWorkspaceNavigatorSections,
   readWorkspaceNavigatorWidth,
   workspaceNavigatorMaximumWidth,
+  workspaceNavigatorRevealDirectories,
+  workspaceNavigatorRowPadding,
   type WorkspaceNavigatorChangedNode,
   type WorkspaceNavigatorSections
 } from './workspaceNavigatorModel'
@@ -101,6 +105,7 @@ export const CLOSE_WORKSPACE_TAB_EVENT = 'codex:close-workspace-tab'
 import './WorkspacePane.css'
 import { WorkspaceDiffViewer, type WorkspaceDiffCommentProps } from './WorkspaceDiffViewer'
 import { OPEN_WORKSPACE_DIFF_EVENT, resolveWorkspaceDiffLink } from './workspaceDiffLinks'
+import { workspacePathComparisonKey } from './workspacePathModel'
 import { WorkspaceTextEditor } from './WorkspaceTextEditor'
 import { WorkspaceFileContextMenu, type WorkspaceFileMenu } from './WorkspaceFileContextMenu'
 import { dispatchWorkspaceReference } from './workspaceEditorSelection'
@@ -117,6 +122,13 @@ import { readDesktopSettings } from './desktopSettings'
 import { WorkspaceBreadcrumbs } from './WorkspaceBreadcrumbs'
 import { WorkspaceFileToolbar } from './WorkspaceFileToolbar'
 import { WorkspaceToolbarControls } from './WorkspaceToolbarControls'
+import { WorkspaceFileIcon } from './WorkspaceFileIcon'
+import { WorkbenchElementGlyph } from './WorkbenchElementGlyph'
+import { WorkspaceOpenTargetIcon } from './WorkspaceOpenTargetIcon'
+import { WorkspaceTreeIndentGuides } from './WorkspaceTreeIndentGuides'
+import { readWindowZoom } from './windowZoom'
+import { OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT, resolveWorkspaceTabContextMenu } from './workspaceTabContextMenuModel'
+export { OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT } from './workspaceTabContextMenuModel'
 
 export interface WorkspacePaneProps extends WorkspaceDiffCommentProps {
   chromeTarget?: HTMLElement | null
@@ -179,7 +191,8 @@ function visibleDirectoryEntries(
   filter: string,
   searchPaths?: ReadonlySet<string>
 ): WorkspaceDirectoryEntry[] {
-  if (!state || state.status !== 'ready') return []
+  // Background watch baselines retain the rows and their keyboard focus.
+  if (!state || (state.status !== 'ready' && state.status !== 'loading')) return []
   const normalizedFilter = filter.trim().toLocaleLowerCase()
   if (!normalizedFilter) return state.entries
   if (searchPaths) return state.entries.filter((entry) => searchPaths.has(entry.path))
@@ -194,7 +207,8 @@ function workspaceSearchDirectoryExpanded(
   if (!searchPaths) return false
   const state = directories[path]
   return Boolean(
-    state?.status === 'ready' && state.entries.some((entry) => searchPaths.has(entry.path))
+    (state?.status === 'ready' || state?.status === 'loading') &&
+    state.entries.some((entry) => searchPaths.has(entry.path))
   )
 }
 
@@ -307,39 +321,9 @@ function WorkspaceEntryIcon({
   expanded?: boolean
 }): ReactNode {
   if (isDirectory) return expanded ? <FolderOpen /> : <Folder />
-  const name = workspacePathName(path)
-  if (/\.(?:png|jpe?g|gif|webp|svg)$/i.test(name)) {
-    return <FileImage className="workspace-file-kind is-image" />
-  }
-  if (/\.git(?:ignore|attributes|modules)$/i.test(name)) {
-    return <GitBranch className="workspace-file-kind is-git" />
-  }
-  if (/\.(?:json|jsonl)$/i.test(name) || /^(?:tsconfig|jsconfig)(?:\..+)?\.json$/i.test(name)) {
-    return <Braces className="workspace-file-kind is-json" />
-  }
-  if (/\.tsx?$/i.test(name)) {
-    return <span className="workspace-file-kind-badge is-typescript" aria-hidden="true">TS</span>
-  }
-  if (/\.[cm]?jsx?$/i.test(name)) {
-    return <span className="workspace-file-kind-badge is-javascript" aria-hidden="true">JS</span>
-  }
-  if (/\.(?:md|mdx)$/i.test(name)) {
-    return <span className="workspace-file-kind-badge is-markdown" aria-hidden="true">M</span>
-  }
-  if (/\.(?:[cm]?[jt]sx?|css|scss|html?|py|go|rs|swift|java|kt|sh|ya?ml|toml)$/i.test(path)) {
-    return <FileCode2 className="workspace-file-kind is-code" />
-  }
-  return <File className="workspace-file-kind" />
+  return <WorkspaceFileIcon path={path} />
 }
 
-function WorkspaceOpenTargetIcon({ target }: { target: WorkspaceOpenTargetId }): ReactNode {
-  if (target === 'terminal') return <span className="workspace-open-target-icon is-terminal" aria-hidden="true"><TerminalSquare /></span>
-  if (target === 'finder') return <span className="workspace-open-target-icon is-finder" aria-hidden="true"><Folder /></span>
-  if (target === 'vscode') return <span className="workspace-open-target-icon is-vscode" aria-hidden="true">⌁</span>
-  if (target === 'cursor') return <span className="workspace-open-target-icon is-cursor" aria-hidden="true">C</span>
-  if (target === 'zed') return <span className="workspace-open-target-icon is-zed" aria-hidden="true">Z</span>
-  return <span className="workspace-open-target-icon is-windsurf" aria-hidden="true">W</span>
-}
 
 function WorkspaceSummaryIcon({ kind }: { kind: WorkspaceSummaryItem['kind'] }): ReactNode {
   if (kind === 'changes') return <GitCompareArrows />
@@ -370,10 +354,7 @@ function splitPath(path: string): { name: string; parent: string } {
 }
 
 function resolvedChangePath(cwd: string | null | undefined, path: string): string | null {
-  if (!cwd) return null
-  if (path.startsWith('/')) return path
-  const relativePath = path.replace(/^\.\//, '')
-  return `${cwd === '/' ? '' : cwd}/${relativePath}`
+  return cwd ? resolveWorkspaceFileLink(cwd, path) : null
 }
 
 function ActivityStatus({
@@ -550,7 +531,7 @@ function FileTreeBranch({
   registerItem
 }: FileTreeBranchProps): ReactNode {
   const state = directories[directory]
-  if (!state || state.status === 'loading') {
+  if (!state || (state.status === 'loading' && state.entries.length === 0)) {
     return (
       <div className="workspace-tree-state" style={{ paddingLeft: Math.max(8, 12 + depth * 14) }}>
         <LoaderCircle className="workspace-pane-spin" />
@@ -597,20 +578,27 @@ function FileTreeBranch({
             tabIndex={activePath === entry.path ? 0 : -1}
             data-workspace-tree-path={entry.path}
             ref={(node) => registerItem(entry.path, node)}
-            style={{ paddingLeft: Math.max(5, 9 + depth * 14) }}
+            style={{ paddingLeft: workspaceNavigatorRowPadding(depth + 1, entry.isDirectory) }}
             title={workspaceRelativePath(cwd, entry.path)}
             onContextMenu={(event) => { event.preventDefault(); onContextMenu(entry, event.clientX, event.clientY) }}
             onDoubleClick={() => !entry.isDirectory && window.dispatchEvent(new CustomEvent('codex:pin-workspace-file', { detail: entry.path }))}
             onFocus={() => onItemFocus(entry.path)}
-            onKeyDown={(event) => onItemKeyDown(event, entry.path)}
+            onKeyDown={(event) => {
+              if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) {
+                event.preventDefault()
+                event.stopPropagation()
+                const rect = event.currentTarget.getBoundingClientRect()
+                onContextMenu(entry, rect.left + 8, rect.bottom)
+              } else onItemKeyDown(event, entry.path)
+            }}
             onClick={() =>
               entry.isDirectory ? onToggleDirectory(entry.path) : onSelectFile(entry.path)
             }
           >
-            <span className="workspace-tree-disclosure">
-              {entry.isDirectory ? isExpanded ? <ChevronDown /> : <ChevronRight /> : null}
-            </span>
-            <WorkspaceEntryIcon path={entry.path} isDirectory={entry.isDirectory} expanded={isExpanded} />
+            <WorkspaceTreeIndentGuides depth={depth + 1} />
+            {entry.isDirectory
+              ? <span className="workspace-tree-disclosure"><WorkbenchElementGlyph name="chevron-down-md-light-12" rotate={isExpanded ? undefined : -90} /></span>
+              : <WorkspaceEntryIcon path={entry.path} />}
             <span>{entry.fileName}</span>
           </button>
         )
@@ -707,7 +695,11 @@ export function FileTreeView({
 
   const focusItem = useCallback((path: string): void => {
     setFocusedPath(path)
-    window.requestAnimationFrame(() => itemRefs.current.get(path)?.focus())
+    window.requestAnimationFrame(() => {
+      const node = itemRefs.current.get(path)
+      node?.focus({ preventScroll: true })
+      node?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    })
   }, [])
 
   const handleItemKeyDown = useCallback((
@@ -753,9 +745,8 @@ export function FileTreeView({
           onClick={() => onToggleDirectory(cwd)}
         >
           <span className="workspace-tree-disclosure">
-            {rootExpanded ? <ChevronDown /> : <ChevronRight />}
+            <WorkbenchElementGlyph name="chevron-down-md-light-12" rotate={rootExpanded ? undefined : -90} />
           </span>
-          {rootExpanded ? <FolderOpen /> : <Folder />}
           <strong>{workspacePathName(cwd)}</strong>
         </button>}
         {rootExpanded && (
@@ -785,14 +776,15 @@ export function FileTreeView({
   )
 }
 
-function WorkspaceChangedFiles({
+export function WorkspaceChangedFiles({
   changes,
   selectedChange,
   cwd,
   filter,
   collapsedPaths,
   onSelect,
-  onToggleDirectory
+  onToggleDirectory,
+  onContextMenu
 }: {
   changes: WorkspaceChangeEntry[]
   selectedChange: WorkspaceChangeEntry | null
@@ -801,12 +793,70 @@ function WorkspaceChangedFiles({
   collapsedPaths: ReadonlySet<string>
   onSelect(change: WorkspaceChangeEntry): void
   onToggleDirectory(path: string): void
+  onContextMenu?(entry: { path: string; isDirectory: boolean }, x: number, y: number): void
 }): ReactNode {
   const query = filter.trim().toLocaleLowerCase()
   const nodes = useMemo(
     () => buildWorkspaceNavigatorChangedTree(cwd || '', changes, filter),
     [changes, cwd, filter]
   )
+  const [focusedPath, setFocusedPath] = useState<string | null>(null)
+  const itemRefs = useRef(new Map<string, HTMLButtonElement>())
+  const visibleItems = useMemo(() => collectVisibleWorkspaceChangedItems(nodes, collapsedPaths, query.length > 0), [nodes, collapsedPaths, query])
+  const visiblePaths = useMemo(() => new Set(visibleItems.map((item) => item.path)), [visibleItems])
+  const changesByPath = useMemo(() => {
+    const entries = new Map<string, WorkspaceChangeEntry>()
+    const collect = (nodes: readonly WorkspaceNavigatorChangedNode<WorkspaceChangeEntry>[]): void => {
+      for (const node of nodes) {
+        if (node.kind === 'file') entries.set(node.path, node.change)
+        else collect(node.children)
+      }
+    }
+    collect(nodes)
+    return entries
+  }, [nodes])
+  const selectedPath = selectedChange
+    ? [...changesByPath].find(([path, change]) => visiblePaths.has(path) && workspaceChangesMatch(cwd, selectedChange, change))?.[0]
+    : undefined
+  const activePath = focusedPath && visiblePaths.has(focusedPath) ? focusedPath : selectedPath || visibleItems[0]?.path
+  const keyDown = (event: ReactKeyboardEvent<HTMLButtonElement>, path: string): void => {
+    if (onContextMenu && (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10'))) {
+      const item = visibleItems.find((item) => item.path === path)
+      const target = resolvedChangePath(cwd, changesByPath.get(path)?.path || path)
+      if (item && target) {
+        event.preventDefault()
+        event.stopPropagation()
+        const rect = event.currentTarget.getBoundingClientRect()
+        onContextMenu({ path: target, isDirectory: item.isDirectory }, rect.left + 8, rect.bottom)
+      }
+      return
+    }
+    const action = workspaceTreeKeyboardAction(visibleItems, path, event.key)
+    if (!action) return
+    event.preventDefault()
+    event.stopPropagation()
+    if (action.type === 'focus') {
+      setFocusedPath(action.path)
+      window.requestAnimationFrame(() => {
+        const node = itemRefs.current.get(action.path)
+        node?.focus({ preventScroll: true })
+        node?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+      })
+    } else if (action.type === 'activate') {
+      const change = changesByPath.get(action.path)
+      if (change) onSelect(change)
+    } else onToggleDirectory(action.path)
+  }
+  const register = (path: string, node: HTMLButtonElement | null): void => {
+    if (node) itemRefs.current.set(path, node)
+    else itemRefs.current.delete(path)
+  }
+  const contextMenu = (event: ReactMouseEvent<HTMLButtonElement>, entry: WorkspaceNavigatorChangedNode<WorkspaceChangeEntry>): void => {
+    if (!onContextMenu) return
+    event.preventDefault()
+    const path = resolvedChangePath(cwd, entry.kind === 'file' ? entry.change.path : entry.path)
+    if (path) onContextMenu({ path, isDirectory: entry.kind === 'directory' }, event.clientX, event.clientY)
+  }
   if (nodes.length === 0) {
     return <div className="workspace-navigator-empty">{query ? '没有匹配的已更改文件' : '暂无已更改文件'}</div>
   }
@@ -814,8 +864,8 @@ function WorkspaceChangedFiles({
   const renderNodes = (
     entries: readonly WorkspaceNavigatorChangedNode<WorkspaceChangeEntry>[],
     depth: number
-  ): ReactNode => entries.map((entry) => {
-    const paddingLeft = 7 + depth * 14
+  ): ReactNode => entries.map((entry, index) => {
+    const paddingLeft = workspaceNavigatorRowPadding(depth, entry.kind === 'directory')
     if (entry.kind === 'directory') {
       const expanded = query.length > 0 || !collapsedPaths.has(entry.path)
       return (
@@ -825,14 +875,24 @@ function WorkspaceChangedFiles({
             role="treeitem"
             className="workspace-change-nav-row is-directory"
             aria-expanded={expanded}
+            aria-selected={false}
+            aria-level={depth + 1}
+            aria-posinset={index + 1}
+            aria-setsize={entries.length}
+            tabIndex={activePath === entry.path ? 0 : -1}
+            data-workspace-tree-path={entry.path}
+            ref={(node) => register(entry.path, node)}
+            onFocus={() => setFocusedPath(entry.path)}
+            onKeyDown={(event) => keyDown(event, entry.path)}
+            onContextMenu={(event) => contextMenu(event, entry)}
             style={{ paddingLeft }}
             title={entry.path}
             onClick={() => onToggleDirectory(entry.path)}
           >
+            <WorkspaceTreeIndentGuides depth={depth} />
             <span className="workspace-tree-disclosure">
-              {expanded ? <ChevronDown /> : <ChevronRight />}
+              <WorkbenchElementGlyph name="chevron-down-md-light-12" rotate={expanded ? undefined : -90} />
             </span>
-            <WorkspaceEntryIcon path={entry.path} isDirectory expanded={expanded} />
             <span className="workspace-change-nav-name">{entry.name}</span>
           </button>
           {expanded && <div role="group">{renderNodes(entry.children, depth + 1)}</div>}
@@ -852,9 +912,18 @@ function WorkspaceChangedFiles({
         style={{ paddingLeft }}
         title={change.path}
         aria-selected={selected}
+        aria-level={depth + 1}
+        aria-posinset={index + 1}
+        aria-setsize={entries.length}
+        tabIndex={activePath === entry.path ? 0 : -1}
+        data-workspace-tree-path={entry.path}
+        ref={(node) => register(entry.path, node)}
+        onFocus={() => setFocusedPath(entry.path)}
+        onKeyDown={(event) => keyDown(event, entry.path)}
+        onContextMenu={(event) => contextMenu(event, entry)}
         onClick={() => onSelect(change)}
       >
-        <span className="workspace-tree-disclosure" />
+        <WorkspaceTreeIndentGuides depth={depth} />
         <WorkspaceEntryIcon path={change.path} />
         <span className="workspace-change-nav-name">{entry.name}</span>
         <span className="workspace-change-nav-stats" aria-label={`${change.additions} 行新增，${change.deletions} 行删除`}>
@@ -1039,7 +1108,7 @@ export function WorkspacePane({
   onCommentsChange,
   commentScopeKey
 }: WorkspacePaneProps): ReactNode {
-  const presentationKey = `${commentScopeKey || 'workspace'}:${cwd || '/'}`
+  const presentationKey = `${commentScopeKey || 'workspace'}:${workspacePathComparisonKey(cwd || '/') || cwd}`
   const restoredPresentation = workspacePresentations.get(presentationKey)
   const presentationKeyRef = useRef(presentationKey)
   const [expanded, setExpanded] = useState(initialExpanded)
@@ -1078,6 +1147,7 @@ export function WorkspacePane({
   const [closeFailure, setCloseFailure] = useState<string | null>(null)
   const [tabMenu, setTabMenu] = useState<{path: string; x: number; y: number} | null>(null)
   const tabMenuRef = useRef<HTMLDivElement>(null)
+  const tabMenuReturnFocusRef = useRef<HTMLElement | null>(null)
   const [fileMenu, setFileMenu] = useState<WorkspaceFileMenu | null>(null)
   const [openTargets, setOpenTargets] = useState<WorkspaceOpenTarget[] | null>(null)
   const [toolbarOpenMenu, setToolbarOpenMenu] = useState(false)
@@ -1311,9 +1381,11 @@ export function WorkspacePane({
   const openFile = useCallback(
     async (path: string, line: number | null = null): Promise<void> => {
       if (!cwd) return
+      const workspacePath = resolveWorkspaceFileLink(cwd, path)
+      if (!workspacePath) return
       sourceImageRequest.current += 1
       setSourceImage(null)
-      await documentsStore.open(path, line)
+      await documentsStore.open(workspacePath, line)
     },
     [cwd, documentsStore]
   )
@@ -1385,6 +1457,17 @@ export function WorkspacePane({
     sourceImageRequest.current += 1
     setSourceImage(null)
   }, [cwd, presentationKey])
+
+  useEffect(() => {
+    if (!cwd || !selectedFile || !expanded || !toolsVisible) return
+    const paths = workspaceNavigatorRevealDirectories(cwd, selectedFile)
+    if (!paths.length) return
+    setExpandedDirectories((current) => {
+      if (paths.every((path) => current.has(path))) return current
+      return new Set([...current, ...paths])
+    })
+    for (const path of paths) void loadDirectory(path)
+  }, [cwd, expanded, loadDirectory, selectedFile, toolsVisible])
 
   useEffect(() => {
     const query = filter.trim()
@@ -1492,12 +1575,32 @@ export function WorkspacePane({
   }, [documentsStore, expanded])
 
   useEffect(() => {
+    const openMenu = (event: Event): void => {
+      const documents = documentsStore.getSnapshot().documents
+      const menu = resolveWorkspaceTabContextMenu((event as CustomEvent<unknown>).detail,
+        documents, { width: window.innerWidth, height: window.innerHeight }, readWindowZoom())
+      if (!menu) return
+      const selectedDocument = documents.find((doc) => doc.path === menu.path)
+      const targetTabId = `workspace:file:${selectedDocument?.id}`
+      tabMenuReturnFocusRef.current = Array.from(document.querySelectorAll<HTMLElement>('[data-right-workbench-tab-id]'))
+        .find((node) => node.dataset.rightWorkbenchTabId === targetTabId) ||
+        (document.activeElement instanceof HTMLElement ? document.activeElement : null)
+      setFileMenu(null)
+      setTabMenu(menu)
+    }
+    window.addEventListener(OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT, openMenu)
+    return () => window.removeEventListener(OPEN_WORKSPACE_TAB_CONTEXT_MENU_EVENT, openMenu)
+  }, [documentsStore])
+
+  useEffect(() => {
     if (!tabMenu) return
     const close = (): void => setTabMenu(null)
     const key = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         event.preventDefault()
+        event.stopPropagation()
         close()
+        if (tabMenuReturnFocusRef.current?.isConnected) tabMenuReturnFocusRef.current.focus({ preventScroll: true })
         return
       }
       if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
@@ -1646,6 +1749,15 @@ export function WorkspacePane({
   const selectedChangeViewActive = activeTab === 'changes' && changeView === 'selection' && Boolean(retainedChange)
   const displayedChange = selectedChangeViewActive && showSelectedDiff ? retainedChange : null
   const previewingSelectedChange = selectedChangeViewActive && !showSelectedDiff
+  const selectedChangeRevealPath = selectedChangeViewActive && retainedChange ? resolvedChangePath(cwd, retainedChange.path) : null
+  useEffect(() => {
+    if (!cwd || !selectedChangeRevealPath) return
+    const parents = workspaceNavigatorRevealDirectories(cwd, selectedChangeRevealPath).slice(1).map((parent) => workspaceRelativePath(cwd, parent))
+    updateNavigatorSections((current) => {
+      if (!parents.some((parent) => current.collapsedChangedPaths.includes(parent))) return current
+      return { ...current, collapsedChangedPaths: current.collapsedChangedPaths.filter((parent) => !parents.includes(parent)) }
+    })
+  }, [cwd, selectedChangeRevealPath, updateNavigatorSections])
   useEffect(() => {
     if (!displayedChange) setChangeSourceMenu(false)
   }, [displayedChange])
@@ -1792,7 +1904,13 @@ export function WorkspacePane({
   }
 
   const documentTabs = <div className="workspace-document-tabs" role="tablist" aria-label="打开的文件">
-    {documentState.documents.map((doc) => <div key={doc.id} className={`workspace-document-tab${!displayedChange && selectedFile === doc.path ? ' is-active' : ''}${doc.preview ? ' is-preview' : ''}`} onContextMenu={(event) => { event.preventDefault(); setTabMenu({path: doc.path, x: Math.min(event.clientX, window.innerWidth - 210), y: Math.min(event.clientY, window.innerHeight - 190)}) }}>
+    {documentState.documents.map((doc) => <div key={doc.id} className={`workspace-document-tab${!displayedChange && selectedFile === doc.path ? ' is-active' : ''}${doc.preview ? ' is-preview' : ''}`} onContextMenu={(event) => {
+      event.preventDefault()
+      tabMenuReturnFocusRef.current = event.currentTarget.querySelector<HTMLButtonElement>('button[role="tab"]') || event.currentTarget
+      setFileMenu(null)
+      setTabMenu(resolveWorkspaceTabContextMenu({ tabId: `file:${doc.id}`, x: event.clientX, y: event.clientY }, documentState.documents,
+        { width: window.innerWidth, height: window.innerHeight }, readWindowZoom()))
+    }}>
       <button type="button" role="tab" aria-selected={!displayedChange && selectedFile === doc.path} title={doc.path} onClick={() => { setActiveTab('files'); documentsStore.activate(doc.path) }} onDoubleClick={() => documentsStore.pin(doc.path)}>
         <WorkspaceEntryIcon path={doc.path} /><span>{workspacePathName(doc.path)}</span>
       </button>
@@ -1851,17 +1969,16 @@ export function WorkspacePane({
           <span>{source}</span>{source === changeSource && <Check />}
         </button>)}
       </div>}
-      <WorkspaceToolbarControls onPresentationChange={resetToolbarOpenMenu}>{leadingActions ? <div className="workspace-diff-native-controls">
+      <WorkspaceToolbarControls collapseBelow={leadingActions ? 0 : 625} onPresentationChange={resetToolbarOpenMenu}>{leadingActions ? <div className="workspace-diff-native-controls">
         {leadingActions}
         {editorTools}
-        <button
+        <ActivityTooltip variant="copy" openDelay={250} content="切换文件树"><button
           type="button"
-          className={toolsVisible ? 'is-active' : ''}
-          aria-label={toolsVisible ? '隐藏文件' : '显示文件'}
+          className={`workspace-file-tree-toggle${toolsVisible ? ' is-active' : ''}`}
+          aria-label="切换文件树"
           aria-pressed={toolsVisible}
-          title={toolsVisible ? '隐藏文件' : '显示文件'}
           onClick={() => setToolsVisible((visible) => !visible)}
-        ><Folder /></button>
+        ><WorkbenchElementGlyph name="file-tree-toggle-original-20" size={18} /></button></ActivityTooltip>
       </div> : <div className="workspace-open-controls">
         {editorTools || <button
           type="button"
@@ -1874,14 +1991,13 @@ export function WorkspacePane({
             })
           }}
         ><Search /></button>}
-        <button
+        <ActivityTooltip variant="copy" openDelay={250} content="切换文件树"><button
           type="button"
-          className={toolsVisible ? 'is-active' : ''}
+          className={`workspace-file-tree-toggle${toolsVisible ? ' is-active' : ''}`}
           aria-label="切换文件树"
           aria-pressed={toolsVisible}
-          title="显示文件"
           onClick={() => setToolsVisible((visible) => !visible)}
-        ><Folder /></button>
+        ><WorkbenchElementGlyph name="file-tree-toggle-original-20" size={18} /></button></ActivityTooltip>
         <div className="workspace-open-native">
           <button
             type="button"
@@ -1890,7 +2006,7 @@ export function WorkspacePane({
             title={primaryOpenTarget ? `在 ${primaryOpenTarget.label} 中打开` : '没有可用的打开方式'}
             disabled={!cwd || !toolbarOpenPath || !primaryOpenTarget}
             onClick={() => primaryOpenTarget && openToolbarPath(primaryOpenTarget.id)}
-          >{primaryOpenTarget && <WorkspaceOpenTargetIcon target={primaryOpenTarget.id} />}<span>打开</span></button>
+          >{primaryOpenTarget && <WorkspaceOpenTargetIcon target={primaryOpenTarget} />}<span>打开</span></button>
           <button
             ref={toolbarOpenMenuButtonRef}
             type="button"
@@ -1906,7 +2022,7 @@ export function WorkspacePane({
           {openTargets === null ? <button type="button" role="menuitem" disabled><LoaderCircle className="workspace-pane-spin" />正在加载…</button>
             : openTargets.length === 0 ? <div className="workspace-open-target-empty">没有可用的打开方式</div>
               : openTargets.map((target) => <button type="button" role="menuitem" key={target.id} onClick={() => openToolbarPath(target.id)}>
-                <WorkspaceOpenTargetIcon target={target.id} /><span>在 {target.label} 中打开</span>
+                <WorkspaceOpenTargetIcon target={target} /><span>在 {target.label} 中打开</span>
               </button>)}
         </div>}
       </div>}</WorkspaceToolbarControls>
@@ -2104,7 +2220,7 @@ export function WorkspacePane({
         onError={(error) => setFileActionError(workspaceErrorMessage(error))} />}
       {fileActionError && <div className="workspace-editor-conflict" role="alert"><CircleAlert /><span>{fileActionError}</span><button onClick={() => setFileActionError(null)}>关闭</button></div>}
       {watchError && <div className="workspace-editor-conflict" role="status"><CircleAlert /><span>无法监听文件变更：{watchError}</span><button onClick={() => setWatchRetry((value) => value + 1)}>重试</button></div>}
-      {tabMenu && <div ref={tabMenuRef} className="workspace-tab-context-menu" role="menu" aria-label="标签页操作" style={{left: tabMenu.x, top: tabMenu.y}} onPointerDown={(event) => event.stopPropagation()}>
+      {tabMenu && createPortal(<div ref={tabMenuRef} className="workspace-tab-context-menu" role="menu" aria-label="标签页操作" style={{left: tabMenu.x, top: tabMenu.y}} onPointerDown={(event) => event.stopPropagation()}>
         <button type="button" role="menuitem" onClick={() => { documentsStore.pin(tabMenu.path); setTabMenu(null) }}>保留标签页</button>
         <button type="button" role="menuitem" onClick={() => { void closeFile(tabMenu.path); setTabMenu(null) }}>关闭</button>
         <button type="button" role="menuitem" onClick={() => { void (async () => { for (const doc of documentState.documents) if (doc.path !== tabMenu.path && !await documentsStore.close(doc.path)) { setCloseFailure(doc.path); break } })(); setTabMenu(null) }}>关闭其他标签页</button>
@@ -2116,7 +2232,7 @@ export function WorkspacePane({
             setFileActionError(workspaceErrorMessage(error))
           })
         }}>复制路径</button>
-      </div>}
+      </div>, document.body)}
       {closeFailure && <div className="workspace-editor-conflict" role="alert"><CircleAlert /><span>无法保存 {workspacePathName(closeFailure)}。更改已保留。</span><button onClick={() => void closeFile(closeFailure)}>重试</button><button onClick={() => void closeFile(closeFailure, true)}>放弃更改并关闭</button><button onClick={() => setCloseFailure(null)}>取消</button></div>}
 
       {summaryItems.length > 0 && !activeDocument && !displayedChange && activeTab !== 'sources' && activeTab !== 'subagents' && (
@@ -2194,6 +2310,7 @@ export function WorkspacePane({
               <ChangesView changes={snapshot.changes} selectedChange={null} cwd={cwd} onSelect={selectChange} />
             </div>
           </section> : displayedChange ? <WorkspaceDiffViewer key={displayedChange.id} change={displayedChange} cwd={cwd}
+            jumpChanges={snapshot.changes} onJumpToChange={selectChange}
             toolbarActions={unifiedChrome ? (leadingControls, fileControls) => renderToolbarActions(fileControls, leadingControls) : undefined}
             comments={comments} onCommentsChange={onCommentsChange} commentScopeKey={commentScopeKey}
             onRefresh={refreshSelectedChange}
@@ -2277,6 +2394,7 @@ export function WorkspacePane({
                     collapsedPaths={collapsedChangedPaths}
                     onSelect={selectChange}
                     onToggleDirectory={toggleChangedDirectory}
+                    onContextMenu={(entry, x, y) => { setTabMenu(null); setFileActionError(null); setFileMenu({ ...entry, x, y }) }}
                   />}
                 </section>
                 <section className={`workspace-navigator-section${allFilesExpanded ? ' is-expanded' : ''}`}>

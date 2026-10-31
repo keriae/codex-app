@@ -3,10 +3,10 @@ import { codexActivityLabels, connectorActivityLabels } from './toolActivityCata
 
 export type ToolActivityStatus = 'inProgress' | 'completed' | 'failed' | 'interrupted'
 export type ToolResultBlock =
-  | { type: 'text'; text: string }
-  | { type: 'image' | 'audio'; source: string; mimeType: string }
-  | { type: 'resourceLink'; uri: string; name: string; description: string | null; mimeType: string | null }
-  | { type: 'resource'; uri: string; mimeType: string | null; text: string | null; source: string | null; annotations: string | null }
+  | { type: 'text'; text: string; annotations?: string }
+  | { type: 'image' | 'audio'; source: string; mimeType: string; annotations?: string }
+  | { type: 'resourceLink'; uri: string; name: string; description: string | null; mimeType: string | null; annotations?: string }
+  | { type: 'resource'; uri: string; mimeType: string | null; text: string | null; annotations: string | null }
   | { type: 'unknown'; json: string }
 
 export function toolRecord(value: unknown): Record<string, unknown> | null {
@@ -156,6 +156,19 @@ function mediaSource(data: unknown, mimeType: unknown, kind: 'image' | 'audio'):
   return `data:${mime};base64,${data}`
 }
 
+/** ka/Oa in the shipped MCP renderer show the three MCP annotation fields. */
+export function toolResultAnnotations(value: unknown): string | null {
+  const annotations = toolRecord(value)
+  if (!annotations) return null
+  const fields: string[] = []
+  const audience = Array.isArray(annotations.audience)
+    ? annotations.audience.filter((value): value is string => typeof value === 'string') : []
+  if (audience.length) fields.push(`audience=${audience.join(', ')}`)
+  if (typeof annotations.priority === 'number' && Number.isFinite(annotations.priority)) fields.push(`priority=${annotations.priority}`)
+  if (typeof annotations.lastModified === 'string' && annotations.lastModified) fields.push(`lastModified=${annotations.lastModified}`)
+  return fields.length ? fields.join('; ') : null
+}
+
 export function safeToolResourceUrl(uri: string): string | null {
   try {
     const url = new URL(uri)
@@ -168,15 +181,27 @@ export function toolResultBlocks(item: ToolItem): ToolResultBlock[] {
   if (!Array.isArray(content)) return []
   return content.map((value): ToolResultBlock => {
     const block = toolRecord(value)
-    if (block?.type === 'text' && typeof block.text === 'string' || block?.type === 'inputText' && typeof block.text === 'string') return { type: 'text', text: String(block.text) }
+    const annotationText = toolResultAnnotations(block?.annotations)
+    const annotations = annotationText ? { annotations: annotationText } : {}
+    if (block?.type === 'text' && typeof block.text === 'string' || block?.type === 'inputText' && typeof block.text === 'string') return { type: 'text', text: String(block.text), ...annotations }
     if (block?.type === 'image' || block?.type === 'audio') {
       const source = mediaSource(block.data, block.mimeType, block.type)
-      if (source) return { type: block.type, source, mimeType: String(block.mimeType) }
+      if (source) return { type: block.type, source, mimeType: String(block.mimeType), ...annotations }
     }
-    if (block?.type === 'resource_link') return { type: 'resourceLink', uri: text(block.uri) || '', name: text(block.title) || text(block.name) || text(block.uri) || '资源', description: text(block.description), mimeType: text(block.mimeType) }
+    if (block?.type === 'resource_link') return {
+      type: 'resourceLink', uri: typeof block.uri === 'string' ? block.uri : '',
+      // Ea uses nullish title/name/URI precedence, preserving even empty titles.
+      name: typeof block.title === 'string' ? block.title : typeof block.name === 'string' ? block.name : typeof block.uri === 'string' ? block.uri : '',
+      description: text(block.description), mimeType: text(block.mimeType), ...annotations
+    }
     if (block?.type === 'resource' || block?.type === 'embedded_resource') {
       const resource = toolRecord(block.resource)
-      if (resource) return { type: 'resource', uri: text(resource.uri) || '', mimeType: text(resource.mimeType), text: typeof resource.text === 'string' ? resource.text : null, source: mediaSource(resource.blob, resource.mimeType, 'image') || mediaSource(resource.blob, resource.mimeType, 'audio'), annotations: toolJson(resource.annotations) }
+      if (resource) return {
+        type: 'resource', uri: typeof resource.uri === 'string' ? resource.uri : '',
+        mimeType: typeof resource.mimeType === 'string' ? resource.mimeType : null,
+        text: typeof resource.text === 'string' ? resource.text : typeof resource.blob === 'string' ? resource.blob : null,
+        annotations: toolResultAnnotations(resource.annotations)
+      }
     }
     return { type: 'unknown', json: toolJson(value) || '' }
   })
@@ -186,7 +211,7 @@ export function toolResultBlocks(item: ToolItem): ToolResultBlock[] {
 export function toolDisplayResult(item: ToolItem): { blocks: ToolResultBlock[]; structuredJson: string | null } {
   const blocks = toolResultBlocks(item)
   const structuredJson = toolJson(item.result?.structuredContent)
-  if (blocks.length === 1 && blocks[0].type === 'text') {
+  if (blocks.length === 1 && blocks[0].type === 'text' && !blocks[0].annotations) {
     try {
       const json = JSON.stringify(JSON.parse(blocks[0].text), null, 2)
       if (structuredJson === null || structuredJson === json) return { blocks: [], structuredJson: json }

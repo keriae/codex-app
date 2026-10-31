@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   commandActivityCopy,
+  commandActivityElapsedMs,
   commandElapsedLabel,
   commandActivityRows,
   completedActivityBatches,
@@ -22,6 +23,22 @@ function command(overrides: Partial<CommandItem>): CommandItem {
 }
 
 describe('command activity presentation', () => {
+  it('ticks the live command from its observed start and uses the authoritative completed duration', () => {
+    const item = command({ startedAtMs: 10_000, durationMs: 90 })
+    expect(commandActivityElapsedMs(item, 12_400)).toBe(2400)
+    expect(commandActivityElapsedMs(item, 9000)).toBe(0)
+    expect(commandActivityElapsedMs({ ...item, status: 'completed', durationMs: 2401 }, 90_000)).toBe(2401)
+    expect(commandActivityElapsedMs(command({ startedAtMs: Number.NaN }), 12_400, 10_000)).toBe(2400)
+    expect(commandActivityElapsedMs(command({ durationMs: 1900 }), 12_400)).toBe(1900)
+  })
+
+  it('shows elapsed work in the expanded command heading without repeating the raw command', () => {
+    const item = command({ command: 'npm test', status: 'completed', durationMs: 2300 })
+    expect(commandActivityRows(item, { expandedRow: 0 })[0]).toMatchObject({ action: '命令已在 2s 内运行完成', detail: null, command: 'npm test' })
+    expect(commandActivityRows({ ...item, executionStatus: 'interrupted' }, { expandedRow: 0 })[0]).toMatchObject({ action: '运行 2s 后停止命令', detail: null })
+    expect(commandActivityRows(item)[0]).toMatchObject({ detail: 'npm test' })
+  })
+
   it('uses the structured read action instead of exposing the shell command', () => {
     expect(
       commandActivityCopy(

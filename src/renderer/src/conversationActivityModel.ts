@@ -20,6 +20,8 @@ function isMcpAppActivity(item: ThreadItem): boolean {
  * quietly developing different grouping boundaries.
  */
 export function conversationActivityGrouping(item: ThreadItem): ConversationActivityGrouping {
+  // Ewo and mwo omit protocol-only review lifecycle/sleep events from the UI.
+  if (['enteredReviewMode', 'exitedReviewMode', 'sleep'].includes(item.type)) return 'hidden'
   if (item.type === 'reasoning') return 'hidden'
   if (item.type === 'agentMessage' || item.type === 'plan') return item.text?.trim() ? 'standalone' : 'hidden'
   if (item.type === 'collabAgentToolCall') return collaborationHeader([item]) === null ? 'hidden' : 'standalone'

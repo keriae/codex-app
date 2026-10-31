@@ -1,0 +1,24 @@
+.retained-tabs-popup {
+  position:fixed; z-index:350; display:flex; flex-direction:column; box-sizing:border-box;
+  width:260px; max-width:calc(100vw / var(--codex-window-zoom, 1) - 16px); padding:8px;
+  overflow-x:hidden; overflow-y:auto; border:0; border-radius:16px; outline:0;
+  background:light-dark(#fff, #181818); color:var(--text); user-select:none; -webkit-app-region:no-drag;
+  box-shadow:0 0 0 .5px var(--border), 0 8px 16px -4px #0000001f;
+  font:400 11px/1.5 -apple-system, system-ui, sans-serif;
+}
+.retained-tabs-heading { flex:0 0 auto; padding:6px 8px; color:var(--text-tertiary, var(--text-secondary)); }
+.retained-tabs-row { position:relative; display:flex; flex:0 0 32px; align-items:center; min-width:0; height:32px; border-radius:10px; }
+.retained-tabs-row:not([data-disabled='true']):hover { background:var(--hover); }
+.retained-tabs-primary { position:relative; display:flex; flex:1; align-items:center; gap:6px; min-width:0; height:100%; padding:0 36px 0 8px; border:0; border-radius:10px; outline:0; background:transparent; color:inherit; font:inherit; text-align:start; cursor:pointer; }
+.retained-tabs-primary:focus-visible, .retained-tabs-full:focus-visible { outline:2px solid var(--focus-ring, var(--accent)); outline-offset:0; }
+.retained-tabs-primary:disabled { cursor:default; opacity:.4; }
+.retained-tabs-icon { display:inline-flex; flex:0 0 16px; align-items:center; justify-content:center; width:16px; height:16px; }
+.retained-tabs-icon svg { width:16px; height:16px; flex-shrink:0; }
+.retained-tabs-title { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.retained-tabs-full { position:absolute; z-index:30; inset-inline-end:4px; top:50%; display:grid; place-items:center; width:24px; height:24px; transform:translateY(-50%); padding:0; border:0; border-radius:8px; background:transparent; color:inherit; opacity:0; pointer-events:none; cursor:pointer; }
+.retained-tabs-row:hover .retained-tabs-full, .retained-tabs-row:focus-within .retained-tabs-full, .retained-tabs-full:focus-visible { opacity:1; pointer-events:auto; }
+.retained-tabs-full:hover:not(:disabled) { background:var(--hover); }
+.retained-tabs-full:disabled { cursor:default; }
+.retained-tabs-row[data-disabled='true']:hover .retained-tabs-full { opacity:.4; }
+.retained-tabs-full svg { width:16px; height:16px; }
+.titlebar-retained-tabs[data-state='open'] { background:var(--hover); color:var(--text); }

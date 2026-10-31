@@ -1,3 +1,5 @@
+import { normalizeAbsoluteWorkspacePath, resolveWorkspacePath } from './workspacePathModel'
+
 export type WorkspaceCodeTokenKind = 'plain' | 'keyword' | 'string' | 'number' | 'comment'
 
 export interface WorkspaceCodeToken {
@@ -68,9 +70,12 @@ export function workspacePathName(path: string): string {
 }
 
 export function workspaceRelativePath(root: string, path: string): string {
-  if (path === root) return ''
-  const prefix = root === '/' ? '/' : `${root}/`
-  return path.startsWith(prefix) ? path.slice(prefix.length) : path
+  const normalizedRoot = normalizeAbsoluteWorkspacePath(root)
+  const resolvedPath = resolveWorkspacePath(root, path)
+  if (!normalizedRoot || !resolvedPath) return path
+  if (resolvedPath === normalizedRoot) return ''
+  const prefix = normalizedRoot === '/' ? '/' : `${normalizedRoot}/`
+  return resolvedPath.slice(prefix.length)
 }
 
 export function workspaceBreadcrumbs(root: string, path: string): string[] {
